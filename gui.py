@@ -468,24 +468,24 @@ def similar(str1, str2):
     return SequenceMatcher(None, str1, str2).ratio()
 
 
-def set_default():
-    """Sets default settings and saves them to a JSON file."""
-    defaults = {
-        'synchro_exe': 'C:\\Program Files (x86)\\Trafficware\\Version10\\Synchro10.exe',
-        'synchro_dir': '',
-        'model_path': '',
-        'rows': 1000,
-        'columns': 30,
-        'update_los': 1
-    }
-
-    # Write the default settings to a JSON file
-    with open('settings.json', 'w') as file:
-        json.dump(defaults, file)
-
-
 def load_settings():
     """Loads settings from a JSON file, creating defaults if the file does not exist."""
+    
+    def set_default():
+        """Sets default settings and saves them to a JSON file."""
+        defaults = {
+            'synchro_exe': 'C:\\Program Files (x86)\\Trafficware\\Version10\\Synchro10.exe',
+            'synchro_dir': '',
+            'model_path': '',
+            'rows': 1000,
+            'columns': 30,
+            'update_los': 1
+        }
+        
+        # Write the default settings to a JSON file
+        with open('settings.json', 'w') as file:
+            json.dump(defaults, file)
+    
     try:
         with open('settings.json', 'r') as file:
             defaults = json.load(file)
@@ -495,7 +495,7 @@ def load_settings():
         set_default()
         with open('settings.json', 'r') as file:
             defaults = json.load(file)
-    
+            
     return defaults  # Return the loaded or default settings
 
 
@@ -898,7 +898,6 @@ class Base(tk.Tk):
         super().__init__()
         self.title('Synchronizer')  # Set the title of the window
         self.geometry(center_window(500, 200, self))  # Center and size the window
-        self.resizable(width=0, height=0)  # Disable window resizing
         self.wm_attributes('-topmost', 0)  # Allow the window to be behind others
         
         # Initialize various attributes for managing the application state
@@ -1030,8 +1029,8 @@ class Base(tk.Tk):
         # wb = xl.load_workbook(filename=model)
         # active = wb.active
         ws = self.ws  # need to make sure sheet is titled "Model"
-        startColumn = 'C'  # get direction column from user or default
-        dataColumns = ['F', 'G', 'H']  # from scenarios to update
+        startColumn = 'C'  # Get direction column from user or default
+        dataColumns = ['F', 'G', 'H']  # From scenarios to update
 
         volume_data = dict()
         movement_list = ['RECORDNAME', 'INTID']
@@ -1253,6 +1252,7 @@ class Base(tk.Tk):
     
         # Return the path to the report file
         return report_table
+
 
 class ProgressWindow:
     def __init__(self, master=None):
@@ -1543,24 +1543,6 @@ class FileMatchApp:
         self.file_window.destroy()
         ProgressWindow(self.master)
 
-    def old_decode(self):
-        for widget in self.frame_2.winfo_children():
-            if type(widget) == ttk.Entry:
-                contents = widget.get()
-                # Check to make sure entry box is not empty
-                if contents is not None and contents != '':
-                    # Scenarios stored in column 2, file names in column 3
-                    if widget.grid_info()['column'] == 2:
-                        key = 'scenario'
-                    else:
-                        key = 'filename'
-                    row = widget.grid_info()['row']
-                    if row not in self.file_dict.keys():
-                        self.file_dict[row] = dict()
-                    self.master.file_dict[row][key] = widget.get()
-
-        self.file_window.destroy()
-        ProgressWindow(self.master)
 
 
 

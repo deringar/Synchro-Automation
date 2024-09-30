@@ -14,7 +14,7 @@ if __name__ == '__main__':
     # import pprint
     # pprint.pprint(standardize(tfile))
     root = Base()
-    root.attributes('-topmost', True)
+    # root.attributes('-topmost', True)
     root.resizable(True, True)
     # icon = tk.PhotoImage(file='Logo.png')
     # root.iconphoto(True, icon)
