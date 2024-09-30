@@ -933,6 +933,14 @@ class Base(tk.Tk):
         self.default_columns = saved_settings.get('columns', defaults['columns'])
         self.update_los = saved_settings.get('update_los', defaults['update_los'])
 
+    # def startup(self):
+    #     start = os.system('start "" "' + self.synchro_app_path + '"')
+    #     if start == 0:
+    #         self.click_button('License.png', 0, 75)
+    #         self.click_button('Update.png')
+    #         self.click_button('Maximize.png')
+    #     return start
+
     def match_ws_name(self, workbook_path, title):
         """
         Find the worksheet in a workbook that best matches a given title.
@@ -1016,7 +1024,6 @@ class Base(tk.Tk):
         )
         scenario.syn_file = match.path if match else str()  # Set the matched file path or empty string
 
-    # keyboard
     # Convert model volumes to Synchro UTDF
     def convert_utdf(self, scenario='test_write', column=5):
         # Open model to copy data
@@ -1274,10 +1281,10 @@ class ProgressWindow:
 
     def run(self):
         time.sleep(2)
-        success = self.master.startup()
-        if success != 0:
-            self.status_text_box.insert('end', 'Failed to start Synchro\n')
-            # return
+        # success = self.master.startup()
+        # if success != 0:
+        #     self.status_text_box.insert('end', 'Failed to start Synchro\n')
+        #     return
         for scenario_obj in self.master.selected_scenarios:
             scenario = scenario_obj.name
             filename = scenario_obj.syn_file
