@@ -14,7 +14,6 @@ from tkinter import messagebox, filedialog  # Import specific Tkinter features f
 import csv  # Module to handle CSV file operations.
 import openpyxl as xl  # Used for working with Excel files (.xlsx format).
 import os  # OS module for interacting with the operating system (file paths, etc.).
-import pyautogui  # Provides functions to control the mouse and keyboard.
 import re  # Regular expression module for pattern matching in strings.
 import time  # Module for time-related functions.
 import json  # JSON module to parse and manipulate JSON data.
@@ -24,176 +23,175 @@ from openpyxl import Workbook
 """
 ______________________ HELPER FUNCTIONS ______________________
 """
+
+# Check if the target is empty
 def is_empty(target):
+    # Check if the target is None
     if target is None:
         return True
+    # If the target is a string, check if it is empty or contains only whitespace
     if type(target) == str:
         if target.strip():
-            return False
+            return False  # The string is not empty
         else:
-            return True
+            return True  # The string is empty
+    return False  # The target is not empty (not None or empty string)
 
-
+# Identify the type of control based on the record name
 def identify_type(record_name):
+    # Map record names to control types
     if record_name == 'Arrive On Green':
         control_type = 'hcm signalized'
-
     elif record_name == 'Opposing Approach':
         control_type = 'hcm all way stop'
-
     elif record_name == 'Int Delay, s/veh':
         control_type = 'hcm two way stop'
-
     elif record_name == 'Conflicting Circle Lanes':
         control_type = 'hcm roundabout'
-
     elif record_name == 'Right Turn on Red':
         control_type = 'synchro signalized'
-
     elif record_name == 'Degree Utilization, x':
         control_type = 'synchro all way stop'
-
     elif record_name == 'cSH':
         control_type = 'synchro two way stop'
-
     elif record_name == 'Control Type: Roundabout':
         control_type = 'synchro roundabout'
-
     else:
-        control_type = None
+        control_type = None  # Unrecognized record name
 
     return control_type
 
-
+# Get bounds of intersections in the file
 def get_bounds(file):
+    # Regex pattern to match intersection records
     pattern = re.compile('([0-9]+):\w*')
-    bounds = list()
-    intersections = list()
-    data = dict()
+    bounds = list()  # To store the bounds of intersections
+    intersections = list()  # To store intersection IDs
+    data = dict()  # To store intersection data
 
+    # Read the file content
     with open(file) as f:
         reader = csv.reader(f, delimiter='\t')
         file_data = list(reader)
+    
+    # Iterate through the file data to find intersection bounds
     for index, line in enumerate(file_data):
-        if line:
-            record_name = line[0].strip()
-            header_match = pattern.match(record_name)
-            if header_match:
-                bounds.append(index)
-                intersection = int(header_match.groups()[0])
-                intersections.append(intersection)
-    bounds.append(index)
+        if line:  # Skip empty lines
+            record_name = line[0].strip()  # Get the first element of the line
+            header_match = pattern.match(record_name)  # Match the record name with the pattern
+            if header_match:  # If there's a match, it's an intersection record
+                bounds.append(index)  # Store the index of the bound
+                intersection = int(header_match.groups()[0])  # Get the intersection ID
+                intersections.append(intersection)  # Store the intersection ID
+    
+    bounds.append(index)  # Append the last index for bounds
 
+    # Process the intersections to gather data
     for index, inter in enumerate(intersections):
         if inter not in data.keys():
-            data[inter] = dict()
-        data[inter]['bounds'] = bounds[index:index + 2]
+            data[inter] = dict()  # Initialize a dictionary for each intersection
+        data[inter]['bounds'] = bounds[index:index + 2]  # Set bounds for the intersection
         start, end = data[inter]['bounds']
-        for line in file_data[start: end]:
-            if line:
-                record_name = line[0].strip()
-                record_type = identify_type(record_name)
-                if record_type:
-                    data[inter]['type'] = record_type
-                    break
+        
+        # Loop through the lines within the bounds
+        for line in file_data[start:end]:
+            if line:  # Skip empty lines
+                record_name = line[0].strip()  # Get the record name
+                record_type = identify_type(record_name)  # Identify the control type
+                if record_type:  # If a control type is found
+                    data[inter]['type'] = record_type  # Set the control type
+                    break  # Exit loop once the type is found
                 else:
-                    data[inter]['type'] = None
-    return data
+                    data[inter]['type'] = None  # No control type found
+    return data  # Return the constructed data dictionary
 
-
+# Find a line in data matching the search term
 def find_line(data, search, give_index=False):
+    # Loop through each line of data
     for index, line in enumerate(data):
-        if line:
-            record_name = line[0].strip()
-            if record_name == search:
+        if line:  # Skip empty lines
+            record_name = line[0].strip()  # Get the first element of the line
+            if record_name == search:  # Check if it matches the search term
                 if give_index:
-                    return line, index
+                    return line, index  # Return line and index if requested
                 else:
-                    return line
-    return None
+                    return line  # Return the line only
+    return None  # Return None if no match is found
 
-
+# Get overall values like delay and LOS based on control type
 def get_overall(data_list, control_type):
     # returns overall values in form: [delay, LOS]
 
+    # Determine the keys based on the control type
     if control_type == 'hcm signalized':
         keys = ['HCM 6th Ctrl Delay', 'HCM 6th LOS']
-
     elif control_type == 'hcm all way stop':
         keys = ['Intersection Delay, s/veh', 'Intersection LOS']
-
     elif control_type == 'hcm two way stop':
         keys = ['Int Delay, s/veh']
-
     elif control_type == 'hcm roundabout':
         keys = ['Intersection Delay, s/veh', 'Intersection LOS']
-
     elif control_type == 'synchro signalized':
-        pass
-
+        pass  # To be implemented for synchro signalized
     elif control_type == 'synchro all way stop':
-        # assumes hcm 2000
-        keys = ['Delay', 'Level of Service']
-
+        keys = ['Delay', 'Level of Service']  # Assumes HCM 2000
     elif control_type == 'synchro two way stop':
-        # assumes hcm 2000
-        keys = ['Average Delay']
-
+        keys = ['Average Delay']  # Assumes HCM 2000
     elif control_type == 'synchro roundabout':
-        # todo add synchro roundabout support
-        return [None, None]
-
+        return [None, None]  # To be implemented for synchro roundabouts
     else:
-        return [None, None]
+        return [None, None]  # Return None for unrecognized control types
 
+    # Handle data extraction for 'synchro signalized' control type
     if control_type == 'synchro signalized':
         for row in data_list:
             if row:
-                if 'Intersection Signal Delay: ' in row[0]:
-                    delay = row[0][27:].strip()
-                    los = row[5][-1]
-                    return [delay, los]
+                if 'Intersection Signal Delay: ' in row[0]:  # Look for specific record
+                    delay = row[0][27:].strip()  # Extract delay
+                    los = row[5][-1]  # Extract level of service
+                    return [delay, los]  # Return extracted values
 
-    else:
-        output = [None, None]
-        for index, key in enumerate(keys):
-            row = find_line(data_list, key)
-            for entry in row[2:]:
-                if entry:
-                    output[index] = entry
-                    break
+    # If not 'synchro signalized', extract data using keys
+    output = [None, None]
+    for index, key in enumerate(keys):
+        row = find_line(data_list, key)  # Find the row for each key
+        for entry in row[2:]:  # Skip the first two columns
+            if entry:  # Get the first non-empty entry
+                output[index] = entry
+                break
 
-        return output
+    return output  # Return the overall values
 
-
+# Standardize the results from the file
 def standardize(results_file):
-    
+    # Read the content of the results file
     with open(results_file) as f:
         reader = csv.reader(f, delimiter='\t')
-        file_content = list(reader)
-    database = dict()
-    parsed = get_bounds(results_file)
+        file_content = list(reader)  # Store the file content as a list
+    database = dict()  # To store the standardized data
+    parsed = get_bounds(results_file)  # Get intersection bounds and types
+
+    # Iterate through parsed intersections to build the database
     for intersection in parsed:
+        db = parsed[intersection]  # Get data for the intersection
+        start = min(db['bounds'])  # Get the starting index for bounds
+        end = max(db['bounds'])  # Get the ending index for bounds
+        subset = file_content[start:end]  # Get the relevant data subset
+        control_type = db['type']  # Get the control type
+        database[intersection] = OrderedDict()  # Initialize an ordered dictionary for intersection
+        database[intersection]['overall'] = dict()  # Initialize overall data dictionary
+        delay, los = get_overall(subset, control_type)  # Get delay and LOS
+        database[intersection]['overall']['delay'] = delay  # Store delay
+        database[intersection]['overall']['los'] = los  # Store LOS
 
-        db = parsed[intersection]
-        start = min(db['bounds'])
-        end = max(db['bounds'])
-        subset = file_content[start:end]
-        control_type = db['type']
-        database[intersection] = OrderedDict()
-        database[intersection]['overall'] = dict()
-        delay, los = get_overall(subset, control_type)
-        database[intersection]['overall']['delay'] = delay
-        database[intersection]['overall']['los'] = los
+        # Initialize storage variables for detailed data
+        header_by_int = OrderedDict()  # Movement headers by intersection
+        secondary_key = OrderedDict()  # Secondary keys for alternate headers
+        second_info = list()  # List to store additional information
+        header_by_int_alt = dict()  # Alternate movement headers
+        roundabout_lanes = list()  # To store roundabout lane information
 
-        # initialize storage variables
-        header_by_int = OrderedDict()
-        secondary_key = OrderedDict()
-        second_info = list()
-        header_by_int_alt = dict()
-        roundabout_lanes = list()
-
-        # declare search parameters
+        # Declare search parameters based on control type
         if control_type == 'hcm signalized':
             header_key = 'Movement'
 
@@ -423,6 +421,7 @@ def standardize(results_file):
 
 
 def order(txt):
+    """Returns a string that contains 'L', 'T', and 'R' based on their presence in the input text."""
     output = str()
     if txt.find('L') != -1:
         output += 'L'
@@ -430,10 +429,11 @@ def order(txt):
         output += 'T'
     if txt.find('R') != -1:
         output += 'R'
-    return output
+    return output  # Return the constructed output string
 
 
 def label(field, config):
+    """Generates a label based on the field and configuration rules, returning a direction or None."""
     output = str()
     if not field:
         return output
@@ -441,105 +441,125 @@ def label(field, config):
         return field
     if field.find('Ln') != -1:
         return None
-    direction = field[2]
+    direction = field[2]  # Extract the direction from the field
+    # If no special characters are found in config, return the direction if '0' is not present
     if config.find('<') == -1 and config.find('>') == -1:
         if config.find('0') == -1:
             return direction
+    
+    # Check if '<' is in the config, if so, add 'L' to output
     if config.find('<') != -1:
         output += 'L'
+    
+    # Loop through numbers 1 to 8 and check if they are in the config
     for num in range(1, 9):
         if config.find(str(num)) != -1:
-            output += direction
+            output += direction  # Append direction for each found number
+    
+    # Check if '>' is in the config, if so, add 'R' to output
     if config.find('>') != -1:
         output += 'R'
-    return order(output)
+    
+    return order(output)  # Call order to finalize the output
 
 
 def similar(str1, str2):
+    """Returns the similarity ratio between two strings using SequenceMatcher."""
     return SequenceMatcher(None, str1, str2).ratio()
 
 
 def set_default():
-    defaults = {'synchro_exe': 'C:\\Program Files (x86)\\Trafficware\\Version10\\Synchro10.exe',
-                'synchro_dir': '',
-                'model_path': '',
-                'rows': 1000,
-                'columns': 30,
-                'update_los': 1}
+    """Sets default settings and saves them to a JSON file."""
+    defaults = {
+        'synchro_exe': 'C:\\Program Files (x86)\\Trafficware\\Version10\\Synchro10.exe',
+        'synchro_dir': '',
+        'model_path': '',
+        'rows': 1000,
+        'columns': 30,
+        'update_los': 1
+    }
 
+    # Write the default settings to a JSON file
     with open('settings.json', 'w') as file:
         json.dump(defaults, file)
 
 
 def load_settings():
+    """Loads settings from a JSON file, creating defaults if the file does not exist."""
     try:
         with open('settings.json', 'r') as file:
             defaults = json.load(file)
 
     except FileNotFoundError:
+        # If the file doesn't exist, create default settings and load them
         set_default()
         with open('settings.json', 'r') as file:
             defaults = json.load(file)
-    return defaults
+    
+    return defaults  # Return the loaded or default settings
 
 
 def center_window(x, y, master):
+    """Calculates the position to center a window of size (x, y) on the screen."""
     screen_width, screen_height = master.winfo_screenwidth(), master.winfo_screenheight()
     x_coord, y_coord = int((screen_width - x) / 2), int((screen_height - y) / 2)
+    
+    # Prepare the size string for window geometry
     if x == 0 and y == 0:
         size = str()
     else:
         size = f'{x}x{y}'
+    
+    # Create the final position string for the window
     position = f'+{x_coord}+{y_coord}'
-    return size + position
+    return size + position  # Return the geometry string
 
 
 def replace_slash(string):
+    """Replaces forward slashes with backslashes in a given string."""
     return string.replace('/', '\\')
 
 
 def get_row(worksheet, intersection):
+    """Finds the appropriate row in the worksheet for a given intersection value."""
     for row in range(1, worksheet.max_row + 1):
-        cell_value = worksheet.cell(row, 1).value
+        cell_value = worksheet.cell(row, 1).value  # Get the value in the first column of the row
+        
+        # If the cell is empty, return the row and method 'direct'
         if cell_value is None:
             return row, 'direct'
+        # If the cell value matches the intersection, return the row and method 'direct'
         elif cell_value == intersection:
             return row, 'direct'
+        # If the cell value is greater than the intersection, return the row and method 'insert'
         elif cell_value > intersection:
             method = 'insert'
             return row, method
+        # If the cell value is less than the intersection, continue searching
         elif cell_value < intersection:
             for i in range(row, worksheet.max_row + 1):
+                # If a subsequent cell value is greater than the intersection, return the row and method 'insert'
                 if worksheet.cell(i, 1).value > intersection:
                     return i, 'insert'
+                # If we reach the last row without finding a greater value, return the last row and method 'append'
                 elif i == worksheet.max_row:
                     return i, 'append'
 
 
 def get_sheet(wb, name):
+    """Retrieves a sheet by name from the workbook, creating it if it does not exist."""
     for sheet in wb.sheetnames:
         if sheet == name:
-            return wb[sheet]
+            return wb[sheet]  # Return the existing sheet
+        # If not found, create a new sheet with the specified name
         wb.create_sheet(title=name)
-    return wb[name]
-
-
-def give_notice(master):
-    notice = tk.Toplevel()
-    notice.geometry(center_window(600, 200, master))
-    notice.wm_attributes('-topmost', 1)
-    text = ttk.Label(notice)
-    text.config(text='Synchronizer is beginning control of Synchro.'
-                     '\nPlease do not touch the mouse until the program has finished.',
-                justify='center',
-                font=('open sans', 15))
-    text.pack()
-    notice.after(5000, notice.destroy)
+    
+    return wb[name]  # Return the newly created sheet
 
 """
 ______________________ CLASSES ______________________
 """
-
+# Stores details about a traffic scenario such as its name, hour, year, condition, and various data files.
 class Scenario:
     def __init__(self, name):
         self.name = name
@@ -551,7 +571,8 @@ class Scenario:
         self.los_data = None
         self.los_results = None
         self.model_data_column = None
-
+        
+    # Processes the scenario name to extract the hour (e.g., AM, PM, SAT).
     def parse(self):
         for hour in ['AM', 'PM', 'SAT']:
             if self.name.find(hour) != -1:
@@ -559,7 +580,8 @@ class Scenario:
                 self.hour = hour
                 break
 
-
+# Manages the settings for the application, including loading and saving settings to a JSON file.
+# Builds a user interface to allow the user to configure settings such as default paths and boundaries.
 class Settings:
     def __init__(self, master=None):
         self.master = master
@@ -752,7 +774,9 @@ class Settings:
 
         self.settings_window.destroy()
 
-
+# Represents the main window of the application.
+# Contains methods to set up the UI, create various UI elements (labels, buttons), and handle user interactions.
+# Provides functionality to launch other components like settings and file matching tools.
 class MainWindow:
     def __init__(self, master=None):
         self.master = master
@@ -850,36 +874,47 @@ class MainWindow:
     def run(self):
         self.mainwindow.mainloop()
         
-
+# Extends tk.Tk to serve as the base window for the application.
+# Contains several methods for interacting with Synchro files and managing the application's 
+# main operations, such as matching worksheet names, converting data, and handling errors.
 class Base(tk.Tk):
+    # Default values for the number of rows and columns in the application
     DEFAULT_ROWS = 1000
     DEFAULT_COLUMNS = 30
+    
+    # List of valid scenario types
     VALID_SCENARIOS = ['EXISTING', 'NO BUILD', 'BUILD']
-    SCENARIO_CONDITIONS = {'EXISTING': ['EX'],
-                           'NO BUILD': ['NB'],
-                           'BUILD': ['B', 'BD'],
-                           'IMPROVEMENT': ['IMP']}
+    
+    # Mapping of scenario conditions to their abbreviations
+    SCENARIO_CONDITIONS = {
+        'EXISTING': ['EX'],
+        'NO BUILD': ['NB'],
+        'BUILD': ['B', 'BD'],
+        'IMPROVEMENT': ['IMP']
+    }
     
     def __init__(self):
+        # Initialize the Tkinter window
         super().__init__()
-        self.title('Synchronizer')
-        self.geometry(center_window(500, 200, self))
-        self.resizable(width=0, height=0)
-        self.wm_attributes('-topmost', 0)
+        self.title('Synchronizer')  # Set the title of the window
+        self.geometry(center_window(500, 200, self))  # Center and size the window
+        self.resizable(width=0, height=0)  # Disable window resizing
+        self.wm_attributes('-topmost', 0)  # Allow the window to be behind others
         
-        self.windows = {}
-        self.main_win = None
-        self.storage_dir = None
-        self.model_sheet_name = str()
-        self.model_data = {}
-        self.scenario_list = []
-        self.scenario_data = {}
-        self.selected_scenarios = []
-        self.scenarios = []  # hold Scenario objects
-        self.ws = None
-        self.data_columns = []
-        
-        # Load settings
+        # Initialize various attributes for managing the application state
+        self.windows = {}  # Dictionary to hold child windows
+        self.main_win = None  # Reference to the main window
+        self.storage_dir = None  # Directory to store files
+        self.model_sheet_name = str()  # Name of the current model sheet
+        self.model_data = {}  # Dictionary to hold model data
+        self.scenario_list = []  # List to store scenario objects
+        self.scenario_data = {}  # Dictionary to hold scenario-related data
+        self.selected_scenarios = []  # List of selected scenarios
+        self.scenarios = []  # List to hold Scenario objects
+        self.ws = None  # Reference to the currently active worksheet
+        self.data_columns = []  # List of data columns
+
+        # Load settings for the application
         defaults = {
             'synchro_exe': 'C:\\Program Files (x86)\\Trafficware\\Version10\\Synchro10.exe',
             'synchro_dir': '',
@@ -888,8 +923,9 @@ class Base(tk.Tk):
             'columns': self.DEFAULT_COLUMNS,
             'update_los': 1
         }
-        saved_settings = load_settings()
+        saved_settings = load_settings()  # Load previously saved settings
 
+        # Set application paths and default settings, using saved values if available
         self.synchro_app_path = saved_settings.get('synchro_exe', defaults['synchro_exe'])
         self.synchro_dir = saved_settings.get('synchro_dir', defaults['synchro_dir'])
         self.model_path = saved_settings.get('model_path', defaults['model_path'])
@@ -898,54 +934,87 @@ class Base(tk.Tk):
         self.update_los = saved_settings.get('update_los', defaults['update_los'])
 
     def match_ws_name(self, workbook_path, title):
-        wb = xl.load_workbook(filename=workbook_path, data_only=True)
+        """
+        Find the worksheet in a workbook that best matches a given title.
+
+        Args:
+            workbook_path (str): The path to the workbook file.
+            title (str): The title to match against worksheet names.
+
+        Returns:
+            ws: The matched worksheet if found, else None.
+        """
+        wb = xl.load_workbook(filename=workbook_path, data_only=True)  # Load workbook
+        # Find the sheet with the maximum similarity to the title
         match = max(wb.sheetnames, key=lambda sheet: similar(sheet, title), default=None)
-        return wb[match] if match else None
+        return wb[match] if match else None  # Return the matched sheet or None
 
     def find_volume_data(self, extra_scenario=None):
+        """
+        Load volume data from the model workbook based on specified scenarios.
+
+        Args:
+            extra_scenario (str, optional): An additional scenario to consider.
+
+        Returns:
+            output.keys(): Keys of the scenario data collected from the model.
+        """
         valid_scenarios = [extra_scenario] if extra_scenario else self.VALID_SCENARIOS
         output = {}
-        
-        wb = xl.load_workbook(filename=self.model_path, data_only=True)
-        self.model_sheet_name = max(wb.sheetnames, key=lambda sheet: similar(sheet, 'Model'), default=None)
-        self.ws = wb[self.model_sheet_name]
 
+        wb = xl.load_workbook(filename=self.model_path, data_only=True)  # Load the model workbook
+        self.model_sheet_name = max(wb.sheetnames, key=lambda sheet: similar(sheet, 'Model'), default=None)
+        self.ws = wb[self.model_sheet_name]  # Set the active worksheet
+
+        # Iterate through rows of the worksheet to find valid scenario data
         for row in range(1, self.ws.max_row):
-            if self.ws.cell(row, 1).value == 1:
+            if self.ws.cell(row, 1).value == 1:  # Check if the row is valid
                 year, scenario = None, None
+                # Iterate through columns to extract year, scenario, and hour data
                 for column in range(1, self.ws.max_column):
                     year_cell = self.ws.cell(row - 4, column).value
                     scenario_cell = self.ws.cell(row - 3, column).value
                     hour_cell = self.ws.cell(row - 2, column).value
                     
                     if year_cell is not None:
-                        year = str(year_cell)
+                        year = str(year_cell)  # Convert year to string
                     if scenario_cell is not None:
-                        scenario = str(scenario_cell)
+                        scenario = str(scenario_cell)  # Convert scenario to string
                     if hour_cell in ['AM', 'PM', 'SAT'] and scenario in valid_scenarios:
+                        # Create a scenario name and check for duplicates
                         name = f"{year} {scenario} {hour_cell}"
                         if not any(found_scenario.name == name for found_scenario in self.scenarios):
-                            sc = Scenario(name)
+                            sc = Scenario(name)  # Create a new Scenario object
                             sc.hour = hour_cell
                             sc.year = year
                             sc.condition = scenario
-                            sc.model_data_column = column
-                            self.match_syn_file(sc, self.synchro_dir)
-                            self.scenarios.append(sc)
+                            sc.model_data_column = column  # Store column index for the model data
+                            self.match_syn_file(sc, self.synchro_dir)  # Match the corresponding .syn file
+                            self.scenarios.append(sc)  # Add the scenario to the list
                         else:
                             messagebox.showwarning('Duplicate', 'One or more scenarios were duplicated and not added.')
 
-        self.scenario_data = output
-        return output.keys()
+        self.scenario_data = output  # Update scenario data
+        return output.keys()  # Return the keys of the collected scenario data
 
     def match_syn_file(self, scenario, dir):
-        key = self.SCENARIO_CONDITIONS.get(scenario.condition, [scenario.condition])
+        """
+        Match a .syn file to a scenario based on its condition and hour.
+
+        Args:
+            scenario (Scenario): The scenario to match the .syn file with.
+            dir (str): Directory to search for .syn files.
+
+        Returns:
+            None: Updates the scenario with the matched .syn file path.
+        """
+        key = self.SCENARIO_CONDITIONS.get(scenario.condition, [scenario.condition])  # Get possible keys for matching
         match = max(
-            (file for file in os.scandir(dir) if file.path.endswith('.syn')),
-            key=lambda file: max(similar(file.name, scenario.hour + acronym) for acronym in key),
+            (file for file in os.scandir(dir) if file.path.endswith('.syn')),  # Find .syn files in the directory
+            key=lambda file: max(similar(file.name, scenario.hour + acronym) for acronym in key),  # Match based on similarity
             default=None
         )
-        scenario.syn_file = match.path if match else str()
+        scenario.syn_file = match.path if match else str()  # Set the matched file path or empty string
 
     # keyboard
     # Convert model volumes to Synchro UTDF
@@ -1002,113 +1071,34 @@ class Base(tk.Tk):
                 writer.writerow(payload)
         return file
 
-    def click_button(self, image, x_off=0, y_off=0):
-        self.manage_error()
-        for attempt in range(2):  # Try to find button again if not found
-            time.sleep(2)
-            result = pyautogui.locateCenterOnScreen(image, confidence=0.9)
-            if result is not None:
-                x_coord, y_coord = result
-                x_coord += x_off
-                y_coord += y_off
-                pyautogui.click(x_coord, y_coord)
-                print(image, x_coord, y_coord)
-                return x_coord, y_coord
-        print(image, None)
-        return None
-
-    def startup(self):
-        start = os.system('start "" "' + self.synchro_app_path + '"')
-        if start == 0:
-            self.click_button('License.png', 0, 75)
-            self.click_button('Update.png')
-            self.click_button('Maximize.png')
-        return start
-
-    def manage_error(self):
-        windows = [{'name': 'Error Symbol.png',
-                    'x': 288,
-                    'y': 88},
-                   {'name': 'Unexpected Error.png',
-                    'x': 240,
-                    'y': -78},
-                   {'name': 'Activity Log.png',
-                    'x': 224,
-                    'y': -119},
-                   {'name': 'Read Only.png',
-                    'x': -42,
-                    'y': 30}
-                   ]
-        for window in windows:
-            name = window['name']
-            x = window['x']
-            y = window['y']
-            result = pyautogui.locateCenterOnScreen(name, confidence=0.9)
-            if result is not None:
-                pyautogui.click(x, y)
-                break
-
-    # update volumes in synchro
-    def import_to_synchro(self, syn_file, data_file):
-        # Open synchro file
-        print(data_file)
-        self.click_button('Open File.png')
-        self.click_button('Open Window.png', 185, 498)
-        pyautogui.write(syn_file)
-        self.click_button('Open.png')
-
-        # Click transfer tab
-        self.click_button('Transfer Tab.png')
-
-        # Click Merge File
-        self.click_button('Merge File.png')
-
-        # Select input volumes file
-        # self.click_button('Merge File Open Logo.png', 306, 501)
-        pyautogui.press('delete')
-        pyautogui.write(data_file)
-        self.click_button('Merge File Open Logo.png', 652, 537)
-        self.click_button('Confirm Merge.png', -42, 29)
-        self.click_button('Save File.png')
-        # return True
-        # pyautogui.getWindowsWithTitle("Photos")[0].maximize()
-        # time.sleep(2)
-        # win32api.SetCursorPos((x, y))
-
-    # retrieve LOS data from synchro
-    def export_from_synchro(self, scenario):
-        file = self.storage_dir + '\\' + scenario + '.txt'
-        # Click report button
-        self.click_button('Reports.png')
-
-        # Click save as text
-        self.click_button('Save Text.png')
-
-        # self.click_button('Open Window.png', 121, 462)
-
-        # Write file name
-        pyautogui.press('delete')
-        pyautogui.write(file)
-
-        # Save text file
-        self.click_button('Save.png')
-        self.click_button('Confirm Save As.png', 190, 93)
-
-        return file
-
     def update_report(self, scenarios, report_table=None):
+        # If no report_table is specified, default to 'synchronizer results.xlsx'
         if report_table is None:
             report_table = 'synchronizer results.xlsx'
+    
+        # Combine the storage directory with the report_table name to get the full file path
         report_table = self.storage_dir + '\\' + report_table
+    
+        # Create a new Excel workbook and activate the default sheet
         wb = xl.Workbook()
         ws = wb.active
+    
+        # Rename the default sheet to 'AM'
         ws.title = 'AM'
-
+    
+        # Loop through each scenario in the scenarios list
         for scenario in scenarios:
+            # Get the LOS (Level of Service) data and hour from the scenario object
             data = scenario.los_data
             hour = scenario.hour
+    
+            # Retrieve or create the sheet based on the scenario's hour (e.g., 'AM', 'PM')
             sheet = get_sheet(wb, hour)
+    
+            # Get the traffic condition (e.g., EXISTING, NO-BUILD, BUILD)
             condition = scenario.condition
+    
+            # Determine the column to store the data based on the condition
             if condition == 'EXISTING':
                 column = 5
             elif condition == 'NO-BUILD':
@@ -1116,46 +1106,61 @@ class Base(tk.Tk):
             elif condition == 'BUILD':
                 column = 11
             else:
-                column = sheet.max_column
-
+                column = sheet.max_column  # If an unrecognized condition, use the last column
+    
+            # Loop through each intersection in the LOS data
             for intersection in data:
+                # Get the row in the sheet corresponding to this intersection
                 row, method = get_row(sheet, intersection)
                 ov_los = None
                 ov_delay = None
+    
+                # Loop through each turning movement in the intersection's data
                 for turn_move, values in data[intersection].items():
+                    # Special handling for 'overall' turning movement (aggregated data)
                     if turn_move == 'overall':
                         ov_delay = values['delay']
                         ov_los = values['los']
                         continue
-
+    
+                    # Generate a name for the movement (e.g., 'Left Turn') based on the config
                     movement_name = label(turn_move, values.get('config', ''))
                     if movement_name:
+                        # Initialize lists to store various values (e.g., v/c ratio, LOS, delay)
                         vc_ratios = list()
                         los_values = list()
                         delays = list()
                         app_los_values = list()
                         app_delays = list()
                         last_move = turn_move[:2]
-
+    
+                        # Process each direction for the movement (e.g., EB, WB)
                         for direction in movement_name:
                             search = turn_move[:2] + direction
+    
+                            # Ensure the search key exists before retrieving the data
                             if search not in data[intersection].keys():
                                 continue
+    
+                            # Append the corresponding values for v/c ratio, LOS, and delay
                             vc_ratios.append(data[intersection][search].get('vc_ratio', ''))
                             los_values.append(data[intersection][search].get('ln_los', ''))
                             delays.append(data[intersection][search].get('ln_delay', ''))
                             app_los_values.append(data[intersection][search].get('app_los', ''))
                             app_delays.append(data[intersection][search].get('app_delay', ''))
-
+    
+                        # Take the maximum values for each metric
                         vc = max(vc_ratios)
                         los = max(los_values)
                         delay = max(delays)
                         app_los = max(app_los_values)
                         app_delay = max(app_delays)
-
+    
+                        # If all values are empty, skip the current movement
                         if vc == '' and los == '' and delay == '':
                             continue
-
+    
+                        # Write the data into the sheet based on the method (direct, insert, append)
                         if method == 'direct':
                             sheet.cell(row, 1).value = intersection
                             sheet.cell(row, 3).value = turn_move[:2]
@@ -1164,7 +1169,7 @@ class Base(tk.Tk):
                             sheet.cell(row, column + 1).value = los
                             sheet.cell(row, column + 2).value = delay
                             row += 1
-
+    
                         elif method == 'insert':
                             sheet.insert_rows(row)
                             sheet.cell(row, 1).value = intersection
@@ -1174,7 +1179,7 @@ class Base(tk.Tk):
                             sheet.cell(row, column + 1).value = los
                             sheet.cell(row, column + 2).value = delay
                             row += 1
-
+    
                         elif method == 'append':
                             row += 1
                             sheet.cell(row, 1).value = intersection
@@ -1183,10 +1188,12 @@ class Base(tk.Tk):
                             sheet.cell(row, column).value = vc
                             sheet.cell(row, column + 1).value = los
                             sheet.cell(row, column + 2).value = delay
-
+    
+                        # If there are no approach LOS and delay values, skip to the next move
                         if app_delay == '' and app_los == '':
                             continue
-
+    
+                        # Write the approach LOS and delay if the last movement is different
                         if last_move and turn_move != last_move:
                             if method == 'direct':
                                 sheet.cell(row, 1).value = intersection
@@ -1194,7 +1201,7 @@ class Base(tk.Tk):
                                 sheet.cell(row, column + 1).value = app_los
                                 sheet.cell(row, column + 2).value = app_delay
                                 row += 1
-
+    
                             elif method == 'insert':
                                 sheet.insert_rows(row)
                                 sheet.cell(row, 1).value = intersection
@@ -1202,40 +1209,43 @@ class Base(tk.Tk):
                                 sheet.cell(row, column + 1).value = app_los
                                 sheet.cell(row, column + 2).value = app_delay
                                 row += 1
-
+    
                             elif method == 'append':
                                 row += 1
                                 sheet.cell(row, 1).value = intersection
                                 sheet.cell(row, 3).value = 'Approach'
                                 sheet.cell(row, column + 1).value = app_los
                                 sheet.cell(row, column + 2).value = app_delay
-
-                if ov_los and ov_delay:
-                    if method == 'direct':
-                        sheet.cell(row, 1).value = intersection
-                        sheet.cell(row, 3).value = 'Overall'
-                        sheet.cell(row, column + 1).value = ov_los
-                        sheet.cell(row, column + 2).value = ov_delay
-                        row += 1
-
-                    elif method == 'insert':
-                        sheet.insert_rows(row)
-                        sheet.cell(row, 1).value = intersection
-                        sheet.cell(row, 3).value = 'Overall'
-                        sheet.cell(row, column + 1).value = ov_los
-                        sheet.cell(row, column + 2).value = ov_delay
-                        row += 1
-
-                    elif method == 'append':
-                        row += 1
-                        sheet.cell(row, 1).value = intersection
-                        sheet.cell(row, 3).value = 'Overall'
-                        sheet.cell(row, column + 1).value = ov_los
-                        sheet.cell(row, column + 2).value = ov_delay
-
+    
+                    # Write the overall LOS and delay if available
+                    if ov_los and ov_delay:
+                        if method == 'direct':
+                            sheet.cell(row, 1).value = intersection
+                            sheet.cell(row, 3).value = 'Overall'
+                            sheet.cell(row, column + 1).value = ov_los
+                            sheet.cell(row, column + 2).value = ov_delay
+                            row += 1
+    
+                        elif method == 'insert':
+                            sheet.insert_rows(row)
+                            sheet.cell(row, 1).value = intersection
+                            sheet.cell(row, 3).value = 'Overall'
+                            sheet.cell(row, column + 1).value = ov_los
+                            sheet.cell(row, column + 2).value = ov_delay
+                            row += 1
+    
+                        elif method == 'append':
+                            row += 1
+                            sheet.cell(row, 1).value = intersection
+                            sheet.cell(row, 3).value = 'Overall'
+                            sheet.cell(row, column + 1).value = ov_los
+                            sheet.cell(row, column + 2).value = ov_delay
+    
+        # Save the workbook to the specified file
         wb.save(report_table)
+    
+        # Return the path to the report file
         return report_table
-
 
 class ProgressWindow:
     def __init__(self, master=None):
@@ -1260,7 +1270,6 @@ class ProgressWindow:
         self.progress_frame.grid(padx=10, pady=10, sticky='nsew')
         # self.progress_window.config(height='200', width='200')
         self.progress_window.title('Program Status')
-        give_notice(self.master)
         self.progress_window.after(6000, self.run)
 
     def run(self):
@@ -1525,7 +1534,6 @@ class FileMatchApp:
                 self.master.selected_scenarios.append(obj)
 
         self.file_window.destroy()
-        give_notice(self.master)
         ProgressWindow(self.master)
 
     def old_decode(self):
