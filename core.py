@@ -2,7 +2,7 @@
 """
 Created on Fri Sep 27 11:19:28 2024
 
-@author: alex.dering
+@authors: phillip.gotthelf, alex.dering
 """
 
 # main_window.py

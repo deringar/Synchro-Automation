@@ -5,7 +5,7 @@ Last modified on Fri Sep 27 2024
 @authors: phillip.gotthelf, alex.dering
 """
 
-from gui import MainWindow, Base
+from core import MainWindow, Base
 # Key: PHF HeavyVehicles Volume
 # 
 # Step 2: V/C Ratio, LOS
