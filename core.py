@@ -21,6 +21,16 @@ from collections import OrderedDict  # Import ordered dictionary to maintain the
 from shutil import copy  # Used to copy files or directories.
 from openpyxl import load_workbook, Workbook
 
+def save_as_csv(excel_file_path, csv_file_path):
+    workbook = load_workbook(filename=excel_file_path)
+    sheet = workbook.active
+
+    with open(csv_file_path, mode='w', newline="") as file:
+        writer = csv.writer(file)
+
+        for row in sheet.iter_rows(values_only=True):
+            writer.writerow(row)
+
 def read_input_file(file_path):
     # Load the workbook and select the active sheet
     workbook = load_workbook(filename=file_path)
@@ -1511,4 +1521,5 @@ class Copier:
 
 if __name__ == "__main__":
     read_input_file("test-input.xlsx")
+    save_as_csv('Results.xlsx', 'Results.csv')
 
