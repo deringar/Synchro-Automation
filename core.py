@@ -19,10 +19,139 @@ import time  # Module for time-related functions.
 import json  # JSON module to parse and manipulate JSON data.
 from collections import OrderedDict  # Import ordered dictionary to maintain the order of keys.
 from shutil import copy  # Used to copy files or directories.
-from openpyxl import Workbook
+from openpyxl import load_workbook, Workbook
+
+from openpyxl import load_workbook, Workbook
+
+def read_input_file(file_path):
+    # Load the workbook and select the active sheet
+    workbook = load_workbook(filename=file_path)
+    sheet = workbook.active
+
+    # Create a new workbook for the output
+    output_workbook = Workbook()
+    output_sheet = output_workbook.active
+    output_sheet.title = "Results"
+    output_sheet["A1"] = "[Lanes]"
+    output_sheet["A2"] = "Lane Group Data"
+
+    # Define headers for the output sheet
+    headers = [
+        "RECORDNAME", "INTID", "NBL", "NBT", "NBR", 
+        "SBL", "SBT", "SBR", "EBL", "EBT", "EBR", 
+        "WBL", "WBT", "WBR", "PED", "HOLD"
+    ]
+
+    # Label cells with corresponding headers (A3-P3)
+    for col, header in enumerate(headers, start=1):
+        output_sheet.cell(row=3, column=col).value = header
+
+    # Check specific cells (F1, I1, L1, O1) and store non-None values
+    relevant_cells = ['F1', 'I1', 'L1', 'O1']
+    stored_values = {}
+
+    for cell in relevant_cells:
+        value = sheet[cell].value
+        if value is not None:
+            stored_values[cell] = value
+
+    print(f"Stored values from specified cells: {stored_values}")
+
+    consecutive_empty_cells = 0
+    intersections = {}
+
+    # First pass: Find all intersection IDs and their corresponding row numbers
+    for row in range(1, sheet.max_row + 1):
+        cell_value = sheet.cell(row=row, column=1).value
+        if cell_value is None:
+            consecutive_empty_cells += 1
+            if consecutive_empty_cells >= 50:
+                break
+        else:
+            consecutive_empty_cells = 0
+            if isinstance(cell_value, int):
+                intersections[cell_value] = row
+
+    print(f"Found intersections: {intersections}")
+
+    directions = ["EB", "WB", "NB", "SB"]
+    output_start_row = 4  # Start writing from row 4
+
+    # Dictionary to store results for each intersection
+    intersection_results = {}
+
+    # Second pass: Process each intersection ID and search for directions
+    for intersection_id, row_with_int in intersections.items():
+        found_directions = {}
+
+        # Search column C for directions starting from the intersection row
+        for search_row in range(row_with_int, sheet.max_row + 1):
+            direction_value = sheet.cell(search_row, column=3).value
+            if direction_value in directions and direction_value not in found_directions:
+                found_directions[direction_value] = search_row
+                if len(found_directions) == len(directions):
+                    break
+
+        # Dictionary to store combined direction-turn keys (e.g., EBL, WBT)
+        direction_turn_results = {}
+
+        # For each found direction, search column D for 'L', 'T', 'R'
+        for direction, found_row in found_directions.items():
+            turn_values = {"L": None, "T": None, "R": None}  # Default is None (not found)
+            for search_row in range(found_row, sheet.max_row + 1):
+                turn_value = sheet.cell(search_row, column=4).value
+                if turn_value in ["L", "T", "R"]:
+                    turn_values[turn_value] = search_row  # Store the row number for each turn type found
+                # Break when all turn values have been found
+                if all(turn_values.values()):
+                    break
+
+            # Combine direction and turn type to form keys like "EBL", "NBT", etc.
+            for turn_type, row_found in turn_values.items():
+                if row_found is not None:  # Only store if the turn was found
+                    combined_key = f"{direction}{turn_type}"
+                    direction_turn_results[combined_key] = row_found
+
+        # Store the results for the current intersection
+        intersection_results[intersection_id] = direction_turn_results
+
+        # Display the results for debugging
+        print(f"Direction-turn results for intersection {intersection_id}: {direction_turn_results}")
+
+    # Match direction-turn results with corresponding headers
+    header_mapping = {header: idx + 1 for idx, header in enumerate(headers)}
+
+    matched_results = {}
+
+    for intersection_id, turn_results in intersection_results.items():
+        matched_results[intersection_id] = {}
+        for direction_turn, row in turn_results.items():
+            if direction_turn in header_mapping:
+                matched_results[intersection_id][direction_turn] = {
+                    "row": row,
+                    "header_column": header_mapping[direction_turn]
+                }
+
+    print("Matched direction-turn results with headers:")
+    for intersection_id, matches in matched_results.items():
+        print(f"Intersection ID: {intersection_id}, Matches: {matches}")
+
+    # Save the output workbook to a new file (commented out for now)
+    output_file_path = "Results.xlsx"
+    output_workbook.save(output_file_path)
+    print(f"Output file saved as {output_file_path}")
+
+    # Return intersection results if needed elsewhere
+    return intersection_results
+
+
+
 """
 ______________________ HELPER FUNCTIONS ______________________
 """
+
+# Example of how to run the function
+# read_input_file('your_input_file.xlsx')
 
 # Check if the target is empty
 def is_empty(target):
@@ -860,14 +989,6 @@ class MainWindow:
     def launch_settings(self):
         Settings(self.master)
 
-    def launch_file_match(self):
-        self.master.synchro_dir = self.syn_entry.get()
-        self.master.storage_dir = os.path.join(self.master.synchro_dir, 'temp')
-        os.makedirs(self.master.storage_dir, exist_ok=True)
-        self.master.model_path = replace_slash(self.model_entry.get())
-        self.master.find_volume_data(self.master.model_path)
-        FileMatchApp(self.master)
-
     def copy(self):
         Copier(self.master)
 
@@ -935,18 +1056,7 @@ class Base(tk.Tk):
     # def startup(self):
     #     start = os.system('start "" "' + self.synchro_app_path + '"')
     #     return start
-
     # def match_ws_name(self, workbook_path, title):
-    #     """
-    #     Find the worksheet in a workbook that best matches a given title.
-
-    #     Args:
-    #         workbook_path (str): The path to the workbook file.
-    #         title (str): The title to match against worksheet names.
-
-    #     Returns:
-    #         ws: The matched worksheet if found, else None.
-    #     """
     #     wb = xl.load_workbook(filename=workbook_path, data_only=True)  # Load workbook
     #     # Find the sheet with the maximum similarity to the title
     #     match = max(wb.sheetnames, key=lambda sheet: similar(sheet, title), default=None)
@@ -1000,24 +1110,24 @@ class Base(tk.Tk):
         self.scenario_data = output  # Update scenario data
         return output.keys()  # Return the keys of the collected scenario data
 
-    def match_syn_file(self, scenario, dir):
-        """
-        Match a .syn file to a scenario based on its condition and hour.
+    # def match_syn_file(self, scenario, dir):
+    #     """
+    #     Match a .syn file to a scenario based on its condition and hour.
 
-        Args:
-            scenario (Scenario): The scenario to match the .syn file with.
-            dir (str): Directory to search for .syn files.
+    #     Args:
+    #         scenario (Scenario): The scenario to match the .syn file with.
+    #         dir (str): Directory to search for .syn files.
 
-        Returns:
-            None: Updates the scenario with the matched .syn file path.
-        """
-        key = self.SCENARIO_CONDITIONS.get(scenario.condition, [scenario.condition])  # Get possible keys for matching
-        match = max(
-            (file for file in os.scandir(dir) if file.path.endswith('.syn')),  # Find .syn files in the directory
-            key=lambda file: max(similar(file.name, scenario.hour + acronym) for acronym in key),  # Match based on similarity
-            default=None
-        )
-        scenario.syn_file = match.path if match else str()  # Set the matched file path or empty string
+    #     Returns:
+    #         None: Updates the scenario with the matched .syn file path.
+    #     """
+    #     key = self.SCENARIO_CONDITIONS.get(scenario.condition, [scenario.condition])  # Get possible keys for matching
+    #     match = max(
+    #         (file for file in os.scandir(dir) if file.path.endswith('.syn')),  # Find .syn files in the directory
+    #         key=lambda file: max(similar(file.name, scenario.hour + acronym) for acronym in key),  # Match based on similarity
+    #         default=None
+    #     )
+    #     scenario.syn_file = match.path if match else str()  # Set the matched file path or empty string
 
     # Convert model volumes to Synchro UTDF
     def convert_utdf(self, scenario='test_write', column=5):
@@ -1378,173 +1488,6 @@ class Copier:
         self.window.destroy()
 
 
-class FileMatchApp:
-    def __init__(self, master=None):
-        self.master = master
-        self.file_window = tk.Toplevel(self.master)
-        self.file_window.geometry(center_window(500, 400, self.master))  # 500 400
-        self.file_window.minsize(width=500, height=100)
-        self.file_window.wm_attributes('-topmost', 1)
-        self.file_window.wm_attributes('-topmost', 0)
-
-        self.file_window.columnconfigure(0, weight=1)
-        # self.file_window.columnconfigure(1, weight=0)
-        # self.file_window.rowconfigure(0, weight=1)
-        self.entry_data = list()
-        self.entry_dict = dict()
-        # self.base = Base()
-        # self.base.find_columns()
-        self.file_dict = dict()
-        scenarios = self.master.scenario_data.keys()
-        # build ui
-        self.frame_1 = ttk.Labelframe(self.file_window)
-        self.frame_1.config(text='Add Scenario: ')
-        self.frame_1.columnconfigure(0, weight=1)
-        self.frame_1.grid(sticky='nsew', padx=10, pady=10)
-
-        self.frame_2 = ttk.Frame(self.file_window)
-        self.frame_2.columnconfigure((0, 1, 2, 4), weight=0)
-        self.frame_2.columnconfigure(3, weight=1)
-        self.frame_2.grid(sticky='nsew')
-
-        self.frame_3 = ttk.Frame(self.file_window)
-        self.frame_3.grid()
-
-        self.search_bar = ttk.Entry(self.frame_1)
-        self.search_bar.grid(row=0, column=0, sticky='ew')
-
-        search_button = ttk.Button(self.frame_1)
-        search_button.config(text='Search')
-        search_button.config(command=self.add_scenario)
-        search_button.grid(row=0, column=1)
-
-        done = ttk.Button(self.frame_3)
-        done.config(text='Done')
-        done.config(command=self.decode)
-        done.grid()
-
-        clear = ttk.Button(self.frame_3)
-        clear.config(text='Clear Blanks')
-        clear.config(command=self.clear)
-        clear.grid(row=0, column=1)
-
-        # Main widget
-        # self.mainwindow = self.frame_2
-
-        for scenario in master.scenarios:
-            name = scenario.name
-            file = scenario.syn_file
-            self.add_row(name, file, scenario)
-
-    def get_path(self, event):
-        x, y = event.widget.winfo_pointerxy()
-        row = event.widget.winfo_containing(x, y).grid_info()['row']
-        path = filedialog.askopenfilename(filetypes=[('Synchro Files', '*.syn')])
-        if path:
-            path = replace_slash(path)
-        entry = self.frame_2.grid_slaves(row=row, column=3)[0]
-        entry.delete('0', 'end')
-        entry.insert('0', path)
-        entry.after_idle(entry.xview_moveto, 1)
-        return path
-
-    def add_scenario(self):
-        scenario = self.search_bar.get()
-        results = self.master.find_volume_data(extra_scenario=scenario)
-        if len(results) == 0:
-            messagebox.showwarning('Scenario Not Found', 'The entered scenario was not found.')
-        for result in results:
-            self.add_row(result)
-
-    def add_row(self, name='', file='', obj=None):
-        row = self.frame_2.grid_size()[1]
-
-        new_plus_button = ttk.Button(self.frame_2)
-        new_plus_button.config(text='+')
-        new_plus_button.config(command=self.add_row)
-        new_plus_button.grid(row=str(row), sticky='w')
-
-        new_minus_button = ttk.Button(self.frame_2)
-        new_minus_button.config(text='-')
-        new_minus_button.bind('<Button-1>', self.delete_row)
-        new_minus_button.grid(column=1, row=str(row), sticky='w')
-
-        scenario_entry = ttk.Entry(self.frame_2)
-        scenario_entry.delete('0', 'end')
-        scenario_entry.insert('0', name)
-        scenario_entry.after(50, scenario_entry.xview_moveto, 1)
-        scenario_entry.grid(column='2', row=str(row), sticky='w')
-
-        file_path_entry = ttk.Entry(self.frame_2)
-        file_path_entry.delete('0', 'end')
-        file_path_entry.insert('0', file)
-        file_path_entry.after(500, file_path_entry.xview_moveto, 1)
-        file_path_entry.grid(column='3', row=str(row), sticky='ew')
-
-        browse = ttk.Button(self.frame_2)
-        browse.config(text='Browse')
-        browse.bind('<Button-1>', self.get_path)
-        browse.grid(column='4', row=str(row), sticky='e')
-
-        self.entry_dict[scenario_entry] = dict()
-        self.entry_dict[scenario_entry]['file'] = file_path_entry
-        self.entry_dict[scenario_entry]['obj'] = obj
-
-    def delete_row(self, event):
-
-        plus_buttons_left = 0
-        for widget in self.frame_2.winfo_children():
-            if widget.cget('text') == '+':
-                plus_buttons_left += 1
-
-        if plus_buttons_left > 1:
-            x, y = event.widget.winfo_pointerxy()
-            row = event.widget.winfo_containing(x, y).grid_info()['row']
-            for widget in self.frame_2.winfo_children():
-                if widget.grid_info()['row'] == row:
-                    self.entry_dict.pop(widget, None)
-                    widget.destroy()
-
-    def clear(self):
-        removed_widgets = list()
-        for sc_widget in self.entry_dict.keys():
-            row = sc_widget.grid_info()['row']
-            sc_content = sc_widget.get()
-            file_content = self.entry_dict[sc_widget]['file'].get()
-            if is_empty(sc_content) or is_empty(file_content):
-                for widget in self.frame_2.winfo_children():
-                    if widget.grid_info()['row'] == row:
-                        removed_widgets.append(widget)
-                        widget.destroy()
-        for item in removed_widgets:
-            self.entry_dict.pop(item, None)
-
-    def decode(self):
-        for sc_widget in self.entry_dict.keys():
-            sc_content = sc_widget.get()
-            file_content = self.entry_dict[sc_widget]['file'].get()
-            if is_empty(sc_content) and is_empty(file_content):
-                continue
-            elif is_empty(sc_content) or is_empty(file_content):
-                messagebox.showwarning('Empty Input',
-                                       'A row is missing a scenario name or file path. Please add the data or delete '
-                                       'the row')
-                return
-            else:
-                obj = self.entry_dict[sc_widget]['obj']
-                obj.name = sc_content
-                obj.syn_file = replace_slash(file_content)
-                self.master.selected_scenarios.append(obj)
-
-        self.file_window.destroy()
-        ProgressWindow(self.master)
-
-
-
-
-
-
-
-
-
+if __name__ == "__main__":
+    read_input_file("test-input.xlsx")
 
