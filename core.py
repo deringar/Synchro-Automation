@@ -934,27 +934,23 @@ class Base(tk.Tk):
 
     # def startup(self):
     #     start = os.system('start "" "' + self.synchro_app_path + '"')
-    #     if start == 0:
-    #         self.click_button('License.png', 0, 75)
-    #         self.click_button('Update.png')
-    #         self.click_button('Maximize.png')
     #     return start
 
-    def match_ws_name(self, workbook_path, title):
-        """
-        Find the worksheet in a workbook that best matches a given title.
+    # def match_ws_name(self, workbook_path, title):
+    #     """
+    #     Find the worksheet in a workbook that best matches a given title.
 
-        Args:
-            workbook_path (str): The path to the workbook file.
-            title (str): The title to match against worksheet names.
+    #     Args:
+    #         workbook_path (str): The path to the workbook file.
+    #         title (str): The title to match against worksheet names.
 
-        Returns:
-            ws: The matched worksheet if found, else None.
-        """
-        wb = xl.load_workbook(filename=workbook_path, data_only=True)  # Load workbook
-        # Find the sheet with the maximum similarity to the title
-        match = max(wb.sheetnames, key=lambda sheet: similar(sheet, title), default=None)
-        return wb[match] if match else None  # Return the matched sheet or None
+    #     Returns:
+    #         ws: The matched worksheet if found, else None.
+    #     """
+    #     wb = xl.load_workbook(filename=workbook_path, data_only=True)  # Load workbook
+    #     # Find the sheet with the maximum similarity to the title
+    #     match = max(wb.sheetnames, key=lambda sheet: similar(sheet, title), default=None)
+    #     return wb[match] if match else None  # Return the matched sheet or None
 
     def find_volume_data(self, extra_scenario=None):
         """
