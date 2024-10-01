@@ -21,8 +21,6 @@ from collections import OrderedDict  # Import ordered dictionary to maintain the
 from shutil import copy  # Used to copy files or directories.
 from openpyxl import load_workbook, Workbook
 
-from openpyxl import load_workbook, Workbook
-
 def read_input_file(file_path):
     # Load the workbook and select the active sheet
     workbook = load_workbook(filename=file_path)
@@ -131,18 +129,46 @@ def read_input_file(file_path):
                     "row": row,
                     "header_column": header_mapping[direction_turn]
                 }
+    
+    # Now read from columns F, G, and H for each direction-turn and write to results
+    for intersection_id, turns in matched_results.items():
+        # Write Intersection ID and Labels
+        output_sheet.cell(row=output_start_row, column=1).value = "Volume"
+        output_sheet.cell(row=output_start_row + 1, column=1).value = "PHF"
+        output_sheet.cell(row=output_start_row + 2, column=1).value = "HeavyVehicles"
+        output_sheet.cell(row=output_start_row, column=2).value = intersection_id
+        output_sheet.cell(row=output_start_row + 1, column=2).value = intersection_id
+        output_sheet.cell(row=output_start_row + 2, column=2).value = intersection_id
+        
+        for direction_turn, info in turns.items():
+            row_found = info['row']
+            volume = sheet.cell(row=row_found, column=6).value  # Column F (Volume)
+            phf = sheet.cell(row=row_found, column=7).value      # Column G (PHF)
+            heavy_vehicles = sheet.cell(row=row_found, column=8).value  # Column H (HeavyVehicles)
 
-    print("Matched direction-turn results with headers:")
-    for intersection_id, matches in matched_results.items():
-        print(f"Intersection ID: {intersection_id}, Matches: {matches}")
+            # Write the values into the output sheet
+            header_column = info['header_column']
+            output_sheet.cell(row=output_start_row, column=header_column).value = volume
+            output_sheet.cell(row=output_start_row + 1, column=header_column).value = phf
+            output_sheet.cell(row=output_start_row + 2, column=header_column).value = heavy_vehicles
 
-    # Save the output workbook to a new file (commented out for now)
+            print(f"Wrote to Results for intersection {intersection_id}, direction {direction_turn}: "
+                  f"Volume: {volume}, PHF: {phf}, HeavyVehicles: {heavy_vehicles}")
+
+        # Move the output start row down by 5 to separate each intersection's output
+        output_start_row += 4  # 4 for data + 1 for separation row
+
+    # Save the output workbook to a new file
     output_file_path = "Results.xlsx"
     output_workbook.save(output_file_path)
     print(f"Output file saved as {output_file_path}")
 
     # Return intersection results if needed elsewhere
     return intersection_results
+
+# Example of how to run the function
+# read_input_file('your_input_file.xlsx')
+
 
 
 
