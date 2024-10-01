@@ -166,11 +166,6 @@ def read_input_file(file_path):
     # Return intersection results if needed elsewhere
     return intersection_results
 
-# Example of how to run the function
-# read_input_file('your_input_file.xlsx')
-
-
-
 
 """
 ______________________ HELPER FUNCTIONS ______________________
