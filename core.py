@@ -31,17 +31,90 @@ def save_as_csv(excel_file_path, csv_file_path):
         for row in sheet.iter_rows(values_only=True):
             writer.writerow(row)
 
+def write_direction_data_to_files(sheet, matched_results, relevant_columns, headers, output_start_row=4):
+    """
+    Writes Volume, PHF, and HeavyVehicles data for each intersection and direction-turn 
+    from the specified column ranges in relevant_columns, and saves the results to 
+    separate files named based on the header in row 1 of each column range.
+
+    Args:
+    - sheet: The active sheet from which data is being read.
+    - matched_results: A dictionary containing intersections and their corresponding turn data.
+    - relevant_columns: A list of starting columns (e.g., [6, 9, 12] for 'F', 'I', 'L') 
+      from which Volume, PHF, and HeavyVehicles are read.
+    - output_start_row: The row in the output sheet to start writing the data (default is 4).
+    """
+    for start_column in relevant_columns:
+        # Define column positions relative to the starting column
+        volume_col = start_column       # Volume is in start_column (e.g., F)
+        phf_col = start_column + 1      # PHF is in start_column + 1 (e.g., G)
+        heavy_vehicles_col = start_column + 2  # HeavyVehicles is in start_column + 2 (e.g., H)
+
+        # Get the header name from row 1 of the start_column (e.g., F1, I1, etc.)
+        file_name_header = sheet.cell(row=1, column=start_column).value
+        if not file_name_header:
+            print(f"Skipping columns starting at {start_column} as no header was found in row 1.")
+            continue
+        
+        # Create a new workbook for this specific column set
+        output_workbook = Workbook()
+        output_sheet = output_workbook.active
+        output_sheet.title = "Results"
+        output_sheet["A1"] = "[Lanes]"
+        output_sheet["A2"] = "Lane Group Data"
+        
+        # Label cells with corresponding headers (A3-P3)
+        for col, header in enumerate(headers, start=1):
+            output_sheet.cell(row=3, column=col).value = header
+        
+        # Reset the output start row for each file
+        output_start_row = 4
+        
+        # Iterate over each intersection and its direction-turn results
+        for intersection_id, turns in matched_results.items():
+            # Write Intersection ID and Labels in the output sheet
+            output_sheet.cell(row=output_start_row, column=1).value = "Volume"
+            output_sheet.cell(row=output_start_row + 1, column=1).value = "PHF"
+            output_sheet.cell(row=output_start_row + 2, column=1).value = "HeavyVehicles"
+            output_sheet.cell(row=output_start_row, column=2).value = intersection_id
+            output_sheet.cell(row=output_start_row + 1, column=2).value = intersection_id
+            output_sheet.cell(row=output_start_row + 2, column=2).value = intersection_id
+
+            # Process each direction-turn within the intersection
+            for direction_turn, info in turns.items():
+                row_found = info['row']
+
+                # Read data from the specified columns for the current row
+                volume = sheet.cell(row=row_found, column=volume_col).value
+                phf = sheet.cell(row=row_found, column=phf_col).value
+                heavy_vehicles = sheet.cell(row=row_found, column=heavy_vehicles_col).value
+
+                # Write the data into the output sheet under the correct direction-turn column
+                header_column = info['header_column']
+                output_sheet.cell(row=output_start_row, column=header_column).value = volume
+                output_sheet.cell(row=output_start_row + 1, column=header_column).value = phf
+                output_sheet.cell(row=output_start_row + 2, column=header_column).value = heavy_vehicles
+
+                # Debugging output
+                print(f"Wrote to Results for intersection {intersection_id}, direction {direction_turn}: "
+                      f"Volume: {volume}, PHF: {phf}, HeavyVehicles: {heavy_vehicles}")
+
+            # Move to the next output row for the next intersection
+            output_start_row += 3  # 3 rows for data + 1 row for separation
+
+        # Save the output workbook to a file named by the header in row 1 of the start column
+        output_file_path = f"{file_name_header}.xlsx"
+        output_workbook.save(output_file_path)
+        save_as_csv(output_file_path, f"{file_name_header}.csv")
+        os.remove(f"{file_name_header}.xlsx")
+        print(f"Output file saved as {file_name_header}.csv")
+
+    return
+
 def read_input_file(file_path):
     # Load the workbook and select the active sheet
     workbook = load_workbook(filename=file_path)
     sheet = workbook.active
-
-    # Create a new workbook for the output
-    output_workbook = Workbook()
-    output_sheet = output_workbook.active
-    output_sheet.title = "Results"
-    output_sheet["A1"] = "[Lanes]"
-    output_sheet["A2"] = "Lane Group Data"
 
     # Define headers for the output sheet
     headers = [
@@ -49,10 +122,6 @@ def read_input_file(file_path):
         "SBL", "SBT", "SBR", "EBL", "EBT", "EBR", 
         "WBL", "WBT", "WBR", "PED", "HOLD"
     ]
-
-    # Label cells with corresponding headers (A3-P3)
-    for col, header in enumerate(headers, start=1):
-        output_sheet.cell(row=3, column=col).value = header
 
     # Check specific cells (F1, I1, L1, O1) and store non-None values
     relevant_cells = ['F1', 'I1', 'L1', 'O1']
@@ -83,7 +152,7 @@ def read_input_file(file_path):
     print(f"Found intersections: {intersections}")
 
     directions = ["EB", "WB", "NB", "SB"]
-    output_start_row = 4  # Start writing from row 4
+    # output_start_row = 4  # Start writing from row 4
 
     # Dictionary to store results for each intersection
     intersection_results = {}
@@ -140,38 +209,10 @@ def read_input_file(file_path):
                     "header_column": header_mapping[direction_turn]
                 }
     
-    # Now read from columns F, G, and H for each direction-turn and write to results
-    for intersection_id, turns in matched_results.items():
-        # Write Intersection ID and Labels
-        output_sheet.cell(row=output_start_row, column=1).value = "Volume"
-        output_sheet.cell(row=output_start_row + 1, column=1).value = "PHF"
-        output_sheet.cell(row=output_start_row + 2, column=1).value = "HeavyVehicles"
-        output_sheet.cell(row=output_start_row, column=2).value = intersection_id
-        output_sheet.cell(row=output_start_row + 1, column=2).value = intersection_id
-        output_sheet.cell(row=output_start_row + 2, column=2).value = intersection_id
-        
-        for direction_turn, info in turns.items():
-            row_found = info['row']
-            volume = sheet.cell(row=row_found, column=6).value  # Column F (Volume)
-            phf = sheet.cell(row=row_found, column=7).value      # Column G (PHF)
-            heavy_vehicles = sheet.cell(row=row_found, column=8).value  # Column H (HeavyVehicles)
+    relevant_columns = [6, 9, 12, 15]  # F-H, I-K, L-N
+    
+    write_direction_data_to_files(sheet, matched_results, relevant_columns, headers=headers, output_start_row=4)
 
-            # Write the values into the output sheet
-            header_column = info['header_column']
-            output_sheet.cell(row=output_start_row, column=header_column).value = volume
-            output_sheet.cell(row=output_start_row + 1, column=header_column).value = phf
-            output_sheet.cell(row=output_start_row + 2, column=header_column).value = heavy_vehicles
-
-            print(f"Wrote to Results for intersection {intersection_id}, direction {direction_turn}: "
-                  f"Volume: {volume}, PHF: {phf}, HeavyVehicles: {heavy_vehicles}")
-
-        # Move the output start row down by 5 to separate each intersection's output
-        output_start_row += 4  # 4 for data + 1 for separation row
-
-    # Save the output workbook to a new file
-    output_file_path = "Results.xlsx"
-    output_workbook.save(output_file_path)
-    print(f"Output file saved as {output_file_path}")
 
     # Return intersection results if needed elsewhere
     return intersection_results
@@ -1521,5 +1562,4 @@ class Copier:
 
 if __name__ == "__main__":
     read_input_file("test-input.xlsx")
-    save_as_csv('Results.xlsx', 'Results.csv')
 
