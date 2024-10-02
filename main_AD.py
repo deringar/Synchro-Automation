@@ -6,9 +6,9 @@ Last modified on Fri Sep 27 2024
 """
 
 from core import MainWindow, Base
-# Key: PHF HeavyVehicles Volume
-# 
+
 # Step 2: V/C Ratio, LOS
+
 if __name__ == '__main__':
     # tfile = 'C:\\Users\\pgard\\Documents\\Synchro Automation\\synchronizer\\tests\\2020 EXISTING AM.txt'
     # import pprint

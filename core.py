@@ -993,9 +993,6 @@ class MainWindow:
         self.los_button = ttk.Checkbutton(self.frame_1, variable=self.master.update_los, text='Update LOS Table')
         self.los_button.grid(column=0, row=2)
 
-        self.create_button("Start", self.launch_file_match, 2, 2, sticky='e')
-        self.create_button("Settings", self.launch_settings, 0, 3, sticky='w')
-
         self.utilities = ttk.Labelframe(self.frame_1, text='Other Functions')
         self.utilities.grid(row=3, column=1)
 
@@ -1115,15 +1112,6 @@ class Base(tk.Tk):
         self.default_columns = saved_settings.get('columns', defaults['columns'])
         self.update_los = saved_settings.get('update_los', defaults['update_los'])
 
-    # def startup(self):
-    #     start = os.system('start "" "' + self.synchro_app_path + '"')
-    #     return start
-    # def match_ws_name(self, workbook_path, title):
-    #     wb = xl.load_workbook(filename=workbook_path, data_only=True)  # Load workbook
-    #     # Find the sheet with the maximum similarity to the title
-    #     match = max(wb.sheetnames, key=lambda sheet: similar(sheet, title), default=None)
-    #     return wb[match] if match else None  # Return the matched sheet or None
-
     def find_volume_data(self, extra_scenario=None):
         """
         Load volume data from the model workbook based on specified scenarios.
@@ -1171,25 +1159,6 @@ class Base(tk.Tk):
 
         self.scenario_data = output  # Update scenario data
         return output.keys()  # Return the keys of the collected scenario data
-
-    # def match_syn_file(self, scenario, dir):
-    #     """
-    #     Match a .syn file to a scenario based on its condition and hour.
-
-    #     Args:
-    #         scenario (Scenario): The scenario to match the .syn file with.
-    #         dir (str): Directory to search for .syn files.
-
-    #     Returns:
-    #         None: Updates the scenario with the matched .syn file path.
-    #     """
-    #     key = self.SCENARIO_CONDITIONS.get(scenario.condition, [scenario.condition])  # Get possible keys for matching
-    #     match = max(
-    #         (file for file in os.scandir(dir) if file.path.endswith('.syn')),  # Find .syn files in the directory
-    #         key=lambda file: max(similar(file.name, scenario.hour + acronym) for acronym in key),  # Match based on similarity
-    #         default=None
-    #     )
-    #     scenario.syn_file = match.path if match else str()  # Set the matched file path or empty string
 
     # Convert model volumes to Synchro UTDF
     def convert_utdf(self, scenario='test_write', column=5):
@@ -1245,6 +1214,8 @@ class Base(tk.Tk):
                 writer.writerow(payload)
         return file
 
+
+#_______________LOS_______________
     def update_report(self, scenarios, report_table=None):
         # If no report_table is specified, default to 'synchronizer results.xlsx'
         if report_table is None:
