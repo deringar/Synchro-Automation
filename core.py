@@ -120,19 +120,9 @@ def read_input_file(file_path):
     headers = [
         "RECORDNAME", "INTID", "NBL", "NBT", "NBR", 
         "SBL", "SBT", "SBR", "EBL", "EBT", "EBR", 
-        "WBL", "WBT", "WBR", "PED", "HOLD"
+        "WBL", "WBT", "WBR","NWR", "NWL", "NWT", "NEL", "NET", "NER",
+        "SEL", "SER", "SET", "SWL", "SWR", "SWT" ,"PED", "HOLD"
     ]
-
-    # Check specific cells (F1, I1, L1, O1) and store non-None values
-    relevant_cells = ['F1', 'I1', 'L1', 'O1']
-    stored_values = {}
-
-    for cell in relevant_cells:
-        value = sheet[cell].value
-        if value is not None:
-            stored_values[cell] = value
-
-    print(f"Stored values from specified cells: {stored_values}")
 
     consecutive_empty_cells = 0
     intersections = {}
@@ -142,7 +132,7 @@ def read_input_file(file_path):
         cell_value = sheet.cell(row=row, column=1).value
         if cell_value is None:
             consecutive_empty_cells += 1
-            if consecutive_empty_cells >= 50:
+            if consecutive_empty_cells >= 25:
                 break
         else:
             consecutive_empty_cells = 0
@@ -151,7 +141,7 @@ def read_input_file(file_path):
 
     print(f"Found intersections: {intersections}")
 
-    directions = ["EB", "WB", "NB", "SB"]
+    directions = ["EB", "WB", "NB", "SB", "NW", "NE", "SW", "SE"]
     # output_start_row = 4  # Start writing from row 4
 
     # Dictionary to store results for each intersection
