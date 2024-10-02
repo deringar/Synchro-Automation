@@ -2,7 +2,7 @@
 """
 Last modified on Fri Sep 27 2024
 
-@authors: phillip.gotthelf, alex.dering
+@authors: philip.gotthelf, alex.dering
 """
 
 from core import MainWindow, Base

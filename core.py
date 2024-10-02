@@ -2,7 +2,7 @@
 """
 Created on Fri Sep 27 11:19:28 2024
 
-@authors: phillip.gotthelf, alex.dering
+@authors: philip.gotthelf, alex.dering
 """
 
 # main_window.py
@@ -20,6 +20,11 @@ import json  # JSON module to parse and manipulate JSON data.
 from collections import OrderedDict  # Import ordered dictionary to maintain the order of keys.
 from shutil import copy  # Used to copy files or directories.
 from openpyxl import load_workbook, Workbook
+
+
+"""
+____________________________ AD _____________________________
+"""
 
 def save_as_csv(excel_file_path, csv_file_path):
     workbook = load_workbook(filename=excel_file_path)
@@ -112,7 +117,7 @@ def write_direction_data_to_files(sheet, matched_results, relevant_columns, head
     return
 
 def read_input_file(file_path):
-    # Load the workbook and select the active sheet
+    # Load the input workbook and select the active sheet
     workbook = load_workbook(filename=file_path)
     sheet = workbook.active
 
@@ -211,9 +216,6 @@ def read_input_file(file_path):
 """
 ______________________ HELPER FUNCTIONS ______________________
 """
-
-# Example of how to run the function
-# read_input_file('your_input_file.xlsx')
 
 # Check if the target is empty
 def is_empty(target):
