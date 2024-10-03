@@ -27,6 +27,11 @@ from openpyxl import load_workbook, Workbook
 ____________________________ AD _____________________________
 """
 
+def parse_text_file(file_path):
+    def parse_roundabout(file_path):
+        return
+    return
+
 def save_as_csv(excel_file_path, csv_file_path):
     workbook = load_workbook(filename=excel_file_path)
     sheet = workbook.active
