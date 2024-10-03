@@ -1,0 +1,445 @@
+﻿
+2024 Existing Traffic Volumes	Peak AM Hour
+1: South Street & Pierces Road	09/30/2024
+
+
+Lane Group                        		EBL  	EBT  	EBR  	WBL  	WBT  	WBR  	NBL  	NBT  	NBR  	SBL  	SBT  	SBR
+Lane Configurations               		0    	<1   	     	     	1>   	0    	     	     	     	1>   	     	0
+Traffic Volume (vph)              		86   	288  	     	     	305  	30   	     	     	     	20   	     	88
+Future Volume (vph)               		86   	288  	     	     	305  	30   	     	     	     	20   	     	88
+Ideal Flow (vphpl)                		1900 	1900 	     	     	1900 	1900 	     	     	     	1900 	     	1900
+Lane Width (ft)                   		12   	13   	     	     	11   	12   	     	     	     	10   	     	12
+Grade (%)                         		     	3%   	     	     	-3%  	     	     	     	     	-6%  	     	
+Lane Util. Factor                 		1.00 	1.00 	     	     	1.00 	1.00 	     	     	     	1.00 	     	1.00
+Frt                               		     	     	     	     	0.988	     	     	     	     	0.890	     	
+Flt Protected                     		     	0.989	     	     	     	     	     	     	     	0.991	     	
+Satd. Flow (prot)                 		0    	1798 	     	     	1703 	0    	     	     	     	1427 	     	0
+Flt Permitted                     		     	0.989	     	     	     	     	     	     	     	0.991	     	
+Satd. Flow (perm)                 		0    	1798 	     	     	1703 	0    	     	     	     	1427 	     	0
+Link Speed (mph)                  		     	30   	     	     	30   	     	     	     	     	30   	     	
+Link Distance (ft)                		     	722  	     	     	694  	     	     	     	     	1453 	     	
+Travel Time (s)                   		     	16.4 	     	     	15.8 	     	     	     	     	33.0 	     	
+Peak Hour Factor                  		0.93 	0.93 	     	     	0.93 	0.93 	     	     	     	0.93 	     	0.93
+Heavy Vehicles (%)                		11%  	5%   	     	     	8%   	10%  	     	     	     	21%  	     	11%
+Adj. Flow (vph)                   		92   	310  	     	     	328  	32   	     	     	     	22   	     	95
+Shared Lane Traffic (%)           		     	     	     	     	     	     	     	     	     	     	     	
+Lane Group Flow (vph)             		0    	402  	     	     	360  	0    	     	     	     	117  	     	0
+Enter Blocked Intersection        		No   	No   	     	     	No   	No   	     	     	     	No   	     	No
+Lane Alignment                    		Left 	Left 	     	     	Left 	Right	     	     	     	Left 	     	Right
+Median Width(ft)                  		     	0    	     	     	0    	     	     	     	     	10   	     	
+Link Offset(ft)                   		     	0    	     	     	0    	     	     	     	     	0    	     	
+Crosswalk Width(ft)               		     	16   	     	     	16   	     	     	     	     	16   	     	
+Two way Left Turn Lane            		     	     	     	     	     	     	     	     	     	     	     	
+Headway Factor                    		1.02 	0.98 	     	     	1.02 	0.98 	     	     	     	1.05 	     	0.96
+Turning Speed (mph)               		15   	     	     	     	     	9    	     	     	     	15   	     	9
+Sign Control                      		     	Free 	     	     	Free 	     	     	     	     	Stop 	     	
+
+Intersection Summary
+Area Type:                        	Other
+Control Type: Unsignalized
+
+
+	Synchro 12 Report
+Job# 23013237A - R.H.	Page 0
+
+
+2024 Existing Traffic Volumes	Peak AM Hour
+1: South Street & Pierces Road	09/30/2024
+
+
+
+Intersection                      		      	      	      	      	      	
+Int Delay, s/veh                  		2.5   	      	      	      	      	
+
+Movement                          		EBL   	EBT   	WBT   	WBR   	SBL   	SBR
+Lane Configurations               		0     	<1    	1>    	0     	1>    	0
+Traffic Vol, veh/h                		86    	288   	305   	30    	20    	88
+Future Vol, veh/h                 		86    	288   	305   	30    	20    	88
+Conflicting Peds, #/hr            		0     	0     	0     	0     	0     	0
+Sign Control                      		Free  	Free  	Free  	Free  	Stop  	Stop
+RT Channelized                    		-     	None  	-     	None  	-     	None
+Storage Length                    		-     	-     	-     	-     	0     	-
+Veh in Median Storage, #          		-     	0     	0     	-     	0     	-
+Grade, %                          		-     	3     	-3    	-     	-6    	-
+Peak Hour Factor                  		93    	93    	93    	93    	93    	93
+Heavy Vehicles, %                 		11    	5     	8     	10    	21    	11
+Mvmt Flow                         		92    	310   	328   	32    	22    	95
+                                  		      	      	      	      	      	
+
+Major/Minor                       		Major1	      	Major2	      	Minor2	
+Conflicting Flow All              		360   	0     	-     	0     	839   	344
+          Stage 1                 		-     	-     	-     	-     	344   	-
+          Stage 2                 		-     	-     	-     	-     	495   	-
+Critical Hdwy                     		4.21  	-     	-     	-     	5.41  	5.71
+Critical Hdwy Stg 1               		-     	-     	-     	-     	4.41  	-
+Critical Hdwy Stg 2               		-     	-     	-     	-     	4.41  	-
+Follow-up Hdwy                    		2.299 	-     	-     	-     	3.689 	3.399
+Pot Cap-1 Maneuver                		1150  	-     	-     	-     	412   	719
+          Stage 1                 		-     	-     	-     	-     	760   	-
+          Stage 2                 		-     	-     	-     	-     	679   	-
+Platoon blocked, %                		      	-     	-     	-     	      	
+Mov Cap-1 Maneuver                		1150  	-     	-     	-     	372   	719
+Mov Cap-2 Maneuver                		-     	-     	-     	-     	372   	-
+          Stage 1                 		-     	-     	-     	-     	686   	-
+          Stage 2                 		-     	-     	-     	-     	679   	-
+                                  		      	      	      	      	      	
+
+Approach                          		EB    	      	WB    	      	SB    	
+HCM Control Delay, s/v            		1.93  	      	0     	      	12.24 	
+HCM LOS                           		      	      	      	      	B     	
+                                  		      	      	      	      	      	
+
+Minor Lane/Major Mvmt             		      	EBL   	EBT   	WBT   	WBR   	SBLn1
+Capacity (veh/h)                  		      	414   	-     	-     	-     	613
+HCM Lane V/C Ratio                		      	0.08  	-     	-     	-     	0.189
+HCM Control Delay (s/veh)         		      	8.4   	0     	-     	-     	12.2
+HCM Lane LOS                      		      	A     	A     	-     	-     	B
+HCM 95th %tile Q(veh)             		      	0.3   	-     	-     	-     	0.7
+
+
+	Synchro 12 Report
+Job# 23013237A - R.H.	Page 0
+
+
+2024 Existing Traffic Volumes	Peak AM Hour
+2: Pierces Road & Scobie Drive	09/30/2024
+
+
+Lane Group                        		EBL   	EBT   	EBR   	WBL   	WBT   	WBR   	NBL   	NBT   	NBR   	SBL   	SBT   	SBR
+Lane Configurations               		0     	<1    	      	      	1>    	0     	      	      	      	1>    	      	0
+Traffic Volume (vph)              		18    	109   	      	      	104   	9     	      	      	      	6     	      	9
+Future Volume (vph)               		18    	109   	      	      	104   	9     	      	      	      	6     	      	9
+Ideal Flow (vphpl)                		1900  	1900  	      	      	1900  	1900  	      	      	      	1900  	      	1900
+Lane Width (ft)                   		12    	11    	      	      	14    	12    	      	      	      	12    	      	12
+Grade (%)                         		      	0%    	      	      	2%    	      	      	      	      	0%    	      	
+Lane Util. Factor                 		1.00  	1.00  	      	      	1.00  	1.00  	      	      	      	1.00  	      	1.00
+Ped Bike Factor                   		      	      	      	      	      	      	      	      	      	      	      	
+Frt                               		      	      	      	      	0.989 	      	      	      	      	0.921 	      	
+Flt Protected                     		      	0.993 	      	      	      	      	      	      	      	0.980 	      	
+Satd. Flow (prot)                 		0     	1707  	      	      	1788  	0     	      	      	      	1518  	      	0
+Flt Permitted                     		      	0.993 	      	      	      	      	      	      	      	0.980 	      	
+Satd. Flow (perm)                 		0     	1707  	      	      	1788  	0     	      	      	      	1518  	      	0
+Link Speed (mph)                  		      	30    	      	      	30    	      	      	      	      	30    	      	
+Link Distance (ft)                		      	714   	      	      	1484  	      	      	      	      	801   	      	
+Travel Time (s)                   		      	16.2  	      	      	33.7  	      	      	      	      	18.2  	      	
+Confl. Peds. (#/hr)               		1     	      	      	      	      	1     	      	      	      	1     	      	1
+Peak Hour Factor                  		0.90  	0.90  	      	      	0.90  	0.90  	      	      	      	0.90  	      	0.90
+Heavy Vehicles (%)                		0%    	8%    	      	      	10%   	22%   	      	      	      	0%    	      	22%
+Adj. Flow (vph)                   		20    	121   	      	      	116   	10    	      	      	      	7     	      	10
+Shared Lane Traffic (%)           		      	      	      	      	      	      	      	      	      	      	      	
+Lane Group Flow (vph)             		0     	141   	      	      	126   	0     	      	      	      	17    	      	0
+Enter Blocked Intersection        		No    	No    	      	      	No    	No    	      	      	      	No    	      	No
+Lane Alignment                    		Left  	Left  	      	      	Left  	Right 	      	      	      	Left  	      	Right
+Median Width(ft)                  		      	0     	      	      	0     	      	      	      	      	12    	      	
+Link Offset(ft)                   		      	0     	      	      	0     	      	      	      	      	0     	      	
+Crosswalk Width(ft)               		      	16    	      	      	16    	      	      	      	      	16    	      	
+Two way Left Turn Lane            		      	      	      	      	      	      	      	      	      	      	      	
+Headway Factor                    		1.00  	1.04  	      	      	0.93  	1.01  	      	      	      	1.00  	      	1.00
+Turning Speed (mph)               		15    	      	      	      	      	9     	      	      	      	15    	      	9
+Sign Control                      		      	Free  	      	      	Free  	      	      	      	      	Stop  	      	
+
+Intersection Summary
+Area Type:                        	Other
+Control Type: Unsignalized
+
+
+	Synchro 12 Report
+Job# 23013237A - R.H.	Page 0
+
+
+2024 Existing Traffic Volumes	Peak AM Hour
+2: Pierces Road & Scobie Drive	09/30/2024
+
+
+
+Intersection                      		      	      	      	      	      	
+Int Delay, s/veh                  		1.1   	      	      	      	      	
+
+Movement                          		EBL   	EBT   	WBT   	WBR   	SBL   	SBR
+Lane Configurations               		0     	<1    	1>    	0     	1>    	0
+Traffic Vol, veh/h                		18    	109   	104   	9     	6     	9
+Future Vol, veh/h                 		18    	109   	104   	9     	6     	9
+Conflicting Peds, #/hr            		1     	0     	0     	1     	1     	1
+Sign Control                      		Free  	Free  	Free  	Free  	Stop  	Stop
+RT Channelized                    		-     	None  	-     	None  	-     	None
+Storage Length                    		-     	-     	-     	-     	0     	-
+Veh in Median Storage, #          		-     	0     	0     	-     	0     	-
+Grade, %                          		-     	0     	2     	-     	0     	-
+Peak Hour Factor                  		90    	90    	90    	90    	90    	90
+Heavy Vehicles, %                 		0     	8     	10    	22    	0     	22
+Mvmt Flow                         		20    	121   	116   	10    	7     	10
+                                  		      	      	      	      	      	
+
+Major/Minor                       		Major1	      	Major2	      	Minor2	
+Conflicting Flow All              		127   	0     	-     	0     	284   	123
+          Stage 1                 		-     	-     	-     	-     	122   	-
+          Stage 2                 		-     	-     	-     	-     	162   	-
+Critical Hdwy                     		4.1   	-     	-     	-     	6.4   	6.42
+Critical Hdwy Stg 1               		-     	-     	-     	-     	5.4   	-
+Critical Hdwy Stg 2               		-     	-     	-     	-     	5.4   	-
+Follow-up Hdwy                    		2.2   	-     	-     	-     	3.5   	3.498
+Pot Cap-1 Maneuver                		1472  	-     	-     	-     	711   	877
+          Stage 1                 		-     	-     	-     	-     	909   	-
+          Stage 2                 		-     	-     	-     	-     	872   	-
+Platoon blocked, %                		      	-     	-     	-     	      	
+Mov Cap-1 Maneuver                		1471  	-     	-     	-     	699   	876
+Mov Cap-2 Maneuver                		-     	-     	-     	-     	699   	-
+          Stage 1                 		-     	-     	-     	-     	895   	-
+          Stage 2                 		-     	-     	-     	-     	871   	-
+                                  		      	      	      	      	      	
+
+Approach                          		EB    	      	WB    	      	SB    	
+HCM Control Delay, s/v            		1.06  	      	0     	      	9.62  	
+HCM LOS                           		      	      	      	      	A     	
+                                  		      	      	      	      	      	
+
+Minor Lane/Major Mvmt             		      	EBL   	EBT   	WBT   	WBR   	SBLn1
+Capacity (veh/h)                  		      	255   	-     	-     	-     	795
+HCM Lane V/C Ratio                		      	0.014 	-     	-     	-     	0.021
+HCM Control Delay (s/veh)         		      	7.5   	0     	-     	-     	9.6
+HCM Lane LOS                      		      	A     	A     	-     	-     	A
+HCM 95th %tile Q(veh)             		      	0     	-     	-     	-     	0.1
+
+
+	Synchro 12 Report
+Job# 23013237A - R.H.	Page 0
+
+
+2024 Existing Traffic Volumes	Peak AM Hour
+3: Gidney Avenue & Pierces Road	09/30/2024
+
+
+Lane Group                        		EBL   	EBT   	EBR   	WBL   	WBT   	WBR   	NBL   	NBT   	NBR   	SBL   	SBT   	SBR
+Lane Configurations               		1>    	      	0     	      	      	      	0     	<1    	      	      	1>    	0
+Traffic Volume (vph)              		87    	      	48    	      	      	      	29    	279   	      	      	347   	63
+Future Volume (vph)               		87    	      	48    	      	      	      	29    	279   	      	      	347   	63
+Ideal Flow (vphpl)                		1900  	      	1900  	      	      	      	1900  	1900  	      	      	1900  	1900
+Lane Width (ft)                   		13    	      	12    	      	      	      	12    	16    	      	      	16    	12
+Grade (%)                         		1%    	      	      	      	      	      	      	1%    	      	      	0%    	
+Lane Util. Factor                 		1.00  	      	1.00  	      	      	      	1.00  	1.00  	      	      	1.00  	1.00
+Ped Bike Factor                   		      	      	      	      	      	      	      	      	      	      	      	
+Frt                               		0.952 	      	      	      	      	      	      	      	      	      	0.979 	
+Flt Protected                     		0.969 	      	      	      	      	      	      	0.995 	      	      	      	
+Satd. Flow (prot)                 		1713  	      	0     	      	      	      	0     	2052  	      	      	1966  	0
+Flt Permitted                     		0.969 	      	      	      	      	      	      	0.995 	      	      	      	
+Satd. Flow (perm)                 		1713  	      	0     	      	      	      	0     	2052  	      	      	1966  	0
+Link Speed (mph)                  		30    	      	      	      	      	      	      	30    	      	      	30    	
+Link Distance (ft)                		1484  	      	      	      	      	      	      	181   	      	      	733   	
+Travel Time (s)                   		33.7  	      	      	      	      	      	      	4.1   	      	      	16.7  	
+Confl. Peds. (#/hr)               		4     	      	4     	      	      	      	4     	      	      	      	      	4
+Peak Hour Factor                  		0.91  	      	0.91  	      	      	      	0.91  	0.91  	      	      	0.91  	0.91
+Heavy Vehicles (%)                		7%    	      	2%    	      	      	      	3%    	4%    	      	      	6%    	14%
+Adj. Flow (vph)                   		96    	      	53    	      	      	      	32    	307   	      	      	381   	69
+Shared Lane Traffic (%)           		      	      	      	      	      	      	      	      	      	      	      	
+Lane Group Flow (vph)             		149   	      	0     	      	      	      	0     	339   	      	      	450   	0
+Enter Blocked Intersection        		No    	      	No    	      	      	      	No    	No    	      	      	No    	No
+Lane Alignment                    		Left  	      	Right 	      	      	      	Left  	Left  	      	      	Left  	Right
+Median Width(ft)                  		13    	      	      	      	      	      	      	0     	      	      	0     	
+Link Offset(ft)                   		0     	      	      	      	      	      	      	0     	      	      	0     	
+Crosswalk Width(ft)               		16    	      	      	      	      	      	      	16    	      	      	16    	
+Two way Left Turn Lane            		      	      	      	      	      	      	      	      	      	      	      	
+Headway Factor                    		0.96  	      	1.01  	      	      	      	1.01  	0.85  	      	      	0.85  	1.00
+Turning Speed (mph)               		15    	      	9     	      	      	      	15    	      	      	      	      	9
+Sign Control                      		Stop  	      	      	      	      	      	      	Free  	      	      	Free  	
+
+Intersection Summary
+Area Type:                        	Other
+Control Type: Unsignalized
+
+
+	Synchro 12 Report
+Job# 23013237A - R.H.	Page 0
+
+
+2024 Existing Traffic Volumes	Peak AM Hour
+3: Gidney Avenue & Pierces Road	09/30/2024
+
+
+
+Intersection                      		      	      	      	      	      	
+Int Delay, s/veh                  		3.4   	      	      	      	      	
+
+Movement                          		EBL   	EBR   	NBL   	NBT   	SBT   	SBR
+Lane Configurations               		1>    	0     	0     	<1    	1>    	0
+Traffic Vol, veh/h                		87    	48    	29    	279   	347   	63
+Future Vol, veh/h                 		87    	48    	29    	279   	347   	63
+Conflicting Peds, #/hr            		4     	4     	4     	0     	0     	4
+Sign Control                      		Stop  	Stop  	Free  	Free  	Free  	Free
+RT Channelized                    		-     	None  	-     	None  	-     	None
+Storage Length                    		0     	-     	-     	-     	-     	-
+Veh in Median Storage, #          		0     	-     	-     	0     	0     	-
+Grade, %                          		1     	-     	-     	1     	0     	-
+Peak Hour Factor                  		91    	91    	91    	91    	91    	91
+Heavy Vehicles, %                 		7     	2     	3     	4     	6     	14
+Mvmt Flow                         		96    	53    	32    	307   	381   	69
+                                  		      	      	      	      	      	
+
+Major/Minor                       		Minor2	      	Major1	      	Major2	
+Conflicting Flow All              		794   	424   	455   	0     	-     	0
+          Stage 1                 		420   	-     	-     	-     	-     	-
+          Stage 2                 		374   	-     	-     	-     	-     	-
+Critical Hdwy                     		6.67  	6.32  	4.13  	-     	-     	-
+Critical Hdwy Stg 1               		5.67  	-     	-     	-     	-     	-
+Critical Hdwy Stg 2               		5.67  	-     	-     	-     	-     	-
+Follow-up Hdwy                    		3.563 	3.318 	2.227 	-     	-     	-
+Pot Cap-1 Maneuver                		335   	623   	1101  	-     	-     	-
+          Stage 1                 		637   	-     	-     	-     	-     	-
+          Stage 2                 		671   	-     	-     	-     	-     	-
+Platoon blocked, %                		      	      	      	-     	-     	-
+Mov Cap-1 Maneuver                		321   	617   	1096  	-     	-     	-
+Mov Cap-2 Maneuver                		321   	-     	-     	-     	-     	-
+          Stage 1                 		612   	-     	-     	-     	-     	-
+          Stage 2                 		668   	-     	-     	-     	-     	-
+                                  		      	      	      	      	      	
+
+Approach                          		EB    	      	NB    	      	SB    	
+HCM Control Delay, s/v            		20    	      	0.79  	      	0     	
+HCM LOS                           		C     	      	      	      	      	
+                                  		      	      	      	      	      	
+
+Minor Lane/Major Mvmt             		      	NBL   	NBT   	EBLn1 	SBT   	SBR
+Capacity (veh/h)                  		      	169   	-     	387   	-     	-
+HCM Lane V/C Ratio                		      	0.029 	-     	0.384 	-     	-
+HCM Control Delay (s/veh)         		      	8.4   	0     	20    	-     	-
+HCM Lane LOS                      		      	A     	A     	C     	-     	-
+HCM 95th %tile Q(veh)             		      	0.1   	-     	1.8   	-     	-
+
+
+	Synchro 12 Report
+Job# 23013237A - R.H.	Page 0
+
+
+2024 Existing Traffic Volumes	Peak AM Hour
+4: Fullerton Avenue & Gidney Avenue	09/30/2024
+
+
+Lane Group                        		EBL   	EBT   	EBR   	WBL   	WBT   	WBR   	NBL   	NBT   	NBR   	SBL   	SBT   	SBR
+Lane Configurations               		0     	<1>   	0     	0     	<1>   	0     	0     	<1>   	0     	0     	<1>   	0
+Traffic Volume (vph)              		34    	107   	89    	12    	94    	18    	38    	81    	14    	25    	109   	115
+Future Volume (vph)               		34    	107   	89    	12    	94    	18    	38    	81    	14    	25    	109   	115
+Ideal Flow (vphpl)                		1900  	1900  	1900  	1900  	1900  	1900  	1900  	1900  	1900  	1900  	1900  	1900
+Lane Width (ft)                   		12    	16    	12    	12    	16    	12    	12    	16    	12    	12    	16    	12
+Grade (%)                         		      	-1%   	      	      	0%    	      	      	0%    	      	      	-2%   	
+Lane Util. Factor                 		1.00  	1.00  	1.00  	1.00  	1.00  	1.00  	1.00  	1.00  	1.00  	1.00  	1.00  	1.00
+Ped Bike Factor                   		      	      	      	      	      	      	      	0.99  	      	      	0.98  	
+Frt                               		      	0.948 	      	      	0.980 	      	      	0.986 	      	      	0.938 	
+Flt Protected                     		      	0.993 	      	      	0.995 	      	      	0.986 	      	      	0.995 	
+Satd. Flow (prot)                 		0     	1929  	0     	0     	1979  	0     	0     	1992  	0     	0     	1930  	0
+Flt Permitted                     		      	0.937 	      	      	0.957 	      	      	0.837 	      	      	0.958 	
+Satd. Flow (perm)                 		0     	1821  	0     	0     	1904  	0     	0     	1690  	0     	0     	1859  	0
+Right Turn on Red                 		      	      	No    	      	      	No    	      	      	No    	      	      	No
+Satd. Flow (RTOR)                 		      	      	      	      	      	      	      	      	      	      	      	
+Link Speed (mph)                  		      	30    	      	      	30    	      	      	30    	      	      	30    	
+Link Distance (ft)                		      	940   	      	      	778   	      	      	871   	      	      	410   	
+Travel Time (s)                   		      	21.4  	      	      	17.7  	      	      	19.8  	      	      	9.3   	
+Confl. Peds. (#/hr)               		      	      	      	      	      	      	3     	      	      	      	      	3
+Peak Hour Factor                  		0.72  	0.72  	0.72  	0.72  	0.72  	0.72  	0.72  	0.72  	0.72  	0.72  	0.72  	0.72
+Heavy Vehicles (%)                		0%    	7%    	6%    	8%    	7%    	0%    	5%    	6%    	0%    	0%    	6%    	3%
+Adj. Flow (vph)                   		47    	149   	124   	17    	131   	25    	53    	113   	19    	35    	151   	160
+Shared Lane Traffic (%)           		      	      	      	      	      	      	      	      	      	      	      	
+Lane Group Flow (vph)             		0     	320   	0     	0     	173   	0     	0     	185   	0     	0     	346   	0
+Enter Blocked Intersection        		No    	No    	No    	No    	No    	No    	No    	No    	No    	No    	No    	No
+Lane Alignment                    		Left  	Left  	Right 	Left  	Left  	Right 	Left  	Left  	Right 	Left  	Left  	Right
+Median Width(ft)                  		      	0     	      	      	0     	      	      	0     	      	      	0     	
+Link Offset(ft)                   		      	0     	      	      	0     	      	      	0     	      	      	0     	
+Crosswalk Width(ft)               		      	16    	      	      	16    	      	      	16    	      	      	16    	
+Two way Left Turn Lane            		      	      	      	      	      	      	      	      	      	      	      	
+Headway Factor                    		0.99  	0.84  	0.99  	1.00  	0.85  	1.00  	1.00  	0.85  	1.00  	0.99  	0.84  	0.99
+Turning Speed (mph)               		15    	      	9     	15    	      	9     	15    	      	9     	15    	      	9
+Turn Type                         		Perm  	NA    	      	Perm  	NA    	      	Perm  	NA    	      	Perm  	NA    	
+Protected Phases                  		      	4     	      	      	8     	      	      	2     	      	      	6     	
+Permitted Phases                  		4     	      	      	8     	      	      	2     	      	      	6     	      	
+Minimum Split (s)                 		23.0  	23.0  	      	23.0  	23.0  	      	23.0  	23.0  	      	23.0  	23.0  	
+Total Split (s)                   		30.0  	30.0  	      	30.0  	30.0  	      	30.0  	30.0  	      	30.0  	30.0  	
+Total Split (%)                   		50.0% 	50.0% 	      	50.0% 	50.0% 	      	50.0% 	50.0% 	      	50.0% 	50.0% 	
+Maximum Green (s)                 		25.0  	25.0  	      	25.0  	25.0  	      	25.0  	25.0  	      	25.0  	25.0  	
+Yellow Time (s)                   		4.0   	4.0   	      	4.0   	4.0   	      	4.0   	4.0   	      	4.0   	4.0   	
+All-Red Time (s)                  		1.0   	1.0   	      	1.0   	1.0   	      	1.0   	1.0   	      	1.0   	1.0   	
+Lost Time Adjust (s)              		      	0.0   	      	      	0.0   	      	      	0.0   	      	      	0.0   	
+Total Lost Time (s)               		      	5.0   	      	      	5.0   	      	      	5.0   	      	      	5.0   	
+Lead/Lag                          		      	      	      	      	      	      	      	      	      	      	      	
+Lead-Lag Optimize?                		      	      	      	      	      	      	      	      	      	      	      	
+v/c Ratio                         		      	0.42  	      	      	0.21  	      	      	0.26  	      	      	0.44  	
+Control Delay (s/veh)             		      	14.5  	      	      	12.1  	      	      	12.7  	      	      	14.8  	
+Queue Delay                       		      	0.0   	      	      	0.0   	      	      	0.0   	      	      	0.0   	
+Total Delay (s/veh)               		      	14.5  	      	      	12.1  	      	      	12.7  	      	      	14.8  	
+Queue Length 50th (ft)            		      	78    	      	      	38    	      	      	42    	      	      	86    	
+Queue Length 95th (ft)            		      	102   	      	      	57    	      	      	61    	      	      	110   	
+Internal Link Dist (ft)           		      	860   	      	      	698   	      	      	791   	      	      	330   	
+Turn Bay Length (ft)              		      	      	      	      	      	      	      	      	      	      	      	
+Base Capacity (vph)               		      	758   	      	      	793   	      	      	704   	      	      	774   	
+Starvation Cap Reductn            		      	0     	      	      	0     	      	      	0     	      	      	0     	
+Spillback Cap Reductn             		      	0     	      	      	0     	      	      	0     	      	      	0     	
+Storage Cap Reductn               		      	0     	      	      	0     	      	      	0     	      	      	0     	
+Reduced v/c Ratio                 		      	0.42  	      	      	0.22  	      	      	0.26  	      	      	0.45  	
+
+Intersection Summary
+Area Type:                        	Other
+Cycle Length: 60
+Actuated Cycle Length: 60
+Offset: 0 (0%), Referenced to phase 2:NBTL and 6:SBTL, Start of Green
+Natural Cycle: 50
+Control Type: Pretimed
+
+
+	Synchro 12 Report
+Job# 23013237A - R.H.	Page 0
+
+
+2024 Existing Traffic Volumes	Peak AM Hour
+4: Fullerton Avenue & Gidney Avenue	09/30/2024
+
+
+Movement                          		EBL   	EBT   	EBR   	WBL   	WBT   	WBR   	NBL   	NBT   	NBR   	SBL   	SBT   	SBR
+Lane Configurations               		0     	<1>   	0     	0     	<1>   	0     	0     	<1>   	0     	0     	<1>   	0
+Traffic Volume (veh/h)            		34    	107   	89    	12    	94    	18    	38    	81    	14    	25    	109   	115
+Future Volume (veh/h)             		34    	107   	89    	12    	94    	18    	38    	81    	14    	25    	109   	115
+Initial Q (Qb), veh               		0     	0     	0     	0     	0     	0     	0     	0     	0     	0     	0     	0
+Lane Width Adj.                   		1.00  	1.04  	1.00  	1.00  	1.04  	1.00  	1.00  	1.04  	1.00  	1.00  	1.04  	1.00
+Ped-Bike Adj(A_pbT)               		1.00  	      	1.00  	1.00  	      	1.00  	1.00  	      	1.00  	1.00  	      	1.00
+Parking Bus, Adj                  		1.00  	1.00  	1.00  	1.00  	1.00  	1.00  	1.00  	1.00  	1.00  	1.00  	1.00  	1.00
+Work Zone On Approach             		      	No    	      	      	No    	      	      	No    	      	      	No    	
+Adj Sat Flow, veh/h/ln            		1939  	1908  	1849  	1781  	1868  	1900  	1826  	1884  	1900  	1979  	1964  	1934
+Adj Flow Rate, veh/h              		47    	149   	124   	17    	131   	25    	53    	112   	19    	35    	151   	160
+Peak Hour Factor                  		0.72  	0.72  	0.72  	0.72  	0.72  	0.72  	0.72  	0.72  	0.72  	0.72  	0.72  	0.72
+Percent Heavy Veh, %              		0     	7     	6     	8     	7     	0     	5     	6     	0     	0     	6     	3
+Cap, veh/h                        		130   	376   	276   	99    	598   	106   	230   	457   	70    	105   	357   	341
+Arrive On Green                   		0.42  	0.42  	0.42  	0.42  	0.42  	0.42  	0.42  	0.42  	0.42  	0.42  	0.42  	0.42
+Sat Flow, veh/h                   		147   	901   	663   	78    	1434  	255   	366   	1097  	169   	94    	856   	817
+Grp Volume(v), veh/h              		320   	0     	0     	173   	0     	0     	184   	0     	0     	346   	0     	0
+Grp Sat Flow(s),veh/h/ln          		1712  	0     	0     	1768  	0     	0     	1632  	0     	0     	1767  	0     	0
+Q Serve(g_s), s                   		0.0   	0.0   	0.0   	0.0   	0.0   	0.0   	0.0   	0.0   	0.0   	0.0   	0.0   	0.0
+Cycle Q Clear(g_c), s             		7.7   	0.0   	0.0   	3.7   	0.0   	0.0   	3.9   	0.0   	0.0   	8.3   	0.0   	0.0
+Prop In Lane                      		0.15  	      	0.39  	0.10  	      	0.14  	0.29  	      	0.10  	0.10  	      	0.46
+Lane Grp Cap(c), veh/h            		782   	0     	0     	803   	0     	0     	757   	0     	0     	802   	0     	0
+V/C Ratio(X)                      		0.41  	0.00  	0.00  	0.22  	0.00  	0.00  	0.24  	0.00  	0.00  	0.43  	0.00  	0.00
+Avail Cap(c_a), veh/h             		782   	0     	0     	803   	0     	0     	757   	0     	0     	802   	0     	0
+HCM Platoon Ratio                 		1.00  	1.00  	1.00  	1.00  	1.00  	1.00  	1.00  	1.00  	1.00  	1.00  	1.00  	1.00
+Upstream Filter(I)                		1.00  	0.00  	0.00  	1.00  	0.00  	0.00  	1.00  	0.00  	0.00  	1.00  	0.00  	0.00
+Uniform Delay (d), s/veh          		12.4  	0.0   	0.0   	11.3  	0.0   	0.0   	11.3  	0.0   	0.0   	12.6  	0.0   	0.0
+Incr Delay (d2), s/veh            		1.6   	0.0   	0.0   	0.6   	0.0   	0.0   	0.8   	0.0   	0.0   	1.7   	0.0   	0.0
+Initial Q Delay(d3), s/veh        		0.0   	0.0   	0.0   	0.0   	0.0   	0.0   	0.0   	0.0   	0.0   	0.0   	0.0   	0.0
+%ile BackOfQ(50%),veh/ln          		3.0   	0.0   	0.0   	1.4   	0.0   	0.0   	1.6   	0.0   	0.0   	3.3   	0.0   	0.0
+Unsig. Movement Delay, s/veh      		      	      	      	      	      	      	      	      	      	      	      	
+LnGrp Delay(d), s/veh             		14.0  	0.0   	0.0   	11.9  	0.0   	0.0   	12.1  	0.0   	0.0   	14.3  	0.0   	0.0
+LnGrp LOS                         		B     	      	      	B     	      	      	B     	      	      	B     	      	
+Approach Vol, veh/h               		      	320   	      	      	173   	      	      	184   	      	      	346   	
+Approach Delay, s/veh             		      	14.0  	      	      	11.9  	      	      	12.1  	      	      	14.3  	
+Approach LOS                      		      	B     	      	      	B     	      	      	B     	      	      	B     	
+
+Timer - Assigned Phs              		      	2     	      	4     	      	6     	      	8
+Phs Duration (G+Y+Rc), s          		      	30.0  	      	30.0  	      	30.0  	      	30.0
+Change Period (Y+Rc), s           		      	5.0   	      	5.0   	      	5.0   	      	5.0
+Max Green Setting (Gmax), s       		      	25.0  	      	25.0  	      	25.0  	      	25.0
+Max Q Clear Time (g_c+I1), s      		      	5.9   	      	9.7   	      	10.3  	      	5.7
+Green Ext Time (p_c), s           		      	1.0   	      	1.8   	      	1.9   	      	0.9
+
+Intersection Summary
+HCM 7th Control Delay, s/veh      				13.4
+HCM 7th LOS                       				B
+
+
+	Synchro 12 Report
+Job# 23013237A - R.H.	Page 0
+
+

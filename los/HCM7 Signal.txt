@@ -1,0 +1,55 @@
+﻿HCM 7th Signalized Intersection Summary
+1: 	10/02/2024
+
+
+Movement                          		EBL 	EBT 	EBR 	WBL 	WBT 	WBR 	NBL 	NBT 	NBR 	SBL 	SBT 	SBR
+Lane Configurations               		0   	<1> 	0   	0   	<1> 	0   	0   	<1> 	0   	0   	<1> 	0
+Traffic Volume (veh/h)            		20  	69  	93  	10  	40  	45  	5   	5   	2   	25  	22  	26
+Future Volume (veh/h)             		20  	69  	93  	10  	40  	45  	5   	5   	2   	25  	22  	26
+Initial Q (Qb), veh               		0   	0   	0   	0   	0   	0   	0   	0   	0   	0   	0   	0
+Lane Width Adj.                   		1.00	1.00	1.00	1.00	1.00	1.00	1.00	1.00	1.00	1.00	1.00	1.00
+Ped-Bike Adj(A_pbT)               		1.00	    	1.00	1.00	    	1.00	1.00	    	1.00	1.00	    	1.00
+Parking Bus, Adj                  		1.00	1.00	1.00	1.00	1.00	1.00	1.00	1.00	1.00	1.00	1.00	1.00
+Work Zone On Approach             		    	No  	    	    	No  	    	    	No  	    	    	No  	
+Adj Sat Flow, veh/h/ln            		1811	1870	1841	1841	1856	1781	1870	1781	1885	1796	1796	1781
+Adj Flow Rate, veh/h              		21  	79  	118 	10  	53  	56  	6   	6   	2   	29  	22  	27
+Peak Hour Factor                  		0.96	0.87	0.79	0.96	0.76	0.81	0.84	0.78	0.87	0.85	0.99	0.97
+Percent Heavy Veh, %              		6   	2   	4   	4   	3   	8   	2   	8   	1   	7   	7   	8
+Cap, veh/h                        		125 	281 	363 	115 	340 	318 	343 	313 	88  	302 	227 	215
+Arrive On Green                   		0.40	0.40	0.40	0.40	0.40	0.40	0.40	0.40	0.40	0.40	0.40	0.40
+Sat Flow, veh/h                   		66  	704 	908 	44  	849 	794 	537 	782 	220 	448 	567 	537
+Grp Volume(v), veh/h              		218 	0   	0   	119 	0   	0   	14  	0   	0   	78  	0   	0
+Grp Sat Flow(s),veh/h/ln          		1677	0   	0   	1687	0   	0   	1538	0   	0   	1552	0   	0
+Q Serve(g_s), s                   		0.0 	0.0 	0.0 	0.0 	0.0 	0.0 	0.0 	0.0 	0.0 	0.0 	0.0 	0.0
+Cycle Q Clear(g_c), s             		3.5 	0.0 	0.0 	1.8 	0.0 	0.0 	0.2 	0.0 	0.0 	1.2 	0.0 	0.0
+Prop In Lane                      		0.10	    	0.54	0.08	    	0.47	0.43	    	0.14	0.37	    	0.35
+Lane Grp Cap(c), veh/h            		769 	0   	0   	772 	0   	0   	744 	0   	0   	744 	0   	0
+***V/C Ratio(X)                      		0.28	0.00	0.00	0.15	0.00	0.00	0.02	0.00	0.00	0.10	0.00	0.00
+Avail Cap(c_a), veh/h             		769 	0   	0   	772 	0   	0   	744 	0   	0   	744 	0   	0
+HCM Platoon Ratio                 		1.00	1.00	1.00	1.00	1.00	1.00	1.00	1.00	1.00	1.00	1.00	1.00
+Upstream Filter(I)                		1.00	0.00	0.00	1.00	0.00	0.00	1.00	0.00	0.00	1.00	0.00	0.00
+Uniform Delay (d), s/veh          		8.3 	0.0 	0.0 	7.7 	0.0 	0.0 	7.3 	0.0 	0.0 	7.5 	0.0 	0.0
+Incr Delay (d2), s/veh            		0.9 	0.0 	0.0 	0.4 	0.0 	0.0 	0.0 	0.0 	0.0 	0.3 	0.0 	0.0
+Initial Q Delay(d3), s/veh        		0.0 	0.0 	0.0 	0.0 	0.0 	0.0 	0.0 	0.0 	0.0 	0.0 	0.0 	0.0
+%ile BackOfQ(50%),veh/ln          		1.1 	0.0 	0.0 	0.6 	0.0 	0.0 	0.1 	0.0 	0.0 	0.4 	0.0 	0.0
+Unsig. Movement Delay, s/veh      		    	    	    	    	    	    	    	    	    	    	    	
+LnGrp Delay(d), s/veh             		9.2 	0.0 	0.0 	8.2 	0.0 	0.0 	7.3 	0.0 	0.0 	7.8 	0.0 	0.0
+LnGrp LOS                         		A   	    	    	A   	    	    	A   	    	    	A   	    	
+Approach Vol, veh/h               		    	218 	    	    	119 	    	    	14  	    	    	78  	
+Approach Delay, s/veh             		    	9.2 	    	    	8.2 	    	    	7.3 	    	    	7.8 	
+Approach LOS                      		    	A   	    	    	A   	    	    	A   	    	    	A   	
+
+Timer - Assigned Phs              		    	2   	    	4   	    	6   	    	8
+Phs Duration (G+Y+Rc), s          		    	20.0	    	20.0	    	20.0	    	20.0
+Change Period (Y+Rc), s           		    	4.0 	    	4.0 	    	4.0 	    	4.0
+Max Green Setting (Gmax), s       		    	16.0	    	16.0	    	16.0	    	16.0
+Max Q Clear Time (g_c+I1), s      		    	2.2 	    	5.5 	    	3.2 	    	3.8
+Green Ext Time (p_c), s           		    	0.0 	    	0.9 	    	0.2 	    	0.4
+
+Intersection Summary
+HCM 7th Control Delay, s/veh      				8.6
+HCM 7th LOS                       				A
+
+
+Scenario 1  2:56 pm 10/01/2024 Baseline	Synchro 12 Report
+	Page 0

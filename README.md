@@ -1,6 +1,6 @@
 # Synchro-Automation
 
-An automation tool for the Synchro application.
+An automation tool to facilitate data processing for the Synchro application
 
 ## Overview
 
@@ -9,7 +9,6 @@ The `Synchro-Automation` tool automates interactions with the Synchro traffic an
 ## Features
 
 - **GUI for Easy Interaction**: The tool provides a graphical user interface for selecting model files, Synchro folders, and configuring settings.
-- **Automation with Synchro**: Automates interactions with the Synchro application using `pyautogui`.
 - **Data Synchronization**: Synchronizes data between the model files and the Synchro application.
 - **Import/Export Functionality**: Facilitates importing and exporting data to/from Synchro.
 - **Report Generation**: Generates reports based on the synchronized data.
@@ -19,7 +18,6 @@ The `Synchro-Automation` tool automates interactions with the Synchro traffic an
 ### Prerequisites
 
 - Python (version 3.6 or above)
-- Synchro software
 
 ### Steps
 
@@ -34,15 +32,11 @@ The `Synchro-Automation` tool automates interactions with the Synchro traffic an
     pip install -r requirements.txt
     ```
 
-3. Configure the settings:
-    - Open the `settings.json` file and configure it according to your environment.
-    - Specify paths and other necessary settings for the Synchro application.
-
 ## Usage
 
 1. Start the GUI application:
     ```bash
-    python main.py
+    python main_AD.py
     ```
 
 2. Use the GUI to:
@@ -51,16 +45,6 @@ The `Synchro-Automation` tool automates interactions with the Synchro traffic an
     - Configure additional settings.
 
 3. Start the synchronization process by clicking the "Start" button in the GUI.
-
-## Main Components
-
-### `gui.py`
-
-- **MainWindow**: Represents the main window of the application. Contains methods to set up the UI, create various UI elements (labels, buttons), and handle user interactions. Provides functionality to launch other components like settings and file matching tools.
-
-### `main.py`
-
-- The main entry point for the application. Initializes the `Base` and `MainWindow` classes and starts the application.
 
 ## Contributing
 
@@ -76,6 +60,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Acknowledgments
 
-- Authors: Phillip Gotthelf, Alex Dering
+- Authors: Philip Gotthelf, Alex Dering
 
 For more details, refer to the [documentation](https://github.com/deringar/Synchro-Automation/blob/main/README.md).

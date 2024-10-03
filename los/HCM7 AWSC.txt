@@ -1,0 +1,54 @@
+﻿HCM 7th AWSC
+3: 	10/02/2024
+
+
+
+Intersection                      		     	     	     	     	     	     	     	     	     	     	     	
+Intersection Delay, s/veh         		8.6  	     	     	     	     	     	     	     	     	     	     	
+Intersection LOS                  		A    	     	     	     	     	     	     	     	     	     	     	
+                                  		     	     	     	     	     	     	     	     	     	     	     	
+
+Movement                          		EBL  	EBT  	EBR  	WBL  	WBT  	WBR  	NBL  	NBT  	NBR  	SBL  	SBT  	SBR
+Lane Configurations               		0    	<1>  	0    	0    	<1>  	0    	0    	<1>  	0    	0    	<1>  	0
+Traffic Vol, veh/h                		40   	27   	62   	17   	1    	82   	88   	60   	2    	44   	6    	82
+Future Vol, veh/h                 		40   	27   	62   	17   	1    	82   	88   	60   	2    	44   	6    	82
+Peak Hour Factor                  		0.79 	0.87 	0.97 	0.92 	0.85 	0.96 	1.00 	0.98 	0.86 	1.00 	0.83 	0.96
+Heavy Vehicles, %                 		9    	9    	4    	9    	3    	3    	1    	8    	5    	3    	9    	3
+Mvmt Flow                         		51   	31   	64   	18   	1    	85   	88   	61   	2    	44   	7    	85
+Number of Lanes                   		0    	1    	0    	0    	1    	0    	0    	1    	0    	0    	1    	0
+
+Approach                          		EB   	     	     	WB   	     	     	NB   	     	     	SB   	     	
+Opposing Approach                 		WB   	     	     	EB   	     	     	SB   	     	     	NB   	     	
+Opposing Lanes                    		1    	     	     	1    	     	     	1    	     	     	1    	     	
+Conflicting Approach Left         		SB   	     	     	NB   	     	     	EB   	     	     	WB   	     	
+Conflicting Lanes Left            		1    	     	     	1    	     	     	1    	     	     	1    	     	
+Conflicting Approach Right        		NB   	     	     	SB   	     	     	WB   	     	     	EB   	     	
+Conflicting Lanes Right           		1    	     	     	1    	     	     	1    	     	     	1    	     	
+HCM Control Delay, s/veh          		8.7  	     	     	8.1  	     	     	9    	     	     	8.3  	     	
+HCM LOS                           		A    	     	     	A    	     	     	A    	     	     	A    	     	
+        
+
+Lane                              		     	NBLn1	EBLn1	WBLn1	SBLn1
+Vol Left, %                       		     	59%  	31%  	17%  	33%
+Vol Thru, %                       		     	40%  	21%  	1%   	5%
+Vol Right, %                      		     	1%   	48%  	82%  	62%
+Sign Control                      		     	Stop 	Stop 	Stop 	Stop
+Traffic Vol by Lane               		     	150  	129  	100  	132
+LT Vol                            		     	88   	40   	17   	44
+Through Vol                       		     	60   	27   	1    	6
+RT Vol                            		     	2    	62   	82   	82
+Lane Flow Rate                    		     	152  	146  	105  	137
+Geometry Grp                      		     	1    	1    	1    	1
+Degree of Util (X)                		     	0.2  	0.187	0.13 	0.167
+Departure Headway (Hd)            		     	4.759	4.618	4.44 	4.407
+Convergence, Y/N                  		     	Yes  	Yes  	Yes  	Yes
+Cap                               		     	753  	776  	805  	812
+Service Time                      		     	2.798	2.656	2.48 	2.446
+HCM Lane V/C Ratio                		     	0.202	0.188	0.13 	0.169
+HCM Control Delay, s/veh          		     	9    	8.7  	8.1  	8.3
+HCM Lane LOS                      		     	A    	A    	A    	A
+HCM 95th-tile Q                   		     	0.7  	0.7  	0.4  	0.6
+
+
+Scenario 1  2:56 pm 10/01/2024 Baseline	Synchro 12 Report
+	Page 0

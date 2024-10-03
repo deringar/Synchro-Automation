@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
 """
-Last modified on Fri Sep 27 2024
+Created on Fri Sep 27 2024
+Last modified on Thurs Oct 3 2024
 
-@authors: philip.gotthelf, alex.dering
+@authors: philip.gotthelf, alex.dering - Colliers Engineering & Design
 """
 
-from core import MainWindow, Base
+from core import MainWindow, Base, read_input_file
 
 # Step 2: V/C Ratio, LOS
 
 if __name__ == '__main__':
+    read_input_file("test-input.xlsx")
     # tfile = 'C:\\Users\\pgard\\Documents\\Synchro Automation\\synchronizer\\tests\\2020 EXISTING AM.txt'
     # import pprint
     # pprint.pprint(standardize(tfile))

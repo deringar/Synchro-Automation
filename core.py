@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-Created on Fri Sep 27 11:19:28 2024
+Created on Fri Sep 27 2024
+Last modified on Thurs Oct 3 2024
 
-@authors: philip.gotthelf, alex.dering
+@authors: philip.gotthelf, alex.dering - Colliers Engineering & Design
 """
 
 # main_window.py
@@ -229,6 +230,10 @@ def is_empty(target):
         else:
             return True  # The string is empty
     return False  # The target is not empty (not None or empty string)
+
+"""
+STEP 2
+"""
 
 # Identify the type of control based on the record name
 def identify_type(record_name):
@@ -1523,6 +1528,5 @@ class Copier:
         self.window.destroy()
 
 
-if __name__ == "__main__":
-    read_input_file("test-input.xlsx")
-
+# if __name__ == "__main__":
+#     read_input_file("test-input.xlsx")

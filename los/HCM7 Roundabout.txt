@@ -1,0 +1,44 @@
+﻿HCM 7th Roundabout
+4: 	10/02/2024
+
+
+
+Intersection                      		       	       	       	       	       	       	       	       	       	       	       	
+Intersection Delay, s/veh         		4.0    	       	       	       	       	       	       	       	       	       	       	
+Intersection LOS                  		A      	       	       	       	       	       	       	       	       	       	       	
+
+Approach                          		       	EB     	       	       	WB     	       	       	NB     	       	       	SB     	
+Entry Lanes                       		       	1      	       	       	1      	       	       	1      	       	       	1      	
+Conflicting Circle Lanes          		       	1      	       	       	1      	       	       	1      	       	       	1      	
+Adj Approach Flow, veh/h          		       	159    	       	       	68     	       	       	151    	       	       	84     	
+Demand Flow Rate, veh/h           		       	166    	       	       	69     	       	       	157    	       	       	89     	
+Vehicles Circulating, veh/h       		       	75     	       	       	200    	       	       	111    	       	       	154    	
+Vehicles Exiting, veh/h           		       	168    	       	       	68     	       	       	130    	       	       	115    	
+Ped Vol Crossing Leg, #/h         		       	0      	       	       	0      	       	       	0      	       	       	0      	
+Ped Cap Adj                       		       	1.000  	       	       	1.000  	       	       	1.000  	       	       	1.000  	
+Approach Delay, s/veh             		       	4.0    	       	       	3.8    	       	       	4.1    	       	       	3.9    	
+Approach LOS                      		       	A      	       	       	A      	       	       	A      	       	       	A      	
+
+Lane                              		Left   	       	       	Left   	       	       	Left   	       	       	Left   	       	
+Designated Moves                  		LTR    	       	       	LTR    	       	       	LTR    	       	       	LTR    	       	
+Assumed Moves                     		LTR    	       	       	LTR    	       	       	LTR    	       	       	LTR    	       	
+RT Channelized                    		       	       	       	       	       	       	       	       	       	       	       	
+Lane Util                         		1.000  	       	       	1.000  	       	       	1.000  	       	       	1.000  	       	
+Follow-Up Headway, s              		2.609  	       	       	2.609  	       	       	2.609  	       	       	2.609  	       	
+Critical Headway, s               		4.976  	       	       	4.976  	       	       	4.976  	       	       	4.976  	       	
+A (Intercept)                     		1380   	       	       	1380   	       	       	1380   	       	       	1380   	       	
+B (Slope)                         		1.02e-3	       	       	1.02e-3	       	       	1.02e-3	       	       	1.02e-3	       	
+Entry Flow, veh/h                 		166    	       	       	69     	       	       	157    	       	       	89     	       	
+Cap Entry Lane, veh/h             		1278   	       	       	1125   	       	       	1232   	       	       	1179   	       	
+Entry HV Adj Factor               		0.960  	       	       	0.982  	       	       	0.962  	       	       	0.942  	       	
+Flow Entry, veh/h                 		159    	       	       	68     	       	       	151    	       	       	84     	       	
+Cap Entry, veh/h                  		1227   	       	       	1105   	       	       	1186   	       	       	1111   	       	
+V/C Ratio                         		0.130  	       	       	0.061  	       	       	0.127  	       	       	0.075  	       	
+Control Delay, s/veh              		4.0    	       	       	3.8    	       	       	4.1    	       	       	3.9    	       	
+LOS                               		A      	       	       	A      	       	       	A      	       	       	A      	       	
+95th %tile Queue, veh             		0      	       	       	0      	       	       	0      	       	       	0      	       	
+
+
+
+Scenario 1  2:56 pm 10/01/2024 Baseline	Synchro 12 Report
+	Page 0
