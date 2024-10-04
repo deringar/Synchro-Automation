@@ -1,0 +1,44 @@
+﻿HCM 7th Roundabout
+4: 	10/03/2024
+
+
+
+Intersection                      		        	        	        	        	        	        	        	        	        	        	        	
+Intersection Delay, s/veh         		3.6     	        	        	        	        	        	        	        	        	        	        	
+Intersection LOS                  		A       	        	        	        	        	        	        	        	        	        	        	
+
+Approach                          		        	EB      	        	        	WB      	        	        	NB      	        	        	SB      	
+Entry Lanes                       		        	2       	        	        	2       	        	        	1       	        	        	1       	
+Conflicting Circle Lanes          		        	2       	        	        	2       	        	        	2       	        	        	2       	
+Adj Approach Flow, veh/h          		        	159     	        	        	68      	        	        	151     	        	        	84      	
+Demand Flow Rate, veh/h           		        	166     	        	        	69      	        	        	157     	        	        	89      	
+Vehicles Circulating, veh/h       		        	75      	        	        	200     	        	        	111     	        	        	154     	
+Vehicles Exiting, veh/h           		        	168     	        	        	68      	        	        	130     	        	        	115     	
+Ped Vol Crossing Leg, #/h         		        	0       	        	        	0       	        	        	0       	        	        	0       	
+Ped Cap Adj                       		        	1.000   	        	        	1.000   	        	        	1.000   	        	        	1.000   	
+Approach Delay, s/veh             		        	3.4     	        	        	3.4     	        	        	3.9     	        	        	3.7     	
+Approach LOS                      		        	A       	        	        	A       	        	        	A       	        	        	A       	
+
+Lane                              		Left    	Right   	        	Left    	Right   	        	Left    	        	        	Left    	        	
+Designated Moves                  		LT      	TR      	        	LT      	TR      	        	LTR     	        	        	LTR     	        	
+Assumed Moves                     		LT      	R       	        	LT      	TR      	        	LTR     	        	        	LTR     	        	
+RT Channelized                    		        	        	        	        	        	        	        	        	        	        	        	
+Lane Util                         		0.319   	0.681   	        	0.464   	0.536   	        	1.000   	        	        	1.000   	        	
+Follow-Up Headway, s              		2.667   	2.535   	        	2.667   	2.535   	        	2.535   	        	        	2.535   	        	
+Critical Headway, s               		4.645   	4.328   	        	4.645   	4.328   	        	4.328   	        	        	4.328   	        	
+A (Intercept)                     		1350    	1420    	        	1350    	1420    	        	1420    	        	        	1420    	        	
+B (Slope)                         		9.199e-4	8.501e-4	        	9.199e-4	8.501e-4	        	8.501e-4	        	        	8.501e-4	        	
+Entry Flow, veh/h                 		53      	113     	        	32      	37      	        	157     	        	        	89      	        	
+Cap Entry Lane, veh/h             		1260    	1332    	        	1123    	1198    	        	1292    	        	        	1246    	        	
+Entry HV Adj Factor               		0.969   	0.956   	        	0.995   	0.971   	        	0.962   	        	        	0.942   	        	
+Flow Entry, veh/h                 		51      	108     	        	32      	36      	        	151     	        	        	84      	        	
+Cap Entry, veh/h                  		1220    	1273    	        	1118    	1163    	        	1244    	        	        	1174    	        	
+V/C Ratio                         		0.042   	0.085   	        	0.028   	0.031   	        	0.121   	        	        	0.071   	        	
+Control Delay, s/veh              		3.3     	3.5     	        	3.5     	3.3     	        	3.9     	        	        	3.7     	        	
+LOS                               		A       	A       	        	A       	A       	        	A       	        	        	A       	        	
+95th %tile Queue, veh             		0       	0       	        	0       	0       	        	0       	        	        	0       	        	
+
+
+
+AMEX  2:56 pm 10/01/2024 Baseline	Synchro 12 Report
+	Page 0

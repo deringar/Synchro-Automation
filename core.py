@@ -25,13 +25,217 @@ from openpyxl import load_workbook, Workbook
 
 """
 ____________________________ AD _____________________________
+
+write_headers(ws, 'C')
+write_headers(ws, 'F')
+write_headers(ws, 'I')
 """
 
-def parse_text_file(file_path):
-    def parse_roundabout(file_path):
-        return
-    return
+def write_to_excel(file_path, lane_groups, delay, vc_ratio, los):
+    import os
+    from openpyxl import Workbook
 
+    # Helper function to transform each sublist into a dictionary with lane directions
+    def separate_characters(sublist):
+        result_dict = {}
+        for item in sublist:
+            rest_chars = ''.join([char for char in item if char not in 'LTR'])
+            separated_chars = [char for char in item if char in 'LTR']
+            
+            if rest_chars in result_dict:
+                result_dict[rest_chars].extend(separated_chars)
+            else:
+                result_dict[rest_chars] = separated_chars
+        
+        print(f"separate_characters({sublist}) -> {result_dict}")
+        return result_dict
+    
+    # Helper function to write headers
+    def write_headers(ws, start_col='C'):
+        headers = ['V/c', 'LOS', 'Delay']
+        for idx, header in enumerate(headers):
+            col = chr(ord(start_col) + idx)
+            ws[f'{col}2'] = header
+
+    # Get the file name without extension
+    file_with_ext = os.path.basename(file_path)
+    file_name = os.path.splitext(file_with_ext)[0]
+    
+    # Create a new Excel workbook and add a sheet
+    wb = Workbook()
+    ws = wb.active
+    
+    # Write the file name in cell A1
+    ws['A1'] = file_name
+    
+    # Write the headers for V/C, LOS, and Delay in row 2 (starting at column C)
+    write_headers(ws, 'C')
+    
+    # Define the order of keys to process
+    key_order = ['EB', 'WB', 'NB', 'SB', 'NE', 'NW', 'SE', 'SW']
+
+    # Group lane_groups, vc_ratio, los, and delay into tuples and print for debugging
+    combined_data = list(zip(lane_groups, vc_ratio, los, delay))
+    print(f"Combined Data Before Sorting: {combined_data}")
+    
+    # Sort the tuples based on the lane groups in the specified key order
+    sorted_data = []
+    for key in key_order:
+        for lg, vc, l, d in combined_data:
+            if any(key in direction for direction in lg):
+                sorted_data.append((lg, vc, l, d))
+    
+    print(f"Sorted Data: {sorted_data}")
+
+    # Keep track of the last used row
+    current_row = 2  # Start from row 2, after headers
+
+    # Write the sorted data into the Excel file
+    for idx, (lg, vc, l, d) in enumerate(sorted_data, start=1):
+        # Print the intersection number above each set
+        ws[f'A{current_row}'] = f"Intersection {idx}"
+        current_row += 1
+
+        print(f"Writing Lane Group {lg}, V/C {vc}, LOS {l}, Delay {d} at Row {current_row}")
+        separated_lg = separate_characters(lg)
+        
+        for direction in key_order:
+            if direction in separated_lg:
+                ws[f'A{current_row}'] = direction
+                for lane_idx, lane_item in enumerate(separated_lg[direction]):
+                    ws[f'B{current_row + lane_idx}'] = lane_item
+                current_row += len(separated_lg[direction])
+        
+        # Write V/C, LOS, and Delay data into columns C, D, and E, respectively
+        for data_idx in range(len(vc)):
+            ws[f'C{current_row}'] = vc[data_idx] if data_idx < len(vc) else ''
+            ws[f'D{current_row}'] = l[data_idx] if data_idx < len(l) else ''
+            ws[f'E{current_row}'] = d[data_idx] if data_idx < len(d) else ''
+            current_row += 1
+    
+    # Save the workbook
+    excel_file_path = f"{file_name}_results.xlsx"
+    wb.save(excel_file_path)
+    print(f"Intersection data written to {excel_file_path}")
+
+
+
+def separate_characters(result):
+    # Initialize a list to hold the dictionaries
+    transformed_results = []
+    
+    # Iterate through each sublist in the result
+    for sublist in result:
+        # Initialize a dictionary for this sublist
+        result_dict = {}
+        
+        # Process each string in the sublist
+        for item in sublist:
+            # Extract the characters that are not 'L', 'T', or 'R' for the prefix
+            rest_chars = ''.join([char for char in item if char not in 'LTR'])  # Characters other than L, T, R
+            separated_chars = [char for char in item if char in 'LTR']  # Characters that are L, T, or R
+            
+            # Use the prefix as the key in the dictionary
+            if rest_chars in result_dict:
+                # Append to the existing entry if the key already exists
+                result_dict[rest_chars].extend(separated_chars)
+            else:
+                # Create a new entry if the key does not exist
+                result_dict[rest_chars] = separated_chars
+
+        # Append the dictionary to the list of transformed results
+        transformed_results.append(result_dict)
+    
+    return transformed_results
+                      
+def parse_text_file(file_path):
+    int_regex = r'\d+:'
+    
+    search_phrase = "Minor Lane/Major Mvmt"
+    
+    search_terms = [r'Delay', r'V/C Ratio', r'LOS']
+    
+    # List to store matching lines
+    matching_lines = []
+    result = []
+        
+    # Initialize lists for each search term
+    delay_results = []
+    vc_ratio_results = []
+    los_results = []
+    
+    # Open and read the file into memory
+    with open(file_path, 'r') as file:
+        lines = file.readlines()  # Read all lines
+    
+    # Find the line numbers containing the integer followed by a colon
+    for line_number, line in enumerate(lines, start=1):
+        if re.search(int_regex, line):
+            matching_lines.append(line_number)
+    
+    # Now search from each line in matching_lines until the next line, looking for "Minor Lane/Major Mvmt"
+    for i, start_line in enumerate(matching_lines):
+        # Set the end line as the next matching line or the end of the file
+        end_line = matching_lines[i+1] if i+1 < len(matching_lines) else len(lines)
+        
+        # Search for "Minor Lane/Major Mvmt" between start_line and end_line
+        for line_number in range(start_line, end_line):
+            if search_phrase in lines[line_number]:
+                # Pattern to remove "Ln" followed by digits
+                remove_ln_pattern = r'Ln\d+'
+                # Get the text after "Minor Lane/Major Mvmt" and remove whitespaces/tabs
+                after_phrase = lines[line_number].split(search_phrase)[1].strip()
+                # Split by whitespace and rejoin to remove extra spaces and tabs
+                cleaned_value = ' '.join(after_phrase.split())
+                # Remove "Ln" followed by digits
+                cleaned_value = re.sub(remove_ln_pattern, '', cleaned_value)
+                # Remove any leading or trailing whitespace after the substitution
+                cleaned_value = cleaned_value.strip()
+                # Split the cleaned value into separate elements
+                result.append(cleaned_value.split())
+                
+                # Now search for Delay, V/c Ratio, and LOS in lines below the current line
+                for term in search_terms:
+                    term_results = []  # Temporary list to hold results for the current term
+                    for search_line_number in range(line_number + 1, end_line):
+                        if re.search(term, lines[search_line_number], re.IGNORECASE):
+                            # Ensure the term exists in the line before splitting
+                            if term in lines[search_line_number]:
+                                parts = lines[search_line_number].split(term)
+                                if len(parts) > 1:  # Check if there is text after the term
+                                    after_term = parts[1].strip()
+    
+                                    # Check which term we're processing
+                                    if term.lower() == 'delay' or term.lower() == 'v/c ratio':
+                                        # Extract only numbers (including decimals) and "-"
+                                        numbers = re.findall(r'\d+\.\d+|\d+|-', after_term)
+                                        term_results = []  # Reset for new line results
+                                        for num in numbers:
+                                            if num == '-':
+                                                term_results.append(num)  # Keep '-' as string
+                                            else:
+                                                term_results.append(float(num))  # Convert numbers to float
+    
+                                    elif term.lower() == 'los':
+                                        # Extract only single capitalized characters and "-"
+                                        capital_letters = re.findall(r'[A-Z]|-', after_term)
+                                        term_results.extend(capital_letters)  # Store in temporary list
+    
+                    # Add the term results to the corresponding results list
+                    if term.lower() == 'delay':
+                        delay_results.append(term_results)  # Store list of results for Delay
+                    elif term.lower() == 'v/c ratio':
+                        vc_ratio_results.append(term_results)  # Store list of results for V/c Ratio
+                    elif term.lower() == 'los':
+                        los_results.append(term_results)  # Store list of results for LOS
+    
+    # Print the results
+    print("Result:", result)
+    print("Delay Results:", delay_results)
+    print("V/c Ratio Results:", vc_ratio_results)
+    print("LOS Results:", los_results)
+    return result, delay_results, vc_ratio_results, los_results
+    
 def save_as_csv(excel_file_path, csv_file_path):
     workbook = load_workbook(filename=excel_file_path)
     sheet = workbook.active
@@ -1533,5 +1737,10 @@ class Copier:
         self.window.destroy()
 
 
-# if __name__ == "__main__":
-#     read_input_file("test-input.xlsx")
+if __name__ == "__main__":
+    # read_input_file("test-input.xlsx")
+    file = "test/Test Report 1.txt"
+    movement, delay, vc, los = parse_text_file(file)
+    lane_groups = separate_characters(movement)
+    print(f"\nLane groups:\n{lane_groups}")
+    write_to_excel(file, movement, delay, vc, los)
