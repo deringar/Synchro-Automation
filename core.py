@@ -21,7 +21,7 @@ import json  # JSON module to parse and manipulate JSON data.
 from collections import OrderedDict  # Import ordered dictionary to maintain the order of keys.
 from shutil import copy  # Used to copy files or directories.
 from openpyxl import load_workbook, Workbook
-
+import pandas as pd
 
 """
 ____________________________ AD _____________________________
@@ -32,92 +32,134 @@ write_headers(ws, 'I')
 """
 
 def write_to_excel(file_path, lane_groups, delay, vc_ratio, los):
-    import os
-    from openpyxl import Workbook
-
+    
     # Helper function to transform each sublist into a dictionary with lane directions
     def separate_characters(sublist):
         result_dict = {}
         for item in sublist:
+            # Extract the prefix and 'L', 'T', 'R' characters
             rest_chars = ''.join([char for char in item if char not in 'LTR'])
             separated_chars = [char for char in item if char in 'LTR']
             
             if rest_chars in result_dict:
-                result_dict[rest_chars].extend(separated_chars)
+                result_dict[rest_chars].extend(separated_chars)  # Append characters if the key exists
             else:
-                result_dict[rest_chars] = separated_chars
+                result_dict[rest_chars] = separated_chars  # Create new entry for the key
         
-        print(f"separate_characters({sublist}) -> {result_dict}")
         return result_dict
+    
+    # Function to enumerate the lane groups and create a dictionary
+    def enumerate_result_list(result):
+        enumerated_dict = {}
+        for index, item in enumerate(result, start=1):
+            if isinstance(item, list):  # Ensure each item is processed as a list
+                enumerated_dict[index] = separate_characters(item)  # Transform each list into a dictionary
+            else:
+                enumerated_dict[index] = item  # Handle already existing dictionaries
+        return enumerated_dict
     
     # Helper function to write headers
     def write_headers(ws, start_col='C'):
         headers = ['V/c', 'LOS', 'Delay']
         for idx, header in enumerate(headers):
-            col = chr(ord(start_col) + idx)
-            ws[f'{col}2'] = header
+            col = chr(ord(start_col) + idx)  # Dynamic column calculation
+            ws[f'{col}2'] = header  # Write the header to row 2
 
     # Get the file name without extension
     file_with_ext = os.path.basename(file_path)
     file_name = os.path.splitext(file_with_ext)[0]
     
+    # Enumerate the lane groups
+    intersection_data = enumerate_result_list(lane_groups)
+    
     # Create a new Excel workbook and add a sheet
     wb = Workbook()
-    ws = wb.active
+    ws = wb.active  # Get the active worksheet
     
     # Write the file name in cell A1
     ws['A1'] = file_name
     
     # Write the headers for V/C, LOS, and Delay in row 2 (starting at column C)
     write_headers(ws, 'C')
+    write_headers(ws, 'F')
+    write_headers(ws, 'I')
     
     # Define the order of keys to process
     key_order = ['EB', 'WB', 'NB', 'SB', 'NE', 'NW', 'SE', 'SW']
 
-    # Group lane_groups, vc_ratio, los, and delay into tuples and print for debugging
-    combined_data = list(zip(lane_groups, vc_ratio, los, delay))
-    print(f"Combined Data Before Sorting: {combined_data}")
-    
-    # Sort the tuples based on the lane groups in the specified key order
-    sorted_data = []
-    for key in key_order:
-        for lg, vc, l, d in combined_data:
-            if any(key in direction for direction in lg):
-                sorted_data.append((lg, vc, l, d))
-    
-    print(f"Sorted Data: {sorted_data}")
-
     # Keep track of the last used row
-    current_row = 2  # Start from row 2, after headers
-
-    # Write the sorted data into the Excel file
-    for idx, (lg, vc, l, d) in enumerate(sorted_data, start=1):
-        # Print the intersection number above each set
-        ws[f'A{current_row}'] = f"Intersection {idx}"
-        current_row += 1
-
-        print(f"Writing Lane Group {lg}, V/C {vc}, LOS {l}, Delay {d} at Row {current_row}")
-        separated_lg = separate_characters(lg)
-        
-        for direction in key_order:
-            if direction in separated_lg:
-                ws[f'A{current_row}'] = direction
-                for lane_idx, lane_item in enumerate(separated_lg[direction]):
-                    ws[f'B{current_row + lane_idx}'] = lane_item
-                current_row += len(separated_lg[direction])
-        
-        # Write V/C, LOS, and Delay data into columns C, D, and E, respectively
-        for data_idx in range(len(vc)):
-            ws[f'C{current_row}'] = vc[data_idx] if data_idx < len(vc) else ''
-            ws[f'D{current_row}'] = l[data_idx] if data_idx < len(l) else ''
-            ws[f'E{current_row}'] = d[data_idx] if data_idx < len(d) else ''
-            current_row += 1
+    current_row = 2  # Starting at row 2 (A2 will be filled first)
     
+    # Iterate through the enumerated intersection data
+    for intersection_id, data in intersection_data.items():
+        # Write the intersection ID in column A
+        ws[f'A{current_row}'] = intersection_id
+        
+        # Move to the next row after writing the intersection ID
+        current_row += 1
+        
+        # Ensure that 'data' is a dictionary before attempting to access its keys
+        if isinstance(data, dict):
+            # For each key in the specified order:
+            for key in key_order:
+                # Write the key in column A
+                ws[f'A{current_row}'] = key
+                
+                # Check if there's a corresponding value in the lane data
+                if key in data and data[key]:  # If values exist
+                    # Write the corresponding values in column B, starting from the current row
+                    for idx, item in enumerate(data[key]):
+                        ws[f'B{current_row + idx}'] = item  # Write each value downwards in column B
+                    # Update the current_row to the next empty row after writing all values
+                    current_row += len(data[key])
+                else:
+                    # If no values exist, write an empty cell in column B
+                    ws[f'B{current_row}'] = ''  # Explicitly write an empty string
+                    current_row += 1  # Move to the next row for the next key
+
+    # Write V/C, LOS, and Delay data into their respective columns, ensuring empty entries are included
+    # Start from row 3 (the row after the headers)
+    
+    # Write V/C Ratio
+    current_row_vc = 3  # Start writing V/C values
+    for idx, vc_list in enumerate(vc_ratio):
+        if idx < len(intersection_data):  # Ensure we don't exceed the intersection data length
+            for item in vc_list:
+                ws[f'C{current_row_vc}'] = item  # Write each value downwards in column C
+                current_row_vc += 1  # Move to the next row
+            # Fill empty cells if the length of vc_list is shorter than the max
+            while current_row_vc < (3 + len(vc_ratio)):
+                ws[f'C{current_row_vc}'] = ''  # Write an empty string
+                current_row_vc += 1
+
+    # Write LOS values
+    current_row_los = 3  # Start writing LOS values
+    for idx, los_list in enumerate(los):
+        if idx < len(intersection_data):  # Ensure we don't exceed the intersection data length
+            for item in los_list:
+                ws[f'D{current_row_los}'] = item  # Write each value downwards in column D
+                current_row_los += 1  # Move to the next row
+            # Fill empty cells if the length of los_list is shorter than the max
+            while current_row_los < (3 + len(los)):
+                ws[f'D{current_row_los}'] = ''  # Write an empty string
+                current_row_los += 1
+
+    # Write Delay values
+    current_row_delay = 3  # Start writing Delay values
+    for idx, delay_list in enumerate(delay):
+        if idx < len(intersection_data):  # Ensure we don't exceed the intersection data length
+            for item in delay_list:
+                ws[f'E{current_row_delay}'] = item  # Write each value downwards in column E
+                current_row_delay += 1  # Move to the next row
+            # Fill empty cells if the length of delay_list is shorter than the max
+            while current_row_delay < (3 + len(delay)):
+                ws[f'E{current_row_delay}'] = ''  # Write an empty string
+                current_row_delay += 1
+
     # Save the workbook
     excel_file_path = f"{file_name}_results.xlsx"
     wb.save(excel_file_path)
     print(f"Intersection data written to {excel_file_path}")
-
 
 
 def separate_characters(result):
@@ -229,12 +271,17 @@ def parse_text_file(file_path):
                     elif term.lower() == 'los':
                         los_results.append(term_results)  # Store list of results for LOS
     
+    # Merge results into tuples
+    merged_results = []
+    for vc_list, los_list, delay_list in zip(vc_ratio_results, los_results, delay_results):
+        merged_results.append(list(zip(vc_list, los_list, delay_list)))
+    
     # Print the results
     print("Result:", result)
     print("Delay Results:", delay_results)
     print("V/c Ratio Results:", vc_ratio_results)
     print("LOS Results:", los_results)
-    return result, delay_results, vc_ratio_results, los_results
+    return result, merged_results
     
 def save_as_csv(excel_file_path, csv_file_path):
     workbook = load_workbook(filename=excel_file_path)
@@ -527,7 +574,7 @@ def find_line(data, search, give_index=False):
 
 # Get overall values like delay and LOS based on control type
 def get_overall(data_list, control_type):
-    # returns overall values in form: [delay, LOS]
+    # returns overall values in the form: [delay, LOS]
 
     # Determine the keys based on the control type
     if control_type == 'hcm signalized':
@@ -562,6 +609,9 @@ def get_overall(data_list, control_type):
     output = [None, None]
     for index, key in enumerate(keys):
         row = find_line(data_list, key)  # Find the row for each key
+        if row is None:
+            print(f"Warning: Key '{key}' not found in data_list for control type '{control_type}'.")
+            continue  # Skip this key if not found
         for entry in row[2:]:  # Skip the first two columns
             if entry:  # Get the first non-empty entry
                 output[index] = entry
@@ -570,261 +620,272 @@ def get_overall(data_list, control_type):
     return output  # Return the overall values
 
 # Standardize the results from the file
-def standardize(results_file):
-    # Read the content of the results file
-    with open(results_file) as f:
-        reader = csv.reader(f, delimiter='\t')
-        file_content = list(reader)  # Store the file content as a list
-    database = dict()  # To store the standardized data
-    parsed = get_bounds(results_file)  # Get intersection bounds and types
+# def standardize(results_file):
+#     # Read the content of the results file
+#     with open(results_file) as f:
+#         reader = csv.reader(f, delimiter='\t')
+#         file_content = list(reader)  # Store the file content as a list
+#     database = dict()  # To store the standardized data
+#     parsed = get_bounds(results_file)  # Get intersection bounds and types
 
-    # Iterate through parsed intersections to build the database
-    for intersection in parsed:
-        db = parsed[intersection]  # Get data for the intersection
-        start = min(db['bounds'])  # Get the starting index for bounds
-        end = max(db['bounds'])  # Get the ending index for bounds
-        subset = file_content[start:end]  # Get the relevant data subset
-        control_type = db['type']  # Get the control type
-        database[intersection] = OrderedDict()  # Initialize an ordered dictionary for intersection
-        database[intersection]['overall'] = dict()  # Initialize overall data dictionary
-        delay, los = get_overall(subset, control_type)  # Get delay and LOS
-        database[intersection]['overall']['delay'] = delay  # Store delay
-        database[intersection]['overall']['los'] = los  # Store LOS
+    
+    
+#     # Iterate through parsed intersections to build the database
+#     for intersection in parsed:
+#         db = parsed[intersection]  # Get data for the intersection
+#         start = min(db['bounds'])  # Get the starting index for bounds
+#         end = max(db['bounds'])  # Get the ending index for bounds
+#         subset = file_content[start:end]  # Get the relevant data subset
+#         control_type = db['type']  # Get the control type
+#         database[intersection] = OrderedDict()  # Initialize an ordered dictionary for intersection
+#         database[intersection]['overall'] = dict()  # Initialize overall data dictionary
+#         delay, los = get_overall(subset, control_type)  # Get delay and LOS
+#         database[intersection]['overall']['delay'] = delay  # Store delay
+#         database[intersection]['overall']['los'] = los  # Store LOS
 
-        # Initialize storage variables for detailed data
-        header_by_int = OrderedDict()  # Movement headers by intersection
-        secondary_key = OrderedDict()  # Secondary keys for alternate headers
-        second_info = list()  # List to store additional information
-        header_by_int_alt = dict()  # Alternate movement headers
-        roundabout_lanes = list()  # To store roundabout lane information
+#         # Initialize storage variables for detailed data
+#         header_by_int = OrderedDict()  # Movement headers by intersection
+#         secondary_key = OrderedDict()  # Secondary keys for alternate headers
+#         second_info = list()  # List to store additional information
+#         header_by_int_alt = dict()  # Alternate movement headers
+#         roundabout_lanes = list()  # To store roundabout lane information
 
-        # Declare search parameters based on control type
-        if control_type == 'hcm signalized':
-            header_key = 'Movement'
+#         # Declare search parameters based on control type
+#         if control_type == 'hcm signalized':
+#             header_key = 'Movement'
 
-            lookup = {'V/C Ratio(X)': 'vc_ratio',
-                      'LnGrp Delay(d),s/veh': 'ln_delay',
-                      'LnGrp LOS': 'ln_los',
-                      'Approach Delay, s/veh': 'app_delay',
-                      'Approach LOS': 'app_los'}
+#             lookup = {'V/C Ratio(X)': 'vc_ratio',
+#                       'LnGrp Delay(d),s/veh': 'ln_delay',
+#                       'LnGrp LOS': 'ln_los',
+#                       'Approach Delay, s/veh': 'app_delay',
+#                       'Approach LOS': 'app_los'}
 
-        elif control_type == 'hcm all way stop':
+#         elif control_type == 'hcm all way stop':
 
-            header_key = 'Movement'
-            secondary_header_key = 'Lane'
+#             header_key = 'Movement'
+#             secondary_header_key = 'Lane'
 
-            lookup = {'HCM Control Delay': 'app_delay',
-                      'HCM LOS': 'app_los'}
+#             lookup = {'HCM Control Delay': 'app_delay',
+#                       'HCM LOS': 'app_los'}
 
-            lookup_2 = {'HCM Lane V/C Ratio': 'vc_ratio',
-                        'HCM Control Delay': 'ln_delay',
-                        'HCM Lane LOS': 'ln_los'}
+#             lookup_2 = {'HCM Lane V/C Ratio': 'vc_ratio',
+#                         'HCM Control Delay': 'ln_delay',
+#                         'HCM Lane LOS': 'ln_los'}
 
-        elif control_type == 'hcm two way stop':
+#         elif control_type == 'hcm two way stop':
 
-            header_key = 'Movement'
-            secondary_header_key = 'Minor Lane/Major Mvmt'
-            lookup = {'HCM Control Delay, s': 'app_delay',
-                      'HCM LOS': 'app_los'}
+#             header_key = 'Movement'
+#             secondary_header_key = 'Minor Lane/Major Mvmt'
+#             lookup = {'HCM Control Delay, s': 'app_delay',
+#                       'HCM LOS': 'app_los'}
 
-            lookup_2 = {'HCM Lane V/C Ratio': 'vc_ratio',
-                        'HCM Control Delay (s)': 'ln_delay',
-                        'HCM Lane LOS': 'ln_los'}
+#             lookup_2 = {'HCM Lane V/C Ratio': 'vc_ratio',
+#                         'HCM Control Delay (s)': 'ln_delay',
+#                         'HCM Lane LOS': 'ln_los'}
 
-        elif control_type == 'hcm roundabout':
-            header_key = 'Approach'
-            lookup = {'Approach Delay, s/veh': 'app_delay',
-                      'Approach LOS': 'app_los'}
+#         elif control_type == 'hcm roundabout':
+#             header_key = 'Approach'
+#             lookup = {'Approach Delay, s/veh': 'app_delay',
+#                       'Approach LOS': 'app_los'}
 
-            lookup_2 = {'V/C Ratio': 'vc_ratio',
-                        'Control Delay, s/veh': 'ln_delay',
-                        'LOS': 'ln_los'}
+#             lookup_2 = {'V/C Ratio': 'vc_ratio',
+#                         'Control Delay, s/veh': 'ln_delay',
+#                         'LOS': 'ln_los'}
 
-        if control_type == 'synchro signalized':
-            header_key = 'Lane Group'
-            lookup = {'v/c Ratio': 'vc_ratio',
-                      'Control Delay': 'ln_delay',
-                      'LOS': 'ln_los',
-                      'Approach Delay': 'app_delay',
-                      'Approach LOS': 'app_los'}
+#         if control_type == 'synchro signalized':
+#             header_key = 'Lane Group'
+#             lookup = {'v/c Ratio': 'vc_ratio',
+#                       'Control Delay': 'ln_delay',
+#                       'LOS': 'ln_los',
+#                       'Approach Delay': 'app_delay',
+#                       'Approach LOS': 'app_los'}
 
-        elif control_type == 'synchro all way stop':
-            header_key = 'Movement'
-            lookup = {'Degree Utilization, x': 'vc_ratio',
-                      'Control Delay (s)': 'ln_delay',
-                      'LnGrp LOS': 'ln_los',
-                      'Approach Delay (s)': 'app_delay',
-                      'Approach LOS': 'app_los'}
+#         elif control_type == 'synchro all way stop':
+#             header_key = 'Movement'
+#             lookup = {'Degree Utilization, x': 'vc_ratio',
+#                       'Control Delay (s)': 'ln_delay',
+#                       'LnGrp LOS': 'ln_los',
+#                       'Approach Delay (s)': 'app_delay',
+#                       'Approach LOS': 'app_los'}
 
-        elif control_type == 'synchro two way stop':
-            header_key = 'Movement'
-            lookup = {'Volume to Capacity': 'vc_ratio',
-                      'Control Delay (s)': 'ln_delay',
-                      'Lane LOS': 'ln_los',
-                      'Approach Delay (s)': 'app_delay',
-                      'Approach LOS': 'app_los'}
+#         elif control_type == 'synchro two way stop':
+#             header_key = 'Movement'
+#             lookup = {'Volume to Capacity': 'vc_ratio',
+#                       'Control Delay (s)': 'ln_delay',
+#                       'Lane LOS': 'ln_los',
+#                       'Approach Delay (s)': 'app_delay',
+#                       'Approach LOS': 'app_los'}
 
-        elif control_type == 'synchro roundabout':
-            header_key = 'Movement'
-            lookup = {'Volume to Capacity': 'vc_ratio',
-                      'Control Delay (s)': 'ln_delay',
-                      'Lane LOS': 'ln_los',
-                      'Approach Delay (s)': 'app_delay',
-                      'Approach LOS': 'app_los'}
+#         elif control_type == 'synchro roundabout':
+#             header_key = 'Movement'
+#             lookup = {'Volume to Capacity': 'vc_ratio',
+#                       'Control Delay (s)': 'ln_delay',
+#                       'Lane LOS': 'ln_los',
+#                       'Approach Delay (s)': 'app_delay',
+#                       'Approach LOS': 'app_los'}
 
-        # main data collection
-        if control_type == 'synchro roundabout':
-            pass
+#         # main data collection
+#         if control_type == 'synchro roundabout':
+#             pass
 
-        elif control_type == 'hcm roundabout':
+#         elif control_type == 'hcm roundabout':
 
-            movement_headers = find_line(subset, header_key)
-            for index, content in enumerate(movement_headers[2:]):
-                index += 2
-                if content:
-                    header_by_int[index] = content
-                    header_by_int_alt[index - 1] = content
+#             movement_headers = find_line(subset, header_key)
+#             for index, content in enumerate(movement_headers[2:]):
+#                 index += 2
+#                 if content:
+#                     header_by_int[index] = content
+#                     header_by_int_alt[index - 1] = content
 
-            lanes = find_line(subset, 'Entry Lanes')
-            for index, lane in enumerate(lanes[2:]):
-                index += 2
-                if lane:
-                    for num in range(int(lane)):
-                        roundabout_lanes.append(header_by_int[index])
+#             lanes = find_line(subset, 'Entry Lanes')
+#             for index, lane in enumerate(lanes[2:]):
+#                 index += 2
+#                 if lane:
+#                     for num in range(int(lane)):
+#                         roundabout_lanes.append(header_by_int[index])
 
-            configurations = find_line(subset, 'Designated Moves')
-            for index, content in enumerate(configurations[2:]):
-                index += 2
-                if content:
-                    direction = roundabout_lanes[0]
-                    roundabout_lanes.pop(0)
-                    if len(content) == 1:
-                        move = content
-                    elif len(content) == 2:
-                        if 'T' in content:
-                            move = 'T'
-                        else:
-                            move = 'L'
-                    else:
-                        move = 'T'
+#             configurations = find_line(subset, 'Designated Moves')
+#             for index, content in enumerate(configurations[2:]):
+#                 index += 2
+#                 if content:
+#                     direction = roundabout_lanes[0]
+#                     roundabout_lanes.pop(0)
+#                     if len(content) == 1:
+#                         move = content
+#                     elif len(content) == 2:
+#                         if 'T' in content:
+#                             move = 'T'
+#                         else:
+#                             move = 'L'
+#                     else:
+#                         move = 'T'
 
-                    database[intersection][direction + move] = dict()
-                    config = str()
-                    if 'L' in content:
-                        config += '<'
-                    if 'T' in content:
-                        config += '1'
-                    if 'R' in content:
-                        config += '>'
-                    database[intersection][direction + move]['config'] = config
+#                     database[intersection][direction + move] = dict()
+#                     config = str()
+#                     if 'L' in content:
+#                         config += '<'
+#                     if 'T' in content:
+#                         config += '1'
+#                     if 'R' in content:
+#                         config += '>'
+#                     database[intersection][direction + move]['config'] = config
 
-                    for lookup_value, data_tag in lookup_2.items():
-                        line = find_line(subset, lookup_value)
-                        value = line[index]
-                        database[intersection][direction + move][data_tag] = value
-            # todo revisit for multilane roundabout support
+#                     for lookup_value, data_tag in lookup_2.items():
+#                         line = find_line(subset, lookup_value)
+#                         value = line[index]
+#                         database[intersection][direction + move][data_tag] = value
+#             # todo revisit for multilane roundabout support
 
-            for lookup_value, data_tag in lookup.items():
-                line = find_line(subset, lookup_value)
-                for index, item in enumerate(line[2:]):
-                    index += 2
-                    if item:
-                        direction = header_by_int[index]
-                        for record, dictionary in database[intersection].items():
-                            if record[:2] == direction:
-                                dictionary[data_tag] = item
+#             for lookup_value, data_tag in lookup.items():
+#                 line = find_line(subset, lookup_value)
+#                 for index, item in enumerate(line[2:]):
+#                     index += 2
+#                     if item:
+#                         direction = header_by_int[index]
+#                         for record, dictionary in database[intersection].items():
+#                             if record[:2] == direction:
+#                                 dictionary[data_tag] = item
 
-        elif control_type in ['hcm signalized', 'synchro signalized']:
-            movement_headers = find_line(subset, header_key)
-            for index, content in enumerate(movement_headers[2:]):
-                index += 2
-                if content:
-                    database[intersection][content] = dict()
-                    header_by_int[index] = content
+#         elif control_type in ['hcm signalized', 'synchro signalized']:
+#             movement_headers = find_line(subset, header_key)
+#             for index, content in enumerate(movement_headers[2:]):
+#                 index += 2
+#                 if content:
+#                     database[intersection][content] = dict()
+#                     header_by_int[index] = content
 
-            configurations = find_line(subset, 'Lane Configurations')
-            for index, content in enumerate(configurations[2:]):
-                index += 2
-                if content:
-                    key = header_by_int[index]
-                    database[intersection][key]['config'] = content
+#             configurations = find_line(subset, 'Lane Configurations')
+#             for index, content in enumerate(configurations[2:]):
+#                 index += 2
+#                 if content:
+#                     key = header_by_int[index]
+#                     database[intersection][key]['config'] = content
 
-            for line in subset:
-                if line:
-                    record_name = line[0].strip()
-                    for lookup_value, data_tag in lookup.items():
-                        if record_name == lookup_value:
-                            database_field = data_tag
-                            for column_num, value in enumerate(line):
-                                if column_num > 1 and column_num in header_by_int.keys():
-                                    movement = header_by_int[column_num]
-                                    if movement in database[intersection]:
-                                        database[intersection][movement][database_field] = value
-                            # exit loop since each line can only be one record
-                            break
+#             for line in subset:
+#                 if line:
+#                     record_name = line[0].strip()
+#                     for lookup_value, data_tag in lookup.items():
+#                         if record_name == lookup_value:
+#                             database_field = data_tag
+#                             for column_num, value in enumerate(line):
+#                                 if column_num > 1 and column_num in header_by_int.keys():
+#                                     movement = header_by_int[column_num]
+#                                     if movement in database[intersection]:
+#                                         database[intersection][movement][database_field] = value
+#                             # exit loop since each line can only be one record
+#                             break
 
-        elif control_type in ['hcm all way stop', 'hcm two way stop']:
-            movement_headers = find_line(subset, header_key)
-            alternate_header_line, second_index = find_line(subset, secondary_header_key, give_index=True)
-            for index, content in enumerate(movement_headers[2:]):
-                index += 2
-                if content:
-                    database[intersection][content] = dict()
-                    header_by_int[index] = content
+#         elif control_type in ['hcm all way stop', 'hcm two way stop']:
+#             movement_headers = find_line(subset, header_key)
+#             alternate_header_line, second_index = find_line(subset, secondary_header_key, give_index=True)
+#             for index, content in enumerate(movement_headers[2:]):
+#                 index += 2
+#                 if content:
+#                     database[intersection][content] = dict()
+#                     header_by_int[index] = content
 
-            for index, header in enumerate(alternate_header_line[2:]):
-                index += 2
-                if header:
-                    second_info.append((header[:2], index))
-                    secondary_key[header] = index
+#             for index, header in enumerate(alternate_header_line[2:]):
+#                 index += 2
+#                 if header:
+#                     second_info.append((header[:2], index))
+#                     secondary_key[header] = index
 
-            configurations = find_line(subset, 'Lane Configurations')
-            for index, content in enumerate(configurations[2:]):
-                index += 2
-                if content:
-                    key = header_by_int[index]
-                    database[intersection][key]['config'] = content
+#             configurations = find_line(subset, 'Lane Configurations')
+#             for index, content in enumerate(configurations[2:]):
+#                 index += 2
+#                 if content:
+#                     key = header_by_int[index]
+#                     database[intersection][key]['config'] = content
 
-            for movement in database[intersection]:
-                if 'config' in database[intersection][movement].keys():
-                    config = database[intersection][movement]['config']
-                else:
-                    continue
-                if config != '0':
-                    for index, pair in enumerate(second_info):
-                        if movement[:2] == pair[0]:
-                            header_by_int_alt[pair[1]] = movement
-                            second_info.pop(index)
-                            break
+#             for movement in database[intersection]:
+#                 if 'config' in database[intersection][movement].keys():
+#                     config = database[intersection][movement]['config']
+#                 else:
+#                     continue
+#                 if config != '0':
+#                     for index, pair in enumerate(second_info):
+#                         if movement[:2] == pair[0]:
+#                             header_by_int_alt[pair[1]] = movement
+#                             second_info.pop(index)
+#                             break
 
-            for line in subset[:second_index]:
-                if line:
-                    record_name = line[0].strip()
-                    for lookup_value, data_tag in lookup.items():
-                        if record_name == lookup_value:
-                            database_field = data_tag
-                            for column_num, value in enumerate(line):
-                                if column_num > 1 and column_num in header_by_int.keys():
-                                    movement = header_by_int[column_num]
-                                    if movement in database[intersection]:
-                                        database[intersection][movement][database_field] = value
-                            # exit loop since each line can only be one record
-                            break
+#             for line in subset[:second_index]:
+#                 if line:
+#                     record_name = line[0].strip()
+#                     for lookup_value, data_tag in lookup.items():
+#                         if record_name == lookup_value:
+#                             database_field = data_tag
+#                             for column_num, value in enumerate(line):
+#                                 if column_num > 1 and column_num in header_by_int.keys():
+#                                     movement = header_by_int[column_num]
+#                                     if movement in database[intersection]:
+#                                         database[intersection][movement][database_field] = value
+#                             # exit loop since each line can only be one record
+#                             break
 
-            for line in subset[second_index:]:
-                if line:
-                    record_name = line[0].strip()
-                    for lookup_value, data_tag in lookup_2.items():
-                        if record_name == lookup_value:
-                            database_field = data_tag
-                            for column_num, value in enumerate(line):
-                                if column_num > 1 and column_num in header_by_int_alt.keys():
-                                    movement = header_by_int_alt[column_num]
-                                    if movement in database[intersection]:
-                                        database[intersection][movement][database_field] = value
-                            # exit loop since each line can only be one record
-                            break
-    return database
+#             for line in subset[second_index:]:
+#                 if line:
+#                     record_name = line[0].strip()
+#                     for lookup_value, data_tag in lookup_2.items():
+#                         if record_name == lookup_value:
+#                             database_field = data_tag
+#                             for column_num, value in enumerate(line):
+#                                 if column_num > 1 and column_num in header_by_int_alt.keys():
+#                                     movement = header_by_int_alt[column_num]
+#                                     if movement in database[intersection]:
+#                                         database[intersection][movement][database_field] = value
+#                             # exit loop since each line can only be one record
+#                             break
+    
+    
+#     df = pd.DataFrame(database)
+#     output = "test.csv"
+#     df.to_csv(output, index=False)
+    
+#     print(database)
+#     return database
+
+
 
 
 def order(txt):
@@ -1737,10 +1798,140 @@ class Copier:
         self.window.destroy()
 
 
+def extract_data_to_csv(file_path, output_file):
+    lane_groups = []  # To store headers extracted from the first data line
+    data = []  # To store the final data for CSV
+    collecting = False  # Flag to indicate if we're collecting data
+    skip_lines = 0  # Counter to track skipped lines
+    intersection_count = 0
+    
+    with open(file_path, 'r') as file:
+        for line in file:
+            stripped_line = line.rstrip('\n')  # Remove the newline character
+
+            # Step 1: Look for a line starting with a digit and a colon
+            if re.match(r'^\d+:', stripped_line):
+                intersection_count += 1
+                data.append([intersection_count])
+                collecting = True  # Start collecting data
+                skip_lines = 2  # Set the counter to skip the next two lines
+                continue  # Skip the current line
+            
+            # Step 2: If we're collecting and need to skip lines
+            if collecting:
+                if skip_lines > 0:
+                    skip_lines -= 1  # Decrement the skip counter
+                    continue  # Skip the line
+                
+                # If the line is empty, stop collecting
+                if stripped_line == "":
+                    collecting = False  # Stop collecting on empty line
+                    continue  # Skip the empty line
+
+                # Step 3: Split the line based on double tabs
+                new_row = re.split(r'\t\t|\s{2}\t|\s\t', line.strip())  # Regular expression to split
+                
+                
+                # Step 4: Store each Lane Group in its own cell
+                # Ensure that there are no empty strings in the new_row
+                new_row = [cell for cell in new_row if cell]  # Filter out empty strings
+                data.append(new_row)  # Append the new row to data
+            
+    pd.set_option('display.max_rows', 10)  # Show all rows
+    pd.set_option('display.max_columns', 10)  # Show all columns
+    
+    # Step 5: Create a DataFrame and save to CSV
+    df = pd.DataFrame(data)
+    
+    df = df.map(lambda x: x.strip() if isinstance(x, str) else x)
+    
+    # Define the terms to search for
+    terms_to_match = [
+        "V/c ratio",
+        "Control delay (s/veh)",
+        "LOS",
+        "V/c ratio(x)",
+        "LnGrp Delay(d), s/veh",
+        "LnGrp LOS"
+    ]
+    
+    # Initialize an empty dictionary to store row indices
+    row_indices = {}
+    
+    # Iterate through DataFrame rows
+    for index, row in df.iterrows():
+        # Check for the presence of "LOS" first, as it is case-sensitive
+        if "LOS" in row.values:
+            row_indices[index] = "LOS"
+            continue
+    
+        # For other terms, check in a case-insensitive manner
+        for term in terms_to_match:
+            if any(str(cell).lower() == term.lower() for cell in row if term.lower() != "los"):
+                row_indices[index] = term
+                break  # Exit the inner loop if a term is found
+    
+    # Initialize an empty list to store the combined dictionaries
+    combined_list = []
+    
+    # Group terms in a general format
+    group_terms = ["v/c", "delay", "los"]
+    
+    # Process every three items in `row_indices`
+    grouped_indices = list(row_indices.items())
+    
+    for i in range(0, len(grouped_indices), 3):
+        # Extract three consecutive term-row_index pairs
+        group = grouped_indices[i:i+3]
+        
+        # Initialize a dictionary to hold the grouped data
+        combined_dict = {}
+        
+        # Iterate over each term-row_index pair within this group
+        for row_index, term in group:
+            # Check if the term contains one of the group terms (case insensitive)
+            for general_term in group_terms:
+                if general_term in term.lower():
+                    # Get the data for the row, replacing both NaNs and empty strings with "-"
+                    row_data = df.iloc[row_index].replace("", "-").fillna("-").tolist()
+                    
+                    # Exclude the first column, assuming it's metadata like intersection ID
+                    row_data_without_first = row_data[1:]
+                    
+                    # Map the data to the generalized term in the combined dictionary
+                    combined_dict[general_term] = row_data_without_first
+                    break
+    
+        # Only add the combined_dict if it contains all three generalized terms
+        if all(term in combined_dict for term in group_terms):
+            combined_list.append(combined_dict)
+            
+        
+    # Initialize the intersection ID
+    for idx, data_dict in enumerate(combined_list, start=1):
+        # Print the intersection ID
+        print(f"Intersection {idx}:")
+        
+        # Print each term and its data in a readable format
+        for term, data in data_dict.items():
+            # Convert the list of data into a comma-separated string for readability
+            data_str = ", ".join(data)
+            
+            # Print the term and corresponding data
+            print(f"  {term.capitalize()}: {data_str}")
+        
+        # Add a blank line for readability between intersections
+        print("\n" + "-" * 40 + "\n")
+
+    df.to_csv(output_file, sep=',', index=False, header=False)  # Write DataFrame to a comma-delimited file
+    print(f'Data written to {output_file}')
+    
 if __name__ == "__main__":
     # read_input_file("test-input.xlsx")
-    file = "test/Test Report 1.txt"
-    movement, delay, vc, los = parse_text_file(file)
-    lane_groups = separate_characters(movement)
-    print(f"\nLane groups:\n{lane_groups}")
-    write_to_excel(file, movement, delay, vc, los)
+    file = "test/Test Report 2.txt"
+    extract_data_to_csv(file, "test.csv")
+    # movement, delay, vc, los = parse_text_file(file)
+
+    #lane_groups = separate_characters(movement)
+    #print(f"\nLane groups:\n{lane_groups}")
+    #write_to_excel(file, movement, delay, vc, los)
