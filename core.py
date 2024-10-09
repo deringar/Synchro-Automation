@@ -189,99 +189,6 @@ def separate_characters(result):
     
     return transformed_results
                       
-def parse_text_file(file_path):
-    int_regex = r'\d+:'
-    
-    search_phrase = "Minor Lane/Major Mvmt"
-    
-    search_terms = [r'Delay', r'V/C Ratio', r'LOS']
-    
-    # List to store matching lines
-    matching_lines = []
-    result = []
-        
-    # Initialize lists for each search term
-    delay_results = []
-    vc_ratio_results = []
-    los_results = []
-    
-    # Open and read the file into memory
-    with open(file_path, 'r') as file:
-        lines = file.readlines()  # Read all lines
-    
-    # Find the line numbers containing the integer followed by a colon
-    for line_number, line in enumerate(lines, start=1):
-        if re.search(int_regex, line):
-            matching_lines.append(line_number)
-    
-    # Now search from each line in matching_lines until the next line, looking for "Minor Lane/Major Mvmt"
-    for i, start_line in enumerate(matching_lines):
-        # Set the end line as the next matching line or the end of the file
-        end_line = matching_lines[i+1] if i+1 < len(matching_lines) else len(lines)
-        
-        # Search for "Minor Lane/Major Mvmt" between start_line and end_line
-        for line_number in range(start_line, end_line):
-            if search_phrase in lines[line_number]:
-                # Pattern to remove "Ln" followed by digits
-                remove_ln_pattern = r'Ln\d+'
-                # Get the text after "Minor Lane/Major Mvmt" and remove whitespaces/tabs
-                after_phrase = lines[line_number].split(search_phrase)[1].strip()
-                # Split by whitespace and rejoin to remove extra spaces and tabs
-                cleaned_value = ' '.join(after_phrase.split())
-                # Remove "Ln" followed by digits
-                cleaned_value = re.sub(remove_ln_pattern, '', cleaned_value)
-                # Remove any leading or trailing whitespace after the substitution
-                cleaned_value = cleaned_value.strip()
-                # Split the cleaned value into separate elements
-                result.append(cleaned_value.split())
-                
-                # Now search for Delay, V/c Ratio, and LOS in lines below the current line
-                for term in search_terms:
-                    term_results = []  # Temporary list to hold results for the current term
-                    for search_line_number in range(line_number + 1, end_line):
-                        if re.search(term, lines[search_line_number], re.IGNORECASE):
-                            # Ensure the term exists in the line before splitting
-                            if term in lines[search_line_number]:
-                                parts = lines[search_line_number].split(term)
-                                if len(parts) > 1:  # Check if there is text after the term
-                                    after_term = parts[1].strip()
-    
-                                    # Check which term we're processing
-                                    if term.lower() == 'delay' or term.lower() == 'v/c ratio':
-                                        # Extract only numbers (including decimals) and "-"
-                                        numbers = re.findall(r'\d+\.\d+|\d+|-', after_term)
-                                        term_results = []  # Reset for new line results
-                                        for num in numbers:
-                                            if num == '-':
-                                                term_results.append(num)  # Keep '-' as string
-                                            else:
-                                                term_results.append(float(num))  # Convert numbers to float
-    
-                                    elif term.lower() == 'los':
-                                        # Extract only single capitalized characters and "-"
-                                        capital_letters = re.findall(r'[A-Z]|-', after_term)
-                                        term_results.extend(capital_letters)  # Store in temporary list
-    
-                    # Add the term results to the corresponding results list
-                    if term.lower() == 'delay':
-                        delay_results.append(term_results)  # Store list of results for Delay
-                    elif term.lower() == 'v/c ratio':
-                        vc_ratio_results.append(term_results)  # Store list of results for V/c Ratio
-                    elif term.lower() == 'los':
-                        los_results.append(term_results)  # Store list of results for LOS
-    
-    # Merge results into tuples
-    merged_results = []
-    for vc_list, los_list, delay_list in zip(vc_ratio_results, los_results, delay_results):
-        merged_results.append(list(zip(vc_list, los_list, delay_list)))
-    
-    # Print the results
-    print("Result:", result)
-    print("Delay Results:", delay_results)
-    print("V/c Ratio Results:", vc_ratio_results)
-    print("LOS Results:", los_results)
-    return result, merged_results
-    
 def save_as_csv(excel_file_path, csv_file_path):
     workbook = load_workbook(filename=excel_file_path)
     sheet = workbook.active
@@ -372,6 +279,8 @@ def write_direction_data_to_files(sheet, matched_results, relevant_columns, head
 
     return
 
+
+""" STEP 1 """
 def read_input_file(file_path):
     # Load the input workbook and select the active sheet
     workbook = load_workbook(filename=file_path)
@@ -1795,6 +1704,261 @@ class Copier:
         self.window.destroy()
 
 
+def parse_overall_data(file_path):
+    int_regex = r'^\d+:'
+    
+    search_phrases = ["Minor Lane/Major Mvmt", "Intersection Summary"]
+    
+    search_terms = [r'\bControl Delay\b', r'\bV/C Ratio\b', r'\bLOS\b', r'\bLevel of Service\b']
+    
+    # List to store matching lines
+    matching_lines = []
+    result = []
+        
+    # Initialize lists for each search term
+    delay_results = []
+    vc_ratio_results = []
+    los_results = []
+    
+    # Open and read the file into memory
+    with open(file_path, 'r') as file:
+        lines = file.readlines()  # Read all lines
+    
+    # Find the line numbers containing the integer followed by a colon
+    for line_number, line in enumerate(lines, start=1):
+        if re.search(int_regex, line):
+            matching_lines.append(line_number)
+            print(line)
+    
+    # Now search from each line in matching_lines until the next line, looking for "Minor Lane/Major Mvmt"
+    for i, start_line in enumerate(matching_lines):
+        # Set the end line as the next matching line or the end of the file
+        end_line = matching_lines[i+1] if i+1 < len(matching_lines) else len(lines)
+        
+        # Search for "Minor Lane/Major Mvmt" between start_line and end_line
+        for line_number in range(start_line, end_line):
+            for search_phrase in search_phrases:
+                if search_phrase in lines[line_number]:
+                        
+                    # Pattern to remove "Ln" followed by digits
+                    #remove_ln_pattern = r'Ln\d+'
+                    # Get the text after "Minor Lane/Major Mvmt" and remove whitespaces/tabs
+                    after_phrase = lines[line_number].split(search_phrase)[1].strip()
+                    # Split by whitespace and rejoin to remove extra spaces and tabs
+                    cleaned_value = ' '.join(after_phrase.split())
+                    # Remove "Ln" followed by digits
+                    #cleaned_value = re.sub(remove_ln_pattern, '', cleaned_value)
+                    # Remove any leading or trailing whitespace after the substitution
+                    cleaned_value = cleaned_value.strip()
+                    # Split the cleaned value into separate elements
+                    result.append(cleaned_value.split())
+                    
+                    # Now search for Delay, V/c Ratio, and LOS in lines below the current line
+                    for term in search_terms:
+                        term_results = []  # Temporary list to hold results for the current term
+                        for search_line_number in range(line_number + 1, end_line):
+                            if re.search(term, lines[search_line_number], re.IGNORECASE):
+                                # Ensure the term exists in the line before splitting
+                                if term in lines[search_line_number]:
+                                    parts = lines[search_line_number].split(term)
+                                    if len(parts) > 1:  # Check if there is text after the term
+                                        after_term = parts[1].strip()
+        
+                                        # Check which term we're processing
+                                        if term.lower() == 'delay' or term.lower() == 'v/c ratio':
+                                            # Extract only numbers (including decimals) and "-"
+                                            numbers = re.findall(r'\d+\.\d+|\d+|-', after_term)
+                                            term_results = []  # Reset for new line results
+                                            for num in numbers:
+                                                if num == '-':
+                                                    term_results.append(num)  # Keep '-' as string
+                                                else:
+                                                    term_results.append(float(num))  # Convert numbers to float
+        
+                                        elif term.lower() == 'los':
+                                            # Extract only single capitalized characters and "-"
+                                            capital_letters = re.findall(r'[A-Z]|-', after_term)
+                                            term_results.extend(capital_letters)  # Store in temporary list
+    
+                        # Add the term results to the corresponding results list
+                        if term.lower() == 'delay':
+                            delay_results.append(term_results)  # Store list of results for Delay
+                        elif term.lower() == 'v/c ratio':
+                            vc_ratio_results.append(term_results)  # Store list of results for V/c Ratio
+                        elif term.lower() == 'los':
+                            los_results.append(term_results)  # Store list of results for LOS
+    
+    # Merge results into tuples
+    merged_results = []
+    for vc_list, los_list, delay_list in zip(vc_ratio_results, los_results, delay_results):
+        merged_results.append(list(zip(vc_list, los_list, delay_list)))
+    
+    # Print the results
+    print("Result:", result)
+    print("Delay Results:", delay_results)
+    print("V/c Ratio Results:", vc_ratio_results)
+    print("LOS Results:", los_results)
+    return result, merged_results
+
+
+def parse_overall_data_v2(file_path):
+    int_regex = r'^\d+:'  # Regex to match lines that start with an integer followed by a colon
+    
+    search_phrases = ["Minor Lane/Major Mvmt", "Intersection Summary"]
+    
+    # Lists to store results
+    synchro_results = []
+    hcm_results = []
+    
+    # List to store matching line numbers
+    matching_lines = []
+    result = []
+    
+    # Open and read the file into memory
+    with open(file_path, 'r') as file:
+        lines = file.readlines()  # Read all lines
+    
+    # Find the line numbers containing the integer followed by a colon
+    for line_number, line in enumerate(lines, start=1):
+        if re.match(int_regex, line):  # Use re.match to check if the line starts with the regex
+            matching_lines.append(line_number)
+    
+    # Now search from each line in matching_lines until the next line matching the regex
+    for start_line in matching_lines:
+        # Get the ID from the corresponding line in 'lines'
+        id_match = re.match(int_regex, lines[start_line - 1])  # Accessing lines using start_line - 1
+        id_value = id_match.group(0).strip(':') if id_match else None  # Get the ID before the colon
+        
+        # Process Synchro Results first
+        found_phrase = False
+        for line_number in range(start_line, len(lines)):
+            line = lines[line_number]
+
+            # Check for the search phrases and process only after finding one
+            for search_phrase in search_phrases:
+                if search_phrase in line:
+                    found_phrase = True  # Mark that we found the phrase
+
+                    # Set the end line to the next empty line starting from this line
+                    end_line = line_number + 1
+                    while end_line < len(lines) and lines[end_line].strip() != '':
+                        end_line += 1  # Continue until we find an empty line
+
+                    # Initialize values to None
+                    vc_ratio_value = None
+                    los_value = None
+                    delay_value = None
+                    
+                    # Now process the following lines for the search terms until the next blank line
+                    for search_line_number in range(line_number + 1, end_line):
+                        line = lines[search_line_number]
+
+                        # Check for 'v/c ratio' and extract the next float
+                        if re.search(r'v/c ratio', line, re.IGNORECASE):
+                            float_match = re.search(r'(\d+\.\d+|\d+)', line)
+                            if float_match:
+                                vc_ratio_value = float(float_match.group(0))
+
+                        # Check for 'delay' and extract the next float
+                        if re.search(r'delay', line, re.IGNORECASE):
+                            float_match = re.search(r'(\d+\.\d+|\d+)', line)
+                            if float_match:
+                                delay_value = float(float_match.group(0))
+
+                        # Check for 'LOS' and extract the next capital letter (A-F)
+                        if re.search(r'LOS', line, re.IGNORECASE):
+                            capital_match = re.search(r'\b[A-F]\b', line)
+                            if capital_match:
+                                los_value = capital_match.group(0)
+
+                    # Store Synchro results only if ID is not already present
+                    if not any(result['ID'] == id_value for result in synchro_results):
+                        synchro_results.append({
+                            'ID': id_value,
+                            'v/c ratio': vc_ratio_value if vc_ratio_value is not None else 'None',
+                            'los': los_value if los_value is not None else 'None',
+                            'delay': delay_value if delay_value is not None else 'None'
+                        })
+
+                    # Stop further processing of Synchro block and move on to HCM
+                    break  # Exit after processing this block for Synchro
+
+            # Skip lines between the ID and the next search phrase
+            if found_phrase:
+                break  # Stop looking at this block and continue with HCM
+
+        # Now search for HCM Results
+        found_phrase = False  # Reset for HCM block
+        for line_number in range(start_line, len(lines)):
+            line = lines[line_number]
+
+            # Process only HCM-related lines
+            for search_phrase in search_phrases:
+                if search_phrase in line:
+                    found_phrase = True
+
+                    # Set the end line to the next empty line starting from this line
+                    end_line = line_number + 1
+                    while end_line < len(lines) and lines[end_line].strip() != '':
+                        end_line += 1  # Continue until we find an empty line
+
+                    # Initialize values to None
+                    vc_ratio_value = None
+                    los_value = None
+                    delay_value = None
+                    found_hcm = False  # Flag to track if we found HCM lines
+                    
+                    # Process HCM lines
+                    for search_line_number in range(line_number + 1, end_line):
+                        line = lines[search_line_number]
+
+                        # Check for 'v/c ratio' and extract the next float
+                        if re.search(r'v/c ratio', line, re.IGNORECASE):
+                            float_match = re.search(r'(\d+\.\d+|\d+)', line)
+                            if float_match:
+                                vc_ratio_value = float(float_match.group(0))
+
+                        # Check for 'delay' and extract the next float
+                        if re.search(r'delay', line, re.IGNORECASE):
+                            delay_pos = line.lower().find('delay')  # Find the position of 'delay' in the line
+                            if delay_pos != -1:  # If 'delay' is found
+                                after_delay = line[delay_pos + len('delay'):].strip()  # Get everything after 'delay'
+                                float_match = re.search(r'(\d+\.\d+|\d+)', after_delay)  # Search for float in the remaining substring
+                                if float_match:
+                                    delay_value = float(float_match.group(0))
+
+                        # Check for 'LOS' and extract the next capital letter (A-F)
+                        if re.search(r'LOS', line, re.IGNORECASE):
+                            capital_match = re.search(r'\b[A-F]\b', line)
+                            if capital_match:
+                                los_value = capital_match.group(0)
+
+                        # Mark the line as HCM only if it starts with "HCM"
+                        if line.startswith("HCM"):
+                            found_hcm = True
+
+                    # Store HCM results only if we processed HCM lines
+                    if found_hcm:
+                        hcm_results.append({
+                            'ID': id_value,
+                            'v/c ratio': vc_ratio_value,
+                            'los': los_value,
+                            'delay': delay_value
+                        })
+
+                    break  # Exit after processing the HCM block
+
+            # Skip lines between the ID and the next search phrase
+            if found_phrase:
+                break  # Stop looking at this block and move on to the next intersection
+        
+    # Print the results
+    print("Synchro Results:", synchro_results)
+    print("HCM Results:", hcm_results)
+    
+    return result, synchro_results, hcm_results
+
+
 def extract_data_to_csv(file_path, output_file):
     data = []  # To store the final data for CSV
     collecting = False  # Flag to indicate if we're collecting data
@@ -1806,6 +1970,7 @@ def extract_data_to_csv(file_path, output_file):
 
             # Step 1: Look for a line starting with a digit and a colon
             if re.match(r'^\d+:', stripped_line):
+                
                 intersection_count += 1
                 data.append([intersection_count])
                 collecting = True  # Start collecting data
@@ -1847,8 +2012,9 @@ def extract_data_to_csv(file_path, output_file):
         "LOS",
         "V/c ratio(x)",
         "LnGrp Delay(d), s/veh",
-        "LnGrp LOS"
+        "LnGrp LOS",
     ]
+
     # Use this for the keys of each dictionary in the list
     movement_lane_group_keys = ['EBL', 'EBT', 'EBR', 'WBL', 'WBT',
                                 'WBR', 'NBL', 'NBT', 'NBR', 'SBL', 'SBT', 'SBR']
@@ -1952,10 +2118,14 @@ def extract_data_to_csv(file_path, output_file):
             # Convert the list of data into a comma-separated string for readability
             data_str = ", ".join(data)
             
-            
             # Print the term and corresponding data
             print(f"  {term.capitalize()}: {data_str}")
         
+        # Print lane configurations for the current intersection
+        if idx - 1 < len(group_config_data):
+            lane_config_str = ", ".join(f"{key}: {value}" for key, value in group_config_data[idx - 1].items())
+            print(f"  Lane Configurations: {lane_config_str}")
+
         # Add a blank line for readability between intersections
         print("\n" + "-" * 40 + "\n")
     
@@ -2015,7 +2185,7 @@ if __name__ == "__main__":
     # read_input_file("test-input.xlsx")
     file = "test/Test Report 2.txt"
     extract_data_to_csv(file, "test.csv")
-    # movement, delay, vc, los = parse_text_file(file)
+    parse_overall_data_v2(file) # Gets the data for overall
     # lane_groups = separate_characters(movement)
     #print(f"\nLane groups:\n{lane_groups}")
     # write_to_excel(file, movement, delay, vc, los)
