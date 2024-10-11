@@ -9,16 +9,21 @@ Last modified on Thurs Oct 3 2024
 # main_window.py
 
 import tkinter as tk  # Import the Tkinter module for GUI development.
-import tkinter.ttk as ttk  # Import themed widgets from Tkinter for better styling.
-from difflib import SequenceMatcher  # Used for comparing sequences and finding similarities.
-from tkinter import messagebox, filedialog  # Import specific Tkinter features for message boxes and file dialogs.
+# Import themed widgets from Tkinter for better styling.
+import tkinter.ttk as ttk
+# Used for comparing sequences and finding similarities.
+from difflib import SequenceMatcher
+# Import specific Tkinter features for message boxes and file dialogs.
+from tkinter import messagebox, filedialog
 import csv  # Module to handle CSV file operations.
 import openpyxl as xl  # Used for working with Excel files (.xlsx format).
-import os  # OS module for interacting with the operating system (file paths, etc.).
+# OS module for interacting with the operating system (file paths, etc.).
+import os
 import re  # Regular expression module for pattern matching in strings.
 import time  # Module for time-related functions.
 import json  # JSON module to parse and manipulate JSON data.
-from collections import OrderedDict  # Import ordered dictionary to maintain the order of keys.
+# Import ordered dictionary to maintain the order of keys.
+from collections import OrderedDict
 from shutil import copy  # Used to copy files or directories.
 from openpyxl import load_workbook, Workbook
 import pandas as pd
@@ -31,8 +36,9 @@ write_headers(ws, 'F')
 write_headers(ws, 'I')
 """
 
+
 def write_to_excel(file_path, lane_groups, delay, vc_ratio, los):
-    
+
     # Helper function to transform each sublist into a dictionary with lane directions
     def separate_characters(sublist):
         result_dict = {}
@@ -40,24 +46,28 @@ def write_to_excel(file_path, lane_groups, delay, vc_ratio, los):
             # Extract the prefix and 'L', 'T', 'R' characters
             rest_chars = ''.join([char for char in item if char not in 'LTR'])
             separated_chars = [char for char in item if char in 'LTR']
-            
+
             if rest_chars in result_dict:
-                result_dict[rest_chars].extend(separated_chars)  # Append characters if the key exists
+                # Append characters if the key exists
+                result_dict[rest_chars].extend(separated_chars)
             else:
-                result_dict[rest_chars] = separated_chars  # Create new entry for the key
-        
+                # Create new entry for the key
+                result_dict[rest_chars] = separated_chars
+
         return result_dict
-    
+
     # Function to enumerate the lane groups and create a dictionary
     def enumerate_result_list(result):
         enumerated_dict = {}
         for index, item in enumerate(result, start=1):
             if isinstance(item, list):  # Ensure each item is processed as a list
-                enumerated_dict[index] = separate_characters(item)  # Transform each list into a dictionary
+                enumerated_dict[index] = separate_characters(
+                    item)  # Transform each list into a dictionary
             else:
-                enumerated_dict[index] = item  # Handle already existing dictionaries
+                # Handle already existing dictionaries
+                enumerated_dict[index] = item
         return enumerated_dict
-    
+
     # Helper function to write headers
     def write_headers(ws, start_col='C'):
         headers = ['V/c', 'LOS', 'Delay']
@@ -68,64 +78,67 @@ def write_to_excel(file_path, lane_groups, delay, vc_ratio, los):
     # Get the file name without extension
     file_with_ext = os.path.basename(file_path)
     file_name = os.path.splitext(file_with_ext)[0]
-    
+
     # Enumerate the lane groups
     intersection_data = enumerate_result_list(lane_groups)
-    
+
     # Create a new Excel workbook and add a sheet
     wb = Workbook()
     ws = wb.active  # Get the active worksheet
-    
+
     # Write the file name in cell A1
     ws['A1'] = file_name
-    
+
     # Write the headers for V/C, LOS, and Delay in row 2 (starting at column C)
     write_headers(ws, 'C')
     write_headers(ws, 'F')
     write_headers(ws, 'I')
-    
+
     # Define the order of keys to process
     key_order = ['EB', 'WB', 'NB', 'SB', 'NE', 'NW', 'SE', 'SW']
 
     # Keep track of the last used row
     current_row = 2  # Starting at row 2 (A2 will be filled first)
-    
+
     # Iterate through the enumerated intersection data
     for intersection_id, data in intersection_data.items():
         # Write the intersection ID in column A
         ws[f'A{current_row}'] = intersection_id
-        
+
         # Move to the next row after writing the intersection ID
         current_row += 1
-        
+
         # Ensure that 'data' is a dictionary before attempting to access its keys
         if isinstance(data, dict):
             # For each key in the specified order:
             for key in key_order:
                 # Write the key in column A
                 ws[f'A{current_row}'] = key
-                
+
                 # Check if there's a corresponding value in the lane data
                 if key in data and data[key]:  # If values exist
                     # Write the corresponding values in column B, starting from the current row
                     for idx, item in enumerate(data[key]):
-                        ws[f'B{current_row + idx}'] = item  # Write each value downwards in column B
+                        # Write each value downwards in column B
+                        ws[f'B{current_row + idx}'] = item
                     # Update the current_row to the next empty row after writing all values
                     current_row += len(data[key])
                 else:
                     # If no values exist, write an empty cell in column B
-                    ws[f'B{current_row}'] = ''  # Explicitly write an empty string
+                    # Explicitly write an empty string
+                    ws[f'B{current_row}'] = ''
                     current_row += 1  # Move to the next row for the next key
 
     # Write V/C, LOS, and Delay data into their respective columns, ensuring empty entries are included
     # Start from row 3 (the row after the headers)
-    
+
     # Write V/C Ratio
     current_row_vc = 3  # Start writing V/C values
     for idx, vc_list in enumerate(vc_ratio):
         if idx < len(intersection_data):  # Ensure we don't exceed the intersection data length
             for item in vc_list:
-                ws[f'C{current_row_vc}'] = item  # Write each value downwards in column C
+                # Write each value downwards in column C
+                ws[f'C{current_row_vc}'] = item
                 current_row_vc += 1  # Move to the next row
             # Fill empty cells if the length of vc_list is shorter than the max
             while current_row_vc < (3 + len(vc_ratio)):
@@ -137,7 +150,8 @@ def write_to_excel(file_path, lane_groups, delay, vc_ratio, los):
     for idx, los_list in enumerate(los):
         if idx < len(intersection_data):  # Ensure we don't exceed the intersection data length
             for item in los_list:
-                ws[f'D{current_row_los}'] = item  # Write each value downwards in column D
+                # Write each value downwards in column D
+                ws[f'D{current_row_los}'] = item
                 current_row_los += 1  # Move to the next row
             # Fill empty cells if the length of los_list is shorter than the max
             while current_row_los < (3 + len(los)):
@@ -149,7 +163,8 @@ def write_to_excel(file_path, lane_groups, delay, vc_ratio, los):
     for idx, delay_list in enumerate(delay):
         if idx < len(intersection_data):  # Ensure we don't exceed the intersection data length
             for item in delay_list:
-                ws[f'E{current_row_delay}'] = item  # Write each value downwards in column E
+                # Write each value downwards in column E
+                ws[f'E{current_row_delay}'] = item
                 current_row_delay += 1  # Move to the next row
             # Fill empty cells if the length of delay_list is shorter than the max
             while current_row_delay < (3 + len(delay)):
@@ -161,21 +176,24 @@ def write_to_excel(file_path, lane_groups, delay, vc_ratio, los):
     wb.save(excel_file_path)
     print(f"Intersection data written to {excel_file_path}")
 
+
 def separate_characters(result):
     # Initialize a list to hold the dictionaries
     transformed_results = []
-    
+
     # Iterate through each sublist in the result
     for sublist in result:
         # Initialize a dictionary for this sublist
         result_dict = {}
-        
+
         # Process each string in the sublist
         for item in sublist:
             # Extract the characters that are not 'L', 'T', or 'R' for the prefix
-            rest_chars = ''.join([char for char in item if char not in 'LTR'])  # Characters other than L, T, R
-            separated_chars = [char for char in item if char in 'LTR']  # Characters that are L, T, or R
-            
+            # Characters other than L, T, R
+            rest_chars = ''.join([char for char in item if char not in 'LTR'])
+            # Characters that are L, T, or R
+            separated_chars = [char for char in item if char in 'LTR']
+
             # Use the prefix as the key in the dictionary
             if rest_chars in result_dict:
                 # Append to the existing entry if the key already exists
@@ -186,9 +204,10 @@ def separate_characters(result):
 
         # Append the dictionary to the list of transformed results
         transformed_results.append(result_dict)
-    
+
     return transformed_results
-                      
+
+
 def save_as_csv(excel_file_path, csv_file_path):
     workbook = load_workbook(filename=excel_file_path)
     sheet = workbook.active
@@ -198,6 +217,7 @@ def save_as_csv(excel_file_path, csv_file_path):
 
         for row in sheet.iter_rows(values_only=True):
             writer.writerow(row)
+
 
 def write_direction_data_to_files(sheet, matched_results, relevant_columns, headers, output_start_row=4):
     """
@@ -216,37 +236,43 @@ def write_direction_data_to_files(sheet, matched_results, relevant_columns, head
         # Define column positions relative to the starting column
         volume_col = start_column       # Volume is in start_column (e.g., F)
         phf_col = start_column + 1      # PHF is in start_column + 1 (e.g., G)
-        heavy_vehicles_col = start_column + 2  # HeavyVehicles is in start_column + 2 (e.g., H)
+        # HeavyVehicles is in start_column + 2 (e.g., H)
+        heavy_vehicles_col = start_column + 2
 
         # Get the header name from row 1 of the start_column (e.g., F1, I1, etc.)
         file_name_header = sheet.cell(row=1, column=start_column).value
         if not file_name_header:
-            print(f"Skipping columns starting at {start_column} as no header was found in row 1.")
+            print(
+                f"Skipping columns starting at {start_column} as no header was found in row 1.")
             continue
-        
+
         # Create a new workbook for this specific column set
         output_workbook = Workbook()
         output_sheet = output_workbook.active
         output_sheet.title = "Results"
         output_sheet["A1"] = "[Lanes]"
         output_sheet["A2"] = "Lane Group Data"
-        
+
         # Label cells with corresponding headers (A3-P3)
         for col, header in enumerate(headers, start=1):
             output_sheet.cell(row=3, column=col).value = header
-        
+
         # Reset the output start row for each file
         output_start_row = 4
-        
+
         # Iterate over each intersection and its direction-turn results
         for intersection_id, turns in matched_results.items():
             # Write Intersection ID and Labels in the output sheet
             output_sheet.cell(row=output_start_row, column=1).value = "Volume"
             output_sheet.cell(row=output_start_row + 1, column=1).value = "PHF"
-            output_sheet.cell(row=output_start_row + 2, column=1).value = "HeavyVehicles"
-            output_sheet.cell(row=output_start_row, column=2).value = intersection_id
-            output_sheet.cell(row=output_start_row + 1, column=2).value = intersection_id
-            output_sheet.cell(row=output_start_row + 2, column=2).value = intersection_id
+            output_sheet.cell(row=output_start_row + 2,
+                              column=1).value = "HeavyVehicles"
+            output_sheet.cell(row=output_start_row,
+                              column=2).value = intersection_id
+            output_sheet.cell(row=output_start_row + 1,
+                              column=2).value = intersection_id
+            output_sheet.cell(row=output_start_row + 2,
+                              column=2).value = intersection_id
 
             # Process each direction-turn within the intersection
             for direction_turn, info in turns.items():
@@ -255,13 +281,17 @@ def write_direction_data_to_files(sheet, matched_results, relevant_columns, head
                 # Read data from the specified columns for the current row
                 volume = sheet.cell(row=row_found, column=volume_col).value
                 phf = sheet.cell(row=row_found, column=phf_col).value
-                heavy_vehicles = sheet.cell(row=row_found, column=heavy_vehicles_col).value
+                heavy_vehicles = sheet.cell(
+                    row=row_found, column=heavy_vehicles_col).value
 
                 # Write the data into the output sheet under the correct direction-turn column
                 header_column = info['header_column']
-                output_sheet.cell(row=output_start_row, column=header_column).value = volume
-                output_sheet.cell(row=output_start_row + 1, column=header_column).value = phf
-                output_sheet.cell(row=output_start_row + 2, column=header_column).value = heavy_vehicles
+                output_sheet.cell(row=output_start_row,
+                                  column=header_column).value = volume
+                output_sheet.cell(row=output_start_row + 1,
+                                  column=header_column).value = phf
+                output_sheet.cell(row=output_start_row + 2,
+                                  column=header_column).value = heavy_vehicles
 
                 # Debugging output
                 print(f"Wrote to Results for intersection {intersection_id}, direction {direction_turn}: "
@@ -281,6 +311,8 @@ def write_direction_data_to_files(sheet, matched_results, relevant_columns, head
 
 
 """ STEP 1 """
+
+
 def read_input_file(file_path):
     # Load the input workbook and select the active sheet
     workbook = load_workbook(filename=file_path)
@@ -288,10 +320,10 @@ def read_input_file(file_path):
 
     # Define headers for the output sheet
     headers = [
-        "RECORDNAME", "INTID", "NBL", "NBT", "NBR", 
-        "SBL", "SBT", "SBR", "EBL", "EBT", "EBR", 
-        "WBL", "WBT", "WBR","NWR", "NWL", "NWT", "NEL", "NET", "NER",
-        "SEL", "SER", "SET", "SWL", "SWR", "SWT" ,"PED", "HOLD"
+        "RECORDNAME", "INTID", "NBL", "NBT", "NBR",
+        "SBL", "SBT", "SBR", "EBL", "EBT", "EBR",
+        "WBL", "WBT", "WBR", "NWR", "NWL", "NWT", "NEL", "NET", "NER",
+        "SEL", "SER", "SET", "SWL", "SWR", "SWT", "PED", "HOLD"
     ]
 
     consecutive_empty_cells = 0
@@ -334,11 +366,13 @@ def read_input_file(file_path):
 
         # For each found direction, search column D for 'L', 'T', 'R'
         for direction, found_row in found_directions.items():
-            turn_values = {"L": None, "T": None, "R": None}  # Default is None (not found)
+            # Default is None (not found)
+            turn_values = {"L": None, "T": None, "R": None}
             for search_row in range(found_row, sheet.max_row + 1):
                 turn_value = sheet.cell(search_row, column=4).value
                 if turn_value in ["L", "T", "R"]:
-                    turn_values[turn_value] = search_row  # Store the row number for each turn type found
+                    # Store the row number for each turn type found
+                    turn_values[turn_value] = search_row
                 # Break when all turn values have been found
                 if all(turn_values.values()):
                     break
@@ -353,7 +387,8 @@ def read_input_file(file_path):
         intersection_results[intersection_id] = direction_turn_results
 
         # Display the results for debugging
-        print(f"Direction-turn results for intersection {intersection_id}: {direction_turn_results}")
+        print(
+            f"Direction-turn results for intersection {intersection_id}: {direction_turn_results}")
 
     # Match direction-turn results with corresponding headers
     header_mapping = {header: idx + 1 for idx, header in enumerate(headers)}
@@ -368,11 +403,11 @@ def read_input_file(file_path):
                     "row": row,
                     "header_column": header_mapping[direction_turn]
                 }
-    
-    relevant_columns = [6, 9, 12, 15]  # F-H, I-K, L-N
-    
-    write_direction_data_to_files(sheet, matched_results, relevant_columns, headers=headers, output_start_row=4)
 
+    relevant_columns = [6, 9, 12, 15]  # F-H, I-K, L-N
+
+    write_direction_data_to_files(
+        sheet, matched_results, relevant_columns, headers=headers, output_start_row=4)
 
     # Return intersection results if needed elsewhere
     return intersection_results
@@ -383,6 +418,8 @@ ______________________ HELPER FUNCTIONS ______________________
 """
 
 # Check if the target is empty
+
+
 def is_empty(target):
     # Check if the target is None
     if target is None:
@@ -395,11 +432,14 @@ def is_empty(target):
             return True  # The string is empty
     return False  # The target is not empty (not None or empty string)
 
+
 """
 STEP 2
 """
 
 # Identify the type of control based on the record name
+
+
 def identify_type(record_name):
     # Map record names to control types
     if record_name == 'Arrive On Green':
@@ -424,6 +464,8 @@ def identify_type(record_name):
     return control_type
 
 # Get bounds of intersections in the file
+
+
 def get_bounds(file):
     # Regex pattern to match intersection records
     pattern = re.compile('([0-9]+):\w*')
@@ -435,31 +477,36 @@ def get_bounds(file):
     with open(file) as f:
         reader = csv.reader(f, delimiter='\t')
         file_data = list(reader)
-    
+
     # Iterate through the file data to find intersection bounds
     for index, line in enumerate(file_data):
         if line:  # Skip empty lines
             record_name = line[0].strip()  # Get the first element of the line
-            header_match = pattern.match(record_name)  # Match the record name with the pattern
+            # Match the record name with the pattern
+            header_match = pattern.match(record_name)
             if header_match:  # If there's a match, it's an intersection record
                 bounds.append(index)  # Store the index of the bound
-                intersection = int(header_match.groups()[0])  # Get the intersection ID
+                # Get the intersection ID
+                intersection = int(header_match.groups()[0])
                 intersections.append(intersection)  # Store the intersection ID
-    
+
     bounds.append(index)  # Append the last index for bounds
 
     # Process the intersections to gather data
     for index, inter in enumerate(intersections):
         if inter not in data.keys():
-            data[inter] = dict()  # Initialize a dictionary for each intersection
-        data[inter]['bounds'] = bounds[index:index + 2]  # Set bounds for the intersection
+            # Initialize a dictionary for each intersection
+            data[inter] = dict()
+        # Set bounds for the intersection
+        data[inter]['bounds'] = bounds[index:index + 2]
         start, end = data[inter]['bounds']
-        
+
         # Loop through the lines within the bounds
         for line in file_data[start:end]:
             if line:  # Skip empty lines
                 record_name = line[0].strip()  # Get the record name
-                record_type = identify_type(record_name)  # Identify the control type
+                # Identify the control type
+                record_type = identify_type(record_name)
                 if record_type:  # If a control type is found
                     data[inter]['type'] = record_type  # Set the control type
                     break  # Exit loop once the type is found
@@ -468,6 +515,8 @@ def get_bounds(file):
     return data  # Return the constructed data dictionary
 
 # Find a line in data matching the search term
+
+
 def find_line(data, search, give_index=False):
     # Loop through each line of data
     for index, line in enumerate(data):
@@ -481,6 +530,8 @@ def find_line(data, search, give_index=False):
     return None  # Return None if no match is found
 
 # Get overall values like delay and LOS based on control type
+
+
 def get_overall(data_list, control_type):
     # returns overall values in the form: [delay, LOS]
 
@@ -508,7 +559,8 @@ def get_overall(data_list, control_type):
     if control_type == 'synchro signalized':
         for row in data_list:
             if row:
-                if 'Intersection Signal Delay: ' in row[0]:  # Look for specific record
+                # Look for specific record
+                if 'Intersection Signal Delay: ' in row[0]:
                     delay = row[0][27:].strip()  # Extract delay
                     los = row[5][-1]  # Extract level of service
                     return [delay, los]  # Return extracted values
@@ -518,7 +570,8 @@ def get_overall(data_list, control_type):
     for index, key in enumerate(keys):
         row = find_line(data_list, key)  # Find the row for each key
         if row is None:
-            print(f"Warning: Key '{key}' not found in data_list for control type '{control_type}'.")
+            print(
+                f"Warning: Key '{key}' not found in data_list for control type '{control_type}'.")
             continue  # Skip this key if not found
         for entry in row[2:]:  # Skip the first two columns
             if entry:  # Get the first non-empty entry
@@ -528,6 +581,8 @@ def get_overall(data_list, control_type):
     return output  # Return the overall values
 
 # Standardize the results from the file
+
+
 def standardize(results_file):
     # Read the content of the results file
     with open(results_file) as f:
@@ -536,8 +591,6 @@ def standardize(results_file):
     database = dict()  # To store the standardized data
     parsed = get_bounds(results_file)  # Get intersection bounds and types
 
-    
-    
     # Iterate through parsed intersections to build the database
     for intersection in parsed:
         db = parsed[intersection]  # Get data for the intersection
@@ -545,8 +598,10 @@ def standardize(results_file):
         end = max(db['bounds'])  # Get the ending index for bounds
         subset = file_content[start:end]  # Get the relevant data subset
         control_type = db['type']  # Get the control type
-        database[intersection] = OrderedDict()  # Initialize an ordered dictionary for intersection
-        database[intersection]['overall'] = dict()  # Initialize overall data dictionary
+        # Initialize an ordered dictionary for intersection
+        database[intersection] = OrderedDict()
+        # Initialize overall data dictionary
+        database[intersection]['overall'] = dict()
         delay, los = get_overall(subset, control_type)  # Get delay and LOS
         database[intersection]['overall']['delay'] = delay  # Store delay
         database[intersection]['overall']['los'] = los  # Store LOS
@@ -681,7 +736,8 @@ def standardize(results_file):
                     for lookup_value, data_tag in lookup_2.items():
                         line = find_line(subset, lookup_value)
                         value = line[index]
-                        database[intersection][direction + move][data_tag] = value
+                        database[intersection][direction +
+                                               move][data_tag] = value
             # todo revisit for multilane roundabout support
 
             for lookup_value, data_tag in lookup.items():
@@ -725,7 +781,8 @@ def standardize(results_file):
 
         elif control_type in ['hcm all way stop', 'hcm two way stop']:
             movement_headers = find_line(subset, header_key)
-            alternate_header_line, second_index = find_line(subset, secondary_header_key, give_index=True)
+            alternate_header_line, second_index = find_line(
+                subset, secondary_header_key, give_index=True)
             for index, content in enumerate(movement_headers[2:]):
                 index += 2
                 if content:
@@ -784,12 +841,11 @@ def standardize(results_file):
                                         database[intersection][movement][database_field] = value
                             # exit loop since each line can only be one record
                             break
-    
-    
+
     df = pd.DataFrame(database)
     output = "test.csv"
     df.to_csv(output, index=False)
-    
+
     print(database)
     return database
 
@@ -820,20 +876,20 @@ def label(field, config):
     if config.find('<') == -1 and config.find('>') == -1:
         if config.find('0') == -1:
             return direction
-    
+
     # Check if '<' is in the config, if so, add 'L' to output
     if config.find('<') != -1:
         output += 'L'
-    
+
     # Loop through numbers 1 to 8 and check if they are in the config
     for num in range(1, 9):
         if config.find(str(num)) != -1:
             output += direction  # Append direction for each found number
-    
+
     # Check if '>' is in the config, if so, add 'R' to output
     if config.find('>') != -1:
         output += 'R'
-    
+
     return order(output)  # Call order to finalize the output
 
 
@@ -844,7 +900,7 @@ def similar(str1, str2):
 
 def load_settings():
     """Loads settings from a JSON file, creating defaults if the file does not exist."""
-    
+
     def set_default():
         """Sets default settings and saves them to a JSON file."""
         defaults = {
@@ -855,11 +911,11 @@ def load_settings():
             'columns': 30,
             'update_los': 1
         }
-        
+
         # Write the default settings to a JSON file
         with open('settings.json', 'w') as file:
             json.dump(defaults, file)
-    
+
     try:
         with open('settings.json', 'r') as file:
             defaults = json.load(file)
@@ -869,21 +925,22 @@ def load_settings():
         set_default()
         with open('settings.json', 'r') as file:
             defaults = json.load(file)
-            
+
     return defaults  # Return the loaded or default settings
 
 
 def center_window(x, y, master):
     """Calculates the position to center a window of size (x, y) on the screen."""
     screen_width, screen_height = master.winfo_screenwidth(), master.winfo_screenheight()
-    x_coord, y_coord = int((screen_width - x) / 2), int((screen_height - y) / 2)
-    
+    x_coord, y_coord = int((screen_width - x) /
+                           2), int((screen_height - y) / 2)
+
     # Prepare the size string for window geometry
     if x == 0 and y == 0:
         size = str()
     else:
         size = f'{x}x{y}'
-    
+
     # Create the final position string for the window
     position = f'+{x_coord}+{y_coord}'
     return size + position  # Return the geometry string
@@ -897,8 +954,9 @@ def replace_slash(string):
 def get_row(worksheet, intersection):
     """Finds the appropriate row in the worksheet for a given intersection value."""
     for row in range(1, worksheet.max_row + 1):
-        cell_value = worksheet.cell(row, 1).value  # Get the value in the first column of the row
-        
+        # Get the value in the first column of the row
+        cell_value = worksheet.cell(row, 1).value
+
         # If the cell is empty, return the row and method 'direct'
         if cell_value is None:
             return row, 'direct'
@@ -927,13 +985,16 @@ def get_sheet(wb, name):
             return wb[sheet]  # Return the existing sheet
         # If not found, create a new sheet with the specified name
         wb.create_sheet(title=name)
-    
+
     return wb[name]  # Return the newly created sheet
+
 
 """
 ______________________ CLASSES ______________________
 """
 # Stores details about a traffic scenario such as its name, hour, year, condition, and various data files.
+
+
 class Scenario:
     def __init__(self, name):
         self.name = name
@@ -945,7 +1006,7 @@ class Scenario:
         self.los_data = None
         self.los_results = None
         self.model_data_column = None
-        
+
     # Processes the scenario name to extract the hour (e.g., AM, PM, SAT).
     def parse(self):
         for hour in ['AM', 'PM', 'SAT']:
@@ -956,6 +1017,8 @@ class Scenario:
 
 # Manages the settings for the application, including loading and saving settings to a JSON file.
 # Builds a user interface to allow the user to configure settings such as default paths and boundaries.
+
+
 class Settings:
     def __init__(self, master=None):
         self.master = master
@@ -1010,7 +1073,8 @@ class Settings:
         self.model_browse.config(text='Browse', command=self.model_browse_func)
         self.model_browse.grid(column='2', row='0')
 
-        self.model_path_frame.config(height='200', text='Default Model Path', width='200')
+        self.model_path_frame.config(
+            height='200', text='Default Model Path', width='200')
         self.model_path_frame.grid(column='0', row='1', sticky='nsew')
 
         self.model_outer.config(height='200', width='200')
@@ -1047,7 +1111,8 @@ class Settings:
         self.syn_browse.grid(column='2', row='0')
 
         self.syn_dir_browse = ttk.Button(self.syn_frame)
-        self.syn_dir_browse.config(text='Browse', command=self.syn_dir_browse_func)
+        self.syn_dir_browse.config(
+            text='Browse', command=self.syn_dir_browse_func)
         self.syn_dir_browse.grid(column='2', row='1')
 
         self.syn_frame.config(height='200', text='Synchro')
@@ -1066,7 +1131,8 @@ class Settings:
         self.update_los_yes.config(variable=self.master.update_los, value=1)
         self.update_los_yes.grid(row=0, column=1)
 
-        self.update_los_no = ttk.Radiobutton(self.gen_tab_frame, variable=self.master.update_los, text='No')
+        self.update_los_no = ttk.Radiobutton(
+            self.gen_tab_frame, variable=self.master.update_los, text='No')
         self.update_los_no.config(variable=self.master.update_los, value=0)
         self.update_los_no.grid(row=0, column=2)
 
@@ -1081,7 +1147,8 @@ class Settings:
         self.done_button.grid(sticky='e')
 
         self.cancel_button = ttk.Button(self.button_frame)
-        self.cancel_button.config(text='Cancel', command=self.settings_window.destroy)
+        self.cancel_button.config(
+            text='Cancel', command=self.settings_window.destroy)
         self.cancel_button.grid(column='1', row='0', sticky='w')
 
         self.button_frame.config()
@@ -1151,6 +1218,8 @@ class Settings:
 # Represents the main window of the application.
 # Contains methods to set up the UI, create various UI elements (labels, buttons), and handle user interactions.
 # Provides functionality to launch other components like settings and file matching tools.
+
+
 class MainWindow:
     def __init__(self, master=None):
         self.master = master
@@ -1168,19 +1237,25 @@ class MainWindow:
         self.frame_1.rowconfigure((0, 1, 2), weight=1)
 
         # Create label and entry for Model file location
-        self.model_entry = self.create_label_entry("Model file location:", self.master.model_path, 0, self.model_browse_func)
+        self.model_entry = self.create_label_entry(
+            "Model file location:", self.master.model_path, 0, self.model_browse_func)
 
         # Create label and entry for Synchro file folder
-        self.syn_entry = self.create_label_entry("Synchro file folder:", self.master.synchro_dir, 1, self.syn_browse_func)
+        self.syn_entry = self.create_label_entry(
+            "Synchro file folder:", self.master.synchro_dir, 1, self.syn_browse_func)
 
-        self.los_button = ttk.Checkbutton(self.frame_1, variable=self.master.update_los, text='Update LOS Table')
+        self.los_button = ttk.Checkbutton(
+            self.frame_1, variable=self.master.update_los, text='Update LOS Table')
         self.los_button.grid(column=0, row=2)
 
         self.utilities = ttk.Labelframe(self.frame_1, text='Other Functions')
         self.utilities.grid(row=3, column=1)
 
-        self.create_button("Copy Files", self.copy, 0, 0, parent=self.utilities, side='left')
-        self.create_button("LOS Only", None, 0, 1, parent=self.utilities, side='left')  # Placeholder for LOS Only button
+        self.create_button("Copy Files", self.copy, 0, 0,
+                           parent=self.utilities, side='left')
+        # Placeholder for LOS Only button
+        self.create_button("LOS Only", None, 0, 1,
+                           parent=self.utilities, side='left')
 
         notes = '''Instructions:\n
                 1. Please ensure the Synchro files you wish to update are not open on any computer.\n
@@ -1201,13 +1276,15 @@ class MainWindow:
         entry.insert(0, default_value)
         entry.grid(column=1, row=row, sticky='nsew')
 
-        browse_button = ttk.Button(self.frame_1, text='Browse', command=browse_command)
+        browse_button = ttk.Button(
+            self.frame_1, text='Browse', command=browse_command)
         browse_button.grid(row=row, column=2)
 
         return entry  # Return the entry widget to assign it to an instance variable
 
     def create_button(self, text, command, col, row, parent=None, sticky=None, side=None):
-        button = ttk.Button(parent if parent else self.frame_1, text=text, command=command)
+        button = ttk.Button(parent if parent else self.frame_1,
+                            text=text, command=command)
         if side:
             button.pack(side=side)
         else:
@@ -1236,18 +1313,20 @@ class MainWindow:
 
     def run(self):
         self.mainwindow.mainloop()
-        
+
 # Extends tk.Tk to serve as the base window for the application.
-# Contains several methods for interacting with Synchro files and managing the application's 
+# Contains several methods for interacting with Synchro files and managing the application's
 # main operations, such as matching worksheet names, converting data, and handling errors.
+
+
 class Base(tk.Tk):
     # Default values for the number of rows and columns in the application
     DEFAULT_ROWS = 1000
     DEFAULT_COLUMNS = 30
-    
+
     # List of valid scenario types
     VALID_SCENARIOS = ['EXISTING', 'NO BUILD', 'BUILD']
-    
+
     # Mapping of scenario conditions to their abbreviations
     SCENARIO_CONDITIONS = {
         'EXISTING': ['EX'],
@@ -1255,14 +1334,16 @@ class Base(tk.Tk):
         'BUILD': ['B', 'BD'],
         'IMPROVEMENT': ['IMP']
     }
-    
+
     def __init__(self):
         # Initialize the Tkinter window
         super().__init__()
         self.title('Synchronizer')  # Set the title of the window
-        self.geometry(center_window(500, 200, self))  # Center and size the window
-        self.wm_attributes('-topmost', 0)  # Allow the window to be behind others
-        
+        # Center and size the window
+        self.geometry(center_window(500, 200, self))
+        # Allow the window to be behind others
+        self.wm_attributes('-topmost', 0)
+
         # Initialize various attributes for managing the application state
         self.windows = {}  # Dictionary to hold child windows
         self.main_win = None  # Reference to the main window
@@ -1288,12 +1369,17 @@ class Base(tk.Tk):
         saved_settings = load_settings()  # Load previously saved settings
 
         # Set application paths and default settings, using saved values if available
-        self.synchro_app_path = saved_settings.get('synchro_exe', defaults['synchro_exe'])
-        self.synchro_dir = saved_settings.get('synchro_dir', defaults['synchro_dir'])
-        self.model_path = saved_settings.get('model_path', defaults['model_path'])
+        self.synchro_app_path = saved_settings.get(
+            'synchro_exe', defaults['synchro_exe'])
+        self.synchro_dir = saved_settings.get(
+            'synchro_dir', defaults['synchro_dir'])
+        self.model_path = saved_settings.get(
+            'model_path', defaults['model_path'])
         self.default_rows = saved_settings.get('rows', defaults['rows'])
-        self.default_columns = saved_settings.get('columns', defaults['columns'])
-        self.update_los = saved_settings.get('update_los', defaults['update_los'])
+        self.default_columns = saved_settings.get(
+            'columns', defaults['columns'])
+        self.update_los = saved_settings.get(
+            'update_los', defaults['update_los'])
 
     def find_volume_data(self, extra_scenario=None):
         """
@@ -1305,11 +1391,14 @@ class Base(tk.Tk):
         Returns:
             output.keys(): Keys of the scenario data collected from the model.
         """
-        valid_scenarios = [extra_scenario] if extra_scenario else self.VALID_SCENARIOS
+        valid_scenarios = [
+            extra_scenario] if extra_scenario else self.VALID_SCENARIOS
         output = {}
 
-        wb = xl.load_workbook(filename=self.model_path, data_only=True)  # Load the model workbook
-        self.model_sheet_name = max(wb.sheetnames, key=lambda sheet: similar(sheet, 'Model'), default=None)
+        wb = xl.load_workbook(filename=self.model_path,
+                              data_only=True)  # Load the model workbook
+        self.model_sheet_name = max(
+            wb.sheetnames, key=lambda sheet: similar(sheet, 'Model'), default=None)
         self.ws = wb[self.model_sheet_name]  # Set the active worksheet
 
         # Iterate through rows of the worksheet to find valid scenario data
@@ -1321,11 +1410,12 @@ class Base(tk.Tk):
                     year_cell = self.ws.cell(row - 4, column).value
                     scenario_cell = self.ws.cell(row - 3, column).value
                     hour_cell = self.ws.cell(row - 2, column).value
-                    
+
                     if year_cell is not None:
                         year = str(year_cell)  # Convert year to string
                     if scenario_cell is not None:
-                        scenario = str(scenario_cell)  # Convert scenario to string
+                        # Convert scenario to string
+                        scenario = str(scenario_cell)
                     if hour_cell in ['AM', 'PM', 'SAT'] and scenario in valid_scenarios:
                         # Create a scenario name and check for duplicates
                         name = f"{year} {scenario} {hour_cell}"
@@ -1335,10 +1425,13 @@ class Base(tk.Tk):
                             sc.year = year
                             sc.condition = scenario
                             sc.model_data_column = column  # Store column index for the model data
-                            self.match_syn_file(sc, self.synchro_dir)  # Match the corresponding .syn file
-                            self.scenarios.append(sc)  # Add the scenario to the list
+                            # Match the corresponding .syn file
+                            self.match_syn_file(sc, self.synchro_dir)
+                            # Add the scenario to the list
+                            self.scenarios.append(sc)
                         else:
-                            messagebox.showwarning('Duplicate', 'One or more scenarios were duplicated and not added.')
+                            messagebox.showwarning(
+                                'Duplicate', 'One or more scenarios were duplicated and not added.')
 
         self.scenario_data = output  # Update scenario data
         return output.keys()  # Return the keys of the collected scenario data
@@ -1398,34 +1491,35 @@ class Base(tk.Tk):
         return file
 
 
-#_______________LOS_______________
+# _______________LOS_______________
+
     def update_report(self, scenarios, report_table=None):
         # If no report_table is specified, default to 'synchronizer results.xlsx'
         if report_table is None:
             report_table = 'synchronizer results.xlsx'
-    
+
         # Combine the storage directory with the report_table name to get the full file path
         report_table = self.storage_dir + '\\' + report_table
-    
+
         # Create a new Excel workbook and activate the default sheet
         wb = xl.Workbook()
         ws = wb.active
-    
+
         # Rename the default sheet to 'AM'
         ws.title = 'AM'
-    
+
         # Loop through each scenario in the scenarios list
         for scenario in scenarios:
             # Get the LOS (Level of Service) data and hour from the scenario object
             data = scenario.los_data
             hour = scenario.hour
-    
+
             # Retrieve or create the sheet based on the scenario's hour (e.g., 'AM', 'PM')
             sheet = get_sheet(wb, hour)
-    
+
             # Get the traffic condition (e.g., EXISTING, NO-BUILD, BUILD)
             condition = scenario.condition
-    
+
             # Determine the column to store the data based on the condition
             if condition == 'EXISTING':
                 column = 5
@@ -1435,14 +1529,14 @@ class Base(tk.Tk):
                 column = 11
             else:
                 column = sheet.max_column  # If an unrecognized condition, use the last column
-    
+
             # Loop through each intersection in the LOS data
             for intersection in data:
                 # Get the row in the sheet corresponding to this intersection
                 row, method = get_row(sheet, intersection)
                 ov_los = None
                 ov_delay = None
-    
+
                 # Loop through each turning movement in the intersection's data
                 for turn_move, values in data[intersection].items():
                     # Special handling for 'overall' turning movement (aggregated data)
@@ -1450,7 +1544,7 @@ class Base(tk.Tk):
                         ov_delay = values['delay']
                         ov_los = values['los']
                         continue
-    
+
                     # Generate a name for the movement (e.g., 'Left Turn') based on the config
                     movement_name = label(turn_move, values.get('config', ''))
                     if movement_name:
@@ -1461,33 +1555,38 @@ class Base(tk.Tk):
                         app_los_values = list()
                         app_delays = list()
                         last_move = turn_move[:2]
-    
+
                         # Process each direction for the movement (e.g., EB, WB)
                         for direction in movement_name:
                             search = turn_move[:2] + direction
-    
+
                             # Ensure the search key exists before retrieving the data
                             if search not in data[intersection].keys():
                                 continue
-    
+
                             # Append the corresponding values for v/c ratio, LOS, and delay
-                            vc_ratios.append(data[intersection][search].get('vc_ratio', ''))
-                            los_values.append(data[intersection][search].get('ln_los', ''))
-                            delays.append(data[intersection][search].get('ln_delay', ''))
-                            app_los_values.append(data[intersection][search].get('app_los', ''))
-                            app_delays.append(data[intersection][search].get('app_delay', ''))
-    
+                            vc_ratios.append(
+                                data[intersection][search].get('vc_ratio', ''))
+                            los_values.append(
+                                data[intersection][search].get('ln_los', ''))
+                            delays.append(data[intersection]
+                                          [search].get('ln_delay', ''))
+                            app_los_values.append(
+                                data[intersection][search].get('app_los', ''))
+                            app_delays.append(
+                                data[intersection][search].get('app_delay', ''))
+
                         # Take the maximum values for each metric
                         vc = max(vc_ratios)
                         los = max(los_values)
                         delay = max(delays)
                         app_los = max(app_los_values)
                         app_delay = max(app_delays)
-    
+
                         # If all values are empty, skip the current movement
                         if vc == '' and los == '' and delay == '':
                             continue
-    
+
                         # Write the data into the sheet based on the method (direct, insert, append)
                         if method == 'direct':
                             sheet.cell(row, 1).value = intersection
@@ -1497,7 +1596,7 @@ class Base(tk.Tk):
                             sheet.cell(row, column + 1).value = los
                             sheet.cell(row, column + 2).value = delay
                             row += 1
-    
+
                         elif method == 'insert':
                             sheet.insert_rows(row)
                             sheet.cell(row, 1).value = intersection
@@ -1507,7 +1606,7 @@ class Base(tk.Tk):
                             sheet.cell(row, column + 1).value = los
                             sheet.cell(row, column + 2).value = delay
                             row += 1
-    
+
                         elif method == 'append':
                             row += 1
                             sheet.cell(row, 1).value = intersection
@@ -1516,11 +1615,11 @@ class Base(tk.Tk):
                             sheet.cell(row, column).value = vc
                             sheet.cell(row, column + 1).value = los
                             sheet.cell(row, column + 2).value = delay
-    
+
                         # If there are no approach LOS and delay values, skip to the next move
                         if app_delay == '' and app_los == '':
                             continue
-    
+
                         # Write the approach LOS and delay if the last movement is different
                         if last_move and turn_move != last_move:
                             if method == 'direct':
@@ -1529,7 +1628,7 @@ class Base(tk.Tk):
                                 sheet.cell(row, column + 1).value = app_los
                                 sheet.cell(row, column + 2).value = app_delay
                                 row += 1
-    
+
                             elif method == 'insert':
                                 sheet.insert_rows(row)
                                 sheet.cell(row, 1).value = intersection
@@ -1537,14 +1636,14 @@ class Base(tk.Tk):
                                 sheet.cell(row, column + 1).value = app_los
                                 sheet.cell(row, column + 2).value = app_delay
                                 row += 1
-    
+
                             elif method == 'append':
                                 row += 1
                                 sheet.cell(row, 1).value = intersection
                                 sheet.cell(row, 3).value = 'Approach'
                                 sheet.cell(row, column + 1).value = app_los
                                 sheet.cell(row, column + 2).value = app_delay
-    
+
                     # Write the overall LOS and delay if available
                     if ov_los and ov_delay:
                         if method == 'direct':
@@ -1553,7 +1652,7 @@ class Base(tk.Tk):
                             sheet.cell(row, column + 1).value = ov_los
                             sheet.cell(row, column + 2).value = ov_delay
                             row += 1
-    
+
                         elif method == 'insert':
                             sheet.insert_rows(row)
                             sheet.cell(row, 1).value = intersection
@@ -1561,17 +1660,17 @@ class Base(tk.Tk):
                             sheet.cell(row, column + 1).value = ov_los
                             sheet.cell(row, column + 2).value = ov_delay
                             row += 1
-    
+
                         elif method == 'append':
                             row += 1
                             sheet.cell(row, 1).value = intersection
                             sheet.cell(row, 3).value = 'Overall'
                             sheet.cell(row, column + 1).value = ov_los
                             sheet.cell(row, column + 2).value = ov_delay
-    
+
         # Save the workbook to the specified file
         wb.save(report_table)
-    
+
         # Return the path to the report file
         return report_table
 
@@ -1589,7 +1688,8 @@ class ProgressWindow:
         self.status_text_box = tk.Text(self.progress_frame)
         self.status_text_box.config(autoseparators='false')
         self.status_text_box.grid(column='0', row='0', sticky='nsew')
-        self.scrollbar_3 = ttk.Scrollbar(self.progress_frame, command=self.status_text_box.yview)
+        self.scrollbar_3 = ttk.Scrollbar(
+            self.progress_frame, command=self.status_text_box.yview)
         self.scrollbar_3.grid(column='1', row='0', sticky='nsew')
         self.status_text_box.configure(yscrollcommand=self.scrollbar_3.set)
         # self.button_3 = ttk.Button(self.progress_frame)
@@ -1613,23 +1713,31 @@ class ProgressWindow:
             column = scenario_obj.model_data_column
             process_update = 'Processing: ' + scenario + '\n'
             self.status_text_box.insert('end', process_update)
-            utdf_volumes = self.master.convert_utdf(scenario=scenario, column=column)
-            self.status_text_box.insert('end', 'Importing volumes to Synchro... \n')
+            utdf_volumes = self.master.convert_utdf(
+                scenario=scenario, column=column)
+            self.status_text_box.insert(
+                'end', 'Importing volumes to Synchro... \n')
             self.master.import_to_synchro(filename, utdf_volumes)
             self.status_text_box.insert('end', 'Import complete\n')
 
             if self.master.update_los:
-                self.status_text_box.insert('end', 'Exporting LOS data from Synchro...\n')
-                scenario_obj.los_results = self.master.export_from_synchro(scenario)
+                self.status_text_box.insert(
+                    'end', 'Exporting LOS data from Synchro...\n')
+                scenario_obj.los_results = self.master.export_from_synchro(
+                    scenario)
                 time.sleep(5)
                 self.status_text_box.insert('end', 'Export complete\n')
                 scenario_obj.los_data = standardize(scenario_obj.los_results)
 
         if self.master.update_los:
-            self.status_text_box.insert('end', 'Writing LOS data to excel file\n')
-            output_results = self.master.update_report(self.master.selected_scenarios)
-            self.status_text_box.insert('end', 'Write complete\nThe program has finished\n')
-            self.status_text_box.insert('end', f'LOS results are saved at: {output_results}')
+            self.status_text_box.insert(
+                'end', 'Writing LOS data to excel file\n')
+            output_results = self.master.update_report(
+                self.master.selected_scenarios)
+            self.status_text_box.insert(
+                'end', 'Write complete\nThe program has finished\n')
+            self.status_text_box.insert(
+                'end', f'LOS results are saved at: {output_results}')
 
 
 class Copier:
@@ -1643,7 +1751,8 @@ class Copier:
         self.old_dir_entry = ttk.Entry(self.window)
         self.old_dir_entry.grid(row=0, column=1, sticky='ew')
 
-        self.old_dir_button = ttk.Button(self.window, text='Browse', command=self.browse)
+        self.old_dir_button = ttk.Button(
+            self.window, text='Browse', command=self.browse)
         self.old_dir_button.bind('<Button 1>', self.browse)
         self.old_dir_button.grid(row=0, column=2)
 
@@ -1653,7 +1762,8 @@ class Copier:
         self.new_dir_entry = ttk.Entry(self.window)
         self.new_dir_entry.grid(row=1, column=1, sticky='ew')
 
-        self.new_dir_button = ttk.Button(self.window, text='Browse', command=self.browse)
+        self.new_dir_button = ttk.Button(
+            self.window, text='Browse', command=self.browse)
         self.new_dir_button.bind('<Button 1>', self.browse)
         self.new_dir_button.grid(row=1, column=2)
 
@@ -1663,7 +1773,8 @@ class Copier:
         self.new_date_entry = ttk.Entry(self.window)
         self.new_date_entry.grid(row=2, column=1, sticky='ew')
 
-        self.start = ttk.Button(self.window, text='Start', command=self.copy_files)
+        self.start = ttk.Button(
+            self.window, text='Start', command=self.copy_files)
         self.start.grid(row=3, columnspan=3)
 
         # self.check_syn = ttk.Checkbutton(self.window, text='Synchro')
@@ -1704,131 +1815,127 @@ class Copier:
         self.window.destroy()
 
 
-def parse_overall_data(file_path):
-    int_regex = r'^\d+:'
-    
-    search_phrases = ["Minor Lane/Major Mvmt", "Intersection Summary"]
-    
-    search_terms = [r'\bControl Delay\b', r'\bV/C Ratio\b', r'\bLOS\b', r'\bLevel of Service\b']
-    
-    # List to store matching lines
-    matching_lines = []
-    result = []
-        
+def parse_minor_lane_mvmt(lines, start_line, end_line):
+    """
+    Parse the "Minor Lane/Major Mvmt" data between the start and end lines.
+    This function extracts the delay, V/C ratio, and LOS from lines containing these terms.
+    """
+    search_phrase = "Minor Lane/Major Mvmt"
+    search_terms = [r'\bControl Delay\b', r'\bV/C Ratio\b', r'\bLOS\b']
+
+    # print(f"Start line: {start_line}")
+    # print(f"End line: {end_line}")
+
     # Initialize lists for each search term
+    result = []
     delay_results = []
     vc_ratio_results = []
     los_results = []
-    
-    # Open and read the file into memory
-    with open(file_path, 'r') as file:
-        lines = file.readlines()  # Read all lines
-    
-    # Find the line numbers containing the integer followed by a colon
-    for line_number, line in enumerate(lines, start=1):
-        if re.search(int_regex, line):
-            matching_lines.append(line_number)
-            print(line)
-    
-    # Now search from each line in matching_lines until the next line, looking for "Minor Lane/Major Mvmt"
-    for i, start_line in enumerate(matching_lines):
-        # Set the end line as the next matching line or the end of the file
-        end_line = matching_lines[i+1] if i+1 < len(matching_lines) else len(lines)
-        
-        # Search for "Minor Lane/Major Mvmt" between start_line and end_line
-        for line_number in range(start_line, end_line):
-            for search_phrase in search_phrases:
-                if search_phrase in lines[line_number]:
-                        
-                    # Pattern to remove "Ln" followed by digits
-                    #remove_ln_pattern = r'Ln\d+'
-                    # Get the text after "Minor Lane/Major Mvmt" and remove whitespaces/tabs
-                    after_phrase = lines[line_number].split(search_phrase)[1].strip()
-                    # Split by whitespace and rejoin to remove extra spaces and tabs
-                    cleaned_value = ' '.join(after_phrase.split())
-                    # Remove "Ln" followed by digits
-                    #cleaned_value = re.sub(remove_ln_pattern, '', cleaned_value)
-                    # Remove any leading or trailing whitespace after the substitution
-                    cleaned_value = cleaned_value.strip()
-                    # Split the cleaned value into separate elements
-                    result.append(cleaned_value.split())
-                    
-                    # Now search for Delay, V/c Ratio, and LOS in lines below the current line
-                    for term in search_terms:
-                        term_results = []  # Temporary list to hold results for the current term
-                        for search_line_number in range(line_number + 1, end_line):
-                            if re.search(term, lines[search_line_number], re.IGNORECASE):
-                                # Ensure the term exists in the line before splitting
-                                if term in lines[search_line_number]:
-                                    parts = lines[search_line_number].split(term)
-                                    if len(parts) > 1:  # Check if there is text after the term
-                                        after_term = parts[1].strip()
-        
-                                        # Check which term we're processing
-                                        if term.lower() == 'delay' or term.lower() == 'v/c ratio':
-                                            # Extract only numbers (including decimals) and "-"
-                                            numbers = re.findall(r'\d+\.\d+|\d+|-', after_term)
-                                            term_results = []  # Reset for new line results
-                                            for num in numbers:
-                                                if num == '-':
-                                                    term_results.append(num)  # Keep '-' as string
-                                                else:
-                                                    term_results.append(float(num))  # Convert numbers to float
-        
-                                        elif term.lower() == 'los':
-                                            # Extract only single capitalized characters and "-"
-                                            capital_letters = re.findall(r'[A-Z]|-', after_term)
-                                            term_results.extend(capital_letters)  # Store in temporary list
-    
-                        # Add the term results to the corresponding results list
-                        if term.lower() == 'delay':
-                            delay_results.append(term_results)  # Store list of results for Delay
-                        elif term.lower() == 'v/c ratio':
-                            vc_ratio_results.append(term_results)  # Store list of results for V/c Ratio
-                        elif term.lower() == 'los':
-                            los_results.append(term_results)  # Store list of results for LOS
-    
-    # Merge results into tuples
+
+    # Search for "Minor Lane/Major Mvmt" in the provided line range
+    for line_number in range(start_line, end_line):
+        line = lines[line_number]
+
+        if search_phrase in line:
+            # Process the "Minor Lane/Major Mvmt" line to get the directions
+            after_phrase = line.split(search_phrase)[1].strip()
+            cleaned_value = ' '.join(after_phrase.split()).strip()
+            result = (cleaned_value.split())
+            # print(f"Result: {result}")
+            # Now search for Delay, V/C Ratio, and LOS in lines below the current line
+            for term in search_terms:
+                term_results = []  # Temporary list to hold results for the current term
+                for search_line_number in range(line_number + 1, end_line):
+                    # Remove whitespace for accurate matching
+                    line = lines[search_line_number].strip()
+
+                    # Print debugging info
+                    # print(f"Checking term: {term}")
+                    # print(f"Line content: {line}")
+
+                    if re.search(term, line, re.IGNORECASE):
+                        # Extract values after the term
+                        # print(f"Found term: {term} in line: {line}")
+
+                        if 'control delay' in term.lower() or 'v/c ratio' in term.lower():
+                            # For control delay or V/C ratio, we extract numbers (floats or '-')
+                            numbers = re.findall(r'(\d+\.\d+|\d+|-)', line)
+                            term_results.extend(
+                                [float(num) if num != '-' else num for num in numbers])
+
+                        elif 'los' in term.lower():
+                            # For LOS, we extract single capital letters (A-F) or '-'
+                            capital_letters = re.findall(r'\b[A-F]\b|-', line)
+                            term_results.extend(capital_letters)
+
+                # Add the term results to the corresponding results list
+                if 'control delay' in term.lower():
+                    delay_results.append(
+                        term_results if term_results else ['-'])
+                elif 'v/c ratio' in term.lower():
+                    vc_ratio_results.append(
+                        term_results if term_results else ['-'])
+                elif 'los' in term.lower():
+                    los_results.append(term_results if term_results else ['-'])
+    # Combine the results into tuples for easier reading
     merged_results = []
     for vc_list, los_list, delay_list in zip(vc_ratio_results, los_results, delay_results):
-        merged_results.append(list(zip(vc_list, los_list, delay_list)))
-    
-    # Print the results
-    print("Result:", result)
-    print("Delay Results:", delay_results)
-    print("V/c Ratio Results:", vc_ratio_results)
-    print("LOS Results:", los_results)
+        merged_results = (list(zip(vc_list, los_list, delay_list)))
+    # Return the parsed results for integration with other parsing logic
+    print(merged_results)
     return result, merged_results
 
 
 def parse_overall_data_v2(file_path):
+    """
+
+    Function to handle the parsing of the overall data
+
+    Parameters
+    ----------
+    file_path : TYPE
+        DESCRIPTION.
+
+    Returns
+    -------
+    result : TYPE
+        DESCRIPTION.
+    synchro_results : TYPE
+        DESCRIPTION.
+    hcm_results : TYPE
+        DESCRIPTION.
+
+    """
+
     int_regex = r'^\d+:'  # Regex to match lines that start with an integer followed by a colon
-    
+
     search_phrases = ["Minor Lane/Major Mvmt", "Intersection Summary"]
-    
+
     # Lists to store results
     synchro_results = []
     hcm_results = []
-    
+
     # List to store matching line numbers
     matching_lines = []
     result = []
-    
+
     # Open and read the file into memory
     with open(file_path, 'r') as file:
         lines = file.readlines()  # Read all lines
-    
+
     # Find the line numbers containing the integer followed by a colon
     for line_number, line in enumerate(lines, start=1):
         if re.match(int_regex, line):  # Use re.match to check if the line starts with the regex
             matching_lines.append(line_number)
-    
+
     # Now search from each line in matching_lines until the next line matching the regex
     for start_line in matching_lines:
         # Get the ID from the corresponding line in 'lines'
-        id_match = re.match(int_regex, lines[start_line - 1])  # Accessing lines using start_line - 1
-        id_value = id_match.group(0).strip(':') if id_match else None  # Get the ID before the colon
-        
+        # Accessing lines using start_line - 1
+        id_match = re.match(int_regex, lines[start_line - 1])
+        id_value = id_match.group(0).strip(
+            ':') if id_match else None  # Get the ID before the colon
+
         # Process Synchro Results first
         found_phrase = False
         for line_number in range(start_line, len(lines)):
@@ -1837,6 +1944,7 @@ def parse_overall_data_v2(file_path):
             # Check for the search phrases and process only after finding one
             for search_phrase in search_phrases:
                 if search_phrase in line:
+
                     found_phrase = True  # Mark that we found the phrase
 
                     # Set the end line to the next empty line starting from this line
@@ -1848,7 +1956,7 @@ def parse_overall_data_v2(file_path):
                     vc_ratio_value = None
                     los_value = None
                     delay_value = None
-                    
+
                     # Now process the following lines for the search terms until the next blank line
                     for search_line_number in range(line_number + 1, end_line):
                         line = lines[search_line_number]
@@ -1896,6 +2004,7 @@ def parse_overall_data_v2(file_path):
             for search_phrase in search_phrases:
                 if search_phrase in line:
                     found_phrase = True
+                    phrase_found = search_phrase  # Store which search phrase was found
 
                     # Set the end line to the next empty line starting from this line
                     end_line = line_number + 1
@@ -1907,7 +2016,7 @@ def parse_overall_data_v2(file_path):
                     los_value = None
                     delay_value = None
                     found_hcm = False  # Flag to track if we found HCM lines
-                    
+
                     # Process HCM lines
                     for search_line_number in range(line_number + 1, end_line):
                         line = lines[search_line_number]
@@ -1920,10 +2029,15 @@ def parse_overall_data_v2(file_path):
 
                         # Check for 'delay' and extract the next float
                         if re.search(r'delay', line, re.IGNORECASE):
-                            delay_pos = line.lower().find('delay')  # Find the position of 'delay' in the line
+                            # Find the position of 'delay' in the line
+                            delay_pos = line.lower().find('delay')
                             if delay_pos != -1:  # If 'delay' is found
-                                after_delay = line[delay_pos + len('delay'):].strip()  # Get everything after 'delay'
-                                float_match = re.search(r'(\d+\.\d+|\d+)', after_delay)  # Search for float in the remaining substring
+                                # Get everything after 'delay'
+                                after_delay = line[delay_pos +
+                                                   len('delay'):].strip()
+                                # Search for float in the remaining substring
+                                float_match = re.search(
+                                    r'(\d+\.\d+|\d+)', after_delay)
                                 if float_match:
                                     delay_value = float(float_match.group(0))
 
@@ -1939,24 +2053,89 @@ def parse_overall_data_v2(file_path):
 
                     # Store HCM results only if we processed HCM lines
                     if found_hcm:
-                        hcm_results.append({
-                            'ID': id_value,
-                            'v/c ratio': vc_ratio_value,
-                            'los': los_value,
-                            'delay': delay_value
-                        })
+                        # Check which search phrase was found and structure the result accordingly
+                        if phrase_found == "Intersection Summary":
+                            hcm_results.append({
+                                'ID': id_value,
+                                'v/c ratio': vc_ratio_value,
+                                'los': los_value,
+                                'delay': delay_value
+                            })
+                        elif phrase_found == "Minor Lane/Major Mvmt":
+                            # Now we parse with the other function
+                            movement_results, merged_results = parse_minor_lane_mvmt(
+                                lines, line_number, end_line)
+
+                            # Create a dictionary where keys are from the movement results
+                            hcm_entry = {'ID': id_value}
+                            for i in range(len(movement_results)):
+                                # Using the movement results as keys
+                                hcm_entry[movement_results[i]
+                                          ] = merged_results[i]
+
+                            hcm_results.append(hcm_entry)
 
                     break  # Exit after processing the HCM block
 
             # Skip lines between the ID and the next search phrase
             if found_phrase:
                 break  # Stop looking at this block and move on to the next intersection
-        
     # Print the results
-    print("Synchro Results:", synchro_results)
-    print("HCM Results:", hcm_results)
-    
+    print("\nSynchro Overall Results:", synchro_results)
+    print("\nHCM Overall Results:", hcm_results)
+
     return result, synchro_results, hcm_results
+
+
+def parse_twsc_approach(df):
+    approach_data = []  # List to hold all parsed data
+
+    # Iterate over each row in the DataFrame
+    for index, row in df.iterrows():
+
+        # Check if "Approach" is in the first column (column 1)
+        if str(row[0]).strip().lower() == "approach":
+            # Initialize a dictionary for the approach directions
+            approach_dict = {
+                "EB": {"Approach Delay": None, "Approach LOS": None},
+                "WB": {"Approach Delay": None, "Approach LOS": None},
+                "NB": {"Approach Delay": None, "Approach LOS": None},
+                "SB": {"Approach Delay": None, "Approach LOS": None}
+            }
+
+            # Check for "EB", "WB", "NB", "SB" in the current row (starting from column 2 onwards)
+            for idx, direction in enumerate(["EB", "WB", "NB", "SB"]):
+                if idx + 1 < len(row) and row[idx + 1] != '-':
+                    approach_dict[direction]["Approach Delay"] = row[idx + 1]
+
+            # Now check the next row(s) for "hcm control delay" and "hcm los"
+            next_row_index = index + 1
+            while next_row_index < len(df):
+                next_row = df.iloc[next_row_index]
+                next_row_term = str(next_row[0]).lower()
+
+                if "hcm control delay" in next_row_term:
+                    # Read values for hcm control delay for each direction
+                    for idx, direction in enumerate(["EB", "WB", "NB", "SB"]):
+                        if idx + 1 < len(next_row) and next_row[idx + 1] != '-':
+                            approach_dict[direction]["Approach Delay"] = next_row[idx + 1]
+
+                elif "hcm los" in next_row_term:
+                    # Read values for hcm los for each direction
+                    for idx, direction in enumerate(["EB", "WB", "NB", "SB"]):
+                        if idx + 1 < len(next_row) and next_row[idx + 1] != '-':
+                            approach_dict[direction]["Approach LOS"] = next_row[idx + 1]
+
+                next_row_index += 1
+
+            # Remove directions where both "Approach Delay" and "Approach LOS" are None
+            approach_dict = {k: v for k, v in approach_dict.items() if v["Approach Delay"] is not None or v["Approach LOS"] is not None}
+
+            # If there's any valid data, add it to approach_data
+            if approach_dict:
+                approach_data.append(approach_dict)
+
+    return approach_data
 
 
 def extract_data_to_csv(file_path, output_file):
@@ -1964,47 +2143,47 @@ def extract_data_to_csv(file_path, output_file):
     collecting = False  # Flag to indicate if we're collecting data
     skip_lines = 0  # Counter to track skipped lines
     intersection_count = 0
+    
     with open(file_path, 'r') as file:
         for line in file:
             stripped_line = line.rstrip('\n')  # Remove the newline character
 
             # Step 1: Look for a line starting with a digit and a colon
             if re.match(r'^\d+:', stripped_line):
-                
                 intersection_count += 1
                 data.append([intersection_count])
                 collecting = True  # Start collecting data
                 skip_lines = 2  # Set the counter to skip the next two lines
                 continue  # Skip the current line
-            
             # Step 2: If we're collecting and need to skip lines
             if collecting:
                 if skip_lines > 0:
                     skip_lines -= 1  # Decrement the skip counter
                     continue  # Skip the line
-                
+
                 # If the line is empty, stop collecting
                 if stripped_line == "":
                     collecting = False  # Stop collecting on empty line
                     continue  # Skip the empty line
 
                 # Step 3: Split the line based on double tabs
-                new_row = re.split(r'\t\t|\s{2}\t|\s\t', line.strip())  # Regular expression to split
-                
-                
+                # Regular expression to split
+                new_row = re.split(r'\t\t|\s{2}\t|\s\t', line.strip())
+
                 # Step 4: Store each Lane Group in its own cell
                 # Ensure that there are no empty strings in the new_row
-                new_row = [cell for cell in new_row if cell]  # Filter out empty strings
+                # Filter out empty strings
+                new_row = [cell for cell in new_row if cell]
                 data.append(new_row)  # Append the new row to data
-            
-    pd.set_option('display.max_rows', 10)  # Show all rows
+
+    pd.set_option('display.max_rows', 20)  # Show all rows
     pd.set_option('display.max_columns', 10)  # Show all columns
-    
+
     # Step 5: Create a DataFrame and save to CSV
     df = pd.DataFrame(data)
-    
+
     df = df.map(lambda x: x.strip() if isinstance(x, str) else x)
-    
+
     # Define the terms to search for
     terms_to_match = [
         "V/c ratio",
@@ -2013,102 +2192,187 @@ def extract_data_to_csv(file_path, output_file):
         "V/c ratio(x)",
         "LnGrp Delay(d), s/veh",
         "LnGrp LOS",
+        "Approach Delay (s/veh)",
+        "Approach Delay, s/veh",
+        "Approach LOS"
     ]
-
+    
     # Use this for the keys of each dictionary in the list
     movement_lane_group_keys = ['EBL', 'EBT', 'EBR', 'WBL', 'WBT',
                                 'WBR', 'NBL', 'NBT', 'NBR', 'SBL', 'SBT', 'SBR']
     
     # Initialize an empty dictionary to store row indices
     row_indices = {}
-    group_config_data = [] # List of dictionaries
+    group_config_data = []  # List of dictionaries
     # Iterate through DataFrame rows
     for index, row in df.iterrows():
         if "Lane Configurations" in row.values:
             # Create a dictionary to hold the configurations
-            config_dict = {key: None for key in movement_lane_group_keys}  # Initialize with None
-            
+            # Initialize with None
+            config_dict = {key: None for key in movement_lane_group_keys}
+
             # Find the index of the row and extract values for each key
             for i, key in enumerate(movement_lane_group_keys):
                 if i < len(row) - 1:  # Avoid the intersection ID column
-                    config_dict[key] = row[i + 1] if row[i + 1] != '' else None  # Assign None for empty strings
-            
+                    # Assign None for empty strings
+                    config_dict[key] = row[i + 1] if row[i + 1] != '' else None
             # Append the config_dict to the group_config_data list
             group_config_data.append(config_dict)
         # Check for the presence of "LOS" first, as it is case-sensitive
         if "LOS" in row.values:
             row_indices[index] = "LOS"
             continue
-    
         # For other terms, check in a case-insensitive manner
         for term in terms_to_match:
-            
             if any(str(cell).lower() == term.lower() for cell in row if term.lower() != "los"):
                 row_indices[index] = term
                 break  # Exit the inner loop if a term is found
+    # print(row_indices)
+    lane_configurations = parse_lane_configs(group_config_data)
     
-    print(parse_lane_configs(group_config_data))
     # Initialize an empty list to store the combined dictionaries
     combined_list = []
-    
-    # Group terms in a general format
-    group_terms = ["v/c", "los", "delay"]
-    
+
     # Process every three items in row_indices
     grouped_indices = list(row_indices.items())
+    # print(grouped_indices)
     
-    for i in range(0, len(grouped_indices), 3):
+    print(parse_twsc_approach(df))
+    
+    for i in range(0, len(grouped_indices), 5):
         # Extract three consecutive term-row_index pairs
-        group = grouped_indices[i:i+3]
-        
+        group = grouped_indices[i:i+5]
+        print(group)
         # Initialize a dictionary to hold the grouped data
         combined_dict = {}
         
+        
+        approach_data = {
+            "EB": {"Approach Delay": None, "Approach LOS": None},
+            "WB": {"Approach Delay": None, "Approach LOS": None},
+            "NB": {"Approach Delay": None, "Approach LOS": None},
+            "SB": {"Approach Delay": None, "Approach LOS": None}
+        }
+        
         # Iterate over each term-row_index pair within this group
         for row_index, term in group:
-            # Check if the term contains one of the group terms (case insensitive)
-            for general_term in group_terms:
-                if general_term in term.lower():
-                    # Get the data for the row, replacing both NaNs and empty strings with "-"
-                    row_data = df.iloc[row_index].replace("", "-").fillna("-").tolist()
+            term_lower = term.lower()  # Make case-insensitive comparison
+            row_data = df.iloc[row_index].replace("", "-").fillna("-").tolist()
+            row_data_without_first = row_data[1:]
+            # print(row_data_without_first)
+            # Check if the current term is in the list of terms to match
+            for specific_term in terms_to_match:
+                # print(specific_term)
+                if specific_term.lower() in term_lower:
+                    if "approach delay" in specific_term.lower():
+                        # Filter out any entries that are '-'
+                        filtered_row_data = [value for value in row_data_without_first if value != '-']
+                        print(filtered_row_data)
+                        # Ensure at least 4 values for each direction
+                        if len(filtered_row_data) >= 4:
+                            approach_data["EB"]["Approach Delay"] = filtered_row_data[0]
+                            approach_data["WB"]["Approach Delay"] = filtered_row_data[1]
+                            approach_data["NB"]["Approach Delay"] = filtered_row_data[2]
+                            approach_data["SB"]["Approach Delay"] = filtered_row_data[3]
+                        continue
+                    if specific_term.lower() == "approach los":
+                        # Filter out any entries that are '-'
+                        filtered_row_data = [value for value in row_data_without_first if value != '-']
+                        print(filtered_row_data)
+                        # Ensure at least 4 values for each direction
+                        if len(filtered_row_data) >= 4:
+                            approach_data["EB"]["Approach LOS"] = filtered_row_data[0]
+                            approach_data["WB"]["Approach LOS"] = filtered_row_data[1]
+                            approach_data["NB"]["Approach LOS"] = filtered_row_data[2]
+                            approach_data["SB"]["Approach LOS"] = filtered_row_data[3]
+                        continue
+                        
+                    combined_dict[specific_term] = [value for value in row_data_without_first if value != '-']
+                    # print(f"\nApproach data: {approach_data}\n")
                     
-                    # Exclude the first column, assuming it's metadata like intersection ID
-                    row_data_without_first = row_data[1:]
                     
-                    # Map the data to the generalized term in the combined dictionary
-                    combined_dict[general_term] = row_data_without_first
-                    break
-    
-        # Only add the combined_dict if it contains all three generalized terms
-        if all(term in combined_dict for term in group_terms):
+        # Merge approach data into the combined dictionary
+        combined_dict.update(approach_data)
+        # print(f"Combined Dictionary (with Approach): {combined_dict}\n")
+        if combined_dict:
             combined_list.append(combined_dict)
-         
-            
-    # Prepare data for CSV writing
-    csv_data = []
-    for idx, data_dict in enumerate(combined_list, start=1):  # Intersection IDs start from 1
-        # Get the maximum number of elements to determine the number of rows needed for this intersection
-        max_length = max(len(data_dict['v/c']), len(data_dict['delay']), len(data_dict['los']))
-        # Loop through each element of the lists and create rows
-        for i in range(max_length):
-            # Only include the intersection ID in the first row
-            intersection_id = str(idx) if i == 0 else ''
-            
-            # Add the V/c, delay, and LOS data (use "-" if the index exceeds the list length)
-            vc_value = data_dict['v/c'][i] if i < len(data_dict['v/c']) else '-'
-            delay_value = data_dict['delay'][i] if i < len(data_dict['delay']) else '-'
-            los_value = data_dict['los'][i] if i < len(data_dict['los']) else '-' 
-            # Create a row with intersection ID, V/c, delay, and LOS
-            row = [intersection_id, '', '', vc_value, los_value, delay_value]
-            csv_data.append(row)
     
+    # combined_list.append(parse_twsc_approach(df))
+    # Create an empty DataFrame to hold all intersections' data
+    final_df = pd.DataFrame()
+
+    # Prepare data for each intersection
+    # Intersection IDs start from 1
+    for idx, data_dict in enumerate(combined_list, start=1):
+
+        # Prepare the intersection's DataFrame
+        intersection_data = []
+
+        # Prepare lane configurations for the current intersection
+        lane_config = lane_configurations[idx - 1]  # Adjust for 0-based index
+
+        # Flag to control printing of the Intersection ID only once for each direction set (NB, EB, etc.)
+        intersection_id_printed = False
+
+        # Prepare separate indexing for v/c, LOS, and Delay values
+        j = 0
+        
+        # Define overall values based on approach metrics
+        approach_metrics = {
+            "EB": {"Delay": '-', "LOS": '-'},
+            "WB": {"Delay": '-', "LOS": '-'},
+            "NB": {"Delay": '-', "LOS": '-'},
+            "SB": {"Delay": '-', "LOS": '-'},
+            "Overall": {"Delay": '-', "LOS": '-'}
+        }
+        
+        # Loop through the lane_config and data_dict to build rows for each direction (EB, WB, etc.)
+        for direction, lanes in lane_config.items():
+            # Print the Intersection ID only once at the start of the set (e.g., once for NB, once for EB, etc.)
+            intersection_id = str(idx) if not intersection_id_printed else ''
+            # After the first print, don't print it again for this direction set
+            intersection_id_printed = True
+            
+            # Loop through each lane in the direction based on its own length
+            for i, lane in enumerate(lanes):
+                # Only include the direction in the first row of each set, and leave it empty after that
+                direction_value = direction if i == 0 else ''
+
+                # Get the v/c, LOS, and delay values for this specific lane
+                vc_value = data_dict['v/c'][j] if j < len(
+                    data_dict['v/c']) else '-'
+                los_value = data_dict['los'][j] if j < len(
+                    data_dict['los']) else '-'
+                delay_value = data_dict['delay'][j] if j < len(
+                    data_dict['delay']) else '-'
+                # Append the row for this lane
+                intersection_data.append(
+                    [intersection_id, direction_value, lane, vc_value, los_value, delay_value])
+
+                # Increment the indices for v/c, LOS, and Delay values
+                j += 1
+
+                # Clear the intersection_id to ensure it doesn't repeat for the remaining rows of the direction
+                intersection_id = ''
+
+            # Add an overall row for this direction (after all lanes)
+            intersection_data.append(
+                ['', f"{direction} Overall", '', '-', '-', '-'])
+
+
+        # Add an overall row for this intersection
+        intersection_data.append(
+            ['', "Overall", '', '-', '-', '-'])
+        # Create a DataFrame for the current intersection's data
+        intersection_df = pd.DataFrame(intersection_data, columns=[
+                                       'Intersection ID', 'Direction', 'Lane', 'v/c', 'LOS', 'Delay'])
+        # Append it to the final DataFrame
+        final_df = pd.concat([final_df, intersection_df], ignore_index=True)
+
+    # Write the final DataFrame to a CSV file
     file_name, _ = os.path.splitext(file_path)
-    # Write the data to a new CSV file
-    csv_header = ['Intersection ID', 'Direction', '', 'V/c', 'LOS', 'Delay']
-    csv_df = pd.DataFrame(csv_data, columns=csv_header)
-    csv_df.to_csv(f"{file_name}-filtered.csv", index=False)
-    
-    
+    final_df.to_csv(f"{file_name}-filtered.csv", index=False)
+
     # Initialize the intersection ID
     for idx, data_dict in enumerate(combined_list, start=1):
         # Print the intersection ID
@@ -2117,34 +2381,36 @@ def extract_data_to_csv(file_path, output_file):
         for term, data in data_dict.items():
             # Convert the list of data into a comma-separated string for readability
             data_str = ", ".join(data)
-            
+
             # Print the term and corresponding data
             print(f"  {term.capitalize()}: {data_str}")
-        
+
         # Print lane configurations for the current intersection
         if idx - 1 < len(group_config_data):
-            lane_config_str = ", ".join(f"{key}: {value}" for key, value in group_config_data[idx - 1].items())
+            lane_config_str = ", ".join(
+                f"{key}: {value}" for key, value in group_config_data[idx - 1].items())
             print(f"  Lane Configurations: {lane_config_str}")
 
         # Add a blank line for readability between intersections
         print("\n" + "-" * 40 + "\n")
-    
-    
+
+
 def parse_lane_configs(int_lane_groups):
     parsed_list = []  # This will store the parsed dictionaries for each group
-    
+
     for lane_dict in int_lane_groups:
         parsed_dict = {
-            'EB': [None, None, None],  # Initialize with three None values for L, T, R
+            # Initialize with three None values for L, T, R
+            'EB': [None, None, None],
             'WB': [None, None, None],
             'NB': [None, None, None],
             'SB': [None, None, None]
         }
-        
+
         for direction, value in lane_dict.items():
             if value is None or value == '':
                 continue
-            
+
             # Process each direction and suffix (L, T, R)
             suffixes = {
                 'L': 0,  # Index 0 for Left
@@ -2156,36 +2422,42 @@ def parse_lane_configs(int_lane_groups):
                 if direction.endswith(suffix):
                     # Parse the value for numbers and special characters < and >
                     parsed_value = ''
-                    
+
                     if '<' in value:
                         parsed_value += 'L'  # Leading left if < is present
-                    number_part = ''.join(filter(str.isdigit, value))  # Get the number
+                    number_part = ''.join(
+                        filter(str.isdigit, value))  # Get the number
                     if number_part:
-                        parsed_value += suffix * int(number_part)  # Repeat based on the number
+                        # Repeat based on the number
+                        parsed_value += suffix * int(number_part)
                     else:
                         parsed_value += suffix
-                    
+
                     if '>' in value:
                         parsed_value += 'R'  # Trailing right if > is present
-                    
+
                     # Store the parsed value in the respective direction and suffix position
-                    direction_prefix = direction[:-1]  # Get the prefix like EB, WB, etc.
+                    # Get the prefix like EB, WB, etc.
+                    direction_prefix = direction[:-1]
                     if direction_prefix in parsed_dict:
                         parsed_dict[direction_prefix][idx] = parsed_value or None
         # Remove None values from each list in the parsed_dict
         for key in parsed_dict:
-            parsed_dict[key] = [value for value in parsed_dict[key] if value is not None]
-            
+            parsed_dict[key] = [
+                value for value in parsed_dict[key] if value is not None]
+
         # Append the parsed_dict for this lane group to the final list
         parsed_list.append(parsed_dict)
-    
+
     return parsed_list
+
 
 if __name__ == "__main__":
     # read_input_file("test-input.xlsx")
     file = "test/Test Report 2.txt"
+    parse_overall_data_v2(file)  # Gets the data for overall
     extract_data_to_csv(file, "test.csv")
-    parse_overall_data_v2(file) # Gets the data for overall
+    
     # lane_groups = separate_characters(movement)
-    #print(f"\nLane groups:\n{lane_groups}")
+    # print(f"\nLane groups:\n{lane_groups}")
     # write_to_excel(file, movement, delay, vc, los)
