@@ -2087,55 +2087,107 @@ def parse_overall_data_v2(file_path):
     return result, synchro_results, hcm_results
 
 
-def parse_twsc_approach(df):
+def parse_twsc_approach(file_path):
     approach_data = []  # List to hold all parsed data
 
-    # Iterate over each row in the DataFrame
-    for index, row in df.iterrows():
-
-        # Check if "Approach" is in the first column (column 1)
-        if str(row[0]).strip().lower() == "approach":
-            # Initialize a dictionary for the approach directions
+    # Open the text file and read it line by line
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+        
+    # Iterate through each line
+    for index, line in enumerate(lines):
+        line = line.strip()  # Remove leading/trailing spaces
+        
+        # Check if the line starts with "approach" and contains at least one direction
+        if line.lower().startswith("approach"):
+            # Check if any of the specified directions are present in the line after "approach"
+            present_directions = {direction: direction in line for direction in ["EB", "WB", "NB", "SB"]}
+            
+            # If no directions are found after "approach", skip this line
+            if not any(present_directions.values()):
+                continue  # Skip the line if no directions are present
+            
+            print(f"Found 'Approach' with directions at line {index}: {line}")
             approach_dict = {
-                "EB": {"Approach Delay": None, "Approach LOS": None},
-                "WB": {"Approach Delay": None, "Approach LOS": None},
-                "NB": {"Approach Delay": None, "Approach LOS": None},
-                "SB": {"Approach Delay": None, "Approach LOS": None}
+                "EB": {"Approach Delay": None, "Approach LOS": '-'},
+                "WB": {"Approach Delay": None, "Approach LOS": '-'},
+                "NB": {"Approach Delay": None, "Approach LOS": '-'},
+                "SB": {"Approach Delay": None, "Approach LOS": '-'}
             }
 
-            # Check for "EB", "WB", "NB", "SB" in the current row (starting from column 2 onwards)
-            for idx, direction in enumerate(["EB", "WB", "NB", "SB"]):
-                if idx + 1 < len(row) and row[idx + 1] != '-':
-                    approach_dict[direction]["Approach Delay"] = row[idx + 1]
+            # Step 1: Record positions of directions (EB, WB, NB, SB)
+            direction_positions = {}
+            for direction in ["EB", "WB", "NB", "SB"]:
+                if present_directions[direction]:
+                    position = line.find(direction)  # Find the starting position of the direction
+                    direction_positions[direction] = position
+                    print(f"Direction {direction} found at position {position}")
 
-            # Now check the next row(s) for "hcm control delay" and "hcm los"
-            next_row_index = index + 1
-            while next_row_index < len(df):
-                next_row = df.iloc[next_row_index]
-                next_row_term = str(next_row[0]).lower()
+            # Step 2: Now check the subsequent lines for "HCM Control Delay" and "HCM LOS"
+            next_line_index = index + 1
+            while next_line_index < len(lines):
+                next_line = lines[next_line_index].strip()
 
-                if "hcm control delay" in next_row_term:
-                    # Read values for hcm control delay for each direction
+                # Check for "HCM Control Delay"
+                if "hcm control delay" in next_line.lower():
+                    print(f"Found 'HCM Control Delay' at line {next_line_index}: {next_line}")
+                    
+                    # Extract integer or float values for each direction
+                    values = re.findall(r'\b\d+\.\d+|\b\d+', next_line)
+                    print(values)
+                    
+                    # Check if the number of values matches the expected direction positions
+                    direction_idx = 0  # Start at the first direction
+                    for direction in ["EB", "WB", "NB", "SB"]:
+                        if present_directions[direction]:
+                            if direction_idx < len(values):
+                                delay_value = values[direction_idx]
+                                # Ensure the value is valid (non-empty)
+                                if delay_value not in [None, '-', '']:
+                                    approach_dict[direction]["Approach Delay"] = delay_value
+                                    print(f"Setting {direction} Approach Delay: {delay_value}")
+                                else:
+                                    print(f"Invalid delay value for {direction}: {delay_value}")
+                            direction_idx += 1
+                
+                # Check for "HCM LOS"
+                elif "hcm los" in next_line.lower():
+                    print(f"Found 'HCM LOS' at line {next_line_index}: {next_line}")
+
+                    # Step 3: Check positions of directions for LOS (A-F)
+                    los_values = []
+                    for direction, position in direction_positions.items():
+                        if present_directions[direction]:
+                            # Check if there is a valid character (A-F) at the exact position
+                            los_char = next_line[position] if position < len(next_line) else '-'
+                            if los_char in 'ABCDEF':  # Check if the character is a valid A-F
+                                los_values.append(los_char)
+                                print(f"Setting LOS for {direction}: {los_char}")
+                            else:
+                                los_values.append('-')
+                                print(f"Setting LOS for {direction}: '-' (Invalid or missing character)")
+
+                    # Assign the LOS values to the appropriate directions
                     for idx, direction in enumerate(["EB", "WB", "NB", "SB"]):
-                        if idx + 1 < len(next_row) and next_row[idx + 1] != '-':
-                            approach_dict[direction]["Approach Delay"] = next_row[idx + 1]
+                        if present_directions[direction] and idx < len(los_values):
+                            approach_dict[direction]["Approach LOS"] = los_values[idx]
+                
+                # Move to the next line
+                next_line_index += 1
 
-                elif "hcm los" in next_row_term:
-                    # Read values for hcm los for each direction
-                    for idx, direction in enumerate(["EB", "WB", "NB", "SB"]):
-                        if idx + 1 < len(next_row) and next_row[idx + 1] != '-':
-                            approach_dict[direction]["Approach LOS"] = next_row[idx + 1]
-
-                next_row_index += 1
-
-            # Remove directions where both "Approach Delay" and "Approach LOS" are None
-            approach_dict = {k: v for k, v in approach_dict.items() if v["Approach Delay"] is not None or v["Approach LOS"] is not None}
+                # Exit the loop if an empty line is found (or any invalid line)
+                if not next_line.strip():  # Check for an empty line
+                    break
+                
+            # Step 3: Remove directions where neither "Approach Delay" nor "Approach LOS" is assigned
+            approach_dict = {k: v for k, v in approach_dict.items() if v["Approach Delay"] is not None or v["Approach LOS"] is not '-'}
 
             # If there's any valid data, add it to approach_data
             if approach_dict:
                 approach_data.append(approach_dict)
 
     return approach_data
+
 
 
 def extract_data_to_csv(file_path, output_file):
@@ -2237,7 +2289,7 @@ def extract_data_to_csv(file_path, output_file):
     grouped_indices = list(row_indices.items())
     # print(grouped_indices)
     
-    print(parse_twsc_approach(df))
+    print(parse_twsc_approach("test/Test Report 2.txt"))
     
     for i in range(0, len(grouped_indices), 5):
         # Extract three consecutive term-row_index pairs
@@ -2296,7 +2348,7 @@ def extract_data_to_csv(file_path, output_file):
         # print(f"Combined Dictionary (with Approach): {combined_dict}\n")
         if combined_dict:
             combined_list.append(combined_dict)
-    
+    print(combined_dict)
     # combined_list.append(parse_twsc_approach(df))
     # Create an empty DataFrame to hold all intersections' data
     final_df = pd.DataFrame()
