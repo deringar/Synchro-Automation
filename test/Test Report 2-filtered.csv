@@ -1,1 +1,16 @@
-
+Intersection ID,Direction,Lane,v/c,LOS,Delay
+1,EB,L,0.67,E,71.7
+,,TTR,0.57,D,53.0
+,EB Overall,,-,-,-
+,WB,L,0.34,E,65.2
+,,T,0.56,E,69.6
+,,R,0.39,A,5.3
+,WB Overall,,-,-,-
+,NB,L,0.31,E,66.7
+,,TTR,0.23,B,16.5
+,NB Overall,,-,-,-
+,SB,LL,0.64,E,58.0
+,,TT,0.13,B,16.4
+,,R,0.28,A,0.5
+,SB Overall,,-,-,-
+,Overall,,-,-,-
