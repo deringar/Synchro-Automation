@@ -1,667 +1,987 @@
+0,1,2,3,4,5,6,7,8,9,10,11,12
 1,,,,,,,,,,,,
-Lane Group,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
-Lane Configurations,1,2>,0,1,1,1,1,2>,0,2,2,1
-Traffic Volume (vph),106,224,11,34,75,218,23,184,123,276,224,359
-Future Volume (vph),106,224,11,34,75,218,23,184,123,276,224,359
-Ideal Flow (vphpl),1900,1900,1900,1900,1900,1900,1900,1900,1900,1900,1900,1900
-Grade (%),,0%,,,0%,,,1%,,,1%,
-Storage Length (ft),400,,400,220,,220,145,,145,330,,280
-Storage Lanes,2,,0,1,,1,1,,1,2,,1
-Taper Length (ft),86,,,86,,,86,,,86,,
-Lane Util. Factor,1.00,0.95,0.95,1.00,1.00,1.00,1.00,0.95,0.95,0.97,0.95,1.00
-Frt,,0.993,,,0.850,0.940,,,0.850,,,
-Flt Protected,0.950,,0.950,,0.950,,0.950,,,,,
-Satd. Flow (prot),1399,2555,0,1703,1496,1524,1330,3168,0,3287,3236,1397
-Flt Permitted,0.950,,0.950,,0.950,,0.950,,,,,
-Satd. Flow (perm),1399,2555,0,1703,1496,1524,1330,3168,0,3287,3236,1397
-Right Turn on Red,,,Yes,,,Yes,,,Yes,,,Yes
-Satd. Flow (RTOR),,4,,,,242,,119,,,,399
-Link Speed (mph),,45,,,25,,,45,,,45,
-Link Distance (ft),,639,,,871,,,1257,,,827,
-Travel Time (s),,9.7,,,23.8,,,19.0,,,12.5,
-Peak Hour Factor,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90
-Heavy Vehicles (%),29%,40%,46%,6%,27%,6%,35%,9%,3%,6%,11%,15%
-Adj. Flow (vph),118,249,12,38,83,242,26,204,137,307,249,399
+Lane Group                      ,	EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
+Lane Configurations             ,	1  ,2> ,0  ,1  ,1  ,1  ,1  ,2> ,0  ,2  ,2  ,1
+Traffic Volume (vph)            ,	106,224,11 ,34 ,75 ,218,23 ,184,123,276,224,359
+Future Volume (vph)             ,	106,224,11 ,34 ,75 ,218,23 ,184,123,276,224,359
+Ideal Flow (vphpl)              ,	1900,1900,1900,1900,1900,1900,1900,1900,1900,1900,1900,1900
+Grade (%)                       ,	   ,0% ,   ,   ,0% ,   ,   ,1% ,   ,   ,1%,
+Storage Length (ft)             ,	400,   ,400,220,   ,220,145,   ,145,330,   ,280
+Storage Lanes                   ,	2  ,   ,0  ,1  ,   ,1  ,1  ,   ,1  ,2  ,   ,1
+Taper Length (ft)               ,	86 ,   ,   ,86 ,   ,   ,86 ,   ,   ,86,,
+Lane Util. Factor               ,	1.00,0.95,0.95,1.00,1.00,1.00,1.00,0.95,0.95,0.97,0.95,1.00
+Frt                             ,	   ,0.993	   ,   ,   ,0.850	   ,0.940	   ,   ,   ,0.850,,,
+Flt Protected                   ,	0.950	   ,   ,0.950	   ,   ,0.950	   ,   ,0.950,,,,,
+Satd. Flow (prot)               ,	1399,2555,0  ,1703,1496,1524,1330,3168,0  ,3287,3236,1397
+Flt Permitted                   ,	0.950	   ,   ,0.950	   ,   ,0.950	   ,   ,0.950,,,,,
+Satd. Flow (perm)               ,	1399,2555,0  ,1703,1496,1524,1330,3168,0  ,3287,3236,1397
+Right Turn on Red               ,	   ,   ,Yes,   ,   ,Yes,   ,   ,Yes,   ,   ,Yes
+Satd. Flow (RTOR)               ,	   ,4  ,   ,   ,   ,242,   ,119,   ,   ,   ,399
+Link Speed (mph)                ,	   ,45 ,   ,   ,25 ,   ,   ,45 ,   ,   ,45,
+Link Distance (ft)              ,	   ,639,   ,   ,871,   ,   ,1257,   ,   ,827,
+Travel Time (s)                 ,	   ,9.7,   ,   ,23.8,   ,   ,19.0,   ,   ,12.5,
+Peak Hour Factor                ,	0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90
+Heavy Vehicles (%)              ,	29%,40%,46%,6% ,27%,6% ,35%,9% ,3% ,6% ,11%,15%
+Adj. Flow (vph)                 ,	118,249,12 ,38 ,83 ,242,26 ,204,137,307,249,399
 Shared Lane Traffic (%),,,,,,,,,,,,
-Lane Group Flow (vph),118,261,0,38,83,242,26,341,0,307,249,399
-Enter Blocked Intersection,No,No,No,No,No,No,No,No,No,No,No,No
-Lane Alignment,Left,Left,Right	Left,Left,Right	Left,Left,Right	Left,Left,Right,,,
-Median Width(ft),,12,,,12,,,24,,,24,
-Link Offset(ft),,0,,,0,,,0,,,0,
-Crosswalk Width(ft),,16,,,16,,,16,,,16,
+Lane Group Flow (vph)           ,	118,261,0  ,38 ,83 ,242,26 ,341,0  ,307,249,399
+Enter Blocked Intersection      ,	No ,No ,No ,No ,No ,No ,No ,No ,No ,No ,No ,No
+Lane Alignment                  ,	Left,Left,Right	Left,Left,Right	Left,Left,Right	Left,Left,Right,,,
+Median Width(ft)                ,	   ,12 ,   ,   ,12 ,   ,   ,24 ,   ,   ,24,
+Link Offset(ft)                 ,	   ,0  ,   ,   ,0  ,   ,   ,0  ,   ,   ,0,
+Crosswalk Width(ft)             ,	   ,16 ,   ,   ,16 ,   ,   ,16 ,   ,   ,16,
 Two way Left Turn Lane,,,,,,,,,,,,
-Headway Factor,1.00,1.00,1.00,1.00,1.00,1.00,1.01,1.01,1.01,1.01,1.01,1.01
-Turning Speed (mph),15,,9,15,,9,15,,9,15,,9
-Number of Detectors,2,2,,2,2,2,2,2,,2,2,2
-Detector Template,Left,Thru,,Left,Thru,Right	Left,Thru,,Left,Thru,Right,
-Leading Detector (ft),83,83,,83,83,83,83,83,,83,83,83
-Trailing Detector (ft),-5,-5,,-5,-5,-5,-5,-5,,-5,-5,-5
-Detector 1 Position(ft),-5,-5,,-5,-5,-5,-5,-5,,-5,-5,-5
-Detector 1 Size(ft),40,40,,40,40,40,40,40,,40,40,40
-Detector 1 Type,Cl+Ex	Cl+Ex,Cl+Ex	Cl+Ex	Cl+Ex	Cl+Ex	Cl+Ex,Cl+Ex	Cl+Ex	Cl+Ex,,,,,,,,,
+Headway Factor                  ,	1.00,1.00,1.00,1.00,1.00,1.00,1.01,1.01,1.01,1.01,1.01,1.01
+Turning Speed (mph)             ,	15 ,   ,9  ,15 ,   ,9  ,15 ,   ,9  ,15 ,   ,9
+Number of Detectors             ,	2  ,2  ,   ,2  ,2  ,2  ,2  ,2  ,   ,2  ,2  ,2
+Detector Template               ,	Left,Thru,   ,Left,Thru,Right	Left,Thru,   ,Left,Thru,Right,
+Leading Detector (ft)           ,	83 ,83 ,   ,83 ,83 ,83 ,83 ,83 ,   ,83 ,83 ,83
+Trailing Detector (ft)          ,	-5 ,-5 ,   ,-5 ,-5 ,-5 ,-5 ,-5 ,   ,-5 ,-5 ,-5
+Detector 1 Position(ft)         ,	-5 ,-5 ,   ,-5 ,-5 ,-5 ,-5 ,-5 ,   ,-5 ,-5 ,-5
+Detector 1 Size(ft)             ,	40 ,40 ,   ,40 ,40 ,40 ,40 ,40 ,   ,40 ,40 ,40
+Detector 1 Type                 ,	Cl+Ex	Cl+Ex	   ,Cl+Ex	Cl+Ex	Cl+Ex	Cl+Ex	Cl+Ex	   ,Cl+Ex	Cl+Ex	Cl+Ex,,,,,,,,,
 Detector 1 Channel,,,,,,,,,,,,
-Detector 1 Extend (s),0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,0.0,0.0
-Detector 1 Queue (s),0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,0.0,0.0
-Detector 1 Delay (s),0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,0.0,0.0
-Detector 2 Position(ft),43,43,,43,43,43,43,43,,43,43,43
-Detector 2 Size(ft),40,40,,40,40,40,40,40,,40,40,40
-Detector 2 Type,Cl+Ex	Cl+Ex,Cl+Ex	Cl+Ex	Cl+Ex	Cl+Ex	Cl+Ex,Cl+Ex	Cl+Ex	Cl+Ex,,,,,,,,,
+Detector 1 Extend (s)           ,	0.0,0.0,   ,0.0,0.0,0.0,0.0,0.0,   ,0.0,0.0,0.0
+Detector 1 Queue (s)            ,	0.0,0.0,   ,0.0,0.0,0.0,0.0,0.0,   ,0.0,0.0,0.0
+Detector 1 Delay (s)            ,	0.0,0.0,   ,0.0,0.0,0.0,0.0,0.0,   ,0.0,0.0,0.0
+Detector 2 Position(ft)         ,	43 ,43 ,   ,43 ,43 ,43 ,43 ,43 ,   ,43 ,43 ,43
+Detector 2 Size(ft)             ,	40 ,40 ,   ,40 ,40 ,40 ,40 ,40 ,   ,40 ,40 ,40
+Detector 2 Type                 ,	Cl+Ex	Cl+Ex	   ,Cl+Ex	Cl+Ex	Cl+Ex	Cl+Ex	Cl+Ex	   ,Cl+Ex	Cl+Ex	Cl+Ex,,,,,,,,,
 Detector 2 Channel,,,,,,,,,,,,
-Detector 2 Extend (s),0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,0.0,0.0
-Turn Type,Prot,NA,,Prot,NA,pm+ov	Prot,NA,,Prot,NA,Free,
-Protected Phases,7,4,,3,8,1,5,2,,1,6,
-Permitted Phases,,,,,,8,,,,,,Free
-Detector Phase,7,4,,3,8,1,5,2,,1,6,
+Detector 2 Extend (s)           ,	0.0,0.0,   ,0.0,0.0,0.0,0.0,0.0,   ,0.0,0.0,0.0
+Turn Type                       ,	Prot,NA ,   ,Prot,NA ,pm+ov	Prot,NA ,   ,Prot,NA ,Free,
+Protected Phases                ,	7  ,4  ,   ,3  ,8  ,1  ,5  ,2  ,   ,1  ,6,
+Permitted Phases                ,	   ,   ,   ,   ,   ,8  ,   ,   ,   ,   ,   ,Free
+Detector Phase                  ,	7  ,4  ,   ,3  ,8  ,1  ,5  ,2  ,   ,1  ,6,
 Switch Phase,,,,,,,,,,,,
-Minimum Initial (s),5.0,5.0,,5.0,5.0,5.0,5.0,10.0,,5.0,10.0,
-Minimum Split (s),11.0,24.0,,11.0,24.0,11.0,11.0,24.0,,11.0,24.0,
-Total Split (s),26.0,46.0,,26.0,46.0,21.0,21.0,36.0,,21.0,36.0,
-Total Split (%),20.2%	35.7%,20.2%	35.7%	16.3%	16.3%	27.9%,16.3%	27.9%,,,,,,,,,
-Maximum Green (s),20.0,40.0,,20.0,40.0,15.0,15.0,30.0,,15.0,30.0,
-Yellow Time (s),5.0,5.0,,5.0,5.0,5.0,5.0,5.0,,5.0,5.0,
-All-Red Time (s),1.0,1.0,,1.0,1.0,1.0,1.0,1.0,,1.0,1.0,
-Lost Time Adjust (s),0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,0.0,
-Total Lost Time (s),6.0,6.0,,6.0,6.0,6.0,6.0,6.0,,6.0,6.0,
-Lead/Lag,Lead,Lag,,Lead,Lag,Lead,Lead,Lag,,Lead,Lag,
-Lead-Lag Optimize?,Yes,Yes,,Yes,Yes,Yes,Yes,Yes,,Yes,Yes,
-Vehicle Extension (s),4.0,3.0,,3.0,3.0,3.0,3.0,3.0,,3.0,3.0,
-Recall Mode,None,None,,None,None,None,None,C-Max,None,None,,
-Act Effct Green (s),16.3,22.8,,8.4,12.6,37.3,8.1,57.4,,18.7,72.8,129.0
-Actuated g/C Ratio,0.13,0.18,,0.07,0.10,0.29,0.06,0.44,,0.14,0.56,1.00
-v/c Ratio,0.67,0.57,,0.34,0.56,0.39,0.31,0.23,,0.64,0.13,0.28
-Control Delay (s/veh),71.7,53.0,,65.2,69.6,5.3,66.7,16.5,,58.0,16.4,0.5
-Queue Delay,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,,0.0,0.0,0.0
-Total Delay (s/veh),71.7,53.0,,65.2,69.6,5.3,66.7,16.5,,58.0,16.4,0.5
-LOS,E,D,,E,E,A,E,B,,E,B,A
-Approach Delay (s/veh),,58.9,,,26.3,,,20.1,,,23.2,
-Approach LOS,,E,,,C,,,C,,,C,
-Queue Length 50th (ft),95,106,,31,67,0,21,57,,126,54,0
-Queue Length 95th (ft),158,146,,68,118,54,51,110,,167,95,0
-Internal Link Dist (ft),,559,,,791,,,1177,,,747,
-Turn Bay Length (ft),400,,,220,,220,145,,,330,,280
-Base Capacity (vph),216,795,,264,463,616,154,1476,,484,1826,1397
-Starvation Cap Reductn,0,0,,0,0,0,0,0,,0,0,0
-Spillback Cap Reductn,0,0,,0,0,0,0,0,,0,0,0
-Storage Cap Reductn,0,0,,0,0,0,0,0,,0,0,0
-Reduced v/c Ratio,0.55,0.33,,0.14,0.18,0.39,0.17,0.23,,0.63,0.14,0.29
+Minimum Initial (s)             ,	5.0,5.0,   ,5.0,5.0,5.0,5.0,10.0,   ,5.0,10.0,
+Minimum Split (s)               ,	11.0,24.0,   ,11.0,24.0,11.0,11.0,24.0,   ,11.0,24.0,
+Total Split (s)                 ,	26.0,46.0,   ,26.0,46.0,21.0,21.0,36.0,   ,21.0,36.0,
+Total Split (%)                 ,	20.2%	35.7%	   ,20.2%	35.7%	16.3%	16.3%	27.9%	   ,16.3%	27.9%,,,,,,,,,
+Maximum Green (s)               ,	20.0,40.0,   ,20.0,40.0,15.0,15.0,30.0,   ,15.0,30.0,
+Yellow Time (s)                 ,	5.0,5.0,   ,5.0,5.0,5.0,5.0,5.0,   ,5.0,5.0,
+All-Red Time (s)                ,	1.0,1.0,   ,1.0,1.0,1.0,1.0,1.0,   ,1.0,1.0,
+Lost Time Adjust (s)            ,	0.0,0.0,   ,0.0,0.0,0.0,0.0,0.0,   ,0.0,0.0,
+Total Lost Time (s)             ,	6.0,6.0,   ,6.0,6.0,6.0,6.0,6.0,   ,6.0,6.0,
+Lead/Lag                        ,	Lead,Lag,   ,Lead,Lag,Lead,Lead,Lag,   ,Lead,Lag,
+Lead-Lag Optimize?              ,	Yes,Yes,   ,Yes,Yes,Yes,Yes,Yes,   ,Yes,Yes,
+Vehicle Extension (s)           ,	4.0,3.0,   ,3.0,3.0,3.0,3.0,3.0,   ,3.0,3.0,
+Recall Mode                     ,	None,None,   ,None,None,None,None,C-Max	   ,None,None,,
+Act Effct Green (s)             ,	16.3,22.8,   ,8.4,12.6,37.3,8.1,57.4,   ,18.7,72.8,129.0
+Actuated g/C Ratio              ,	0.13,0.18,   ,0.07,0.10,0.29,0.06,0.44,   ,0.14,0.56,1.00
+v/c Ratio                       ,	0.67,0.57,   ,0.34,0.56,0.39,0.31,0.23,   ,0.64,0.13,0.28
+Control Delay (s/veh)           ,	71.7,53.0,   ,65.2,69.6,5.3,66.7,16.5,   ,58.0,16.4,0.5
+Queue Delay                     ,	0.0,0.0,   ,0.0,0.0,0.0,0.0,0.0,   ,0.0,0.0,0.0
+Total Delay (s/veh)             ,	71.7,53.0,   ,65.2,69.6,5.3,66.7,16.5,   ,58.0,16.4,0.5
+LOS                             ,	E  ,D  ,   ,E  ,E  ,A  ,E  ,B  ,   ,E  ,B  ,A
+Approach Delay (s/veh)          ,	   ,58.9,   ,   ,26.3,   ,   ,20.1,   ,   ,23.2,
+Approach LOS                    ,	   ,E  ,   ,   ,C  ,   ,   ,C  ,   ,   ,C,
+Queue Length 50th (ft)          ,	95 ,106,   ,31 ,67 ,0  ,21 ,57 ,   ,126,54 ,0
+Queue Length 95th (ft)          ,	158,146,   ,68 ,118,54 ,51 ,110,   ,167,95 ,0
+Internal Link Dist (ft)         ,	   ,559,   ,   ,791,   ,   ,1177,   ,   ,747,
+Turn Bay Length (ft)            ,	400,   ,   ,220,   ,220,145,   ,   ,330,   ,280
+Base Capacity (vph)             ,	216,795,   ,264,463,616,154,1476,   ,484,1826,1397
+Starvation Cap Reductn          ,	0  ,0  ,   ,0  ,0  ,0  ,0  ,0  ,   ,0  ,0  ,0
+Spillback Cap Reductn           ,	0  ,0  ,   ,0  ,0  ,0  ,0  ,0  ,   ,0  ,0  ,0
+Storage Cap Reductn             ,	0  ,0  ,   ,0  ,0  ,0  ,0  ,0  ,   ,0  ,0  ,0
+Reduced v/c Ratio               ,	0.55,0.33,   ,0.14,0.18,0.39,0.17,0.23,   ,0.63,0.14,0.29
+Intersection Summary,,,,,,,,,,,,
+Area Type:                      ,Other,,,,,,,,,,,
+Cycle Length: 129,,,,,,,,,,,,
+Actuated Cycle Length: 129,,,,,,,,,,,,
+"Offset: 0 (0%), Referenced to phase 2:NBT, Start of Yellow",,,,,,,,,,,,
+Natural Cycle: 75,,,,,,,,,,,,
+Control Type: Actuated-Coordinated,,,,,,,,,,,,
+Maximum v/c Ratio: 0.67,,,,,,,,,,,,
+Intersection Signal Delay (s/veh): 29.7,	Intersection LOS: C,,,,,,,,,,,
+Intersection Capacity Utilization 47.6%,	ICU Level of Service A,,,,,,,,,,,
+Analysis Period (min) 15,,,,,,,,,,,,
+1,,,,,,,,,,,,
+Movement                        ,	EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
+Lane Configurations             ,	1  ,2> ,0  ,1  ,1  ,1  ,1  ,2> ,0  ,2  ,2  ,1
+Traffic Volume (veh/h)          ,	106,224,11 ,34 ,75 ,218,23 ,184,123,276,224,359
+Future Volume (veh/h)           ,	106,224,11 ,34 ,75 ,218,23 ,184,123,276,224,359
+"Initial Q (Qb), veh             ",	0  ,0  ,0  ,0  ,0  ,0  ,0  ,0  ,0  ,0  ,0  ,0
+Lane Width Adj.                 ,	1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
+Ped-Bike Adj(A_pbT)             ,	1.00,   ,1.00,1.00,   ,1.00,1.00,   ,1.00,1.00,   ,1.00
+"Parking Bus, Adj                ",	1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
+Work Zone On Approach           ,	   ,No ,   ,   ,No ,   ,   ,No ,   ,   ,No,
+"Adj Sat Flow, veh/h/ln          ",	1470,1307,1218,1811,1500,1811,1375,1761,1850,1805,1731,1672
+"Adj Flow Rate, veh/h            ",	118,249,12 ,38 ,83 ,242,26 ,204,137,307,249,0
+Peak Hour Factor                ,	0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90
+"Percent Heavy Veh, %            ",	29 ,40 ,46 ,6  ,27 ,6  ,35 ,9  ,3  ,6  ,11 ,15
+"Cap, veh/h                      ",	139,571,27 ,50 ,249,420,31 ,862,552,359,1727,
+Arrive On Green                 ,	0.10,0.24,0.24,0.03,0.17,0.17,0.02,0.44,0.44,0.11,0.53,0.00
+"Sat Flow, veh/h                 ",	1400,2412,116,1725,1500,1535,1310,1955,1253,3335,3289,1417
+"Grp Volume(v), veh/h            ",	118,128,133,38 ,83 ,242,26 ,173,168,307,249,0
+"Grp Sat Flow(s),veh/h/ln        ",	1400,1242,1286,1725,1500,1535,1310,1673,1535,1668,1645,1417
+"Q Serve(g_s), s                 ",	10.7,11.3,11.4,2.8,6.3,17.5,2.6,8.3,8.9,11.7,5.0,0.0
+"Cycle Q Clear(g_c), s           ",	10.7,11.3,11.4,2.8,6.3,17.5,2.6,8.3,8.9,11.7,5.0,0.0
+Prop In Lane                    ,	1.00,   ,0.09,1.00,   ,1.00,1.00,   ,0.82,1.00,   ,1.00
+"Lane Grp Cap(c), veh/h          ",	139,294,304,50 ,249,420,31 ,738,677,359,1727,
+V/C Ratio(X)                    ,	0.85,0.43,0.44,0.76,0.33,0.58,0.84,0.23,0.25,0.86,0.14,
+"Avail Cap(c_a), veh/h           ",	217,385,399,267,465,641,152,738,677,388,1727,
+HCM Platoon Ratio               ,	1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
+Upstream Filter(I)              ,	1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,0.00
+"Uniform Delay (d), s/veh        ",	57.1,41.9,41.9,62.2,47.5,40.4,62.8,22.5,22.6,56.6,15.7,0.0
+"Incr Delay (d2), s/veh          ",	20.4,1.0,1.0,21.1,0.8,1.3,42.7,0.7,0.9,16.0,0.0,0.0
+"Initial Q Delay(d3), s/veh      ",	0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+"%ile BackOfQ(50%),veh/ln        ",	4.5,3.5,3.6,1.5,2.4,6.9,1.2,3.3,3.3,5.6,1.8,0.0
+"Unsig. Movement Delay, s/veh",,,,,,,,,,,,
+"LnGrp Delay(d), s/veh           ",	77.5,42.9,42.9,83.3,48.3,41.7,105.5	23.2,23.5,72.6,15.8,0.0,
+LnGrp LOS                       ,	E  ,D  ,D  ,F  ,D  ,D  ,F  ,C  ,C  ,E  ,B,
+"Approach Vol, veh/h             ",	   ,379,   ,   ,363,   ,   ,367,   ,   ,556,
+"Approach Delay, s/veh           ",	   ,53.7,   ,   ,47.5,   ,   ,29.2,   ,   ,47.1,
+Approach LOS                    ,	   ,D  ,   ,   ,D  ,   ,   ,C  ,   ,   ,D,
+Intersection Summary,,,,,,,,,,,,
+"HCM 7th Control Delay, s/veh    ",	44.8,,,,,,,,,,,
+HCM 7th LOS                     ,	D,,,,,,,,,,,
 2,,,,,,,,,,,,
-Movement,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
-Lane Configurations,1,2>,0,1,1,1,1,2>,0,2,2,1
-Traffic Volume (veh/h),106,224,11,34,75,218,23,184,123,276,224,359
-Future Volume (veh/h),106,224,11,34,75,218,23,184,123,276,224,359
-"Initial Q (Qb), veh",0,0,0,0,0,0,0,0,0,0,0,0
-Lane Width Adj.,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
-Ped-Bike Adj(A_pbT),1.00,,1.00,1.00,,1.00,1.00,,1.00,1.00,,1.00
-"Parking Bus, Adj",1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
-Work Zone On Approach,,No,,,No,,,No,,,No,
-"Adj Sat Flow, veh/h/ln",1470,1307,1218,1811,1500,1811,1375,1761,1850,1805,1731,1672
-"Adj Flow Rate, veh/h",118,249,12,38,83,242,26,204,137,307,249,0
-Peak Hour Factor,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90
-"Percent Heavy Veh, %",29,40,46,6,27,6,35,9,3,6,11,15
-"Cap, veh/h",139,571,27,50,249,420,31,862,552,359,1727,
-Arrive On Green,0.10,0.24,0.24,0.03,0.17,0.17,0.02,0.44,0.44,0.11,0.53,0.00
-"Sat Flow, veh/h",1400,2412,116,1725,1500,1535,1310,1955,1253,3335,3289,1417
-"Grp Volume(v), veh/h",118,128,133,38,83,242,26,173,168,307,249,0
-"Grp Sat Flow(s),veh/h/ln",1400,1242,1286,1725,1500,1535,1310,1673,1535,1668,1645,1417
-"Q Serve(g_s), s",10.7,11.3,11.4,2.8,6.3,17.5,2.6,8.3,8.9,11.7,5.0,0.0
-"Cycle Q Clear(g_c), s",10.7,11.3,11.4,2.8,6.3,17.5,2.6,8.3,8.9,11.7,5.0,0.0
-Prop In Lane,1.00,,0.09,1.00,,1.00,1.00,,0.82,1.00,,1.00
-"Lane Grp Cap(c), veh/h",139,294,304,50,249,420,31,738,677,359,1727,
-V/C Ratio(X),0.85,0.43,0.44,0.76,0.33,0.58,0.84,0.23,0.25,0.86,0.14,
-"Avail Cap(c_a), veh/h",217,385,399,267,465,641,152,738,677,388,1727,
-HCM Platoon Ratio,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
-Upstream Filter(I),1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,0.00
-"Uniform Delay (d), s/veh",57.1,41.9,41.9,62.2,47.5,40.4,62.8,22.5,22.6,56.6,15.7,0.0
-"Incr Delay (d2), s/veh",20.4,1.0,1.0,21.1,0.8,1.3,42.7,0.7,0.9,16.0,0.0,0.0
-"Initial Q Delay(d3), s/veh",0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-"%ile BackOfQ(50%),veh/ln",4.5,3.5,3.6,1.5,2.4,6.9,1.2,3.3,3.3,5.6,1.8,0.0
+Lane Group                      ,	EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
+Lane Configurations             ,	1  ,1> ,0  ,1  ,1> ,0  ,0  ,<1 ,1  ,0  ,<1>,0
+Traffic Volume (vph)            ,	3  ,142,28 ,56 ,279,12 ,34 ,16 ,21 ,3  ,22 ,8
+Future Volume (vph)             ,	3  ,142,28 ,56 ,279,12 ,34 ,16 ,21 ,3  ,22 ,8
+Ideal Flow (vphpl)              ,	1900,1900,1900,1900,1900,1900,1900,1900,1900,1900,1900,1900
+Lane Width (ft)                 ,	12 ,12 ,12 ,12 ,12 ,12 ,12 ,12 ,16 ,12 ,12 ,12
+Grade (%)                       ,	   ,1% ,   ,   ,2% ,   ,   ,-2%,   ,   ,0%,
+Storage Length (ft)             ,	70 ,   ,0  ,220,   ,0  ,0  ,   ,150,0  ,   ,0
+Storage Lanes                   ,	1  ,   ,0  ,1  ,   ,0  ,0  ,   ,1  ,0  ,   ,0
+Taper Length (ft)               ,	86 ,   ,   ,86 ,   ,   ,86 ,   ,   ,86,,
+Lane Util. Factor               ,	1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
+Frt                             ,	   ,0.975	   ,   ,0.994	   ,   ,   ,0.850	   ,0.967,,,,
+Flt Protected                   ,	0.950	   ,   ,0.950	   ,   ,   ,0.967	   ,   ,0.996,,,,
+Satd. Flow (prot)               ,	1796,1416,0  ,1407,1450,0  ,0  ,1683,1622,0  ,1770,0
+Flt Permitted                   ,	0.465	   ,   ,0.636	   ,   ,   ,0.810	   ,   ,0.985,,,,
+Satd. Flow (perm)               ,	879,1416,0  ,942,1450,0  ,0  ,1410,1622,0  ,1751,0
+Right Turn on Red               ,	   ,   ,Yes,   ,   ,Yes,   ,   ,Yes,   ,   ,Yes
+Satd. Flow (RTOR)               ,	   ,20 ,   ,   ,2  ,   ,   ,   ,109,   ,9,
+Link Speed (mph)                ,	   ,45 ,   ,   ,45 ,   ,   ,35 ,   ,   ,35,
+Link Distance (ft)              ,	   ,2146,   ,   ,540,   ,   ,620,   ,   ,646,
+Travel Time (s)                 ,	   ,32.5,   ,   ,8.2,   ,   ,12.1,   ,   ,12.6,
+Peak Hour Factor                ,	0.88,0.88,0.88,0.88,0.88,0.88,0.88,0.88,0.88,0.88,0.88,0.88
+Heavy Vehicles (%)              ,	0% ,32%,21%,27%,28%,50%,9% ,13%,14%,0% ,5% ,0%
+Adj. Flow (vph)                 ,	3  ,161,32 ,64 ,317,14 ,39 ,18 ,24 ,3  ,25 ,9
+Shared Lane Traffic (%),,,,,,,,,,,,
+Lane Group Flow (vph)           ,	3  ,193,0  ,64 ,331,0  ,0  ,57 ,24 ,0  ,37 ,0
+Enter Blocked Intersection      ,	No ,No ,No ,No ,No ,No ,No ,No ,No ,No ,No ,No
+Lane Alignment                  ,	Left,Left,Right	Left,Left,Right	Left,Left,Right	Left,Left,Right,,,
+Median Width(ft)                ,	   ,12 ,   ,   ,12 ,   ,   ,0  ,   ,   ,0,
+Link Offset(ft)                 ,	   ,0  ,   ,   ,0  ,   ,   ,0  ,   ,   ,0,
+Crosswalk Width(ft)             ,	   ,16 ,   ,   ,16 ,   ,   ,16 ,   ,   ,16,
+Two way Left Turn Lane,,,,,,,,,,,,
+Headway Factor                  ,	1.01,1.01,1.01,1.01,1.01,1.01,0.99,0.99,0.84,1.00,1.00,1.00
+Turning Speed (mph)             ,	15 ,   ,9  ,15 ,   ,9  ,15 ,   ,9  ,15 ,   ,9
+Number of Detectors             ,	2  ,2  ,   ,2  ,2  ,   ,2  ,2  ,2  ,2  ,2,
+Detector Template               ,	Left,Thru,   ,Left,Thru,   ,Left,Thru,Right	Left,Thru,,
+Leading Detector (ft)           ,	83 ,83 ,   ,83 ,83 ,   ,83 ,83 ,83 ,83 ,83,
+Trailing Detector (ft)          ,	-5 ,-5 ,   ,-5 ,-5 ,   ,-5 ,-5 ,-5 ,-5 ,-5,
+Detector 1 Position(ft)         ,	-5 ,-5 ,   ,-5 ,-5 ,   ,-5 ,-5 ,-5 ,-5 ,-5,
+Detector 1 Size(ft)             ,	40 ,40 ,   ,40 ,40 ,   ,40 ,40 ,40 ,40 ,40,
+Detector 1 Type                 ,	Cl+Ex	Cl+Ex	   ,Cl+Ex	Cl+Ex	   ,Cl+Ex	Cl+Ex	Cl+Ex	Cl+Ex	Cl+Ex,,,,,,,,,
+Detector 1 Channel,,,,,,,,,,,,
+Detector 1 Extend (s)           ,	0.0,0.0,   ,0.0,0.0,   ,0.0,0.0,0.0,0.0,0.0,
+Detector 1 Queue (s)            ,	0.0,0.0,   ,0.0,0.0,   ,0.0,0.0,0.0,0.0,0.0,
+Detector 1 Delay (s)            ,	0.0,0.0,   ,0.0,0.0,   ,0.0,0.0,0.0,0.0,0.0,
+Detector 2 Position(ft)         ,	43 ,43 ,   ,43 ,43 ,   ,43 ,43 ,43 ,43 ,43,
+Detector 2 Size(ft)             ,	40 ,40 ,   ,40 ,40 ,   ,40 ,40 ,40 ,40 ,40,
+Detector 2 Type                 ,	Cl+Ex	Cl+Ex	   ,Cl+Ex	Cl+Ex	   ,Cl+Ex	Cl+Ex	Cl+Ex	Cl+Ex	Cl+Ex,,,,,,,,,
+Detector 2 Channel,,,,,,,,,,,,
+Detector 2 Extend (s)           ,	0.0,0.0,   ,0.0,0.0,   ,0.0,0.0,0.0,0.0,0.0,
+Turn Type                       ,	pm+pt	NA ,   ,Perm,NA ,   ,Perm,NA ,Perm,Perm,NA,,
+Protected Phases                ,	7  ,4  ,   ,   ,8  ,   ,   ,2  ,   ,   ,6,
+Permitted Phases                ,	4  ,   ,   ,8  ,   ,   ,2  ,   ,2  ,6,,
+Detector Phase                  ,	7  ,4  ,   ,8  ,8  ,   ,2  ,2  ,2  ,6  ,6,
+Switch Phase,,,,,,,,,,,,
+Minimum Initial (s)             ,	8.0,8.0,   ,8.0,8.0,   ,8.0,8.0,8.0,8.0,8.0,
+Minimum Split (s)               ,	14.0,14.0,   ,14.0,14.0,   ,14.0,14.0,14.0,14.0,14.0,
+Total Split (s)                 ,	30.0,60.0,   ,30.0,30.0,   ,30.0,30.0,30.0,30.0,30.0,
+Total Split (%)                 ,	33.3%	66.7%	   ,33.3%	33.3%	   ,33.3%	33.3%	33.3%	33.3%	33.3%,,,,,,,,,
+Maximum Green (s)               ,	24.0,54.0,   ,24.0,24.0,   ,24.0,24.0,24.0,24.0,24.0,
+Yellow Time (s)                 ,	4.0,4.0,   ,4.0,4.0,   ,4.0,4.0,4.0,4.0,4.0,
+All-Red Time (s)                ,	2.0,2.0,   ,2.0,2.0,   ,2.0,2.0,2.0,2.0,2.0,
+Lost Time Adjust (s)            ,	0.0,0.0,   ,0.0,0.0,   ,   ,0.0,0.0,   ,0.0,
+Total Lost Time (s)             ,	6.0,6.0,   ,6.0,6.0,   ,   ,6.0,6.0,   ,6.0,
+Lead/Lag                        ,	Lead,   ,   ,Lag,Lag,,,,,,,
+Lead-Lag Optimize?              ,	Yes,   ,   ,Yes,Yes,,,,,,,
+Vehicle Extension (s)           ,	3.0,3.0,   ,3.0,3.0,   ,3.0,3.0,3.0,3.0,3.0,
+Recall Mode                     ,	None,Max,   ,Max,Max,   ,Max,Max,Max,Max,Max,
+Act Effct Green (s)             ,	54.0,54.0,   ,51.2,51.2,   ,   ,24.0,24.0,   ,24.0,
+Actuated g/C Ratio              ,	0.60,0.60,   ,0.57,0.57,   ,   ,0.27,0.27,   ,0.27,
+v/c Ratio                       ,	0.00,0.22,   ,0.11,0.40,   ,   ,0.15,0.04,   ,0.07,
+Control Delay (s/veh)           ,	7.3,8.2,   ,11.5,13.9,   ,   ,26.6,0.1,   ,20.7,
+Queue Delay                     ,	0.0,0.0,   ,0.0,0.0,   ,   ,0.0,0.0,   ,0.0,
+Total Delay (s/veh)             ,	7.3,8.2,   ,11.5,13.9,   ,   ,26.6,0.1,   ,20.7,
+LOS                             ,	A  ,A  ,   ,B  ,B  ,   ,   ,C  ,A  ,   ,C,
+Approach Delay (s/veh)          ,	   ,8.2,   ,   ,13.5,   ,   ,18.8,   ,   ,20.8,
+Approach LOS                    ,	   ,A  ,   ,   ,B  ,   ,   ,B  ,   ,   ,C,
+Queue Length 50th (ft)          ,	1  ,41 ,   ,14 ,89 ,   ,   ,25 ,0  ,   ,12,
+Queue Length 95th (ft)          ,	4  ,72 ,   ,46 ,203,   ,   ,55 ,0  ,   ,34,
+Internal Link Dist (ft)         ,	   ,2066,   ,   ,460,   ,   ,540,   ,   ,566,
+Turn Bay Length (ft)            ,	70 ,   ,   ,220,   ,   ,   ,   ,150,,,
+Base Capacity (vph)             ,	771,857,   ,536,825,   ,   ,376,512,   ,473,
+Starvation Cap Reductn          ,	0  ,0  ,   ,0  ,0  ,   ,   ,0  ,0  ,   ,0,
+Spillback Cap Reductn           ,	0  ,0  ,   ,0  ,0  ,   ,   ,0  ,0  ,   ,0,
+Storage Cap Reductn             ,	0  ,0  ,   ,0  ,0  ,   ,   ,0  ,0  ,   ,0,
+Reduced v/c Ratio               ,	0.00,0.23,   ,0.12,0.40,   ,   ,0.15,0.05,   ,0.08,
+Intersection Summary,,,,,,,,,,,,
+Area Type:                      ,Other,,,,,,,,,,,
+Cycle Length: 90,,,,,,,,,,,,
+Actuated Cycle Length: 90,,,,,,,,,,,,
+Natural Cycle: 50,,,,,,,,,,,,
+Control Type: Semi Act-Uncoord,,,,,,,,,,,,
+Maximum v/c Ratio: 0.40,,,,,,,,,,,,
+Intersection Signal Delay (s/veh): 13.0,	Intersection LOS: B,,,,,,,,,,,
+Intersection Capacity Utilization 46.5%,	ICU Level of Service A,,,,,,,,,,,
+Analysis Period (min) 15,,,,,,,,,,,,
+2,,,,,,,,,,,,
+Movement                        ,	EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
+Lane Configurations             ,	1  ,1> ,0  ,1  ,1> ,0  ,0  ,<1 ,1  ,0  ,<1>,0
+Traffic Volume (veh/h)          ,	3  ,142,28 ,56 ,279,12 ,34 ,16 ,21 ,3  ,22 ,8
+Future Volume (veh/h)           ,	3  ,142,28 ,56 ,279,12 ,34 ,16 ,21 ,3  ,22 ,8
+"Initial Q (Qb), veh             ",	0  ,0  ,0  ,0  ,0  ,0  ,0  ,0  ,0  ,0  ,0  ,0
+Lane Width Adj.                 ,	1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.04,1.00,1.00,1.00
+Ped-Bike Adj(A_pbT)             ,	1.00,   ,1.00,1.00,   ,1.00,1.00,   ,1.00,1.00,   ,1.00
+"Parking Bus, Adj                ",	1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
+Work Zone On Approach           ,	   ,No ,   ,   ,No ,   ,   ,No ,   ,   ,No,
+"Adj Sat Flow, veh/h/ln          ",	1894,1420,1583,1476,1461,1135,1844,1784,1839,1900,1826,1900
+"Adj Flow Rate, veh/h            ",	3  ,161,32 ,64 ,317,14 ,39 ,18 ,24 ,3  ,25 ,9
+Peak Hour Factor                ,	0.88,0.88,0.88,0.88,0.88,0.88,0.88,0.88,0.88,0.88,0.88,0.88
+"Percent Heavy Veh, %            ",	0  ,32 ,21 ,27 ,28 ,50 ,9  ,13 ,14 ,0  ,5  ,0
+"Cap, veh/h                      ",	503,690,137,575,732,32 ,319,135,416,58 ,334,112
+Arrive On Green                 ,	0.01,0.60,0.60,0.53,0.53,0.53,0.27,0.27,0.27,0.27,0.27,0.27
+"Sat Flow, veh/h                 ",	1804,1150,229,939,1389,61 ,945,505,1559,55 ,1254,421
+"Grp Volume(v), veh/h            ",	3  ,0  ,193,64 ,0  ,331,57 ,0  ,24 ,37 ,0  ,0
+"Grp Sat Flow(s),veh/h/ln        ",	1804,0  ,1379,939,0  ,1450,1450,0  ,1559,1730,0  ,0
+"Q Serve(g_s), s                 ",	0.1,0.0,5.9,3.1,0.0,12.6,1.0,0.0,1.0,0.0,0.0,0.0
+"Cycle Q Clear(g_c), s           ",	0.1,0.0,5.9,3.1,0.0,12.6,2.4,0.0,1.0,1.4,0.0,0.0
+Prop In Lane                    ,	1.00,   ,0.17,1.00,   ,0.04,0.68,   ,1.00,0.08,   ,0.24
+"Lane Grp Cap(c), veh/h          ",	503,0  ,827,575,0  ,764,454,0  ,416,505,0  ,0
+V/C Ratio(X)                    ,	0.01,0.00,0.23,0.11,0.00,0.43,0.13,0.00,0.06,0.07,0.00,0.00
+"Avail Cap(c_a), veh/h           ",	972,0  ,827,575,0  ,764,454,0  ,416,505,0  ,0
+HCM Platoon Ratio               ,	1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
+Upstream Filter(I)              ,	1.00,0.00,1.00,1.00,0.00,1.00,1.00,0.00,1.00,1.00,0.00,0.00
+"Uniform Delay (d), s/veh        ",	10.1,0.0,8.4,10.8,0.0,13.0,25.0,0.0,24.6,24.7,0.0,0.0
+"Incr Delay (d2), s/veh          ",	0.0,0.0,0.7,0.4,0.0,1.8,0.6,0.0,0.3,0.3,0.0,0.0
+"Initial Q Delay(d3), s/veh      ",	0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+"%ile BackOfQ(50%),veh/ln        ",	0.0,0.0,1.6,0.6,0.0,3.9,1.0,0.0,0.4,0.6,0.0,0.0
 "Unsig. Movement Delay, s/veh",,,,,,,,,,,,
-"LnGrp Delay(d), s/veh",77.5,42.9,42.9,83.3,48.3,41.7,105.5	23.2,23.5,72.6,15.8,0.0,
-LnGrp LOS,E,D,D,F,D,D,F,C,C,E,B,
-"Approach Vol, veh/h",,379,,,363,,,367,,,556,
-"Approach Delay, s/veh",,53.7,,,47.5,,,29.2,,,47.1,
-Approach LOS,,D,,,D,,,C,,,D,
+"LnGrp Delay(d), s/veh           ",	10.1,0.0,9.0,11.2,0.0,14.8,25.6,0.0,24.8,25.0,0.0,0.0
+LnGrp LOS                       ,	B  ,   ,A  ,B  ,   ,B  ,C  ,   ,C  ,C,,
+"Approach Vol, veh/h             ",	   ,196,   ,   ,395,   ,   ,81 ,   ,   ,37,
+"Approach Delay, s/veh           ",	   ,9.0,   ,   ,14.2,   ,   ,25.4,   ,   ,25.0,
+Approach LOS                    ,	   ,A  ,   ,   ,B  ,   ,   ,C  ,   ,   ,C,
+Intersection Summary,,,,,,,,,,,,
+"HCM 7th Control Delay, s/veh    ",	14.6,,,,,,,,,,,
+HCM 7th LOS                     ,	B,,,,,,,,,,,
 3,,,,,,,,,,,,
-Lane Group,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
-Lane Configurations,1,1>,0,1,1>,0,0,<1,1,0,<1>,0
-Traffic Volume (vph),3,142,28,56,279,12,34,16,21,3,22,8
-Future Volume (vph),3,142,28,56,279,12,34,16,21,3,22,8
-Ideal Flow (vphpl),1900,1900,1900,1900,1900,1900,1900,1900,1900,1900,1900,1900
-Lane Width (ft),12,12,12,12,12,12,12,12,16,12,12,12
-Grade (%),,1%,,,2%,,,-2%,,,0%,
-Storage Length (ft),70,,0,220,,0,0,,150,0,,0
-Storage Lanes,1,,0,1,,0,0,,1,0,,0
-Taper Length (ft),86,,,86,,,86,,,86,,
-Lane Util. Factor,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
-Frt,,0.975,,0.994,,,0.850,0.967,,,,
-Flt Protected,0.950,,0.950,,,0.967,,0.996,,,,
-Satd. Flow (prot),1796,1416,0,1407,1450,0,0,1683,1622,0,1770,0
-Flt Permitted,0.465,,0.636,,,0.810,,0.985,,,,
-Satd. Flow (perm),879,1416,0,942,1450,0,0,1410,1622,0,1751,0
-Right Turn on Red,,,Yes,,,Yes,,,Yes,,,Yes
-Satd. Flow (RTOR),,20,,,2,,,,109,,9,
-Link Speed (mph),,45,,,45,,,35,,,35,
-Link Distance (ft),,2146,,,540,,,620,,,646,
-Travel Time (s),,32.5,,,8.2,,,12.1,,,12.6,
-Peak Hour Factor,0.88,0.88,0.88,0.88,0.88,0.88,0.88,0.88,0.88,0.88,0.88,0.88
-Heavy Vehicles (%),0%,32%,21%,27%,28%,50%,9%,13%,14%,0%,5%,0%
-Adj. Flow (vph),3,161,32,64,317,14,39,18,24,3,25,9
+Lane Group                      ,	EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
+Lane Configurations             ,	1> ,   ,0  ,   ,   ,   ,0  ,<1 ,   ,   ,1> ,0
+Traffic Volume (vph)            ,	0  ,   ,1  ,   ,   ,   ,1  ,29 ,   ,   ,31 ,3
+Future Volume (vph)             ,	0  ,   ,1  ,   ,   ,   ,1  ,29 ,   ,   ,31 ,3
+Ideal Flow (vphpl)              ,	1900,   ,1900,   ,   ,   ,1900,1900,   ,   ,1900,1900
+Lane Width (ft)                 ,	10 ,   ,12 ,   ,   ,   ,12 ,11 ,   ,   ,12 ,12
+Grade (%)                       ,	-2%,   ,   ,   ,   ,   ,   ,-5%,   ,   ,1%,
+Lane Util. Factor               ,	1.00,   ,1.00,   ,   ,   ,1.00,1.00,   ,   ,1.00,1.00
+Frt                             ,	0.865	   ,   ,   ,   ,   ,   ,   ,   ,   ,0.990,,
+Flt Protected                   ,	   ,   ,   ,   ,   ,   ,   ,0.999,,,,
+Satd. Flow (prot)               ,	775,   ,0  ,   ,   ,   ,0  ,1576,   ,   ,1713,0
+Flt Permitted                   ,	   ,   ,   ,   ,   ,   ,   ,0.999,,,,
+Satd. Flow (perm)               ,	775,   ,0  ,   ,   ,   ,0  ,1576,   ,   ,1713,0
+Link Speed (mph)                ,	30 ,   ,   ,   ,   ,   ,   ,30 ,   ,   ,30,
+Link Distance (ft)              ,	636,   ,   ,   ,   ,   ,   ,1349,   ,   ,584,
+Travel Time (s)                 ,	14.5,   ,   ,   ,   ,   ,   ,34.3,   ,   ,15.6,
+Peak Hour Factor                ,	0.86,   ,0.86,   ,   ,   ,0.86,0.86,   ,   ,0.86,0.86
+Heavy Vehicles (%)              ,	0% ,   ,100%,   ,   ,   ,100%,17%,   ,   ,10%,0%
+Adj. Flow (vph)                 ,	0  ,   ,1  ,   ,   ,   ,1  ,34 ,   ,   ,36 ,3
 Shared Lane Traffic (%),,,,,,,,,,,,
-Lane Group Flow (vph),3,193,0,64,331,0,0,57,24,0,37,0
-Enter Blocked Intersection,No,No,No,No,No,No,No,No,No,No,No,No
-Lane Alignment,Left,Left,Right	Left,Left,Right	Left,Left,Right	Left,Left,Right,,,
-Median Width(ft),,12,,,12,,,0,,,0,
-Link Offset(ft),,0,,,0,,,0,,,0,
-Crosswalk Width(ft),,16,,,16,,,16,,,16,
+Lane Group Flow (vph)           ,	1  ,   ,0  ,   ,   ,   ,0  ,35 ,   ,   ,39 ,0
+Enter Blocked Intersection      ,	No ,   ,No ,   ,   ,   ,No ,No ,   ,   ,No ,No
+Lane Alignment                  ,	Left,   ,Right	   ,   ,   ,Left,Left,   ,   ,Left,Right,
+Median Width(ft)                ,	10 ,   ,   ,   ,   ,   ,   ,0  ,   ,   ,0,
+Link Offset(ft)                 ,	0  ,   ,   ,   ,   ,   ,   ,0  ,   ,   ,0,
+Crosswalk Width(ft)             ,	16 ,   ,   ,   ,   ,   ,   ,16 ,   ,   ,16,
 Two way Left Turn Lane,,,,,,,,,,,,
-Headway Factor,1.01,1.01,1.01,1.01,1.01,1.01,0.99,0.99,0.84,1.00,1.00,1.00
-Turning Speed (mph),15,,9,15,,9,15,,9,15,,9
-Number of Detectors,2,2,,2,2,,2,2,2,2,2,
-Detector Template,Left,Thru,,Left,Thru,,Left,Thru,Right	Left,Thru,,
-Leading Detector (ft),83,83,,83,83,,83,83,83,83,83,
-Trailing Detector (ft),-5,-5,,-5,-5,,-5,-5,-5,-5,-5,
-Detector 1 Position(ft),-5,-5,,-5,-5,,-5,-5,-5,-5,-5,
-Detector 1 Size(ft),40,40,,40,40,,40,40,40,40,40,
-Detector 1 Type,Cl+Ex	Cl+Ex,Cl+Ex	Cl+Ex,Cl+Ex	Cl+Ex	Cl+Ex	Cl+Ex	Cl+Ex,,,,,,,,,
-Detector 1 Channel,,,,,,,,,,,,
-Detector 1 Extend (s),0.0,0.0,,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,
-Detector 1 Queue (s),0.0,0.0,,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,
-Detector 1 Delay (s),0.0,0.0,,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,
-Detector 2 Position(ft),43,43,,43,43,,43,43,43,43,43,
-Detector 2 Size(ft),40,40,,40,40,,40,40,40,40,40,
-Detector 2 Type,Cl+Ex	Cl+Ex,Cl+Ex	Cl+Ex,Cl+Ex	Cl+Ex	Cl+Ex	Cl+Ex	Cl+Ex,,,,,,,,,
-Detector 2 Channel,,,,,,,,,,,,
-Detector 2 Extend (s),0.0,0.0,,0.0,0.0,,0.0,0.0,0.0,0.0,0.0,
-Turn Type,pm+pt	NA,,Perm,NA,,Perm,NA,Perm,Perm,NA,,
-Protected Phases,7,4,,,8,,,2,,,6,
-Permitted Phases,4,,,8,,,2,,2,6,,
-Detector Phase,7,4,,8,8,,2,2,2,6,6,
-Switch Phase,,,,,,,,,,,,
-Minimum Initial (s),8.0,8.0,,8.0,8.0,,8.0,8.0,8.0,8.0,8.0,
-Minimum Split (s),14.0,14.0,,14.0,14.0,,14.0,14.0,14.0,14.0,14.0,
-Total Split (s),30.0,60.0,,30.0,30.0,,30.0,30.0,30.0,30.0,30.0,
-Total Split (%),33.3%	66.7%,33.3%	33.3%,33.3%	33.3%	33.3%	33.3%	33.3%,,,,,,,,,
-Maximum Green (s),24.0,54.0,,24.0,24.0,,24.0,24.0,24.0,24.0,24.0,
-Yellow Time (s),4.0,4.0,,4.0,4.0,,4.0,4.0,4.0,4.0,4.0,
-All-Red Time (s),2.0,2.0,,2.0,2.0,,2.0,2.0,2.0,2.0,2.0,
-Lost Time Adjust (s),0.0,0.0,,0.0,0.0,,,0.0,0.0,,0.0,
-Total Lost Time (s),6.0,6.0,,6.0,6.0,,,6.0,6.0,,6.0,
-Lead/Lag,Lead,,,Lag,Lag,,,,,,,
-Lead-Lag Optimize?,Yes,,,Yes,Yes,,,,,,,
-Vehicle Extension (s),3.0,3.0,,3.0,3.0,,3.0,3.0,3.0,3.0,3.0,
-Recall Mode,None,Max,,Max,Max,,Max,Max,Max,Max,Max,
-Act Effct Green (s),54.0,54.0,,51.2,51.2,,,24.0,24.0,,24.0,
-Actuated g/C Ratio,0.60,0.60,,0.57,0.57,,,0.27,0.27,,0.27,
-v/c Ratio,0.00,0.22,,0.11,0.40,,,0.15,0.04,,0.07,
-Control Delay (s/veh),7.3,8.2,,11.5,13.9,,,26.6,0.1,,20.7,
-Queue Delay,0.0,0.0,,0.0,0.0,,,0.0,0.0,,0.0,
-Total Delay (s/veh),7.3,8.2,,11.5,13.9,,,26.6,0.1,,20.7,
-LOS,A,A,,B,B,,,C,A,,C,
-Approach Delay (s/veh),,8.2,,,13.5,,,18.8,,,20.8,
-Approach LOS,,A,,,B,,,B,,,C,
-Queue Length 50th (ft),1,41,,14,89,,,25,0,,12,
-Queue Length 95th (ft),4,72,,46,203,,,55,0,,34,
-Internal Link Dist (ft),,2066,,,460,,,540,,,566,
-Turn Bay Length (ft),70,,,220,,,,,150,,,
-Base Capacity (vph),771,857,,536,825,,,376,512,,473,
-Starvation Cap Reductn,0,0,,0,0,,,0,0,,0,
-Spillback Cap Reductn,0,0,,0,0,,,0,0,,0,
-Storage Cap Reductn,0,0,,0,0,,,0,0,,0,
-Reduced v/c Ratio,0.00,0.23,,0.12,0.40,,,0.15,0.05,,0.08,
+Headway Factor                  ,	1.08,   ,0.99,   ,   ,   ,0.97,1.01,   ,   ,1.01,1.01
+Turning Speed (mph)             ,	15 ,   ,9  ,   ,   ,   ,15 ,   ,   ,   ,   ,9
+Sign Control                    ,	Stop,   ,   ,   ,   ,   ,   ,Free,   ,   ,Free,
+Intersection Summary,,,,,,,,,,,,
+Area Type:                      ,Other,,,,,,,,,,,
+Control Type: Unsignalized,,,,,,,,,,,,
+Intersection Capacity Utilization 13.3%,	ICU Level of Service A,,,,,,,,,,,
+Analysis Period (min) 15,,,,,,,,,,,,
+3,,,,,,,,,,,,
+Intersection,,,,,,,,,,,,
+"Int Delay, s/veh                ",	0.3,,,,,,,,,,,
+Movement                        ,	EBL ,EBR ,NBL ,NBT ,SBT ,SBR,,,,,,
+Lane Configurations             ,	1>  ,0   ,0   ,<1  ,1>  ,0,,,,,,
+"Traffic Vol, veh/h              ",	0   ,1   ,1   ,29  ,31  ,3,,,,,,
+"Future Vol, veh/h               ",	0   ,1   ,1   ,29  ,31  ,3,,,,,,
+"Conflicting Peds, #/hr          ",	0   ,0   ,0   ,0   ,0   ,0,,,,,,
+Sign Control                    ,	Stop,Stop,Free,Free,Free,Free,,,,,,
+RT Channelized                  ,	-   ,None,-   ,None,-   ,None,,,,,,
+Storage Length                  ,	0   ,-   ,-   ,-   ,-   ,-,,,,,,
+"Veh in Median Storage, #        ",	0   ,-   ,-   ,0   ,0   ,-,,,,,,
+"Grade, %                        ",	-2  ,-   ,-   ,-5  ,1   ,-,,,,,,
+Peak Hour Factor                ,	86  ,86  ,86  ,86  ,86  ,86,,,,,,
+"Heavy Vehicles, %               ",	0   ,100 ,100 ,17  ,10  ,0,,,,,,
+Mvmt Flow                       ,	0   ,1   ,1   ,34  ,36  ,3,,,,,,
+,,,,,,,,,,,,
+Approach                        ,	EB  ,    ,NB  ,    ,SB,,,,,,,
+"HCM Control Delay, s/v          ",	9.43,    ,0.27,    ,0,,,,,,,
+HCM LOS                         ,	A,,,,,,,,,,,
+,,,,,,,,,,,,
+Minor Lane/Major Mvmt           ,	    ,NBL ,NBT ,EBLn1,SBT ,SBR,,,,,,
+Capacity (veh/h)                ,	    ,60  ,-   ,814 ,-   ,-,,,,,,
+HCM Lane V/C Ratio              ,	    ,0.001,-   ,0.001,-   ,-,,,,,,
+HCM Control Delay (s/veh)       ,	    ,8.2 ,0   ,9.4 ,-   ,-,,,,,,
+HCM Lane LOS                    ,	    ,A   ,A   ,A   ,-   ,-,,,,,,
+HCM 95th %tile Q(veh)           ,	    ,0   ,-   ,0   ,-   ,-,,,,,,
 4,,,,,,,,,,,,
-Movement,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
-Lane Configurations,1,1>,0,1,1>,0,0,<1,1,0,<1>,0
-Traffic Volume (veh/h),3,142,28,56,279,12,34,16,21,3,22,8
-Future Volume (veh/h),3,142,28,56,279,12,34,16,21,3,22,8
-"Initial Q (Qb), veh",0,0,0,0,0,0,0,0,0,0,0,0
-Lane Width Adj.,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.04,1.00,1.00,1.00
-Ped-Bike Adj(A_pbT),1.00,,1.00,1.00,,1.00,1.00,,1.00,1.00,,1.00
-"Parking Bus, Adj",1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
-Work Zone On Approach,,No,,,No,,,No,,,No,
-"Adj Sat Flow, veh/h/ln",1894,1420,1583,1476,1461,1135,1844,1784,1839,1900,1826,1900
-"Adj Flow Rate, veh/h",3,161,32,64,317,14,39,18,24,3,25,9
-Peak Hour Factor,0.88,0.88,0.88,0.88,0.88,0.88,0.88,0.88,0.88,0.88,0.88,0.88
-"Percent Heavy Veh, %",0,32,21,27,28,50,9,13,14,0,5,0
-"Cap, veh/h",503,690,137,575,732,32,319,135,416,58,334,112
-Arrive On Green,0.01,0.60,0.60,0.53,0.53,0.53,0.27,0.27,0.27,0.27,0.27,0.27
-"Sat Flow, veh/h",1804,1150,229,939,1389,61,945,505,1559,55,1254,421
-"Grp Volume(v), veh/h",3,0,193,64,0,331,57,0,24,37,0,0
-"Grp Sat Flow(s),veh/h/ln",1804,0,1379,939,0,1450,1450,0,1559,1730,0,0
-"Q Serve(g_s), s",0.1,0.0,5.9,3.1,0.0,12.6,1.0,0.0,1.0,0.0,0.0,0.0
-"Cycle Q Clear(g_c), s",0.1,0.0,5.9,3.1,0.0,12.6,2.4,0.0,1.0,1.4,0.0,0.0
-Prop In Lane,1.00,,0.17,1.00,,0.04,0.68,,1.00,0.08,,0.24
-"Lane Grp Cap(c), veh/h",503,0,827,575,0,764,454,0,416,505,0,0
-V/C Ratio(X),0.01,0.00,0.23,0.11,0.00,0.43,0.13,0.00,0.06,0.07,0.00,0.00
-"Avail Cap(c_a), veh/h",972,0,827,575,0,764,454,0,416,505,0,0
-HCM Platoon Ratio,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
-Upstream Filter(I),1.00,0.00,1.00,1.00,0.00,1.00,1.00,0.00,1.00,1.00,0.00,0.00
-"Uniform Delay (d), s/veh",10.1,0.0,8.4,10.8,0.0,13.0,25.0,0.0,24.6,24.7,0.0,0.0
-"Incr Delay (d2), s/veh",0.0,0.0,0.7,0.4,0.0,1.8,0.6,0.0,0.3,0.3,0.0,0.0
-"Initial Q Delay(d3), s/veh",0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-"%ile BackOfQ(50%),veh/ln",0.0,0.0,1.6,0.6,0.0,3.9,1.0,0.0,0.4,0.6,0.0,0.0
-"Unsig. Movement Delay, s/veh",,,,,,,,,,,,
-"LnGrp Delay(d), s/veh",10.1,0.0,9.0,11.2,0.0,14.8,25.6,0.0,24.8,25.0,0.0,0.0
-LnGrp LOS,B,,A,B,,B,C,,C,C,,
-"Approach Vol, veh/h",,196,,,395,,,81,,,37,
-"Approach Delay, s/veh",,9.0,,,14.2,,,25.4,,,25.0,
-Approach LOS,,A,,,B,,,C,,,C,
+Lane Group                      ,	EBL ,EBT ,EBR ,WBL ,WBT ,WBR ,NBL ,NBT ,NBR ,SBL ,SBT ,SBR
+Lane Configurations             ,	1>  ,    ,0   ,    ,    ,    ,0   ,<1  ,    ,    ,1>  ,0
+Traffic Volume (vph)            ,	0   ,    ,2   ,    ,    ,    ,1   ,26  ,    ,    ,28  ,0
+Future Volume (vph)             ,	0   ,    ,2   ,    ,    ,    ,1   ,26  ,    ,    ,28  ,0
+Ideal Flow (vphpl)              ,	1900,    ,1900,    ,    ,    ,1900,1900,    ,    ,1900,1900
+Lane Width (ft)                 ,	15  ,    ,15  ,    ,    ,    ,11  ,11  ,    ,    ,11  ,11
+Grade (%)                       ,	-5% ,    ,    ,    ,    ,    ,    ,2%  ,    ,    ,-2%,
+Lane Util. Factor               ,	1.00,    ,1.00,    ,    ,    ,1.00,1.00,    ,    ,1.00,1.00
+Frt                             ,	0.865,,,,,,,,,,,
+Flt Protected                   ,	    ,    ,    ,    ,    ,    ,    ,0.998,,,,
+Satd. Flow (prot)               ,	1853,    ,0   ,    ,    ,    ,0   ,1747,    ,    ,1613,0
+Flt Permitted                   ,	    ,    ,    ,    ,    ,    ,    ,0.998,,,,
+Satd. Flow (perm)               ,	1853,    ,0   ,    ,    ,    ,0   ,1747,    ,    ,1613,0
+Link Speed (mph)                ,	30  ,    ,    ,    ,    ,    ,    ,30  ,    ,    ,30,
+Link Distance (ft)              ,	619 ,    ,    ,    ,    ,    ,    ,220 ,    ,    ,1349,
+Travel Time (s)                 ,	8.3 ,    ,    ,    ,    ,    ,    ,1.8 ,    ,    ,33.8,
+Peak Hour Factor                ,	0.89,    ,0.89,    ,    ,    ,0.89,0.89,    ,    ,0.89,0.89
+Heavy Vehicles (%)              ,	0%  ,    ,0%  ,    ,    ,    ,0%  ,4%  ,    ,    ,15% ,0%
+Adj. Flow (vph)                 ,	0   ,    ,2   ,    ,    ,    ,1   ,29  ,    ,    ,31  ,0
+Shared Lane Traffic (%),,,,,,,,,,,,
+Lane Group Flow (vph)           ,	2   ,    ,0   ,    ,    ,    ,0   ,30  ,    ,    ,31  ,0
+Enter Blocked Intersection      ,	No  ,    ,No  ,    ,    ,    ,No  ,No  ,    ,    ,No  ,No
+Lane Alignment                  ,	Left,    ,Right,    ,    ,    ,Left,Left,    ,    ,Left,Right
+Median Width(ft)                ,	0   ,    ,    ,    ,    ,    ,    ,0   ,    ,    ,0,
+Link Offset(ft)                 ,	0   ,    ,    ,    ,    ,    ,    ,0   ,    ,    ,0,
+Crosswalk Width(ft)             ,	16  ,    ,    ,    ,    ,    ,    ,16  ,    ,    ,16,
+Two way Left Turn Lane,,,,,,,,,,,,
+Headway Factor                  ,	0.85,    ,0.85,    ,    ,    ,1.06,1.06,    ,    ,1.03,1.03
+Turning Speed (mph)             ,	15  ,    ,9   ,    ,    ,    ,15  ,    ,    ,    ,    ,9
+Sign Control                    ,	Stop,    ,    ,    ,    ,    ,    ,Free,    ,    ,Free,
+Intersection Summary,,,,,,,,,,,,
+Area Type:                      ,Other,,,,,,,,,,,
+Control Type: Unsignalized,,,,,,,,,,,,
+Intersection Capacity Utilization 13.3%,	ICU Level of Service A,,,,,,,,,,,
+Analysis Period (min) 15,,,,,,,,,,,,
+4,,,,,,,,,,,,
+Intersection,,,,,,,,,,,,
+"Int Delay, s/veh                ",	0.4,,,,,,,,,,,
+Movement                        ,	EBL ,EBR ,NBL ,NBT ,SBT ,SBR,,,,,,
+Lane Configurations             ,	1>  ,0   ,0   ,<1  ,1>  ,0,,,,,,
+"Traffic Vol, veh/h              ",	0   ,2   ,1   ,26  ,28  ,0,,,,,,
+"Future Vol, veh/h               ",	0   ,2   ,1   ,26  ,28  ,0,,,,,,
+"Conflicting Peds, #/hr          ",	0   ,0   ,0   ,0   ,0   ,0,,,,,,
+Sign Control                    ,	Stop,Stop,Free,Free,Free,Free,,,,,,
+RT Channelized                  ,	-   ,None,-   ,None,-   ,None,,,,,,
+Storage Length                  ,	-   ,-   ,-   ,-   ,-   ,-,,,,,,
+"Veh in Median Storage, #        ",	0   ,-   ,-   ,0   ,0   ,-,,,,,,
+"Grade, %                        ",	-5  ,-   ,-   ,2   ,-2  ,-,,,,,,
+Peak Hour Factor                ,	89  ,89  ,89  ,89  ,89  ,89,,,,,,
+"Heavy Vehicles, %               ",	0   ,0   ,0   ,4   ,15  ,0,,,,,,
+Mvmt Flow                       ,	0   ,2   ,1   ,29  ,31  ,0,,,,,,
+,,,,,,,,,,,,
+Approach                        ,	EB  ,    ,NB  ,    ,SB,,,,,,,
+"HCM Control Delay, s/v          ",	8.43,    ,0.27,    ,0,,,,,,,
+HCM LOS                         ,	A,,,,,,,,,,,
+,,,,,,,,,,,,
+Minor Lane/Major Mvmt           ,	    ,NBL ,NBT ,EBLn1,SBT ,SBR,,,,,,
+Capacity (veh/h)                ,	    ,67  ,-   ,1053,-   ,-,,,,,,
+HCM Lane V/C Ratio              ,	    ,0.001,-   ,0.002,-   ,-,,,,,,
+HCM Control Delay (s/veh)       ,	    ,7.3 ,0   ,8.4 ,-   ,-,,,,,,
+HCM Lane LOS                    ,	    ,A   ,A   ,A   ,-   ,-,,,,,,
+HCM 95th %tile Q(veh)           ,	    ,0   ,-   ,0   ,-   ,-,,,,,,
 5,,,,,,,,,,,,
-Lane Group,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
-Lane Configurations,1>,,0,,,,0,<1,,,1>,0
-Traffic Volume (vph),0,,1,,,,1,29,,,31,3
-Future Volume (vph),0,,1,,,,1,29,,,31,3
-Ideal Flow (vphpl),1900,,1900,,,,1900,1900,,,1900,1900
-Lane Width (ft),10,,12,,,,12,11,,,12,12
-Grade (%),-2%,,,,,,,-5%,,,1%,
-Lane Util. Factor,1.00,,1.00,,,,1.00,1.00,,,1.00,1.00
-Frt,0.865,,,,,,,,,0.990,,
-Flt Protected,,,,,,,,0.999,,,,
-Satd. Flow (prot),775,,0,,,,0,1576,,,1713,0
-Flt Permitted,,,,,,,,0.999,,,,
-Satd. Flow (perm),775,,0,,,,0,1576,,,1713,0
-Link Speed (mph),30,,,,,,,30,,,30,
-Link Distance (ft),636,,,,,,,1349,,,584,
-Travel Time (s),14.5,,,,,,,34.3,,,15.6,
-Peak Hour Factor,0.86,,0.86,,,,0.86,0.86,,,0.86,0.86
-Heavy Vehicles (%),0%,,100%,,,,100%,17%,,,10%,0%
-Adj. Flow (vph),0,,1,,,,1,34,,,36,3
+Lane Group                      ,	EBL ,EBT ,EBR ,WBL ,WBT ,WBR ,NBL ,NBT ,NBR ,SBL ,SBT ,SBR
+Lane Configurations             ,	    ,    ,    ,1   ,    ,1   ,    ,1>  ,0   ,0   ,<1,
+Traffic Volume (vph)            ,	    ,    ,    ,0   ,    ,0   ,    ,27  ,0   ,0   ,30,
+Future Volume (vph)             ,	    ,    ,    ,0   ,    ,0   ,    ,27  ,0   ,0   ,30,
+Ideal Flow (vphpl)              ,	    ,    ,    ,1900,    ,1900,    ,1900,1900,1900,1900,
+Lane Width (ft)                 ,	    ,    ,    ,15  ,    ,16  ,    ,11  ,11  ,11  ,11,
+Grade (%)                       ,	    ,    ,    ,3%  ,    ,    ,    ,2%  ,    ,    ,-2%,
+Storage Length (ft)             ,	    ,    ,    ,0   ,    ,50  ,    ,    ,0   ,0,,
+Storage Lanes                   ,	    ,    ,    ,0   ,    ,1   ,    ,    ,0   ,0,,
+Taper Length (ft)               ,	    ,    ,    ,86  ,    ,    ,    ,    ,    ,86,,
+Lane Util. Factor               ,	    ,    ,    ,1.00,    ,1.00,    ,1.00,1.00,1.00,1.00,
+Frt,,,,,,,,,,,,
+Flt Protected,,,,,,,,,,,,
+Satd. Flow (prot)               ,	    ,    ,    ,2059,    ,2121,    ,1748,0   ,0   ,1585,
+Flt Permitted,,,,,,,,,,,,
+Satd. Flow (perm)               ,	    ,    ,    ,2059,    ,2121,    ,1748,0   ,0   ,1585,
+Link Speed (mph)                ,	    ,    ,    ,30  ,    ,    ,    ,30  ,    ,    ,30,
+Link Distance (ft)              ,	    ,    ,    ,582 ,    ,    ,    ,186 ,    ,    ,220,
+Travel Time (s)                 ,	    ,    ,    ,5.7 ,    ,    ,    ,4.2 ,    ,    ,1.8,
+Peak Hour Factor                ,	    ,    ,    ,0.84,    ,0.84,    ,0.84,0.84,0.84,0.84,
+Heavy Vehicles (%)              ,	    ,    ,    ,0%  ,    ,0%  ,    ,4%  ,0%  ,0%  ,17%,
+Adj. Flow (vph)                 ,	    ,    ,    ,0   ,    ,0   ,    ,32  ,0   ,0   ,36,
 Shared Lane Traffic (%),,,,,,,,,,,,
-Lane Group Flow (vph),1,,0,,,,0,35,,,39,0
-Enter Blocked Intersection,No,,No,,,,No,No,,,No,No
-Lane Alignment,Left,,Right,,,Left,Left,,,Left,Right,
-Median Width(ft),10,,,,,,,0,,,0,
-Link Offset(ft),0,,,,,,,0,,,0,
-Crosswalk Width(ft),16,,,,,,,16,,,16,
+Lane Group Flow (vph)           ,	    ,    ,    ,0   ,    ,0   ,    ,32  ,0   ,0   ,36,
+Enter Blocked Intersection      ,	    ,    ,    ,No  ,    ,No  ,    ,No  ,No  ,No  ,No,
+Lane Alignment                  ,	    ,    ,    ,Left,    ,Right,    ,Left,Right,Left,Left,
+Median Width(ft)                ,	    ,    ,    ,0   ,    ,    ,    ,0   ,    ,    ,0,
+Link Offset(ft)                 ,	    ,    ,    ,0   ,    ,    ,    ,0   ,    ,    ,0,
+Crosswalk Width(ft)             ,	    ,    ,    ,16  ,    ,    ,    ,16  ,    ,    ,16,
 Two way Left Turn Lane,,,,,,,,,,,,
-Headway Factor,1.08,,0.99,,,,0.97,1.01,,,1.01,1.01
-Turning Speed (mph),15,,9,,,,15,,,,,9
-Sign Control,Stop,,,,,,,Free,,,Free,
+Headway Factor                  ,	    ,    ,    ,0.90,    ,0.86,    ,1.06,1.06,1.03,1.03,
+Turning Speed (mph)             ,	    ,    ,    ,15  ,    ,9   ,    ,    ,9   ,15,,
+Sign Control                    ,	    ,    ,    ,Stop,    ,    ,    ,Free,    ,    ,Free,
+Intersection Summary,,,,,,,,,,,,
+Area Type:                      ,Other,,,,,,,,,,,
+Control Type: Unsignalized,,,,,,,,,,,,
+Intersection Capacity Utilization 13.3%,	ICU Level of Service A,,,,,,,,,,,
+Analysis Period (min) 15,,,,,,,,,,,,
+5,,,,,,,,,,,,
+Intersection,,,,,,,,,,,,
+"Int Delay, s/veh                ",	0,,,,,,,,,,,
+Movement                        ,	WBL ,WBR ,NBT ,NBR ,SBL ,SBT,,,,,,
+Lane Configurations             ,	1   ,1   ,1>  ,0   ,0   ,<1,,,,,,
+"Traffic Vol, veh/h              ",	0   ,0   ,27  ,0   ,0   ,30,,,,,,
+"Future Vol, veh/h               ",	0   ,0   ,27  ,0   ,0   ,30,,,,,,
+"Conflicting Peds, #/hr          ",	0   ,0   ,0   ,0   ,0   ,0,,,,,,
+Sign Control                    ,	Stop,Stop,Free,Free,Free,Free,,,,,,
+RT Channelized                  ,	-   ,Yield,-   ,None,-   ,None,,,,,,
+Storage Length                  ,	-   ,50  ,-   ,-   ,-   ,-,,,,,,
+"Veh in Median Storage, #        ",	0   ,-   ,0   ,-   ,-   ,0,,,,,,
+"Grade, %                        ",	3   ,-   ,2   ,-   ,-   ,-2,,,,,,
+Peak Hour Factor                ,	84  ,84  ,84  ,84  ,84  ,84,,,,,,
+"Heavy Vehicles, %               ",	0   ,0   ,4   ,0   ,0   ,17,,,,,,
+Mvmt Flow                       ,	0   ,0   ,32  ,0   ,0   ,36,,,,,,
+,,,,,,,,,,,,
+Approach                        ,	WB  ,    ,NB  ,    ,SB,,,,,,,
+"HCM Control Delay, s/v          ",	0   ,    ,0   ,    ,0,,,,,,,
+HCM LOS                         ,	A,,,,,,,,,,,
+,,,,,,,,,,,,
+Minor Lane/Major Mvmt           ,	    ,NBT ,NBR ,WBLn1,WBLn2,SBL ,SBT,,,,,
+Capacity (veh/h)                ,	    ,-   ,-   ,-   ,-   ,1593,-,,,,,
+HCM Lane V/C Ratio              ,	    ,-   ,-   ,-   ,-   ,-   ,-,,,,,
+HCM Control Delay (s/veh)       ,	    ,-   ,-   ,0   ,0   ,0   ,-,,,,,
+HCM Lane LOS                    ,	    ,-   ,-   ,A   ,A   ,A   ,-,,,,,
+HCM 95th %tile Q(veh)           ,	    ,-   ,-   ,-   ,-   ,0   ,-,,,,,
 6,,,,,,,,,,,,
+Lane Group                      ,	EBL ,EBT ,EBR ,WBL ,WBT ,WBR ,NBL ,NBT ,NBR ,SBL ,SBT ,SBR
+Lane Configurations             ,	1>  ,    ,0   ,    ,    ,    ,0   ,<1  ,    ,    ,1>  ,0
+Traffic Volume (vph)            ,	0   ,    ,0   ,    ,    ,    ,0   ,27  ,    ,    ,30  ,0
+Future Volume (vph)             ,	0   ,    ,0   ,    ,    ,    ,0   ,27  ,    ,    ,30  ,0
+Ideal Flow (vphpl)              ,	1900,    ,1900,    ,    ,    ,1900,1900,    ,    ,1900,1900
+Lane Width (ft)                 ,	15  ,    ,15  ,    ,    ,    ,11  ,11  ,    ,    ,11  ,11
+Grade (%)                       ,	-5% ,    ,    ,    ,    ,    ,    ,2%  ,    ,    ,-2%,
+Lane Util. Factor               ,	1.00,    ,1.00,    ,    ,    ,1.00,1.00,    ,    ,1.00,1.00
+Frt,,,,,,,,,,,,
+Flt Protected,,,,,,,,,,,,
+Satd. Flow (prot)               ,	2142,    ,0   ,    ,    ,    ,0   ,1748,    ,    ,1613,0
+Flt Permitted,,,,,,,,,,,,
+Satd. Flow (perm)               ,	2142,    ,0   ,    ,    ,    ,0   ,1748,    ,    ,1613,0
+Link Speed (mph)                ,	30  ,    ,    ,    ,    ,    ,    ,30  ,    ,    ,30,
+Link Distance (ft)              ,	760 ,    ,    ,    ,    ,    ,    ,600 ,    ,    ,186,
+Travel Time (s)                 ,	4.1 ,    ,    ,    ,    ,    ,    ,13.6,    ,    ,4.2,
+Peak Hour Factor                ,	0.89,    ,0.89,    ,    ,    ,0.89,0.89,    ,    ,0.89,0.89
+Heavy Vehicles (%)              ,	0%  ,    ,0%  ,    ,    ,    ,0%  ,4%  ,    ,    ,15% ,0%
+Adj. Flow (vph)                 ,	0   ,    ,0   ,    ,    ,    ,0   ,30  ,    ,    ,34  ,0
+Shared Lane Traffic (%),,,,,,,,,,,,
+Lane Group Flow (vph)           ,	0   ,    ,0   ,    ,    ,    ,0   ,30  ,    ,    ,34  ,0
+Enter Blocked Intersection      ,	No  ,    ,No  ,    ,    ,    ,No  ,No  ,    ,    ,No  ,No
+Lane Alignment                  ,	Left,    ,Right,    ,    ,    ,Left,Left,    ,    ,Left,Right
+Median Width(ft)                ,	15  ,    ,    ,    ,    ,    ,    ,0   ,    ,    ,0,
+Link Offset(ft)                 ,	0   ,    ,    ,    ,    ,    ,    ,0   ,    ,    ,0,
+Crosswalk Width(ft)             ,	16  ,    ,    ,    ,    ,    ,    ,16  ,    ,    ,16,
+Two way Left Turn Lane,,,,,,,,,,,,
+Headway Factor                  ,	0.85,    ,0.85,    ,    ,    ,1.06,1.06,    ,    ,1.03,1.03
+Turning Speed (mph)             ,	15  ,    ,9   ,    ,    ,    ,15  ,    ,    ,    ,    ,9
+Sign Control                    ,	Stop,    ,    ,    ,    ,    ,    ,Free,    ,    ,Free,
+Intersection Summary,,,,,,,,,,,,
+Area Type:                      ,Other,,,,,,,,,,,
+Control Type: Unsignalized,,,,,,,,,,,,
+Intersection Capacity Utilization 13.3%,	ICU Level of Service A,,,,,,,,,,,
+Analysis Period (min) 15,,,,,,,,,,,,
+6,,,,,,,,,,,,
+Intersection,,,,,,,,,,,,
+"Int Delay, s/veh                ",	0,,,,,,,,,,,
+Movement                        ,	EBL ,EBR ,NBL ,NBT ,SBT ,SBR,,,,,,
+Lane Configurations             ,	1>  ,0   ,0   ,<1  ,1>  ,0,,,,,,
+"Traffic Vol, veh/h              ",	0   ,0   ,0   ,27  ,30  ,0,,,,,,
+"Future Vol, veh/h               ",	0   ,0   ,0   ,27  ,30  ,0,,,,,,
+"Conflicting Peds, #/hr          ",	0   ,0   ,0   ,0   ,0   ,0,,,,,,
+Sign Control                    ,	Stop,Stop,Free,Free,Free,Free,,,,,,
+RT Channelized                  ,	-   ,None,-   ,None,-   ,None,,,,,,
+Storage Length                  ,	0   ,-   ,-   ,-   ,-   ,-,,,,,,
+"Veh in Median Storage, #        ",	0   ,-   ,-   ,0   ,0   ,-,,,,,,
+"Grade, %                        ",	-5  ,-   ,-   ,2   ,-2  ,-,,,,,,
+Peak Hour Factor                ,	89  ,89  ,89  ,89  ,89  ,89,,,,,,
+"Heavy Vehicles, %               ",	0   ,0   ,0   ,4   ,15  ,0,,,,,,
+Mvmt Flow                       ,	0   ,0   ,0   ,30  ,34  ,0,,,,,,
+,,,,,,,,,,,,
+Approach                        ,	EB  ,    ,NB  ,    ,SB,,,,,,,
+"HCM Control Delay, s/v          ",	0   ,    ,0   ,    ,0,,,,,,,
+HCM LOS                         ,	A,,,,,,,,,,,
+,,,,,,,,,,,,
+Minor Lane/Major Mvmt           ,	    ,NBL ,NBT ,EBLn1,SBT ,SBR,,,,,,
+Capacity (veh/h)                ,	    ,1591,-   ,-   ,-   ,-,,,,,,
+HCM Lane V/C Ratio              ,	    ,-   ,-   ,-   ,-   ,-,,,,,,
+HCM Control Delay (s/veh)       ,	    ,0   ,-   ,0   ,-   ,-,,,,,,
+HCM Lane LOS                    ,	    ,A   ,-   ,A   ,-   ,-,,,,,,
+HCM 95th %tile Q(veh)           ,	    ,0   ,-   ,-   ,-   ,-,,,,,,
 7,,,,,,,,,,,,
-Lane Group,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
-Lane Configurations,1>,,0,,,,0,<1,,,1>,0
-Traffic Volume (vph),0,,2,,,,1,26,,,28,0
-Future Volume (vph),0,,2,,,,1,26,,,28,0
-Ideal Flow (vphpl),1900,,1900,,,,1900,1900,,,1900,1900
-Lane Width (ft),15,,15,,,,11,11,,,11,11
-Grade (%),-5%,,,,,,,2%,,,-2%,
-Lane Util. Factor,1.00,,1.00,,,,1.00,1.00,,,1.00,1.00
-Frt,0.865,,,,,,,,,,,
-Flt Protected,,,,,,,,0.998,,,,
-Satd. Flow (prot),1853,,0,,,,0,1747,,,1613,0
-Flt Permitted,,,,,,,,0.998,,,,
-Satd. Flow (perm),1853,,0,,,,0,1747,,,1613,0
-Link Speed (mph),30,,,,,,,30,,,30,
-Link Distance (ft),619,,,,,,,220,,,1349,
-Travel Time (s),8.3,,,,,,,1.8,,,33.8,
-Peak Hour Factor,0.89,,0.89,,,,0.89,0.89,,,0.89,0.89
-Heavy Vehicles (%),0%,,0%,,,,0%,4%,,,15%,0%
-Adj. Flow (vph),0,,2,,,,1,29,,,31,0
+Lane Group                      ,	EBL ,EBT ,EBR ,WBL ,WBT ,WBR ,NBL ,NBT ,NBR ,SBL ,SBT ,SBR
+Lane Configurations             ,	1>  ,    ,0   ,    ,    ,    ,0   ,<1  ,    ,    ,1>  ,0
+Traffic Volume (vph)            ,	8   ,    ,4   ,    ,    ,    ,2   ,21  ,    ,    ,31  ,2
+Future Volume (vph)             ,	8   ,    ,4   ,    ,    ,    ,2   ,21  ,    ,    ,31  ,2
+Ideal Flow (vphpl)              ,	1900,    ,1900,    ,    ,    ,1900,1900,    ,    ,1900,1900
+Lane Width (ft)                 ,	11  ,    ,12  ,    ,    ,    ,12  ,12  ,    ,    ,12  ,12
+Grade (%)                       ,	-4% ,    ,    ,    ,    ,    ,    ,4%  ,    ,    ,-5%,
+Lane Util. Factor               ,	1.00,    ,1.00,    ,    ,    ,1.00,1.00,    ,    ,1.00,1.00
+Frt                             ,	0.952,    ,    ,    ,    ,    ,    ,    ,    ,    ,0.993,
+Flt Protected                   ,	0.969,    ,    ,    ,    ,    ,    ,0.996,,,,
+Satd. Flow (prot)               ,	1728,    ,0   ,    ,    ,    ,0   ,1855,    ,    ,1934,0
+Flt Permitted                   ,	0.969,    ,    ,    ,    ,    ,    ,0.996,,,,
+Satd. Flow (perm)               ,	1728,    ,0   ,    ,    ,    ,0   ,1855,    ,    ,1934,0
+Link Speed (mph)                ,	30  ,    ,    ,    ,    ,    ,    ,30  ,    ,    ,30,
+Link Distance (ft)              ,	517 ,    ,    ,    ,    ,    ,    ,622 ,    ,    ,268,
+Travel Time (s)                 ,	11.8,    ,    ,    ,    ,    ,    ,10.8,    ,    ,5.2,
+Peak Hour Factor                ,	0.85,    ,0.85,    ,    ,    ,0.85,0.85,    ,    ,0.85,0.85
+Heavy Vehicles (%)              ,	0%  ,    ,0%  ,    ,    ,    ,0%  ,0%  ,    ,    ,0%  ,0%
+Adj. Flow (vph)                 ,	9   ,    ,5   ,    ,    ,    ,2   ,25  ,    ,    ,36  ,2
 Shared Lane Traffic (%),,,,,,,,,,,,
-Lane Group Flow (vph),2,,0,,,,0,30,,,31,0
-Enter Blocked Intersection,No,,No,,,,No,No,,,No,No
-Lane Alignment,Left,,Right,,,,Left,Left,,,Left,Right
-Median Width(ft),0,,,,,,,0,,,0,
-Link Offset(ft),0,,,,,,,0,,,0,
-Crosswalk Width(ft),16,,,,,,,16,,,16,
+Lane Group Flow (vph)           ,	14  ,    ,0   ,    ,    ,    ,0   ,27  ,    ,    ,38  ,0
+Enter Blocked Intersection      ,	No  ,    ,No  ,    ,    ,    ,No  ,No  ,    ,    ,No  ,No
+Lane Alignment                  ,	Left,    ,Right,    ,    ,    ,Left,Left,    ,    ,Left,Right
+Median Width(ft)                ,	11  ,    ,    ,    ,    ,    ,    ,0   ,    ,    ,0,
+Link Offset(ft)                 ,	0   ,    ,    ,    ,    ,    ,    ,0   ,    ,    ,0,
+Crosswalk Width(ft)             ,	16  ,    ,    ,    ,    ,    ,    ,16  ,    ,    ,16,
 Two way Left Turn Lane,,,,,,,,,,,,
-Headway Factor,0.85,,0.85,,,,1.06,1.06,,,1.03,1.03
-Turning Speed (mph),15,,9,,,,15,,,,,9
-Sign Control,Stop,,,,,,,Free,,,Free,
+Headway Factor                  ,	1.02,    ,0.97,    ,    ,    ,1.03,1.03,    ,    ,0.97,0.97
+Turning Speed (mph)             ,	15  ,    ,9   ,    ,    ,    ,15  ,    ,    ,    ,    ,9
+Sign Control                    ,	Stop,    ,    ,    ,    ,    ,    ,Free,    ,    ,Free,
+Intersection Summary,,,,,,,,,,,,
+Area Type:                      ,Other,,,,,,,,,,,
+Control Type: Unsignalized,,,,,,,,,,,,
+Intersection Capacity Utilization 13.3%,	ICU Level of Service A,,,,,,,,,,,
+Analysis Period (min) 15,,,,,,,,,,,,
+7,,,,,,,,,,,,
+Intersection,,,,,,,,,,,,
+"Int Delay, s/veh                ",	1.8,,,,,,,,,,,
+Movement                        ,	EBL ,EBR ,NBL ,NBT ,SBT ,SBR,,,,,,
+Lane Configurations             ,	1>  ,0   ,0   ,<1  ,1>  ,0,,,,,,
+"Traffic Vol, veh/h              ",	8   ,4   ,2   ,21  ,31  ,2,,,,,,
+"Future Vol, veh/h               ",	8   ,4   ,2   ,21  ,31  ,2,,,,,,
+"Conflicting Peds, #/hr          ",	0   ,0   ,0   ,0   ,0   ,0,,,,,,
+Sign Control                    ,	Stop,Stop,Free,Free,Free,Free,,,,,,
+RT Channelized                  ,	-   ,None,-   ,None,-   ,None,,,,,,
+Storage Length                  ,	0   ,-   ,-   ,-   ,-   ,-,,,,,,
+"Veh in Median Storage, #        ",	0   ,-   ,-   ,0   ,0   ,-,,,,,,
+"Grade, %                        ",	-4  ,-   ,-   ,4   ,-5  ,-,,,,,,
+Peak Hour Factor                ,	85  ,85  ,85  ,85  ,85  ,85,,,,,,
+"Heavy Vehicles, %               ",	0   ,0   ,0   ,0   ,0   ,0,,,,,,
+Mvmt Flow                       ,	9   ,5   ,2   ,25  ,36  ,2,,,,,,
+,,,,,,,,,,,,
+Approach                        ,	EB  ,    ,NB  ,    ,SB,,,,,,,
+"HCM Control Delay, s/v          ",	8.71,    ,0.63,    ,0,,,,,,,
+HCM LOS                         ,	A,,,,,,,,,,,
+,,,,,,,,,,,,
+Minor Lane/Major Mvmt           ,	    ,NBL ,NBT ,EBLn1,SBT ,SBR,,,,,,
+Capacity (veh/h)                ,	    ,157 ,-   ,984 ,-   ,-,,,,,,
+HCM Lane V/C Ratio              ,	    ,0.001,-   ,0.014,-   ,-,,,,,,
+HCM Control Delay (s/veh)       ,	    ,7.3 ,0   ,8.7 ,-   ,-,,,,,,
+HCM Lane LOS                    ,	    ,A   ,A   ,A   ,-   ,-,,,,,,
+HCM 95th %tile Q(veh)           ,	    ,0   ,-   ,0   ,-   ,-,,,,,,
 8,,,,,,,,,,,,
-9,,,,,,,,,,,,
-Lane Group,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
-Lane Configurations,,,,1,,1,,1>,0,0,<1,
-Traffic Volume (vph),,,,0,,0,,27,0,0,30,
-Future Volume (vph),,,,0,,0,,27,0,0,30,
-Ideal Flow (vphpl),,,,1900,,1900,,1900,1900,1900,1900,
-Lane Width (ft),,,,15,,16,,11,11,11,11,
-Grade (%),,,,3%,,,,2%,,,-2%,
-Storage Length (ft),,,,0,,50,,,0,0,,
-Storage Lanes,,,,0,,1,,,0,0,,
-Taper Length (ft),,,,86,,,,,,86,,
-Lane Util. Factor,,,,1.00,,1.00,,1.00,1.00,1.00,1.00,
-Frt,,,,,,,,,,,,
-Flt Protected,,,,,,,,,,,,
-Satd. Flow (prot),,,,2059,,2121,,1748,0,0,1585,
-Flt Permitted,,,,,,,,,,,,
-Satd. Flow (perm),,,,2059,,2121,,1748,0,0,1585,
-Link Speed (mph),,,,30,,,,30,,,30,
-Link Distance (ft),,,,582,,,,186,,,220,
-Travel Time (s),,,,5.7,,,,4.2,,,1.8,
-Peak Hour Factor,,,,0.84,,0.84,,0.84,0.84,0.84,0.84,
-Heavy Vehicles (%),,,,0%,,0%,,4%,0%,0%,17%,
-Adj. Flow (vph),,,,0,,0,,32,0,0,36,
-Shared Lane Traffic (%),,,,,,,,,,,,
-Lane Group Flow (vph),,,,0,,0,,32,0,0,36,
-Enter Blocked Intersection,,,,No,,No,,No,No,No,No,
-Lane Alignment,,,,Left,,Right,,Left,Right,Left,Left,
-Median Width(ft),,,,0,,,,0,,,0,
-Link Offset(ft),,,,0,,,,0,,,0,
-Crosswalk Width(ft),,,,16,,,,16,,,16,
-Two way Left Turn Lane,,,,,,,,,,,,
-Headway Factor,,,,0.90,,0.86,,1.06,1.06,1.03,1.03,
-Turning Speed (mph),,,,15,,9,,,9,15,,
-Sign Control,,,,Stop,,,,Free,,,Free,
-10,,,,,,,,,,,,
-11,,,,,,,,,,,,
-Lane Group,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
-Lane Configurations,1>,,0,,,,0,<1,,,1>,0
-Traffic Volume (vph),0,,0,,,,0,27,,,30,0
-Future Volume (vph),0,,0,,,,0,27,,,30,0
-Ideal Flow (vphpl),1900,,1900,,,,1900,1900,,,1900,1900
-Lane Width (ft),15,,15,,,,11,11,,,11,11
-Grade (%),-5%,,,,,,,2%,,,-2%,
-Lane Util. Factor,1.00,,1.00,,,,1.00,1.00,,,1.00,1.00
-Frt,,,,,,,,,,,,
-Flt Protected,,,,,,,,,,,,
-Satd. Flow (prot),2142,,0,,,,0,1748,,,1613,0
-Flt Permitted,,,,,,,,,,,,
-Satd. Flow (perm),2142,,0,,,,0,1748,,,1613,0
-Link Speed (mph),30,,,,,,,30,,,30,
-Link Distance (ft),760,,,,,,,600,,,186,
-Travel Time (s),4.1,,,,,,,13.6,,,4.2,
-Peak Hour Factor,0.89,,0.89,,,,0.89,0.89,,,0.89,0.89
-Heavy Vehicles (%),0%,,0%,,,,0%,4%,,,15%,0%
-Adj. Flow (vph),0,,0,,,,0,30,,,34,0
-Shared Lane Traffic (%),,,,,,,,,,,,
-Lane Group Flow (vph),0,,0,,,,0,30,,,34,0
-Enter Blocked Intersection,No,,No,,,,No,No,,,No,No
-Lane Alignment,Left,,Right,,,,Left,Left,,,Left,Right
-Median Width(ft),15,,,,,,,0,,,0,
-Link Offset(ft),0,,,,,,,0,,,0,
-Crosswalk Width(ft),16,,,,,,,16,,,16,
-Two way Left Turn Lane,,,,,,,,,,,,
-Headway Factor,0.85,,0.85,,,,1.06,1.06,,,1.03,1.03
-Turning Speed (mph),15,,9,,,,15,,,,,9
-Sign Control,Stop,,,,,,,Free,,,Free,
-12,,,,,,,,,,,,
-13,,,,,,,,,,,,
-Lane Group,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
-Lane Configurations,1>,,0,,,,0,<1,,,1>,0
-Traffic Volume (vph),8,,4,,,,2,21,,,31,2
-Future Volume (vph),8,,4,,,,2,21,,,31,2
-Ideal Flow (vphpl),1900,,1900,,,,1900,1900,,,1900,1900
-Lane Width (ft),11,,12,,,,12,12,,,12,12
-Grade (%),-4%,,,,,,,4%,,,-5%,
-Lane Util. Factor,1.00,,1.00,,,,1.00,1.00,,,1.00,1.00
-Frt,0.952,,,,,,,,,,0.993,
-Flt Protected,0.969,,,,,,,0.996,,,,
-Satd. Flow (prot),1728,,0,,,,0,1855,,,1934,0
-Flt Permitted,0.969,,,,,,,0.996,,,,
-Satd. Flow (perm),1728,,0,,,,0,1855,,,1934,0
-Link Speed (mph),30,,,,,,,30,,,30,
-Link Distance (ft),517,,,,,,,622,,,268,
-Travel Time (s),11.8,,,,,,,10.8,,,5.2,
-Peak Hour Factor,0.85,,0.85,,,,0.85,0.85,,,0.85,0.85
-Heavy Vehicles (%),0%,,0%,,,,0%,0%,,,0%,0%
-Adj. Flow (vph),9,,5,,,,2,25,,,36,2
-Shared Lane Traffic (%),,,,,,,,,,,,
-Lane Group Flow (vph),14,,0,,,,0,27,,,38,0
-Enter Blocked Intersection,No,,No,,,,No,No,,,No,No
-Lane Alignment,Left,,Right,,,,Left,Left,,,Left,Right
-Median Width(ft),11,,,,,,,0,,,0,
-Link Offset(ft),0,,,,,,,0,,,0,
-Crosswalk Width(ft),16,,,,,,,16,,,16,
-Two way Left Turn Lane,,,,,,,,,,,,
-Headway Factor,1.02,,0.97,,,,1.03,1.03,,,0.97,0.97
-Turning Speed (mph),15,,9,,,,15,,,,,9
-Sign Control,Stop,,,,,,,Free,,,Free,
-14,,,,,,,,,,,,
-15,,,,,,,,,,,,
-Lane Group,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
-Lane Configurations,0,<1,,,1>,0,,,,1>,,0
-Traffic Volume (vph),1,99,,,179,2,,,,1,,5
-Future Volume (vph),1,99,,,179,2,,,,1,,5
-Ideal Flow (vphpl),1900,1900,,,1900,1900,,,,1900,,1900
-Lane Width (ft),11,11,,,12,12,,,,13,,13
-Grade (%),,-3%,,,0%,,,,,0%,,
-Lane Util. Factor,1.00,1.00,,,1.00,1.00,,,,1.00,,1.00
+Lane Group                      ,	EBL ,EBT ,EBR ,WBL ,WBT ,WBR ,NBL ,NBT ,NBR ,SBL ,SBT ,SBR
+Lane Configurations             ,	0   ,<1  ,    ,    ,1>  ,0   ,    ,    ,    ,1>  ,    ,0
+Traffic Volume (vph)            ,	1   ,99  ,    ,    ,179 ,2   ,    ,    ,    ,1   ,    ,5
+Future Volume (vph)             ,	1   ,99  ,    ,    ,179 ,2   ,    ,    ,    ,1   ,    ,5
+Ideal Flow (vphpl)              ,	1900,1900,    ,    ,1900,1900,    ,    ,    ,1900,    ,1900
+Lane Width (ft)                 ,	11  ,11  ,    ,    ,12  ,12  ,    ,    ,    ,13  ,    ,13
+Grade (%)                       ,	    ,-3% ,    ,    ,0%  ,    ,    ,    ,    ,0%,,
+Lane Util. Factor               ,	1.00,1.00,    ,    ,1.00,1.00,    ,    ,    ,1.00,    ,1.00
 Ped Bike Factor,,,,,,,,,,,,
-Frt,,,,,0.999,,,,,0.887,,
-Flt Protected,,,,,,,,,,0.992,,
-Satd. Flow (prot),0,1681,,,1743,0,,,,1728,,0
-Flt Permitted,,,,,,,,,,0.992,,
-Satd. Flow (perm),0,1681,,,1743,0,,,,1728,,0
-Link Speed (mph),,30,,,30,,,,,30,,
-Link Distance (ft),,116,,,276,,,,,554,,
-Travel Time (s),,2.6,,,6.3,,,,,12.6,,
-Confl. Peds. (#/hr),1,,,,,8,,,,8,,
-Peak Hour Factor,0.93,0.93,,,0.93,0.93,,,,0.93,,0.93
-Heavy Vehicles (%),0%,11%,,,9%,0%,,,,0%,,0%
-Adj. Flow (vph),1,106,,,192,2,,,,1,,5
+Frt                             ,	    ,    ,    ,    ,0.999,    ,    ,    ,    ,0.887,,
+Flt Protected                   ,	    ,    ,    ,    ,    ,    ,    ,    ,    ,0.992,,
+Satd. Flow (prot)               ,	0   ,1681,    ,    ,1743,0   ,    ,    ,    ,1728,    ,0
+Flt Permitted                   ,	    ,    ,    ,    ,    ,    ,    ,    ,    ,0.992,,
+Satd. Flow (perm)               ,	0   ,1681,    ,    ,1743,0   ,    ,    ,    ,1728,    ,0
+Link Speed (mph)                ,	    ,30  ,    ,    ,30  ,    ,    ,    ,    ,30,,
+Link Distance (ft)              ,	    ,116 ,    ,    ,276 ,    ,    ,    ,    ,554,,
+Travel Time (s)                 ,	    ,2.6 ,    ,    ,6.3 ,    ,    ,    ,    ,12.6,,
+Confl. Peds. (#/hr)             ,	1   ,    ,    ,    ,    ,8   ,    ,    ,    ,8,,
+Peak Hour Factor                ,	0.93,0.93,    ,    ,0.93,0.93,    ,    ,    ,0.93,    ,0.93
+Heavy Vehicles (%)              ,	0%  ,11% ,    ,    ,9%  ,0%  ,    ,    ,    ,0%  ,    ,0%
+Adj. Flow (vph)                 ,	1   ,106 ,    ,    ,192 ,2   ,    ,    ,    ,1   ,    ,5
 Shared Lane Traffic (%),,,,,,,,,,,,
-Lane Group Flow (vph),0,107,,,194,0,,,,6,,0
-Enter Blocked Intersection,No,No,,,No,No,,,,No,,No
-Lane Alignment,Left,Left,,,Left,Right,,,,Left,,Right
-Median Width(ft),,0,,,0,,,,,12,,
-Link Offset(ft),,0,,,0,,,,,0,,
-Crosswalk Width(ft),,16,,,16,,,,,16,,
+Lane Group Flow (vph)           ,	0   ,107 ,    ,    ,194 ,0   ,    ,    ,    ,6   ,    ,0
+Enter Blocked Intersection      ,	No  ,No  ,    ,    ,No  ,No  ,    ,    ,    ,No  ,    ,No
+Lane Alignment                  ,	Left,Left,    ,    ,Left,Right,    ,    ,    ,Left,    ,Right
+Median Width(ft)                ,	    ,0   ,    ,    ,0   ,    ,    ,    ,    ,12,,
+Link Offset(ft)                 ,	    ,0   ,    ,    ,0   ,    ,    ,    ,    ,0,,
+Crosswalk Width(ft)             ,	    ,16  ,    ,    ,16  ,    ,    ,    ,    ,16,,
 Two way Left Turn Lane,,,,,,,,,,,,
-Headway Factor,1.02,1.02,,,1.00,1.00,,,,0.96,,0.96
-Turning Speed (mph),15,,,,,9,,,,15,,9
-Sign Control,,Free,,,Free,,,,,Stop,,
-16,,,,,,,,,,,,
-17,,,,,,,,,,,,
-Lane Group,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
-Lane Configurations,0,<1,,,1>,0,,,,1>,,0
-Traffic Volume (vph),13,87,,,176,8,,,,13,,30
-Future Volume (vph),13,87,,,176,8,,,,13,,30
-Ideal Flow (vphpl),1900,1900,,,1900,1900,,,,1900,,1900
-Lane Width (ft),12,12,,,12,12,,,,10,,10
-Grade (%),,-3%,,,0%,,,,,-3%,,
-Lane Util. Factor,1.00,1.00,,,1.00,1.00,,,,1.00,,1.00
-Frt,,,,,0.994,,,,,0.905,,
-Flt Protected,,0.994,,,,,,,,0.985,,
-Satd. Flow (prot),0,1763,,,1723,0,,,,1572,,0
-Flt Permitted,,0.994,,,,,,,,0.985,,
-Satd. Flow (perm),0,1763,,,1723,0,,,,1572,,0
-Link Speed (mph),,30,,,30,,,,,30,,
-Link Distance (ft),,700,,,116,,,,,731,,
-Travel Time (s),,15.9,,,2.6,,,,,14.0,,
-Peak Hour Factor,0.85,0.85,,,0.85,0.85,,,,0.85,,0.85
-Heavy Vehicles (%),0%,10%,,,10%,0%,,,,0%,,3%
-Adj. Flow (vph),15,102,,,207,9,,,,15,,35
+Headway Factor                  ,	1.02,1.02,    ,    ,1.00,1.00,    ,    ,    ,0.96,    ,0.96
+Turning Speed (mph)             ,	15  ,    ,    ,    ,    ,9   ,    ,    ,    ,15  ,    ,9
+Sign Control                    ,	    ,Free,    ,    ,Free,    ,    ,    ,    ,Stop,,
+Intersection Summary,,,,,,,,,,,,
+Area Type:                      ,Other,,,,,,,,,,,
+Control Type: Unsignalized,,,,,,,,,,,,
+Intersection Capacity Utilization 20.4%,	ICU Level of Service A,,,,,,,,,,,
+Analysis Period (min) 15,,,,,,,,,,,,
+8,,,,,,,,,,,,
+Intersection,,,,,,,,,,,,
+"Int Delay, s/veh                ",	0.2,,,,,,,,,,,
+Movement                        ,	EBL ,EBT ,WBT ,WBR ,SBL ,SBR,,,,,,
+Lane Configurations             ,	0   ,<1  ,1>  ,0   ,1>  ,0,,,,,,
+"Traffic Vol, veh/h              ",	1   ,99  ,179 ,2   ,1   ,5,,,,,,
+"Future Vol, veh/h               ",	1   ,99  ,179 ,2   ,1   ,5,,,,,,
+"Conflicting Peds, #/hr          ",	1   ,0   ,0   ,8   ,8   ,0,,,,,,
+Sign Control                    ,	Free,Free,Free,Free,Stop,Stop,,,,,,
+RT Channelized                  ,	-   ,None,-   ,None,-   ,None,,,,,,
+Storage Length                  ,	-   ,-   ,-   ,-   ,0   ,-,,,,,,
+"Veh in Median Storage, #        ",	-   ,0   ,0   ,-   ,0   ,-,,,,,,
+"Grade, %                        ",	-   ,-3  ,0   ,-   ,0   ,-,,,,,,
+Peak Hour Factor                ,	93  ,93  ,93  ,93  ,93  ,93,,,,,,
+"Heavy Vehicles, %               ",	0   ,11  ,9   ,0   ,0   ,0,,,,,,
+Mvmt Flow                       ,	1   ,106 ,192 ,2   ,1   ,5,,,,,,
+,,,,,,,,,,,,
+Approach                        ,	EB  ,    ,WB  ,    ,SB,,,,,,,
+"HCM Control Delay, s/v          ",	0.08,    ,0   ,    ,9.52,,,,,,,
+HCM LOS                         ,	    ,    ,    ,    ,A,,,,,,,
+,,,,,,,,,,,,
+Minor Lane/Major Mvmt           ,	    ,EBL ,EBT ,WBT ,WBR ,SBLn1,,,,,,
+Capacity (veh/h)                ,	    ,18  ,-   ,-   ,-   ,803,,,,,,
+HCM Lane V/C Ratio              ,	    ,0.001,-   ,-   ,-   ,0.008,,,,,,
+HCM Control Delay (s/veh)       ,	    ,7.6 ,0   ,-   ,-   ,9.5,,,,,,
+HCM Lane LOS                    ,	    ,A   ,A   ,-   ,-   ,A,,,,,,
+HCM 95th %tile Q(veh)           ,	    ,0   ,-   ,-   ,-   ,0,,,,,,
+9,,,,,,,,,,,,
+Lane Group                      ,	EBL ,EBT ,EBR ,WBL ,WBT ,WBR ,NBL ,NBT ,NBR ,SBL ,SBT ,SBR
+Lane Configurations             ,	0   ,<1  ,    ,    ,1>  ,0   ,    ,    ,    ,1>  ,    ,0
+Traffic Volume (vph)            ,	13  ,87  ,    ,    ,176 ,8   ,    ,    ,    ,13  ,    ,30
+Future Volume (vph)             ,	13  ,87  ,    ,    ,176 ,8   ,    ,    ,    ,13  ,    ,30
+Ideal Flow (vphpl)              ,	1900,1900,    ,    ,1900,1900,    ,    ,    ,1900,    ,1900
+Lane Width (ft)                 ,	12  ,12  ,    ,    ,12  ,12  ,    ,    ,    ,10  ,    ,10
+Grade (%)                       ,	    ,-3% ,    ,    ,0%  ,    ,    ,    ,    ,-3%,,
+Lane Util. Factor               ,	1.00,1.00,    ,    ,1.00,1.00,    ,    ,    ,1.00,    ,1.00
+Frt                             ,	    ,    ,    ,    ,0.994,    ,    ,    ,    ,0.905,,
+Flt Protected                   ,	    ,0.994,    ,    ,    ,    ,    ,    ,    ,0.985,,
+Satd. Flow (prot)               ,	0   ,1763,    ,    ,1723,0   ,    ,    ,    ,1572,    ,0
+Flt Permitted                   ,	    ,0.994,    ,    ,    ,    ,    ,    ,    ,0.985,,
+Satd. Flow (perm)               ,	0   ,1763,    ,    ,1723,0   ,    ,    ,    ,1572,    ,0
+Link Speed (mph)                ,	    ,30  ,    ,    ,30  ,    ,    ,    ,    ,30,,
+Link Distance (ft)              ,	    ,700 ,    ,    ,116 ,    ,    ,    ,    ,731,,
+Travel Time (s)                 ,	    ,15.9,    ,    ,2.6 ,    ,    ,    ,    ,14.0,,
+Peak Hour Factor                ,	0.85,0.85,    ,    ,0.85,0.85,    ,    ,    ,0.85,    ,0.85
+Heavy Vehicles (%)              ,	0%  ,10% ,    ,    ,10% ,0%  ,    ,    ,    ,0%  ,    ,3%
+Adj. Flow (vph)                 ,	15  ,102 ,    ,    ,207 ,9   ,    ,    ,    ,15  ,    ,35
 Shared Lane Traffic (%),,,,,,,,,,,,
-Lane Group Flow (vph),0,117,,,216,0,,,,50,,0
-Enter Blocked Intersection,No,No,,,No,No,,,,No,,No
-Lane Alignment,Left,Left,,,Left,Right,,,,Left,,Right
-Median Width(ft),,0,,,0,,,,,12,,
-Link Offset(ft),,0,,,0,,,,,0,,
-Crosswalk Width(ft),,16,,,16,,,,,16,,
+Lane Group Flow (vph)           ,	0   ,117 ,    ,    ,216 ,0   ,    ,    ,    ,50  ,    ,0
+Enter Blocked Intersection      ,	No  ,No  ,    ,    ,No  ,No  ,    ,    ,    ,No  ,    ,No
+Lane Alignment                  ,	Left,Left,    ,    ,Left,Right,    ,    ,    ,Left,    ,Right
+Median Width(ft)                ,	    ,0   ,    ,    ,0   ,    ,    ,    ,    ,12,,
+Link Offset(ft)                 ,	    ,0   ,    ,    ,0   ,    ,    ,    ,    ,0,,
+Crosswalk Width(ft)             ,	    ,16  ,    ,    ,16  ,    ,    ,    ,    ,16,,
 Two way Left Turn Lane,,,,,,,,,,,,
-Headway Factor,0.98,0.98,,,1.00,1.00,,,,1.07,,1.07
-Turning Speed (mph),15,,,,,9,,,,15,,9
-Sign Control,,Free,,,Free,,,,,Stop,,
-18,,,,,,,,,,,,
-19,,,,,,,,,,,,
-Lane Group,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
-Lane Configurations,0,<1,,,1,1,,,,1>,,0
-Traffic Volume (vph),149,104,,,184,11,,,,15,,218
-Future Volume (vph),149,104,,,184,11,,,,15,,218
-Ideal Flow (vphpl),1900,1900,,,1900,1900,,,,1900,,1900
-Lane Width (ft),11,11,,,12,12,,,,12,,12
-Storage Length (ft),0,,,,,50,,,,0,,0
-Storage Lanes,0,,,,,1,,,,1,,0
-Taper Length (ft),86,,,,,,,,,86,,
-Lane Util. Factor,1.00,1.00,,,1.00,1.00,,,,1.00,,1.00
-Frt,,,,,,0.850,,,,0.873,,
-Flt Protected,,0.971,,,,,,,,0.997,,
-Satd. Flow (prot),0,1741,,,1776,1369,,,,1602,,0
-Flt Permitted,,0.971,,,,,,,,0.997,,
-Satd. Flow (perm),0,1741,,,1776,1369,,,,1602,,0
-Link Speed (mph),,45,,,45,,,,,55,,
-Link Distance (ft),,484,,,1011,,,,,904,,
-Travel Time (s),,11.0,,,23.0,,,,,20.5,,
-Peak Hour Factor,0.86,0.86,,,0.86,0.86,,,,0.86,,0.86
-Heavy Vehicles (%),2%,3%,,,7%,18%,,,,7%,,3%
-Adj. Flow (vph),173,121,,,214,13,,,,17,,253
+Headway Factor                  ,	0.98,0.98,    ,    ,1.00,1.00,    ,    ,    ,1.07,    ,1.07
+Turning Speed (mph)             ,	15  ,    ,    ,    ,    ,9   ,    ,    ,    ,15  ,    ,9
+Sign Control                    ,	    ,Free,    ,    ,Free,    ,    ,    ,    ,Stop,,
+Intersection Summary,,,,,,,,,,,,
+Area Type:                      ,Other,,,,,,,,,,,
+Control Type: Unsignalized,,,,,,,,,,,,
+Intersection Capacity Utilization 25.6%,	ICU Level of Service A,,,,,,,,,,,
+Analysis Period (min) 15,,,,,,,,,,,,
+9,,,,,,,,,,,,
+Intersection,,,,,,,,,,,,
+"Int Delay, s/veh                ",	1.6,,,,,,,,,,,
+Movement                        ,	EBL ,EBT ,WBT ,WBR ,SBL ,SBR,,,,,,
+Lane Configurations             ,	0   ,<1  ,1>  ,0   ,1>  ,0,,,,,,
+"Traffic Vol, veh/h              ",	13  ,87  ,176 ,8   ,13  ,30,,,,,,
+"Future Vol, veh/h               ",	13  ,87  ,176 ,8   ,13  ,30,,,,,,
+"Conflicting Peds, #/hr          ",	0   ,0   ,0   ,0   ,0   ,0,,,,,,
+Sign Control                    ,	Free,Free,Free,Free,Stop,Stop,,,,,,
+RT Channelized                  ,	-   ,None,-   ,None,-   ,None,,,,,,
+Storage Length                  ,	-   ,-   ,-   ,-   ,0   ,-,,,,,,
+"Veh in Median Storage, #        ",	-   ,0   ,0   ,-   ,0   ,-,,,,,,
+"Grade, %                        ",	-   ,-3  ,0   ,-   ,-3  ,-,,,,,,
+Peak Hour Factor                ,	85  ,85  ,85  ,85  ,85  ,85,,,,,,
+"Heavy Vehicles, %               ",	0   ,10  ,10  ,0   ,0   ,3,,,,,,
+Mvmt Flow                       ,	15  ,102 ,207 ,9   ,15  ,35,,,,,,
+,,,,,,,,,,,,
+Approach                        ,	EB  ,    ,WB  ,    ,SB,,,,,,,
+"HCM Control Delay, s/v          ",	1   ,    ,0   ,    ,9.89,,,,,,,
+HCM LOS                         ,	    ,    ,    ,    ,A,,,,,,,
+,,,,,,,,,,,,
+Minor Lane/Major Mvmt           ,	    ,EBL ,EBT ,WBT ,WBR ,SBLn1,,,,,,
+Capacity (veh/h)                ,	    ,234 ,-   ,-   ,-   ,787,,,,,,
+HCM Lane V/C Ratio              ,	    ,0.011,-   ,-   ,-   ,0.064,,,,,,
+HCM Control Delay (s/veh)       ,	    ,7.7 ,0   ,-   ,-   ,9.9,,,,,,
+HCM Lane LOS                    ,	    ,A   ,A   ,-   ,-   ,A,,,,,,
+HCM 95th %tile Q(veh)           ,	    ,0   ,-   ,-   ,-   ,0.2,,,,,,
+10,,,,,,,,,,,,
+Lane Group                      ,	EBL ,EBT ,EBR ,WBL ,WBT ,WBR ,NBL ,NBT ,NBR ,SBL ,SBT ,SBR
+Lane Configurations             ,	0   ,<1  ,    ,    ,1   ,1   ,    ,    ,    ,1>  ,    ,0
+Traffic Volume (vph)            ,	149 ,104 ,    ,    ,184 ,11  ,    ,    ,    ,15  ,    ,218
+Future Volume (vph)             ,	149 ,104 ,    ,    ,184 ,11  ,    ,    ,    ,15  ,    ,218
+Ideal Flow (vphpl)              ,	1900,1900,    ,    ,1900,1900,    ,    ,    ,1900,    ,1900
+Lane Width (ft)                 ,	11  ,11  ,    ,    ,12  ,12  ,    ,    ,    ,12  ,    ,12
+Storage Length (ft)             ,	0   ,    ,    ,    ,    ,50  ,    ,    ,    ,0   ,    ,0
+Storage Lanes                   ,	0   ,    ,    ,    ,    ,1   ,    ,    ,    ,1   ,    ,0
+Taper Length (ft)               ,	86  ,    ,    ,    ,    ,    ,    ,    ,    ,86,,
+Lane Util. Factor               ,	1.00,1.00,    ,    ,1.00,1.00,    ,    ,    ,1.00,    ,1.00
+Frt                             ,	    ,    ,    ,    ,    ,0.850,    ,    ,    ,0.873,,
+Flt Protected                   ,	    ,0.971,    ,    ,    ,    ,    ,    ,    ,0.997,,
+Satd. Flow (prot)               ,	0   ,1741,    ,    ,1776,1369,    ,    ,    ,1602,    ,0
+Flt Permitted                   ,	    ,0.971,    ,    ,    ,    ,    ,    ,    ,0.997,,
+Satd. Flow (perm)               ,	0   ,1741,    ,    ,1776,1369,    ,    ,    ,1602,    ,0
+Link Speed (mph)                ,	    ,45  ,    ,    ,45  ,    ,    ,    ,    ,55,,
+Link Distance (ft)              ,	    ,484 ,    ,    ,1011,    ,    ,    ,    ,904,,
+Travel Time (s)                 ,	    ,11.0,    ,    ,23.0,    ,    ,    ,    ,20.5,,
+Peak Hour Factor                ,	0.86,0.86,    ,    ,0.86,0.86,    ,    ,    ,0.86,    ,0.86
+Heavy Vehicles (%)              ,	2%  ,3%  ,    ,    ,7%  ,18% ,    ,    ,    ,7%  ,    ,3%
+Adj. Flow (vph)                 ,	173 ,121 ,    ,    ,214 ,13  ,    ,    ,    ,17  ,    ,253
 Shared Lane Traffic (%),,,,,,,,,,,,
-Lane Group Flow (vph),0,294,,,214,13,,,,270,,0
-Enter Blocked Intersection,No,No,,,No,No,,,,No,,No
-Lane Alignment,Left,Left,,,Left,Right,,,,Left,,Right
-Median Width(ft),,0,,,0,,,,,13,,
-Link Offset(ft),,0,,,0,,,,,0,,
-Crosswalk Width(ft),,16,,,16,,,,,16,,
+Lane Group Flow (vph)           ,	0   ,294 ,    ,    ,214 ,13  ,    ,    ,    ,270 ,    ,0
+Enter Blocked Intersection      ,	No  ,No  ,    ,    ,No  ,No  ,    ,    ,    ,No  ,    ,No
+Lane Alignment                  ,	Left,Left,    ,    ,Left,Right,    ,    ,    ,Left,    ,Right
+Median Width(ft)                ,	    ,0   ,    ,    ,0   ,    ,    ,    ,    ,13,,
+Link Offset(ft)                 ,	    ,0   ,    ,    ,0   ,    ,    ,    ,    ,0,,
+Crosswalk Width(ft)             ,	    ,16  ,    ,    ,16  ,    ,    ,    ,    ,16,,
 Two way Left Turn Lane,,,,,,,,,,,,
-Headway Factor,1.04,1.04,,,1.00,1.00,,,,1.00,,1.00
-Turning Speed (mph),15,,,,,9,,,,15,,9
-Sign Control,,Free,,,Free,,,,,Stop,,
-20,,,,,,,,,,,,
-21,,,,,,,,,,,,
-Lane Group,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
-Lane Configurations,,,,1>,,0,,1>,0,0,<1,
-Traffic Volume (vph),,,,1,,0,,157,1,0,224,
-Future Volume (vph),,,,1,,0,,157,1,0,224,
-Ideal Flow (vphpl),,,,1900,,1900,,1900,1900,1900,1900,
-Lane Width (ft),,,,9,,9,,12,12,12,12,
-Grade (%),,,,4%,,,,2%,,,-2%,
-Storage Length (ft),,,,150,,150,,,150,150,,
-Storage Lanes,,,,0,,0,,,0,0,,
-Taper Length (ft),,,,86,,,,,,86,,
-Lane Util. Factor,,,,1.00,,1.00,,1.00,1.00,1.00,1.00,
-Frt,,,,,,,,0.999,,,,
-Flt Protected,,,,0.950,,,,,,,,
-Satd. Flow (prot),,,,1592,,0,,1797,0,0,1845,
-Flt Permitted,,,,0.950,,,,,,,,
-Satd. Flow (perm),,,,1592,,0,,1797,0,0,1845,
-Link Speed (mph),,,,30,,,,55,,,55,
-Link Distance (ft),,,,374,,,,3910,,,3515,
-Travel Time (s),,,,8.5,,,,88.9,,,83.6,
-Peak Hour Factor,,,,0.94,,0.94,,0.94,0.94,0.94,0.94,
-Heavy Vehicles (%),,,,0%,,0%,,4%,100%,0%,4%,
-Adj. Flow (vph),,,,1,,0,,167,1,0,238,
+Headway Factor                  ,	1.04,1.04,    ,    ,1.00,1.00,    ,    ,    ,1.00,    ,1.00
+Turning Speed (mph)             ,	15  ,    ,    ,    ,    ,9   ,    ,    ,    ,15  ,    ,9
+Sign Control                    ,	    ,Free,    ,    ,Free,    ,    ,    ,    ,Stop,,
+Intersection Summary,,,,,,,,,,,,
+Area Type:                      ,Other,,,,,,,,,,,
+Control Type: Unsignalized,,,,,,,,,,,,
+Intersection Capacity Utilization 47.7%,	ICU Level of Service A,,,,,,,,,,,
+Analysis Period (min) 15,,,,,,,,,,,,
+10,,,,,,,,,,,,
+Intersection,,,,,,,,,,,,
+"Int Delay, s/veh                ",	6,,,,,,,,,,,
+Movement                        ,	EBL ,EBT ,WBT ,WBR ,SBL ,SBR,,,,,,
+Lane Configurations             ,	0   ,<1  ,1   ,1   ,1>  ,0,,,,,,
+"Traffic Vol, veh/h              ",	149 ,104 ,184 ,11  ,15  ,218,,,,,,
+"Future Vol, veh/h               ",	149 ,104 ,184 ,11  ,15  ,218,,,,,,
+"Conflicting Peds, #/hr          ",	0   ,0   ,0   ,0   ,0   ,0,,,,,,
+Sign Control                    ,	Free,Free,Free,Free,Stop,Stop,,,,,,
+RT Channelized                  ,	-   ,None,-   ,Stop,-   ,None,,,,,,
+Storage Length                  ,	-   ,-   ,-   ,50  ,0   ,-,,,,,,
+"Veh in Median Storage, #        ",	-   ,0   ,0   ,-   ,0   ,-,,,,,,
+"Grade, %                        ",	-   ,0   ,0   ,-   ,0   ,-,,,,,,
+Peak Hour Factor                ,	86  ,86  ,86  ,86  ,86  ,86,,,,,,
+"Heavy Vehicles, %               ",	2   ,3   ,7   ,18  ,7   ,3,,,,,,
+Mvmt Flow                       ,	173 ,121 ,214 ,13  ,17  ,253,,,,,,
+,,,,,,,,,,,,
+Approach                        ,	EB  ,    ,WB  ,    ,SB,,,,,,,
+"HCM Control Delay, s/v          ",	4.74,    ,0   ,    ,12.36,,,,,,,
+HCM LOS                         ,	    ,    ,    ,    ,B,,,,,,,
+,,,,,,,,,,,,
+Minor Lane/Major Mvmt           ,	    ,EBL ,EBT ,WBT ,WBR ,SBLn1,,,,,,
+Capacity (veh/h)                ,	    ,1060,-   ,-   ,-   ,758,,,,,,
+HCM Lane V/C Ratio              ,	    ,0.128,-   ,-   ,-   ,0.357,,,,,,
+HCM Control Delay (s/veh)       ,	    ,8   ,0   ,-   ,-   ,12.4,,,,,,
+HCM Lane LOS                    ,	    ,A   ,A   ,-   ,-   ,B,,,,,,
+HCM 95th %tile Q(veh)           ,	    ,0.4 ,-   ,-   ,-   ,1.6,,,,,,
+11,,,,,,,,,,,,
+Lane Group                      ,	EBL ,EBT ,EBR ,WBL ,WBT ,WBR ,NBL ,NBT ,NBR ,SBL ,SBT ,SBR
+Lane Configurations             ,	    ,    ,    ,1>  ,    ,0   ,    ,1>  ,0   ,0   ,<1,
+Traffic Volume (vph)            ,	    ,    ,    ,1   ,    ,0   ,    ,157 ,1   ,0   ,224,
+Future Volume (vph)             ,	    ,    ,    ,1   ,    ,0   ,    ,157 ,1   ,0   ,224,
+Ideal Flow (vphpl)              ,	    ,    ,    ,1900,    ,1900,    ,1900,1900,1900,1900,
+Lane Width (ft)                 ,	    ,    ,    ,9   ,    ,9   ,    ,12  ,12  ,12  ,12,
+Grade (%)                       ,	    ,    ,    ,4%  ,    ,    ,    ,2%  ,    ,    ,-2%,
+Storage Length (ft)             ,	    ,    ,    ,150 ,    ,150 ,    ,    ,150 ,150,,
+Storage Lanes                   ,	    ,    ,    ,0   ,    ,0   ,    ,    ,0   ,0,,
+Taper Length (ft)               ,	    ,    ,    ,86  ,    ,    ,    ,    ,    ,86,,
+Lane Util. Factor               ,	    ,    ,    ,1.00,    ,1.00,    ,1.00,1.00,1.00,1.00,
+Frt                             ,	    ,    ,    ,    ,    ,    ,    ,0.999,,,,
+Flt Protected                   ,	    ,    ,    ,0.950,,,,,,,,
+Satd. Flow (prot)               ,	    ,    ,    ,1592,    ,0   ,    ,1797,0   ,0   ,1845,
+Flt Permitted                   ,	    ,    ,    ,0.950,,,,,,,,
+Satd. Flow (perm)               ,	    ,    ,    ,1592,    ,0   ,    ,1797,0   ,0   ,1845,
+Link Speed (mph)                ,	    ,    ,    ,30  ,    ,    ,    ,55  ,    ,    ,55,
+Link Distance (ft)              ,	    ,    ,    ,374 ,    ,    ,    ,3910,    ,    ,3515,
+Travel Time (s)                 ,	    ,    ,    ,8.5 ,    ,    ,    ,88.9,    ,    ,83.6,
+Peak Hour Factor                ,	    ,    ,    ,0.94,    ,0.94,    ,0.94,0.94,0.94,0.94,
+Heavy Vehicles (%)              ,	    ,    ,    ,0%  ,    ,0%  ,    ,4%  ,100%,0%  ,4%,
+Adj. Flow (vph)                 ,	    ,    ,    ,1   ,    ,0   ,    ,167 ,1   ,0   ,238,
 Shared Lane Traffic (%),,,,,,,,,,,,
-Lane Group Flow (vph),,,,1,,0,,168,0,0,238,
-Enter Blocked Intersection,,,,No,,No,,No,No,No,No,
-Lane Alignment,,,,Left,,Right,,Left,Right,Left,Left,
-Median Width(ft),,,,12,,,,0,,,0,
-Link Offset(ft),,,,0,,,,0,,,0,
-Crosswalk Width(ft),,,,16,,,,16,,,16,
+Lane Group Flow (vph)           ,	    ,    ,    ,1   ,    ,0   ,    ,168 ,0   ,0   ,238,
+Enter Blocked Intersection      ,	    ,    ,    ,No  ,    ,No  ,    ,No  ,No  ,No  ,No,
+Lane Alignment                  ,	    ,    ,    ,Left,    ,Right,    ,Left,Right,Left,Left,
+Median Width(ft)                ,	    ,    ,    ,12  ,    ,    ,    ,0   ,    ,    ,0,
+Link Offset(ft)                 ,	    ,    ,    ,0   ,    ,    ,    ,0   ,    ,    ,0,
+Crosswalk Width(ft)             ,	    ,    ,    ,16  ,    ,    ,    ,16  ,    ,    ,16,
 Two way Left Turn Lane,,,,,,,,,,,,
-Headway Factor,,,,1.17,,1.17,,1.01,1.01,0.99,0.99,
-Turning Speed (mph),,,,15,,9,,,9,15,,
-Sign Control,,,,Stop,,,,Free,,,Free,
-22,,,,,,,,,,,,
-23,,,,,,,,,,,,
-Lane Group,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
-Lane Configurations,,,,1>,,0,,1>,0,0,<1,
-Traffic Volume (vph),,,,68,,119,,77,80,97,166,
-Future Volume (vph),,,,68,,119,,77,80,97,166,
-Ideal Flow (vphpl),,,,1900,,1900,,1900,1900,1900,1900,
-Lane Util. Factor,,,,1.00,,1.00,,1.00,1.00,1.00,1.00,
-Frt,,,,0.914,,,,0.931,,,,
-Flt Protected,,,,0.982,,,,,,,0.982,
-Satd. Flow (prot),,,,1426,,0,,1669,0,0,1750,
-Flt Permitted,,,,0.982,,,,,,,0.810,
-Satd. Flow (perm),,,,1426,,0,,1669,0,0,1444,
-Right Turn on Red,,,,,,Yes,,,Yes,,,
-Satd. Flow (RTOR),,,,131,,,,79,,,,
-Link Speed (mph),,,,45,,,,55,,,55,
-Link Distance (ft),,,,2393,,,,1129,,,1086,
-Travel Time (s),,,,36.3,,,,14.0,,,13.5,
-Peak Hour Factor,,,,0.91,,0.91,,0.91,0.91,0.91,0.91,
-Heavy Vehicles (%),,,,12%,,24%,,7%,5%,11%,4%,
-Adj. Flow (vph),,,,75,,131,,85,88,107,182,
+Headway Factor                  ,	    ,    ,    ,1.17,    ,1.17,    ,1.01,1.01,0.99,0.99,
+Turning Speed (mph)             ,	    ,    ,    ,15  ,    ,9   ,    ,    ,9   ,15,,
+Sign Control                    ,	    ,    ,    ,Stop,    ,    ,    ,Free,    ,    ,Free,
+Intersection Summary,,,,,,,,,,,,
+Area Type:                      ,Other,,,,,,,,,,,
+Control Type: Unsignalized,,,,,,,,,,,,
+Intersection Capacity Utilization 21.8%,	ICU Level of Service A,,,,,,,,,,,
+Analysis Period (min) 15,,,,,,,,,,,,
+11,,,,,,,,,,,,
+Intersection,,,,,,,,,,,,
+"Int Delay, s/veh                ",	0,,,,,,,,,,,
+Movement                        ,	WBL ,WBR ,NBT ,NBR ,SBL ,SBT,,,,,,
+Lane Configurations             ,	1>  ,0   ,1>  ,0   ,0   ,<1,,,,,,
+"Traffic Vol, veh/h              ",	1   ,0   ,157 ,1   ,0   ,224,,,,,,
+"Future Vol, veh/h               ",	1   ,0   ,157 ,1   ,0   ,224,,,,,,
+"Conflicting Peds, #/hr          ",	0   ,0   ,0   ,0   ,0   ,0,,,,,,
+Sign Control                    ,	Stop,Stop,Free,Free,Free,Free,,,,,,
+RT Channelized                  ,	-   ,None,-   ,None,-   ,None,,,,,,
+Storage Length                  ,	-   ,-   ,-   ,-   ,-   ,-,,,,,,
+"Veh in Median Storage, #        ",	0   ,-   ,0   ,-   ,-   ,0,,,,,,
+"Grade, %                        ",	4   ,-   ,2   ,-   ,-   ,-2,,,,,,
+Peak Hour Factor                ,	94  ,94  ,94  ,94  ,94  ,94,,,,,,
+"Heavy Vehicles, %               ",	0   ,0   ,4   ,100 ,0   ,4,,,,,,
+Mvmt Flow                       ,	1   ,0   ,167 ,1   ,0   ,238,,,,,,
+,,,,,,,,,,,,
+Approach                        ,	WB  ,    ,NB  ,    ,SB,,,,,,,
+"HCM Control Delay, s/v          ",	11.52,    ,0   ,    ,0,,,,,,,
+HCM LOS                         ,	B,,,,,,,,,,,
+,,,,,,,,,,,,
+Minor Lane/Major Mvmt           ,	    ,NBT ,NBR ,WBLn1,SBL ,SBT,,,,,,
+Capacity (veh/h)                ,	    ,-   ,-   ,553 ,1422,-,,,,,,
+HCM Lane V/C Ratio              ,	    ,-   ,-   ,0.002,-   ,-,,,,,,
+HCM Control Delay (s/veh)       ,	    ,-   ,-   ,11.5,0   ,-,,,,,,
+HCM Lane LOS                    ,	    ,-   ,-   ,B   ,A   ,-,,,,,,
+HCM 95th %tile Q(veh)           ,	    ,-   ,-   ,0   ,0   ,-,,,,,,
+12,,,,,,,,,,,,
+Lane Group                      ,	EBL ,EBT ,EBR ,WBL ,WBT ,WBR ,NBL ,NBT ,NBR ,SBL ,SBT ,SBR
+Lane Configurations             ,	    ,    ,    ,1>  ,    ,0   ,    ,1>  ,0   ,0   ,<1,
+Traffic Volume (vph)            ,	    ,    ,    ,68  ,    ,119 ,    ,77  ,80  ,97  ,166,
+Future Volume (vph)             ,	    ,    ,    ,68  ,    ,119 ,    ,77  ,80  ,97  ,166,
+Ideal Flow (vphpl)              ,	    ,    ,    ,1900,    ,1900,    ,1900,1900,1900,1900,
+Lane Util. Factor               ,	    ,    ,    ,1.00,    ,1.00,    ,1.00,1.00,1.00,1.00,
+Frt                             ,	    ,    ,    ,0.914,    ,    ,    ,0.931,,,,
+Flt Protected                   ,	    ,    ,    ,0.982,    ,    ,    ,    ,    ,    ,0.982,
+Satd. Flow (prot)               ,	    ,    ,    ,1426,    ,0   ,    ,1669,0   ,0   ,1750,
+Flt Permitted                   ,	    ,    ,    ,0.982,    ,    ,    ,    ,    ,    ,0.810,
+Satd. Flow (perm)               ,	    ,    ,    ,1426,    ,0   ,    ,1669,0   ,0   ,1444,
+Right Turn on Red               ,	    ,    ,    ,    ,    ,Yes ,    ,    ,Yes,,,
+Satd. Flow (RTOR)               ,	    ,    ,    ,131 ,    ,    ,    ,79,,,,
+Link Speed (mph)                ,	    ,    ,    ,45  ,    ,    ,    ,55  ,    ,    ,55,
+Link Distance (ft)              ,	    ,    ,    ,2393,    ,    ,    ,1129,    ,    ,1086,
+Travel Time (s)                 ,	    ,    ,    ,36.3,    ,    ,    ,14.0,    ,    ,13.5,
+Peak Hour Factor                ,	    ,    ,    ,0.91,    ,0.91,    ,0.91,0.91,0.91,0.91,
+Heavy Vehicles (%)              ,	    ,    ,    ,12% ,    ,24% ,    ,7%  ,5%  ,11% ,4%,
+Adj. Flow (vph)                 ,	    ,    ,    ,75  ,    ,131 ,    ,85  ,88  ,107 ,182,
 Shared Lane Traffic (%),,,,,,,,,,,,
-Lane Group Flow (vph),,,,206,,0,,173,0,0,289,
-Enter Blocked Intersection,,,,No,,No,,No,No,No,No,
-Lane Alignment,,,,Left,,Right,,Left,Right,Left,Left,
-Median Width(ft),,,,12,,,,0,,,0,
-Link Offset(ft),,,,0,,,,0,,,0,
-Crosswalk Width(ft),,,,16,,,,16,,,16,
+Lane Group Flow (vph)           ,	    ,    ,    ,206 ,    ,0   ,    ,173 ,0   ,0   ,289,
+Enter Blocked Intersection      ,	    ,    ,    ,No  ,    ,No  ,    ,No  ,No  ,No  ,No,
+Lane Alignment                  ,	    ,    ,    ,Left,    ,Right,    ,Left,Right,Left,Left,
+Median Width(ft)                ,	    ,    ,    ,12  ,    ,    ,    ,0   ,    ,    ,0,
+Link Offset(ft)                 ,	    ,    ,    ,0   ,    ,    ,    ,0   ,    ,    ,0,
+Crosswalk Width(ft)             ,	    ,    ,    ,16  ,    ,    ,    ,16  ,    ,    ,16,
 Two way Left Turn Lane,,,,,,,,,,,,
-Headway Factor,,,,1.00,,1.00,,1.00,1.00,1.00,1.00,
-Turning Speed (mph),,,,15,,9,,,9,15,,
-Number of Detectors,,,,2,,,,2,,1,2,
-Detector Template,,,,,,,,,,Left,,
-Leading Detector (ft),,,,83,,,,83,,20,83,
-Trailing Detector (ft),,,,-5,,,,-5,,0,-5,
-Detector 1 Position(ft),,,,-5,,,,-5,,0,-5,
-Detector 1 Size(ft),,,,40,,,,40,,20,40,
-Detector 1 Type,,,,Cl+Ex,,,,Cl+Ex,,Cl+Ex,Cl+Ex,
+Headway Factor                  ,	    ,    ,    ,1.00,    ,1.00,    ,1.00,1.00,1.00,1.00,
+Turning Speed (mph)             ,	    ,    ,    ,15  ,    ,9   ,    ,    ,9   ,15,,
+Number of Detectors             ,	    ,    ,    ,2   ,    ,    ,    ,2   ,    ,1   ,2,
+Detector Template               ,	    ,    ,    ,    ,    ,    ,    ,    ,    ,Left,,
+Leading Detector (ft)           ,	    ,    ,    ,83  ,    ,    ,    ,83  ,    ,20  ,83,
+Trailing Detector (ft)          ,	    ,    ,    ,-5  ,    ,    ,    ,-5  ,    ,0   ,-5,
+Detector 1 Position(ft)         ,	    ,    ,    ,-5  ,    ,    ,    ,-5  ,    ,0   ,-5,
+Detector 1 Size(ft)             ,	    ,    ,    ,40  ,    ,    ,    ,40  ,    ,20  ,40,
+Detector 1 Type                 ,	    ,    ,    ,Cl+Ex,    ,    ,    ,Cl+Ex,    ,Cl+Ex,Cl+Ex,
 Detector 1 Channel,,,,,,,,,,,,
-Detector 1 Extend (s),,,,0.0,,,,0.0,,0.0,0.0,
-Detector 1 Queue (s),,,,0.0,,,,0.0,,0.0,0.0,
-Detector 1 Delay (s),,,,0.0,,,,0.0,,0.0,0.0,
-Detector 2 Position(ft),,,,40,,,,40,,,40,
-Detector 2 Size(ft),,,,43,,,,43,,,43,
-Detector 2 Type,,,,Cl+Ex,,,,Cl+Ex,,,Cl+Ex,
+Detector 1 Extend (s)           ,	    ,    ,    ,0.0 ,    ,    ,    ,0.0 ,    ,0.0 ,0.0,
+Detector 1 Queue (s)            ,	    ,    ,    ,0.0 ,    ,    ,    ,0.0 ,    ,0.0 ,0.0,
+Detector 1 Delay (s)            ,	    ,    ,    ,0.0 ,    ,    ,    ,0.0 ,    ,0.0 ,0.0,
+Detector 2 Position(ft)         ,	    ,    ,    ,40  ,    ,    ,    ,40  ,    ,    ,40,
+Detector 2 Size(ft)             ,	    ,    ,    ,43  ,    ,    ,    ,43  ,    ,    ,43,
+Detector 2 Type                 ,	    ,    ,    ,Cl+Ex,    ,    ,    ,Cl+Ex,    ,    ,Cl+Ex,
 Detector 2 Channel,,,,,,,,,,,,
-Detector 2 Extend (s),,,,0.0,,,,0.0,,,0.0,
-Turn Type,,,,Prot,,,,NA,,Perm,NA,
-Protected Phases,,,,8,,,,2,,,6,
-Permitted Phases,,,,,,,,,,6,,
-Detector Phase,,,,8,,,,2,,6,6,
+Detector 2 Extend (s)           ,	    ,    ,    ,0.0 ,    ,    ,    ,0.0 ,    ,    ,0.0,
+Turn Type                       ,	    ,    ,    ,Prot,    ,    ,    ,NA  ,    ,Perm,NA,
+Protected Phases                ,	    ,    ,    ,8   ,    ,    ,    ,2   ,    ,    ,6,
+Permitted Phases                ,	    ,    ,    ,    ,    ,    ,    ,    ,    ,6,,
+Detector Phase                  ,	    ,    ,    ,8   ,    ,    ,    ,2   ,    ,6   ,6,
 Switch Phase,,,,,,,,,,,,
-Minimum Initial (s),,,,5.0,,,,5.0,,5.0,5.0,
-Minimum Split (s),,,,24.0,,,,24.0,,24.0,24.0,
-Total Split (s),,,,41.0,,,,39.0,,39.0,39.0,
-Total Split (%),,,,51.3%,,,,48.8%,,48.8%,48.8%,
-Maximum Green (s),,,,35.0,,,,33.0,,33.0,33.0,
-Yellow Time (s),,,,4.0,,,,4.0,,4.0,4.0,
-All-Red Time (s),,,,2.0,,,,2.0,,2.0,2.0,
-Lost Time Adjust (s),,,,0.0,,,,0.0,,,0.0,
-Total Lost Time (s),,,,6.0,,,,6.0,,,6.0,
+Minimum Initial (s)             ,	    ,    ,    ,5.0 ,    ,    ,    ,5.0 ,    ,5.0 ,5.0,
+Minimum Split (s)               ,	    ,    ,    ,24.0,    ,    ,    ,24.0,    ,24.0,24.0,
+Total Split (s)                 ,	    ,    ,    ,41.0,    ,    ,    ,39.0,    ,39.0,39.0,
+Total Split (%)                 ,	    ,    ,    ,51.3%,    ,    ,    ,48.8%,    ,48.8%,48.8%,
+Maximum Green (s)               ,	    ,    ,    ,35.0,    ,    ,    ,33.0,    ,33.0,33.0,
+Yellow Time (s)                 ,	    ,    ,    ,4.0 ,    ,    ,    ,4.0 ,    ,4.0 ,4.0,
+All-Red Time (s)                ,	    ,    ,    ,2.0 ,    ,    ,    ,2.0 ,    ,2.0 ,2.0,
+Lost Time Adjust (s)            ,	    ,    ,    ,0.0 ,    ,    ,    ,0.0 ,    ,    ,0.0,
+Total Lost Time (s)             ,	    ,    ,    ,6.0 ,    ,    ,    ,6.0 ,    ,    ,6.0,
 Lead/Lag,,,,,,,,,,,,
 Lead-Lag Optimize?,,,,,,,,,,,,
-Vehicle Extension (s),,,,3.0,,,,3.0,,3.0,3.0,
-Recall Mode,,,,None,,,,Min,,Min,Min,
-Walk Time (s),,,,7.0,,,,7.0,,7.0,7.0,
-Flash Dont Walk (s),,,,11.0,,,,11.0,,11.0,11.0,
-Pedestrian Calls (#/hr),,,,0,,,,0,,0,0,
-Act Effct Green (s),,,,8.2,,,,15.5,,,15.5,
-Actuated g/C Ratio,,,,0.23,,,,0.43,,,0.43,
-v/c Ratio,,,,0.48,,,,0.22,,,0.46,
-Control Delay (s/veh),,,,9.1,,,,5.4,,,11.1,
-Queue Delay,,,,0.0,,,,0.0,,,0.0,
-Total Delay (s/veh),,,,9.1,,,,5.4,,,11.1,
-LOS,,,,A,,,,A,,,B,
-Approach Delay (s/veh),,,,9.1,,,,5.4,,,11.1,
-Approach LOS,,,,A,,,,A,,,B,
-Queue Length 50th (ft),,,,10,,,,9,,,34,
-Queue Length 95th (ft),,,,50,,,,40,,,98,
-Internal Link Dist (ft),,,,2313,,,,1049,,,1006,
+Vehicle Extension (s)           ,	    ,    ,    ,3.0 ,    ,    ,    ,3.0 ,    ,3.0 ,3.0,
+Recall Mode                     ,	    ,    ,    ,None,    ,    ,    ,Min ,    ,Min ,Min,
+Walk Time (s)                   ,	    ,    ,    ,7.0 ,    ,    ,    ,7.0 ,    ,7.0 ,7.0,
+Flash Dont Walk (s)             ,	    ,    ,    ,11.0,    ,    ,    ,11.0,    ,11.0,11.0,
+Pedestrian Calls (#/hr)         ,	    ,    ,    ,0   ,    ,    ,    ,0   ,    ,0   ,0,
+Act Effct Green (s)             ,	    ,    ,    ,8.2 ,    ,    ,    ,15.5,    ,    ,15.5,
+Actuated g/C Ratio              ,	    ,    ,    ,0.23,    ,    ,    ,0.43,    ,    ,0.43,
+v/c Ratio                       ,	    ,    ,    ,0.48,    ,    ,    ,0.22,    ,    ,0.46,
+Control Delay (s/veh)           ,	    ,    ,    ,9.1 ,    ,    ,    ,5.4 ,    ,    ,11.1,
+Queue Delay                     ,	    ,    ,    ,0.0 ,    ,    ,    ,0.0 ,    ,    ,0.0,
+Total Delay (s/veh)             ,	    ,    ,    ,9.1 ,    ,    ,    ,5.4 ,    ,    ,11.1,
+LOS                             ,	    ,    ,    ,A   ,    ,    ,    ,A   ,    ,    ,B,
+Approach Delay (s/veh)          ,	    ,    ,    ,9.1 ,    ,    ,    ,5.4 ,    ,    ,11.1,
+Approach LOS                    ,	    ,    ,    ,A   ,    ,    ,    ,A   ,    ,    ,B,
+Queue Length 50th (ft)          ,	    ,    ,    ,10  ,    ,    ,    ,9   ,    ,    ,34,
+Queue Length 95th (ft)          ,	    ,    ,    ,50  ,    ,    ,    ,40  ,    ,    ,98,
+Internal Link Dist (ft)         ,	    ,    ,    ,2313,    ,    ,    ,1049,    ,    ,1006,
 Turn Bay Length (ft),,,,,,,,,,,,
-Base Capacity (vph),,,,1346,,,,1523,,,1311,
-Starvation Cap Reductn,,,,0,,,,0,,,0,
-Spillback Cap Reductn,,,,0,,,,0,,,0,
-Storage Cap Reductn,,,,0,,,,0,,,0,
-Reduced v/c Ratio,,,,0.15,,,,0.11,,,0.22,
-24,,,,,,,,,,,,
-Movement,,,,WBL,,WBR,,NBT,NBR,SBL,SBT,
-Lane Configurations,,,,1>,,0,,1>,0,0,<1,
-Traffic Volume (veh/h),,,,68,,119,,77,80,97,166,
-Future Volume (veh/h),,,,68,,119,,77,80,97,166,
-"Initial Q (Qb), veh",,,,0,,0,,0,0,0,0,
-Lane Width Adj.,,,,1.00,,1.00,,1.00,1.00,1.00,1.00,
-Ped-Bike Adj(A_pbT),,,,1.00,,1.00,,,1.00,1.00,,
-"Parking Bus, Adj",,,,1.00,,1.00,,1.00,1.00,1.00,1.00,
-Work Zone On Approach,,,,No,,,,No,,,No,
-"Adj Sat Flow, veh/h/ln",,,,1722,,1544,,1796,1826,1737,1841,
-"Adj Flow Rate, veh/h",,,,75,,131,,85,88,107,182,
-Peak Hour Factor,,,,0.91,,0.91,,0.91,0.91,0.91,0.91,
-"Percent Heavy Veh, %",,,,12,,24,,7,5,11,4,
-"Cap, veh/h",,,,105,,184,,245,254,334,339,
-Arrive On Green,,,,0.19,,0.19,,0.30,0.30,0.30,0.30,
-"Sat Flow, veh/h",,,,551,,963,,809,837,414,1116,
-"Grp Volume(v), veh/h",,,,207,,0,,0,173,289,0,
-"Grp Sat Flow(s),veh/h/ln",,,,1521,,0,,0,1646,1531,0,
-"Q Serve(g_s), s",,,,3.0,,0.0,,0.0,1.9,1.9,0.0,
-"Cycle Q Clear(g_c), s",,,,3.0,,0.0,,0.0,1.9,3.8,0.0,
-Prop In Lane,,,,0.36,,0.63,,,0.51,0.37,,
-"Lane Grp Cap(c), veh/h",,,,290,,0,,0,499,672,0,
-V/C Ratio(X),,,,0.71,,0.00,,0.00,0.35,0.43,0.00,
-"Avail Cap(c_a), veh/h",,,,2244,,0,,0,2289,2339,0,
-HCM Platoon Ratio,,,,1.00,,1.00,,1.00,1.00,1.00,1.00,
-Upstream Filter(I),,,,1.00,,0.00,,0.00,1.00,1.00,0.00,
-"Uniform Delay (d), s/veh",,,,9.0,,0.0,,0.0,6.4,7.0,0.0,
-"Incr Delay (d2), s/veh",,,,3.3,,0.0,,0.0,0.4,0.4,0.0,
-"Initial Q Delay(d3), s/veh",,,,0.0,,0.0,,0.0,0.0,0.0,0.0,
-"%ile BackOfQ(50%),veh/ln",,,,0.7,,0.0,,0.0,0.2,0.3,0.0,
+Base Capacity (vph)             ,	    ,    ,    ,1346,    ,    ,    ,1523,    ,    ,1311,
+Starvation Cap Reductn          ,	    ,    ,    ,0   ,    ,    ,    ,0   ,    ,    ,0,
+Spillback Cap Reductn           ,	    ,    ,    ,0   ,    ,    ,    ,0   ,    ,    ,0,
+Storage Cap Reductn             ,	    ,    ,    ,0   ,    ,    ,    ,0   ,    ,    ,0,
+Reduced v/c Ratio               ,	    ,    ,    ,0.15,    ,    ,    ,0.11,    ,    ,0.22,
+Intersection Summary,,,,,,,,,,,,
+Area Type:                      ,Other,,,,,,,,,,,
+Cycle Length: 80,,,,,,,,,,,,
+Actuated Cycle Length: 35.9,,,,,,,,,,,,
+Natural Cycle: 50,,,,,,,,,,,,
+Control Type: Actuated-Uncoordinated,,,,,,,,,,,,
+Maximum v/c Ratio: 0.48,,,,,,,,,,,,
+Intersection Signal Delay (s/veh): 9.0,	Intersection LOS: A,,,,,,,,,,,
+Intersection Capacity Utilization 49.1%,	ICU Level of Service A,,,,,,,,,,,
+Analysis Period (min) 15,,,,,,,,,,,,
+12,,,,,,,,,,,,
+Movement                        ,	    ,    ,    ,WBL ,    ,WBR ,    ,NBT ,NBR ,SBL ,SBT,
+Lane Configurations             ,	    ,    ,    ,1>  ,    ,0   ,    ,1>  ,0   ,0   ,<1,
+Traffic Volume (veh/h)          ,	    ,    ,    ,68  ,    ,119 ,    ,77  ,80  ,97  ,166,
+Future Volume (veh/h)           ,	    ,    ,    ,68  ,    ,119 ,    ,77  ,80  ,97  ,166,
+"Initial Q (Qb), veh             ",	    ,    ,    ,0   ,    ,0   ,    ,0   ,0   ,0   ,0,
+Lane Width Adj.                 ,	    ,    ,    ,1.00,    ,1.00,    ,1.00,1.00,1.00,1.00,
+Ped-Bike Adj(A_pbT)             ,	    ,    ,    ,1.00,    ,1.00,    ,    ,1.00,1.00,,
+"Parking Bus, Adj                ",	    ,    ,    ,1.00,    ,1.00,    ,1.00,1.00,1.00,1.00,
+Work Zone On Approach           ,	    ,    ,    ,No  ,    ,    ,    ,No  ,    ,    ,No,
+"Adj Sat Flow, veh/h/ln          ",	    ,    ,    ,1722,    ,1544,    ,1796,1826,1737,1841,
+"Adj Flow Rate, veh/h            ",	    ,    ,    ,75  ,    ,131 ,    ,85  ,88  ,107 ,182,
+Peak Hour Factor                ,	    ,    ,    ,0.91,    ,0.91,    ,0.91,0.91,0.91,0.91,
+"Percent Heavy Veh, %            ",	    ,    ,    ,12  ,    ,24  ,    ,7   ,5   ,11  ,4,
+"Cap, veh/h                      ",	    ,    ,    ,105 ,    ,184 ,    ,245 ,254 ,334 ,339,
+Arrive On Green                 ,	    ,    ,    ,0.19,    ,0.19,    ,0.30,0.30,0.30,0.30,
+"Sat Flow, veh/h                 ",	    ,    ,    ,551 ,    ,963 ,    ,809 ,837 ,414 ,1116,
+"Grp Volume(v), veh/h            ",	    ,    ,    ,207 ,    ,0   ,    ,0   ,173 ,289 ,0,
+"Grp Sat Flow(s),veh/h/ln        ",	    ,    ,    ,1521,    ,0   ,    ,0   ,1646,1531,0,
+"Q Serve(g_s), s                 ",	    ,    ,    ,3.0 ,    ,0.0 ,    ,0.0 ,1.9 ,1.9 ,0.0,
+"Cycle Q Clear(g_c), s           ",	    ,    ,    ,3.0 ,    ,0.0 ,    ,0.0 ,1.9 ,3.8 ,0.0,
+Prop In Lane                    ,	    ,    ,    ,0.36,    ,0.63,    ,    ,0.51,0.37,,
+"Lane Grp Cap(c), veh/h          ",	    ,    ,    ,290 ,    ,0   ,    ,0   ,499 ,672 ,0,
+V/C Ratio(X)                    ,	    ,    ,    ,0.71,    ,0.00,    ,0.00,0.35,0.43,0.00,
+"Avail Cap(c_a), veh/h           ",	    ,    ,    ,2244,    ,0   ,    ,0   ,2289,2339,0,
+HCM Platoon Ratio               ,	    ,    ,    ,1.00,    ,1.00,    ,1.00,1.00,1.00,1.00,
+Upstream Filter(I)              ,	    ,    ,    ,1.00,    ,0.00,    ,0.00,1.00,1.00,0.00,
+"Uniform Delay (d), s/veh        ",	    ,    ,    ,9.0 ,    ,0.0 ,    ,0.0 ,6.4 ,7.0 ,0.0,
+"Incr Delay (d2), s/veh          ",	    ,    ,    ,3.3 ,    ,0.0 ,    ,0.0 ,0.4 ,0.4 ,0.0,
+"Initial Q Delay(d3), s/veh      ",	    ,    ,    ,0.0 ,    ,0.0 ,    ,0.0 ,0.0 ,0.0 ,0.0,
+"%ile BackOfQ(50%),veh/ln        ",	    ,    ,    ,0.7 ,    ,0.0 ,    ,0.0 ,0.2 ,0.3 ,0.0,
 "Unsig. Movement Delay, s/veh",,,,,,,,,,,,
-"LnGrp Delay(d), s/veh",,,,12.2,,0.0,,0.0,6.8,7.5,0.0,
-LnGrp LOS,,,,B,,,,,A,A,,
-"Approach Vol, veh/h",,,,207,,,,173,,,289,
-"Approach Delay, s/veh",,,,12.2,,,,6.8,,,7.5,
-Approach LOS,,,,B,,,,A,,,A,
+"LnGrp Delay(d), s/veh           ",	    ,    ,    ,12.2,    ,0.0 ,    ,0.0 ,6.8 ,7.5 ,0.0,
+LnGrp LOS                       ,	    ,    ,    ,B   ,    ,    ,    ,    ,A   ,A,,
+"Approach Vol, veh/h             ",	    ,    ,    ,207 ,    ,    ,    ,173 ,    ,    ,289,
+"Approach Delay, s/veh           ",	    ,    ,    ,12.2,    ,    ,    ,6.8 ,    ,    ,7.5,
+Approach LOS                    ,	    ,    ,    ,B   ,    ,    ,    ,A   ,    ,    ,A,
+Intersection Summary,,,,,,,,,,,,
+"HCM 7th Control Delay, s/veh    ",	8.8,,,,,,,,,,,
+HCM 7th LOS                     ,	A,,,,,,,,,,,

@@ -1883,7 +1883,7 @@ def parse_minor_lane_mvmt(lines, start_line, end_line):
     for vc_list, los_list, delay_list in zip(vc_ratio_results, los_results, delay_results):
         merged_results = (list(zip(vc_list, los_list, delay_list)))
     # Return the parsed results for integration with other parsing logic
-    print(merged_results)
+    # print(merged_results)
     return result, merged_results
 
 
@@ -1982,12 +1982,13 @@ def parse_overall_data_v2(file_path):
 
                     # Store Synchro results only if ID is not already present
                     if not any(result['ID'] == id_value for result in synchro_results):
-                        synchro_results.append({
-                            'ID': id_value,
-                            'v/c ratio': vc_ratio_value if vc_ratio_value is not None else 'None',
-                            'los': los_value if los_value is not None else 'None',
-                            'delay': delay_value if delay_value is not None else 'None'
-                        })
+                        if not (vc_ratio_value is None and los_value is None and delay_value is None):    
+                            synchro_results.append({
+                                    'ID': id_value,
+                                    'v/c ratio': vc_ratio_value if vc_ratio_value is not None else 'None',
+                                    'los': los_value if los_value is not None else 'None',
+                                    'delay': delay_value if delay_value is not None else 'None'
+                                })
 
                     # Stop further processing of Synchro block and move on to HCM
                     break  # Exit after processing this block for Synchro
@@ -2082,6 +2083,7 @@ def parse_overall_data_v2(file_path):
             if found_phrase:
                 break  # Stop looking at this block and move on to the next intersection
     # Print the results
+    
     print("\nSynchro Overall Results:", synchro_results)
     print("\nHCM Overall Results:", hcm_results)
 
@@ -2191,9 +2193,12 @@ def parse_twsc_approach(file_path):
 
 def extract_data_to_csv(file_path, output_file):
     data = []  # To store the final data for CSV
-    collecting = False  # Flag to indicate if we're collecting data
-    skip_lines = 0  # Counter to track skipped lines
+    # skip_lines = 0  # Counter to track skipped lines
     intersection_count = 0
+    intersection_ids = []
+    collecting = False  # Flag to indicate if we're collecting data
+    collecting_minor_lane = False  # Flag to track if we're collecting after "Minor Lane/Major Mvmt"
+
     
     with open(file_path, 'r') as file:
         for line in file:
@@ -2204,40 +2209,65 @@ def extract_data_to_csv(file_path, output_file):
                 # Extract the intersection count from the beginning of the line
                 intersection_count = int(re.match(r'^(\d+):', stripped_line).group(1))
                 data.append([intersection_count])
+                intersection_ids.append(intersection_count)
                 print(f"Intersection {intersection_count} found")
+                
+                
+                
                 collecting = True  # Start collecting data
-                skip_lines = 2  # Set the counter to skip the next two lines
+                collecting_minor_lane = False                
                 continue  # Skip the current line
-            # Step 2: If we're collecting and need to skip lines
-            if collecting:
-                if skip_lines > 0:
-                    skip_lines -= 1  # Decrement the skip counter
-                    continue  # Skip the line
-
-                # If the line is empty, stop collecting
+                
+            # Step 2: Start collecting after finding "Lane Group", "Movement", or "Intersection"
+            if collecting or collecting_minor_lane:
+                # If the line is empty, stop collecting (except when we're in the middle of collecting after "Minor Lane/Major Mvmt")
                 if stripped_line == "":
-                    collecting = False  # Stop collecting on empty line
+                    collecting = False
+                    collecting_minor_lane = False
                     continue  # Skip the empty line
 
-                # Step 3: Split the line based on double tabs
-                # Regular expression to split
-                new_row = re.split(r'\t\t|\s{2}\t|\s\t', line.strip())
-
-                # Step 4: Store each Lane Group in its own cell
-                # Ensure that there are no empty strings in the new_row
-                # Filter out empty strings
-                new_row = [cell for cell in new_row if cell]
+                # Split the line based on double tabs or multiple spaces
+                new_row = re.split(r'\t\t|\s{2}\t|\s\t', stripped_line.strip())
+                new_row = [cell for cell in new_row if cell]  # Remove empty cells
                 data.append(new_row)  # Append the new row to data
+                
+            # Look for "Lane Group", "Movement", or "Intersection" after finding the intersection line
+            if not collecting and not collecting_minor_lane:
+                if re.match(r'\s*Lane Group', stripped_line) or re.match(r'\s*Movement', stripped_line):
+                    collecting = True  # Start collecting data when either is found
+                    # Split the line based on double tabs or multiple spaces
+                    new_row = re.split(r'\t\t|\s{2}\t|\s\t', stripped_line.strip())
+                    new_row = [cell for cell in new_row if cell]  # Remove empty cells
+                    data.append(new_row)  # Append the new row to data
+                    # print(f"Collecting data for {intersection_count} under {stripped_line.strip()}")
+                # If we find "Intersection" before "Lane Group" or "Movement"
+                elif re.match(r'^\s*Intersection', stripped_line):
+                    collecting = True  # Start collecting, ignoring blank lines
+                    # Split the line based on double tabs or multiple spaces
+                    new_row = re.split(r'\t\t|\s{2}\t|\s\t', stripped_line.strip())
+                    new_row = [cell for cell in new_row if cell]  # Remove empty cells
+                    data.append(new_row)  # Append the new row to data
+                    # print(f"Collecting data for {intersection_count} under Intersection")
+                # If we find "Minor Lane/Major Mvmt", start collecting until the next blank line
+                elif re.match(r'^\s*Minor Lane/Major Mvmt', stripped_line) or re.match(r'^Approach', stripped_line):
+                    collecting_minor_lane = True  # Start collecting after "Minor Lane/Major Mvmt"
+                    # Split the line based on double tabs or multiple spaces
+                    new_row = re.split(r'\t\t|\s{2}\t|\s\t', stripped_line.strip())
+                    new_row = [cell for cell in new_row if cell]  # Remove empty cells
+                    data.append(new_row)  # Append the new row to data
+                    # print(f"Started collecting for {intersection_count} after Minor Lane/Major Mvmt")
+                
                 
     pd.set_option('display.max_rows', 20)  # Show all rows
     pd.set_option('display.max_columns', 10)  # Show all columns
 
+    # print(f"Intersection ID's stored (length = {len(intersection_ids)}): \n{intersection_ids}\n")
+    
     # Step 5: Create a DataFrame and save to CSV
     df = pd.DataFrame(data)
+    df.to_csv(output_file, index=False)
     # print(f"\nDataframe from collected data:\n{df}\n")
     df = df.map(lambda x: x.strip() if isinstance(x, str) else x)
-    
-    
     
     # Define the terms to search for
     terms_to_match = [
@@ -2261,7 +2291,6 @@ def extract_data_to_csv(file_path, output_file):
     group_config_data = []  # List of dictionaries
     # Iterate through DataFrame rows
     for index, row in df.iterrows():
-        
         if "Lane Configurations" in row.values:
             # Create a dictionary to hold the configurations
             # Initialize with None
@@ -2292,12 +2321,11 @@ def extract_data_to_csv(file_path, output_file):
 
     # Process every three items in row_indices
     grouped_indices = list(row_indices.items())
-    # print(grouped_indices)
-    
-    # print(parse_twsc_approach(file_path))
+    print(f"Grouped Indices (length = {len(grouped_indices)}): \n {grouped_indices}\n")
+    print(parse_twsc_approach(file_path))
     
     for i in range(0, len(grouped_indices), 5):
-        # Extract three consecutive term-row_index pairs
+        # Extract five consecutive term-row_index pairs
         group = grouped_indices[i:i+5]
         # print(group)
         # Initialize a dictionary to hold the grouped data
@@ -2359,7 +2387,7 @@ def extract_data_to_csv(file_path, output_file):
                             # If lane_config has '-' for a direction, insert it in filtered_row_data
                             if lane_config.get(direction) == '-':
                                 filtered_row_data.insert(idx, '-')
-                        print(filtered_row_data)
+                        # print(filtered_row_data)
                         # Ensure at least 4 values for each direction
                         if len(filtered_row_data) >= 4:
                             approach_data["EB"]["Approach Delay"] = filtered_row_data[0]
@@ -2374,7 +2402,7 @@ def extract_data_to_csv(file_path, output_file):
                             # If lane_config has '-' for a direction, insert it in filtered_row_data
                             if lane_config.get(direction) == '-':
                                 filtered_row_data.insert(idx, '-')
-                        print(filtered_row_data)
+                        # print(filtered_row_data)
                         # Ensure at least 4 values for each direction
                         if len(filtered_row_data) >= 4:
                             approach_data["EB"]["Approach LOS"] = filtered_row_data[0]
@@ -2391,19 +2419,21 @@ def extract_data_to_csv(file_path, output_file):
                     
         # Merge approach data into the combined dictionary
         combined_dict.update(approach_data)
-        # print(f"Combined Dictionary (with Approach): {combined_dict}\n")
+        print(f"Combined Dictionary (with Approach): {combined_dict}\n")
         if combined_dict:
             combined_list.append(combined_dict)
-            print(combined_dict)
+            # print(combined_dict)
     
+    _, synchro_overall, hcm_overall = parse_overall_data_v2(file_path)
     twsc_intersections = parse_twsc_approach(file_path)
     
     for i in twsc_intersections: 
         combined_list.append(i)
         print(f"\nAdded {i} to combined_list\n")
-        
     
-    print(f"\nCombined list with TWSC data (length = {len(combined_list)}):\n{combined_list}\n")
+    print(len(combined_dict))
+    
+    # print(f"\nCombined list with TWSC data (length = {len(combined_list)}):\n{combined_list}\n")
     # combined_list.append(parse_twsc_approach(df))
     # Create an empty DataFrame to hold all intersections' data
     final_df = pd.DataFrame()
@@ -2437,18 +2467,37 @@ def extract_data_to_csv(file_path, output_file):
             # After the first print, don't print it again for this direction set
             intersection_id_printed = True
             
+            # Retrieve approach delay and LOS for the current direction
+            approach_delay = data_dict.get(direction, {}).get("Approach Delay", '-')
+            approach_los = data_dict.get(direction, {}).get("Approach LOS", '-')
+            
             # Loop through each lane in the direction based on its own length
             for i, lane in enumerate(lanes):
                 # Only include the direction in the first row of each set, and leave it empty after that
                 direction_value = direction if i == 0 else ''
-
-                # Get the v/c, LOS, and delay values for this specific lane
-                vc_value = data_dict['v/c'][j] if j < len(
-                    data_dict['v/c']) else '-'
-                los_value = data_dict['los'][j] if j < len(
-                    data_dict['los']) else '-'
-                delay_value = data_dict['delay'][j] if j < len(
-                    data_dict['delay']) else '-'
+                
+                # Get v/c, LOS, and Delay values based on general terms dictionary
+                vc_value = '-'
+                los_value = '-'
+                delay_value = '-'
+                
+                # Check and get v/c value from general terms
+                for term in general_terms['v/c']:
+                    if term in data_dict:
+                        vc_value = data_dict[term][j] if j < len(data_dict[term]) else '-'
+                        break
+    
+                # Check and get LOS value from general terms
+                for term in general_terms['los']:
+                    if term in data_dict:
+                        los_value = data_dict[term][j] if j < len(data_dict[term]) else '-'
+                        break
+    
+                # Check and get Delay value from general terms
+                for term in general_terms['delay']:
+                    if term in data_dict:
+                        delay_value = data_dict[term][j] if j < len(data_dict[term]) else '-'
+                        break
                 # Append the row for this lane
                 intersection_data.append(
                     [intersection_id, direction_value, lane, vc_value, los_value, delay_value])
@@ -2461,12 +2510,13 @@ def extract_data_to_csv(file_path, output_file):
 
             # Add an overall row for this direction (after all lanes)
             intersection_data.append(
-                ['', f"{direction} Overall", '', '-', '-', '-'])
+                ['', f"{direction} Overall", '', '-', f'{approach_los}', f'{approach_delay}'])
 
 
         # Add an overall row for this intersection
         intersection_data.append(
             ['', "Overall", '', '-', '-', '-'])
+        intersection_data.append([''] * 6)
         # Create a DataFrame for the current intersection's data
         intersection_df = pd.DataFrame(intersection_data, columns=[
                                        'Intersection ID', 'Direction', 'Lane', 'v/c', 'LOS', 'Delay'])
@@ -2483,12 +2533,19 @@ def extract_data_to_csv(file_path, output_file):
         print(f"Intersection {idx}:")
         # Print each term and its data in a readable format
         for term, data in data_dict.items():
-            # Convert the list of data into a comma-separated string for readability
-            data_str = ", ".join(data)
-
-            # Print the term and corresponding data
-            print(f"  {term.capitalize()}: {data_str}")
-
+            if term not in ['EB', 'WB', 'NB', 'SB']:  # Only print non-directional data here
+                data_str = ", ".join(data)
+                print(f"  {term}: {data_str}")
+            
+        # Now, print the Approach Delay and LOS for each direction (EB, WB, NB, SB)
+        for direction in ['EB', 'WB', 'NB', 'SB']:
+            # Retrieve approach delay and LOS for the current direction
+            approach_delay = data_dict.get(direction, {}).get("Approach Delay", '-')
+            approach_los = data_dict.get(direction, {}).get("Approach LOS", '-')
+            
+            # Print the actual approach delay and LOS values for this direction
+            print(f"  {direction}: Approach Delay = {approach_delay}, Approach LOS = {approach_los}")
+                
         # Print lane configurations for the current intersection
         if idx - 1 < len(group_config_data):
             lane_config_str = ", ".join(
