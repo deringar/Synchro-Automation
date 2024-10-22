@@ -2090,106 +2090,101 @@ def parse_overall_data_v2(file_path):
     return result, synchro_results, hcm_results
 
 
-def parse_twsc_approach(file_path):
+def parse_twsc_approach(df):
     approach_data = []  # List to hold all parsed data
-
-    # Open the text file and read it line by line
-    with open(file_path, 'r') as file:
-        lines = file.readlines()
+    intersection_id = None # Store the ID of the intersection we are currently looking at
+    
+    # Iterate through each row in the DataFrame
+    for index, row in df.iterrows():
+        line = str(row[0]).strip()  # Consider column 1 as the line to process
+        # print(f"\nProcessing line {index}: {line}")
         
-    # Iterate through each line
-    for index, line in enumerate(lines):
-        line = line.strip()  # Remove leading/trailing spaces
+        # Check if the row in column 1 contains an integer (this is the intersection ID)
+        if line.isdigit():
+            intersection_id = int(line)
+            # print(f"Found Intersection ID {intersection_id} at line {index}")
+            continue  # Move to the next row
         
         # Check if the line starts with "approach" and contains at least one direction
-        if line.lower().startswith("approach"):
+        if line.lower() == "approach":
+            # print(f"Found 'Approach' at line {index}: {line}")
+            
             # Check if any of the specified directions are present in the line after "approach"
-            present_directions = {direction: direction in line for direction in ["EB", "WB", "NB", "SB"]}
+            present_directions = {direction: direction in row.values for direction in ["EB", "WB", "NB", "SB"]}
+            # print(f"Present directions: {present_directions}")
             
             # If no directions are found after "approach", skip this line
             if not any(present_directions.values()):
+                print("No valid directions found, skipping line.")
                 continue  # Skip the line if no directions are present
-            
-            # print(f"Found 'Approach' with directions at line {index}: {line}")
+
             approach_dict = {
+                "Intersection ID": intersection_id,
                 "EB": {"Approach Delay": None, "Approach LOS": '-'},
                 "WB": {"Approach Delay": None, "Approach LOS": '-'},
                 "NB": {"Approach Delay": None, "Approach LOS": '-'},
                 "SB": {"Approach Delay": None, "Approach LOS": '-'}
             }
-
-            # Step 1: Record positions of directions (EB, WB, NB, SB)
-            direction_positions = {}
+            
+            # Step 1: Record the positions (columns) of directions
+            direction_columns = {}
             for direction in ["EB", "WB", "NB", "SB"]:
                 if present_directions[direction]:
-                    position = line.find(direction)  # Find the starting position of the direction
-                    direction_positions[direction] = position
-                    # print(f"Direction {direction} found at position {position}")
-
-            # Step 2: Now check the subsequent lines for "HCM Control Delay" and "HCM LOS"
-            next_line_index = index + 1
-            while next_line_index < len(lines):
-                next_line = lines[next_line_index].strip()
-
+                    direction_columns[direction] = row[row == direction].index[0]  # Find the column where the direction was found
+                    # print(f"Direction {direction} found in column {direction_columns[direction]}.")
+                    
+            # Now check subsequent rows for "HCM Control Delay" and "HCM LOS"
+            next_row_index = index + 1
+            while next_row_index < len(df):
+                next_row = df.iloc[next_row_index]  # Get the next row
+                
                 # Check for "HCM Control Delay"
-                if "hcm control delay" in next_line.lower():
-                    # print(f"Found 'HCM Control Delay' at line {next_line_index}: {next_line}")
+                if "hcm control delay" in str(next_row.iloc[0]).lower():
+                    # print(f"Found 'HCM Control Delay' at row {next_row_index}.")
                     
-                    # Extract integer or float values for each direction
-                    values = re.findall(r'\b\d+\.\d+|\b\d+', next_line)
-                    
-                    # Check if the number of values matches the expected direction positions
-                    direction_idx = 0  # Start at the first direction
-                    for direction in ["EB", "WB", "NB", "SB"]:
-                        if present_directions[direction]:
-                            if direction_idx < len(values):
-                                delay_value = values[direction_idx]
-                                # Ensure the value is valid (non-empty)
-                                if delay_value not in [None, '-', '']:
-                                    approach_dict[direction]["Approach Delay"] = delay_value
-                                    # print(f"Setting {direction} Approach Delay: {delay_value}")
-                                # else:
-                                #     print(f"Invalid delay value for {direction}: {delay_value}")
-                            direction_idx += 1
-                
+                    # Assign the delay values from the columns where directions were found
+                    for direction, col in direction_columns.items():
+                        delay_value = next_row[col]
+                        if pd.notna(delay_value) and re.match(r'\b\d+\.\d+|\b\d+', str(delay_value)):  # Check for numeric values
+                            approach_dict[direction]["Approach Delay"] = delay_value
+                            # print(f"Setting {direction} Approach Delay: {delay_value}")
+                        else:
+                            approach_dict[direction]["Approach Delay"] = '-'  # Store '-' if no valid value
+                            # print(f"No valid delay value for {direction}, setting to '-'.")
+
                 # Check for "HCM LOS"
-                elif "hcm los" in next_line.lower():
-                    # print(f"Found 'HCM LOS' at line {next_line_index}: {next_line}")
+                elif "hcm los" in str(next_row.iloc[0]).lower():
+                    # print(f"Found 'HCM LOS' at row {next_row_index}.")
                     
-                    # Step 3: Check positions of directions for LOS (A-F)
-                    los_values = []
-                    for direction, position in direction_positions.items():
-                        if present_directions[direction]:
-                            # Check if there is a valid character (A-F) at the exact position
-                            los_char = next_line[position] if position < len(next_line) else '-'
-                            if los_char in 'ABCDEF':  # Check if the character is a valid A-F
-                                los_values.append(los_char)
-                                # print(f"Setting LOS for {direction}: {los_char}")
-                            else:
-                                los_values.append('-')
-                                # print(f"Setting LOS for {direction}: '-' (Invalid or missing character)")
+                    # Assign the LOS values (A-F) from the columns where directions were found
+                    for direction, col in direction_columns.items():
+                        los_value = str(next_row[col]).strip().upper()
+                        if los_value in 'ABCDEF' and los_value != '':  # Check if the value is a valid LOS (A-F)
+                            approach_dict[direction]["Approach LOS"] = los_value
+                            # print(f"Setting {direction} Approach LOS: {los_value}")
+                        else:
+                            approach_dict[direction]["Approach LOS"] = '-'  # Store '-' if no valid LOS value
+                            # print(f"No LOS value for {direction}, setting to '-'.")
 
-                    # Assign the LOS values to the appropriate directions
-                    for idx, direction in enumerate(["EB", "WB", "NB", "SB"]):
-                        if present_directions[direction] and idx < len(los_values):
-                            approach_dict[direction]["Approach LOS"] = los_values[idx]
-                
-                # Move to the next line
-                next_line_index += 1
+                # Move to the next row
+                next_row_index += 1
 
-                # Exit the loop if an empty line is found (or any invalid line)
-                if not next_line.strip():  # Check for an empty line
+                # Exit the loop if an empty row is found
+                if next_row.isna().all():  # Check if the row is entirely empty or NaN
                     break
-                
-            # Step 3: Remove directions where neither "Approach Delay" nor "Approach LOS" is assigned
-            approach_dict = {k: v for k, v in approach_dict.items() if v["Approach Delay"] is not None or v["Approach LOS"] != '-'}
 
+            # Step 3: Remove directions with no valid data
+            approach_dict = {
+                k: v for k, v in approach_dict.items() if k == "Intersection ID" or (isinstance(v, dict) and (v["Approach Delay"] is not None or v["Approach LOS"] != '-'))
+            }
+            
             # If there's any valid data, add it to approach_data
             if approach_dict:
                 approach_data.append(approach_dict)
+                # print(f"Added approach data: {approach_dict}")
 
+    print(f"\nFinal approach data: {approach_data}")
     return approach_data
-
 
 def extract_data_to_csv(file_path, output_file):
     data = []  # To store the final data for CSV
@@ -2210,9 +2205,6 @@ def extract_data_to_csv(file_path, output_file):
                 intersection_count = int(re.match(r'^(\d+):', stripped_line).group(1))
                 data.append([intersection_count])
                 intersection_ids.append(intersection_count)
-                print(f"Intersection {intersection_count} found")
-                
-                
                 
                 collecting = True  # Start collecting data
                 collecting_minor_lane = False                
@@ -2227,7 +2219,7 @@ def extract_data_to_csv(file_path, output_file):
                     continue  # Skip the empty line
 
                 # Split the line based on double tabs or multiple spaces
-                new_row = re.split(r'\t\t|\s{2}\t|\s\t', stripped_line.strip())
+                new_row = re.split(r'\t\t|\s{2}\t|\s\t|\t', stripped_line.strip())
                 new_row = [cell for cell in new_row if cell]  # Remove empty cells
                 data.append(new_row)  # Append the new row to data
                 
@@ -2236,7 +2228,7 @@ def extract_data_to_csv(file_path, output_file):
                 if re.match(r'\s*Lane Group', stripped_line) or re.match(r'\s*Movement', stripped_line):
                     collecting = True  # Start collecting data when either is found
                     # Split the line based on double tabs or multiple spaces
-                    new_row = re.split(r'\t\t|\s{2}\t|\s\t', stripped_line.strip())
+                    new_row = re.split(r'\t\t|\s{2}\t|\s\t|\t', stripped_line.strip())
                     new_row = [cell for cell in new_row if cell]  # Remove empty cells
                     data.append(new_row)  # Append the new row to data
                     # print(f"Collecting data for {intersection_count} under {stripped_line.strip()}")
@@ -2244,7 +2236,7 @@ def extract_data_to_csv(file_path, output_file):
                 elif re.match(r'^\s*Intersection', stripped_line):
                     collecting = True  # Start collecting, ignoring blank lines
                     # Split the line based on double tabs or multiple spaces
-                    new_row = re.split(r'\t\t|\s{2}\t|\s\t', stripped_line.strip())
+                    new_row = re.split(r'\t\t|\s{2}\t|\s\t|\t', stripped_line.strip())
                     new_row = [cell for cell in new_row if cell]  # Remove empty cells
                     data.append(new_row)  # Append the new row to data
                     # print(f"Collecting data for {intersection_count} under Intersection")
@@ -2252,7 +2244,7 @@ def extract_data_to_csv(file_path, output_file):
                 elif re.match(r'^\s*Minor Lane/Major Mvmt', stripped_line) or re.match(r'^Approach', stripped_line):
                     collecting_minor_lane = True  # Start collecting after "Minor Lane/Major Mvmt"
                     # Split the line based on double tabs or multiple spaces
-                    new_row = re.split(r'\t\t|\s{2}\t|\s\t', stripped_line.strip())
+                    new_row = re.split(r'\t\t|\s{2}\t|\s\t|\t', stripped_line.strip())
                     new_row = [cell for cell in new_row if cell]  # Remove empty cells
                     data.append(new_row)  # Append the new row to data
                     # print(f"Started collecting for {intersection_count} after Minor Lane/Major Mvmt")
@@ -2288,9 +2280,18 @@ def extract_data_to_csv(file_path, output_file):
     
     # Initialize an empty dictionary to store row indices
     row_indices = {}
+    # intersection_indices = {}
     group_config_data = []  # List of dictionaries
     # Iterate through DataFrame rows
     for index, row in df.iterrows():
+        # # Check if the first column starts with a digit to identify intersection ID
+        # col1_value = str(row[0]).strip()
+        
+        # if col1_value.isdigit():
+        #     current_intersection_id = str(col1_value)
+        #     intersection_indices[index] = current_intersection_id  # Map the line number to intersection ID
+        #     continue  # Skip the current iteration to prevent processing the intersection ID row
+
         if "Lane Configurations" in row.values:
             # Create a dictionary to hold the configurations
             # Initialize with None
@@ -2312,18 +2313,24 @@ def extract_data_to_csv(file_path, output_file):
             if any(str(cell).lower() == term.lower() for cell in row if term.lower() != "los"):
                 row_indices[index] = term
                 break  # Exit the inner loop if a term is found
+    
     lane_configurations = parse_lane_configs(group_config_data)
     
-    # print(lane_configurations)
+    print(f'{row_indices} \nlength = {len(row_indices)}')
     
     # Initialize an empty list to store the combined dictionaries
     combined_list = []
-
+    
     # Process every three items in row_indices
     grouped_indices = list(row_indices.items())
     print(f"Grouped Indices (length = {len(grouped_indices)}): \n {grouped_indices}\n")
-    print(parse_twsc_approach(file_path))
+    # print(parse_twsc_approach(df))
     
+    # Initialize current_intersection_id outside of the loop
+    # current_intersection_id = None
+    
+    id_combined_list = [] 
+    # Initialize the id_combined_dict to store results   
     for i in range(0, len(grouped_indices), 5):
         # Extract five consecutive term-row_index pairs
         group = grouped_indices[i:i+5]
@@ -2344,12 +2351,24 @@ def extract_data_to_csv(file_path, output_file):
         
         lane_config = lane_configurations[i // 5]
         
+        intersection_id = None
+        first_row_index = group[0][0]  # Get the row_index of the first term-row_index pair in the group
+        for i in range(first_row_index - 1, -1, -1):  # Go upwards in the DataFrame
+            if str(df.iloc[i, 0]).strip().isdigit():  # Check if the first column starts with a digit
+                intersection_id = str(df.iloc[i, 0]).strip()
+                print(f"Found intersection ID '{intersection_id}' above term (line {first_row_index}).")
+                break  # Exit loop once the first intersection ID is found
+    
+        if intersection_id is None:
+            print(f"No intersection ID found above row index {first_row_index}.")
+            continue  # Skip this iteration if no intersection ID is found
         # Iterate over each term-row_index pair within this group
         for row_index, term in group:
             term_lower = term.lower()  # Make case-insensitive comparison
             row_data = df.iloc[row_index].replace("", "-").fillna("-").tolist()
             row_data_without_first = row_data[1:]
             # print(row_data_without_first)
+            
             # Check if the current term is in the list of terms to match
             for specific_term in terms_to_match:
                 # print(specific_term)
@@ -2415,17 +2434,19 @@ def extract_data_to_csv(file_path, output_file):
                     if specific_term.lower() not in ["v/c ratio", "los", "v/c ratio(x)", "lngrp los"]:
                         combined_dict[specific_term] = [value for value in row_data_without_first if value != '-']
                     # print(f"\nApproach data: {approach_data}\n")
-                    
-                    
+            
+        # Append the tuple (intersection ID, combined dictionary) to the list
+        id_combined_list.append((intersection_id, combined_dict))
         # Merge approach data into the combined dictionary
         combined_dict.update(approach_data)
-        print(f"Combined Dictionary (with Approach): {combined_dict}\n")
+        # print(f"Combined Dictionary (with Approach): {combined_dict}\n")
         if combined_dict:
             combined_list.append(combined_dict)
             # print(combined_dict)
-    
+    print(f"Combined list: {combined_list}")
+    print(f"ID combined list: {id_combined_list}")
     _, synchro_overall, hcm_overall = parse_overall_data_v2(file_path)
-    twsc_intersections = parse_twsc_approach(file_path)
+    twsc_intersections = parse_twsc_approach(df)
     
     for i in twsc_intersections: 
         combined_list.append(i)
