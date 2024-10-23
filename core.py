@@ -1918,7 +1918,6 @@ def parse_overall_data_v2(file_path):
 
     # List to store matching line numbers
     matching_lines = []
-    result = []
 
     # Open and read the file into memory
     with open(file_path, 'r') as file:
@@ -1936,62 +1935,87 @@ def parse_overall_data_v2(file_path):
         id_match = re.match(int_regex, lines[start_line - 1])
         id_value = id_match.group(0).strip(
             ':') if id_match else None  # Get the ID before the colon
-
+        
+        # print(f"\nProcessing ID {id_value} at line {start_line}")
+        
         # Process Synchro Results first
         found_phrase = False
         for line_number in range(start_line, len(lines)):
             line = lines[line_number]
+            
+            # Check for a new ID match before processing further
+            new_id_match = re.match(int_regex, line)
+            if new_id_match:
+                new_id_value = new_id_match.group(0).strip(':')
+                # print(f"Found new ID {new_id_value} at line {line_number}")
+                id_value = new_id_value  # Update the ID to the new one found
+            
+            if "Intersection Summary" in line:
+                # print(f"Found 'Intersection Summary' at line {line_number}")
 
-            # Check for the search phrases and process only after finding one
-            for search_phrase in search_phrases:
-                if search_phrase in line:
+                found_phrase = True  # Mark that we found the phrase
 
-                    found_phrase = True  # Mark that we found the phrase
+                # Set the end line to the next empty line starting from this line
+                end_line = line_number + 1
+                while end_line < len(lines) and lines[end_line].strip() != '':
+                    if "HCM" in lines[end_line]:
+                        break
+                    end_line += 1  # Continue until we find an empty line
+                
+                if "HCM" in lines[end_line]:
+                    # print(f"Found 'HCM' at line {end_line}, skipping Synchro block for this ID\n")
+                    continue    
+                
+                # print(f"Synchro block ends at line {end_line}\n")
 
-                    # Set the end line to the next empty line starting from this line
-                    end_line = line_number + 1
-                    while end_line < len(lines) and lines[end_line].strip() != '':
-                        end_line += 1  # Continue until we find an empty line
+                # Initialize values to None
+                vc_ratio_value = None
+                los_value = None
+                delay_value = None
 
-                    # Initialize values to None
-                    vc_ratio_value = None
-                    los_value = None
-                    delay_value = None
+                # Now process the following lines for the search terms until the next blank line
+                for search_line_number in range(line_number + 1, end_line):
+                    line = lines[search_line_number]
+                    
+                    # print(f"Processing Synchro data at line {search_line_number}: {line.strip()}")
 
-                    # Now process the following lines for the search terms until the next blank line
-                    for search_line_number in range(line_number + 1, end_line):
-                        line = lines[search_line_number]
+                    
+                    # Check for 'v/c ratio' and extract the next float
+                    if re.search(r'v/c ratio', line, re.IGNORECASE):
+                        float_match = re.search(r'(\d+\.\d+|\d+)', line)
+                        if float_match:
+                            vc_ratio_value = float(float_match.group(0))
+                            # print(f"Extracted v/c ratio: {vc_ratio_value}")
 
-                        # Check for 'v/c ratio' and extract the next float
-                        if re.search(r'v/c ratio', line, re.IGNORECASE):
-                            float_match = re.search(r'(\d+\.\d+|\d+)', line)
-                            if float_match:
-                                vc_ratio_value = float(float_match.group(0))
+                    # Check for 'delay' and extract the next float
+                    if re.search(r'delay', line, re.IGNORECASE):
+                        float_match = re.search(r'(\d+\.\d+|\d+)', line)
+                        if float_match:
+                            delay_value = float(float_match.group(0))
+                            # print(f"Extracted delay: {delay_value}")
 
-                        # Check for 'delay' and extract the next float
-                        if re.search(r'delay', line, re.IGNORECASE):
-                            float_match = re.search(r'(\d+\.\d+|\d+)', line)
-                            if float_match:
-                                delay_value = float(float_match.group(0))
+                    # Check for 'LOS' and extract the next capital letter (A-F)
+                    if re.search(r'LOS', line, re.IGNORECASE):
+                        capital_match = re.search(r'\b[A-F]\b', line)
+                        if capital_match:
+                            los_value = capital_match.group(0)
+                            # print(f"Extracted LOS: {los_value}")
+                            
+                            
+                # print(f"Final Synchro values for ID {id_value}: v/c ratio={vc_ratio_value}, delay={delay_value}, LOS={los_value}")
 
-                        # Check for 'LOS' and extract the next capital letter (A-F)
-                        if re.search(r'LOS', line, re.IGNORECASE):
-                            capital_match = re.search(r'\b[A-F]\b', line)
-                            if capital_match:
-                                los_value = capital_match.group(0)
-
-                    # Store Synchro results only if ID is not already present
+                # Store Synchro results only if ID is not already present
+                if not (vc_ratio_value is None and los_value is None and delay_value is None) and found_phrase:
                     if not any(result['ID'] == id_value for result in synchro_results):
-                        if not (vc_ratio_value is None and los_value is None and delay_value is None):    
-                            synchro_results.append({
-                                    'ID': id_value,
-                                    'v/c ratio': vc_ratio_value if vc_ratio_value is not None else 'None',
-                                    'los': los_value if los_value is not None else 'None',
-                                    'delay': delay_value if delay_value is not None else 'None'
-                                })
+                        synchro_results.append({
+                                'ID': id_value,
+                                'v/c ratio': vc_ratio_value if vc_ratio_value is not None else 'None',
+                                'los': los_value if los_value is not None else 'None',
+                                'delay': delay_value if delay_value is not None else 'None'
+                            })
 
-                    # Stop further processing of Synchro block and move on to HCM
-                    break  # Exit after processing this block for Synchro
+                # Stop further processing of Synchro block and move on to HCM
+                break  # Exit after processing this block for Synchro
 
             # Skip lines between the ID and the next search phrase
             if found_phrase:
@@ -2048,7 +2072,7 @@ def parse_overall_data_v2(file_path):
                             capital_match = re.search(r'\b[A-F]\b', line)
                             if capital_match:
                                 los_value = capital_match.group(0)
-
+                        
                         # Mark the line as HCM only if it starts with "HCM"
                         if line.startswith("HCM"):
                             found_hcm = True
@@ -2074,20 +2098,21 @@ def parse_overall_data_v2(file_path):
                                 # Using the movement results as keys
                                 hcm_entry[movement_results[i]
                                           ] = merged_results[i]
-
+                                
                             hcm_results.append(hcm_entry)
+                            
 
                     break  # Exit after processing the HCM block
 
             # Skip lines between the ID and the next search phrase
             if found_phrase:
                 break  # Stop looking at this block and move on to the next intersection
-    # Print the results
     
+    # Print the results
     print("\nSynchro Overall Results:", synchro_results)
     print("\nHCM Overall Results:", hcm_results)
 
-    return result, synchro_results, hcm_results
+    return synchro_results, hcm_results
 
 
 def parse_twsc_approach(df):
@@ -2183,7 +2208,7 @@ def parse_twsc_approach(df):
                 approach_data.append(approach_dict)
                 # print(f"Added approach data: {approach_dict}")
 
-    print(f"\nFinal approach data: {approach_data}")
+    print(f"\nFinal approach data (TWSC Intersections):\n{approach_data}")
     return approach_data
 
 def extract_data_to_csv(file_path, output_file):
@@ -2280,18 +2305,9 @@ def extract_data_to_csv(file_path, output_file):
     
     # Initialize an empty dictionary to store row indices
     row_indices = {}
-    # intersection_indices = {}
     group_config_data = []  # List of dictionaries
     # Iterate through DataFrame rows
     for index, row in df.iterrows():
-        # # Check if the first column starts with a digit to identify intersection ID
-        # col1_value = str(row[0]).strip()
-        
-        # if col1_value.isdigit():
-        #     current_intersection_id = str(col1_value)
-        #     intersection_indices[index] = current_intersection_id  # Map the line number to intersection ID
-        #     continue  # Skip the current iteration to prevent processing the intersection ID row
-
         if "Lane Configurations" in row.values:
             # Create a dictionary to hold the configurations
             # Initialize with None
@@ -2316,18 +2332,15 @@ def extract_data_to_csv(file_path, output_file):
     
     lane_configurations = parse_lane_configs(group_config_data)
     
-    print(f'{row_indices} \nlength = {len(row_indices)}')
+    # print(f'{row_indices} \nlength = {len(row_indices)}')
     
     # Initialize an empty list to store the combined dictionaries
     combined_list = []
     
     # Process every three items in row_indices
     grouped_indices = list(row_indices.items())
-    print(f"Grouped Indices (length = {len(grouped_indices)}): \n {grouped_indices}\n")
+    # print(f"Grouped Indices (length = {len(grouped_indices)}): \n {grouped_indices}\n")
     # print(parse_twsc_approach(df))
-    
-    # Initialize current_intersection_id outside of the loop
-    # current_intersection_id = None
     
     id_combined_list = [] 
     # Initialize the id_combined_dict to store results   
@@ -2443,16 +2456,25 @@ def extract_data_to_csv(file_path, output_file):
         if combined_dict:
             combined_list.append(combined_dict)
             # print(combined_dict)
-    print(f"Combined list: {combined_list}")
+    
+    idx = 0
+    for i in id_combined_list:
+        idx += 1
+        print(f"Signalized Intersection #{idx}: \n{i}\n")
     print(f"ID combined list: {id_combined_list}")
-    _, synchro_overall, hcm_overall = parse_overall_data_v2(file_path)
+    
+    synchro_overall, hcm_overall = parse_overall_data_v2(file_path)
     twsc_intersections = parse_twsc_approach(df)
     
     for i in twsc_intersections: 
-        combined_list.append(i)
-        print(f"\nAdded {i} to combined_list\n")
+        id_combined_list.append(i)
     
-    print(len(combined_dict))
+    idx = 0
+    for i in id_combined_list:
+        idx += 1
+        # print(f"ID Combined list (item {idx}): {i}\n")
+    
+    # print(len(combined_dict))
     
     # print(f"\nCombined list with TWSC data (length = {len(combined_list)}):\n{combined_list}\n")
     # combined_list.append(parse_twsc_approach(df))
