@@ -15,7 +15,7 @@ Intersection ID,Direction,Lane,v/c,LOS,Delay
 ,SB Overall,,-,C,23.2
 ,Overall,,-,-,-
 ,,,,,
-2,EB,L,0.85,E,77.5
+1,EB,L,0.85,E,77.5
 ,,TTR,0.43,D,42.9
 ,EB Overall,,-,D,53.7
 ,WB,L,0.44,D,42.9
@@ -31,50 +31,119 @@ Intersection ID,Direction,Lane,v/c,LOS,Delay
 ,SB Overall,,-,D,47.1
 ,Overall,,-,-,-
 ,,,,,
-3,EB,L,0.00,A,7.3
+2,EB,L,0.00,A,7.3
 ,,TR,0.22,A,8.2
 ,EB Overall,,-,A,8.2
 ,WB,L,0.11,B,11.5
 ,,TR,0.40,B,13.9
-,WB Overall,,-,B,13.5
+,WB Overall,,-,-,-
 ,NB,LT,0.15,C,26.6
 ,,R,0.04,A,0.1
-,NB Overall,,-,B,18.8
+,NB Overall,,-,B,13.5
 ,SB,LTR,0.07,C,20.7
-,SB Overall,,-,C,20.8
+,SB Overall,,-,B,18.8
 ,Overall,,-,-,-
 ,,,,,
-4,EB,L,0.01,B,10.1
+2,EB,L,0.01,B,10.1
 ,,TR,0.00,A,0.0
 ,EB Overall,,-,A,9.0
 ,WB,L,0.23,B,9.0
 ,,TR,0.11,B,11.2
-,WB Overall,,-,B,14.2
+,WB Overall,,-,-,-
 ,NB,LT,0.00,C,0.0
 ,,R,0.43,C,14.8
-,NB Overall,,-,C,25.4
+,NB Overall,,-,B,14.2
 ,SB,LTR,0.13,C,25.6
-,SB Overall,,-,C,25.0
+,SB Overall,,-,C,25.4
 ,Overall,,-,-,-
 ,,,,,
-5,EB,LR,0.48,A,9.1
-,EB Overall,,-,A,9.1
-,WB,-,0.22,A,5.4
-,WB Overall,,-,-,-
-,NB,LT,0.46,B,11.1
+12,WB,LR,0.48,A,9.1
+,WB Overall,,-,A,9.1
+,NB,TR,0.22,A,5.4
 ,NB Overall,,-,A,5.4
-,SB,TR,-,-,-
+,SB,LT,0.46,B,11.1
 ,SB Overall,,-,B,11.1
 ,Overall,,-,-,-
 ,,,,,
-6,EB,LR,0.71,B,12.2
-,EB Overall,,-,B,12.2
-,WB,LL,0.00,A,0.0
-,,TR,0.00,A,0.0
-,WB Overall,,-,A,6.8
-,NB,-,0.35,-,6.8
-,NB Overall,,-,-,-
-,SB,-,0.43,-,7.5
-,SB Overall,,-,-,-
+12,WB,LR,0.71,B,12.2
+,WB Overall,,-,-,-
+,NB,TR,0.00,A,0.0
+,NB Overall,,-,A,6.8
+,SB,LT,0.00,A,0.0
+,SB Overall,,-,A,7.5
+,Overall,,-,-,-
+,,,,,
+3,EB,LR,-,-,-
+,EB Overall,,-,A,9.43
+,NB,LT,-,-,-
+,NB Overall,,-,-,0.27
+,SB,TR,-,-,-
+,SB Overall,,-,-,0
+,Overall,,-,-,-
+,,,,,
+4,EB,LR,-,-,-
+,EB Overall,,-,A,8.43
+,NB,LT,-,-,-
+,NB Overall,,-,-,0.27
+,SB,TR,-,-,-
+,SB Overall,,-,-,0
+,Overall,,-,-,-
+,,,,,
+5,WB,L,-,-,-
+,,R,-,-,-
+,WB Overall,,-,A,0
+,NB,TR,-,-,-
+,NB Overall,,-,-,0
+,SB,LT,-,-,-
+,SB Overall,,-,-,0
+,Overall,,-,-,-
+,,,,,
+6,EB,LR,-,-,-
+,EB Overall,,-,A,0
+,NB,LT,-,-,-
+,NB Overall,,-,-,0
+,SB,TR,-,-,-
+,SB Overall,,-,-,0
+,Overall,,-,-,-
+,,,,,
+7,EB,LR,-,-,-
+,EB Overall,,-,A,8.71
+,NB,LT,-,-,-
+,NB Overall,,-,-,0.63
+,SB,TR,-,-,-
+,SB Overall,,-,-,0
+,Overall,,-,-,-
+,,,,,
+8,EB,LT,-,-,-
+,EB Overall,,-,-,0.08
+,WB,TR,-,-,-
+,WB Overall,,-,-,0
+,SB,LR,-,-,-
+,SB Overall,,-,A,9.52
+,Overall,,-,-,-
+,,,,,
+9,EB,LT,-,-,-
+,EB Overall,,-,-,1
+,WB,TR,-,-,-
+,WB Overall,,-,-,0
+,SB,LR,-,-,-
+,SB Overall,,-,A,9.89
+,Overall,,-,-,-
+,,,,,
+10,EB,LT,-,-,-
+,EB Overall,,-,-,4.74
+,WB,T,-,-,-
+,,R,-,-,-
+,WB Overall,,-,-,0
+,SB,LR,-,-,-
+,SB Overall,,-,B,12.36
+,Overall,,-,-,-
+,,,,,
+11,WB,LR,-,-,-
+,WB Overall,,-,B,11.52
+,NB,TR,-,-,-
+,NB Overall,,-,-,0
+,SB,LT,-,-,-
+,SB Overall,,-,-,0
 ,Overall,,-,-,-
 ,,,,,
