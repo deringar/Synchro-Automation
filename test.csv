@@ -1,6 +1,6 @@
 0,1,2,3,4,5,6,7,8,9,10,11,12
 1,,,,,,,,,,,,
-Lane Group                      ,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
+Lane Group,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
 Lane Configurations             ,1  ,2> ,0  ,1  ,1  ,1  ,1  ,2> ,0  ,2  ,2  ,1
 Traffic Volume (vph)            ,106,224,11 ,34 ,75 ,218,23 ,184,123,276,224,359
 Future Volume (vph)             ,106,224,11 ,34 ,75 ,218,23 ,184,123,276,224,359
@@ -97,7 +97,7 @@ Intersection Signal Delay (s/veh): 29.7,Intersection LOS: C,,,,,,,,,,,
 Intersection Capacity Utilization 47.6%,ICU Level of Service A,,,,,,,,,,,
 Analysis Period (min) 15,,,,,,,,,,,,
 1,,,,,,,,,,,,
-Movement                        ,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
+Movement,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
 Lane Configurations             ,1  ,2> ,0  ,1  ,1  ,1  ,1  ,2> ,0  ,2  ,2  ,1
 Traffic Volume (veh/h)          ,106,224,11 ,34 ,75 ,218,23 ,184,123,276,224,359
 Future Volume (veh/h)           ,106,224,11 ,34 ,75 ,218,23 ,184,123,276,224,359
@@ -137,7 +137,7 @@ Intersection Summary,,,,,,,,,,,,
 "HCM 7th Control Delay, s/veh    ",44.8,,,,,,,,,,,
 HCM 7th LOS                     ,D,,,,,,,,,,,
 2,,,,,,,,,,,,
-Lane Group                      ,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
+Lane Group,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
 Lane Configurations             ,1  ,1> ,0  ,1  ,1> ,0  ,0  ,<1 ,1  ,0  ,<1>,0
 Traffic Volume (vph)            ,3  ,142,28 ,56 ,279,12 ,34 ,16 ,21 ,3  ,22 ,8
 Future Volume (vph)             ,3  ,142,28 ,56 ,279,12 ,34 ,16 ,21 ,3  ,22 ,8
@@ -234,7 +234,7 @@ Intersection Signal Delay (s/veh): 13.0,Intersection LOS: B,,,,,,,,,,,
 Intersection Capacity Utilization 46.5%,ICU Level of Service A,,,,,,,,,,,
 Analysis Period (min) 15,,,,,,,,,,,,
 2,,,,,,,,,,,,
-Movement                        ,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
+Movement,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
 Lane Configurations             ,1  ,1> ,0  ,1  ,1> ,0  ,0  ,<1 ,1  ,0  ,<1>,0
 Traffic Volume (veh/h)          ,3  ,142,28 ,56 ,279,12 ,34 ,16 ,21 ,3  ,22 ,8
 Future Volume (veh/h)           ,3  ,142,28 ,56 ,279,12 ,34 ,16 ,21 ,3  ,22 ,8
@@ -274,7 +274,7 @@ Intersection Summary,,,,,,,,,,,,
 "HCM 7th Control Delay, s/veh    ",14.6,,,,,,,,,,,
 HCM 7th LOS                     ,B,,,,,,,,,,,
 3,,,,,,,,,,,,
-Lane Group                      ,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
+Lane Group,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
 Lane Configurations             ,1> ,   ,0  ,   ,   ,   ,0  ,<1 ,   ,   ,1> ,0
 Traffic Volume (vph)            ,0  ,   ,1  ,   ,   ,   ,1  ,29 ,   ,   ,31 ,3
 Future Volume (vph)             ,0  ,   ,1  ,   ,   ,   ,1  ,29 ,   ,   ,31 ,3
@@ -312,7 +312,7 @@ Analysis Period (min) 15,,,,,,,,,,,,
 3,,,,,,,,,,,,
 Intersection,,,,,,,,,,,,
 "Int Delay, s/veh                ",0.3,,,,,,,,,,,
-Movement                        ,EBL ,EBR ,NBL ,NBT ,SBT ,SBR,,,,,,
+Movement,EBL,EBR,NBL,NBT,SBT,SBR,,,,,,
 Lane Configurations             ,1>  ,0   ,0   ,<1  ,1>  ,0,,,,,,
 "Traffic Vol, veh/h              ",0   ,1   ,1   ,29  ,31  ,3,,,,,,
 "Future Vol, veh/h               ",0   ,1   ,1   ,29  ,31  ,3,,,,,,
@@ -337,7 +337,7 @@ HCM Control Delay (s/veh)       ,    ,8.2 ,0   ,9.4 ,-   ,-,,,,,,
 HCM Lane LOS                    ,    ,A   ,A   ,A   ,-   ,-,,,,,,
 HCM 95th %tile Q(veh)           ,    ,0   ,-   ,0   ,-   ,-,,,,,,
 4,,,,,,,,,,,,
-Lane Group                      ,EBL ,EBT ,EBR ,WBL ,WBT ,WBR ,NBL ,NBT ,NBR ,SBL ,SBT ,SBR
+Lane Group,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
 Lane Configurations             ,1>  ,    ,0   ,    ,    ,    ,0   ,<1  ,    ,    ,1>  ,0
 Traffic Volume (vph)            ,0   ,    ,2   ,    ,    ,    ,1   ,26  ,    ,    ,28  ,0
 Future Volume (vph)             ,0   ,    ,2   ,    ,    ,    ,1   ,26  ,    ,    ,28  ,0
@@ -375,7 +375,7 @@ Analysis Period (min) 15,,,,,,,,,,,,
 4,,,,,,,,,,,,
 Intersection,,,,,,,,,,,,
 "Int Delay, s/veh                ",0.4,,,,,,,,,,,
-Movement                        ,EBL ,EBR ,NBL ,NBT ,SBT ,SBR,,,,,,
+Movement,EBL,EBR,NBL,NBT,SBT,SBR,,,,,,
 Lane Configurations             ,1>  ,0   ,0   ,<1  ,1>  ,0,,,,,,
 "Traffic Vol, veh/h              ",0   ,2   ,1   ,26  ,28  ,0,,,,,,
 "Future Vol, veh/h               ",0   ,2   ,1   ,26  ,28  ,0,,,,,,
@@ -400,7 +400,7 @@ HCM Control Delay (s/veh)       ,    ,7.3 ,0   ,8.4 ,-   ,-,,,,,,
 HCM Lane LOS                    ,    ,A   ,A   ,A   ,-   ,-,,,,,,
 HCM 95th %tile Q(veh)           ,    ,0   ,-   ,0   ,-   ,-,,,,,,
 5,,,,,,,,,,,,
-Lane Group                      ,EBL ,EBT ,EBR ,WBL ,WBT ,WBR ,NBL ,NBT ,NBR ,SBL ,SBT ,SBR
+Lane Group,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
 Lane Configurations             ,    ,    ,    ,1   ,    ,1   ,    ,1>  ,0   ,0   ,<1,
 Traffic Volume (vph)            ,    ,    ,    ,0   ,    ,0   ,    ,27  ,0   ,0   ,30,
 Future Volume (vph)             ,    ,    ,    ,0   ,    ,0   ,    ,27  ,0   ,0   ,30,
@@ -441,7 +441,7 @@ Analysis Period (min) 15,,,,,,,,,,,,
 5,,,,,,,,,,,,
 Intersection,,,,,,,,,,,,
 "Int Delay, s/veh                ",0,,,,,,,,,,,
-Movement                        ,WBL ,WBR ,NBT ,NBR ,SBL ,SBT,,,,,,
+Movement,WBL,WBR,NBT,NBR,SBL,SBT,,,,,,
 Lane Configurations             ,1   ,1   ,1>  ,0   ,0   ,<1,,,,,,
 "Traffic Vol, veh/h              ",0   ,0   ,27  ,0   ,0   ,30,,,,,,
 "Future Vol, veh/h               ",0   ,0   ,27  ,0   ,0   ,30,,,,,,
@@ -466,7 +466,7 @@ HCM Control Delay (s/veh)       ,    ,-   ,-   ,0   ,0   ,0   ,-,,,,,
 HCM Lane LOS                    ,    ,-   ,-   ,A   ,A   ,A   ,-,,,,,
 HCM 95th %tile Q(veh)           ,    ,-   ,-   ,-   ,-   ,0   ,-,,,,,
 6,,,,,,,,,,,,
-Lane Group                      ,EBL ,EBT ,EBR ,WBL ,WBT ,WBR ,NBL ,NBT ,NBR ,SBL ,SBT ,SBR
+Lane Group,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
 Lane Configurations             ,1>  ,    ,0   ,    ,    ,    ,0   ,<1  ,    ,    ,1>  ,0
 Traffic Volume (vph)            ,0   ,    ,0   ,    ,    ,    ,0   ,27  ,    ,    ,30  ,0
 Future Volume (vph)             ,0   ,    ,0   ,    ,    ,    ,0   ,27  ,    ,    ,30  ,0
@@ -504,7 +504,7 @@ Analysis Period (min) 15,,,,,,,,,,,,
 6,,,,,,,,,,,,
 Intersection,,,,,,,,,,,,
 "Int Delay, s/veh                ",0,,,,,,,,,,,
-Movement                        ,EBL ,EBR ,NBL ,NBT ,SBT ,SBR,,,,,,
+Movement,EBL,EBR,NBL,NBT,SBT,SBR,,,,,,
 Lane Configurations             ,1>  ,0   ,0   ,<1  ,1>  ,0,,,,,,
 "Traffic Vol, veh/h              ",0   ,0   ,0   ,27  ,30  ,0,,,,,,
 "Future Vol, veh/h               ",0   ,0   ,0   ,27  ,30  ,0,,,,,,
@@ -529,7 +529,7 @@ HCM Control Delay (s/veh)       ,    ,0   ,-   ,0   ,-   ,-,,,,,,
 HCM Lane LOS                    ,    ,A   ,-   ,A   ,-   ,-,,,,,,
 HCM 95th %tile Q(veh)           ,    ,0   ,-   ,-   ,-   ,-,,,,,,
 7,,,,,,,,,,,,
-Lane Group                      ,EBL ,EBT ,EBR ,WBL ,WBT ,WBR ,NBL ,NBT ,NBR ,SBL ,SBT ,SBR
+Lane Group,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
 Lane Configurations             ,1>  ,    ,0   ,    ,    ,    ,0   ,<1  ,    ,    ,1>  ,0
 Traffic Volume (vph)            ,8   ,    ,4   ,    ,    ,    ,2   ,21  ,    ,    ,31  ,2
 Future Volume (vph)             ,8   ,    ,4   ,    ,    ,    ,2   ,21  ,    ,    ,31  ,2
@@ -567,7 +567,7 @@ Analysis Period (min) 15,,,,,,,,,,,,
 7,,,,,,,,,,,,
 Intersection,,,,,,,,,,,,
 "Int Delay, s/veh                ",1.8,,,,,,,,,,,
-Movement                        ,EBL ,EBR ,NBL ,NBT ,SBT ,SBR,,,,,,
+Movement,EBL,EBR,NBL,NBT,SBT,SBR,,,,,,
 Lane Configurations             ,1>  ,0   ,0   ,<1  ,1>  ,0,,,,,,
 "Traffic Vol, veh/h              ",8   ,4   ,2   ,21  ,31  ,2,,,,,,
 "Future Vol, veh/h               ",8   ,4   ,2   ,21  ,31  ,2,,,,,,
@@ -592,7 +592,7 @@ HCM Control Delay (s/veh)       ,    ,7.3 ,0   ,8.7 ,-   ,-,,,,,,
 HCM Lane LOS                    ,    ,A   ,A   ,A   ,-   ,-,,,,,,
 HCM 95th %tile Q(veh)           ,    ,0   ,-   ,0   ,-   ,-,,,,,,
 8,,,,,,,,,,,,
-Lane Group                      ,EBL ,EBT ,EBR ,WBL ,WBT ,WBR ,NBL ,NBT ,NBR ,SBL ,SBT ,SBR
+Lane Group,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
 Lane Configurations             ,0   ,<1  ,    ,    ,1>  ,0   ,    ,    ,    ,1>  ,    ,0
 Traffic Volume (vph)            ,1   ,99  ,    ,    ,179 ,2   ,    ,    ,    ,1   ,    ,5
 Future Volume (vph)             ,1   ,99  ,    ,    ,179 ,2   ,    ,    ,    ,1   ,    ,5
@@ -632,7 +632,7 @@ Analysis Period (min) 15,,,,,,,,,,,,
 8,,,,,,,,,,,,
 Intersection,,,,,,,,,,,,
 "Int Delay, s/veh                ",0.2,,,,,,,,,,,
-Movement                        ,EBL ,EBT ,WBT ,WBR ,SBL ,SBR,,,,,,
+Movement,EBL,EBT,WBT,WBR,SBL,SBR,,,,,,
 Lane Configurations             ,0   ,<1  ,1>  ,0   ,1>  ,0,,,,,,
 "Traffic Vol, veh/h              ",1   ,99  ,179 ,2   ,1   ,5,,,,,,
 "Future Vol, veh/h               ",1   ,99  ,179 ,2   ,1   ,5,,,,,,
@@ -657,7 +657,7 @@ HCM Control Delay (s/veh)       ,    ,7.6 ,0   ,-   ,-   ,9.5,,,,,,
 HCM Lane LOS                    ,    ,A   ,A   ,-   ,-   ,A,,,,,,
 HCM 95th %tile Q(veh)           ,    ,0   ,-   ,-   ,-   ,0,,,,,,
 9,,,,,,,,,,,,
-Lane Group                      ,EBL ,EBT ,EBR ,WBL ,WBT ,WBR ,NBL ,NBT ,NBR ,SBL ,SBT ,SBR
+Lane Group,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
 Lane Configurations             ,0   ,<1  ,    ,    ,1>  ,0   ,    ,    ,    ,1>  ,    ,0
 Traffic Volume (vph)            ,13  ,87  ,    ,    ,176 ,8   ,    ,    ,    ,13  ,    ,30
 Future Volume (vph)             ,13  ,87  ,    ,    ,176 ,8   ,    ,    ,    ,13  ,    ,30
@@ -695,7 +695,7 @@ Analysis Period (min) 15,,,,,,,,,,,,
 9,,,,,,,,,,,,
 Intersection,,,,,,,,,,,,
 "Int Delay, s/veh                ",1.6,,,,,,,,,,,
-Movement                        ,EBL ,EBT ,WBT ,WBR ,SBL ,SBR,,,,,,
+Movement,EBL,EBT,WBT,WBR,SBL,SBR,,,,,,
 Lane Configurations             ,0   ,<1  ,1>  ,0   ,1>  ,0,,,,,,
 "Traffic Vol, veh/h              ",13  ,87  ,176 ,8   ,13  ,30,,,,,,
 "Future Vol, veh/h               ",13  ,87  ,176 ,8   ,13  ,30,,,,,,
@@ -720,7 +720,7 @@ HCM Control Delay (s/veh)       ,    ,7.7 ,0   ,-   ,-   ,9.9,,,,,,
 HCM Lane LOS                    ,    ,A   ,A   ,-   ,-   ,A,,,,,,
 HCM 95th %tile Q(veh)           ,    ,0   ,-   ,-   ,-   ,0.2,,,,,,
 10,,,,,,,,,,,,
-Lane Group                      ,EBL ,EBT ,EBR ,WBL ,WBT ,WBR ,NBL ,NBT ,NBR ,SBL ,SBT ,SBR
+Lane Group,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
 Lane Configurations             ,0   ,<1  ,    ,    ,1   ,1   ,    ,    ,    ,1>  ,    ,0
 Traffic Volume (vph)            ,149 ,104 ,    ,    ,184 ,11  ,    ,    ,    ,15  ,    ,218
 Future Volume (vph)             ,149 ,104 ,    ,    ,184 ,11  ,    ,    ,    ,15  ,    ,218
@@ -760,7 +760,7 @@ Analysis Period (min) 15,,,,,,,,,,,,
 10,,,,,,,,,,,,
 Intersection,,,,,,,,,,,,
 "Int Delay, s/veh                ",6,,,,,,,,,,,
-Movement                        ,EBL ,EBT ,WBT ,WBR ,SBL ,SBR,,,,,,
+Movement,EBL,EBT,WBT,WBR,SBL,SBR,,,,,,
 Lane Configurations             ,0   ,<1  ,1   ,1   ,1>  ,0,,,,,,
 "Traffic Vol, veh/h              ",149 ,104 ,184 ,11  ,15  ,218,,,,,,
 "Future Vol, veh/h               ",149 ,104 ,184 ,11  ,15  ,218,,,,,,
@@ -785,7 +785,7 @@ HCM Control Delay (s/veh)       ,    ,8   ,0   ,-   ,-   ,12.4,,,,,,
 HCM Lane LOS                    ,    ,A   ,A   ,-   ,-   ,B,,,,,,
 HCM 95th %tile Q(veh)           ,    ,0.4 ,-   ,-   ,-   ,1.6,,,,,,
 11,,,,,,,,,,,,
-Lane Group                      ,EBL ,EBT ,EBR ,WBL ,WBT ,WBR ,NBL ,NBT ,NBR ,SBL ,SBT ,SBR
+Lane Group,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
 Lane Configurations             ,    ,    ,    ,1>  ,    ,0   ,    ,1>  ,0   ,0   ,<1,
 Traffic Volume (vph)            ,    ,    ,    ,1   ,    ,0   ,    ,157 ,1   ,0   ,224,
 Future Volume (vph)             ,    ,    ,    ,1   ,    ,0   ,    ,157 ,1   ,0   ,224,
@@ -826,7 +826,7 @@ Analysis Period (min) 15,,,,,,,,,,,,
 11,,,,,,,,,,,,
 Intersection,,,,,,,,,,,,
 "Int Delay, s/veh                ",0,,,,,,,,,,,
-Movement                        ,WBL ,WBR ,NBT ,NBR ,SBL ,SBT,,,,,,
+Movement,WBL,WBR,NBT,NBR,SBL,SBT,,,,,,
 Lane Configurations             ,1>  ,0   ,1>  ,0   ,0   ,<1,,,,,,
 "Traffic Vol, veh/h              ",1   ,0   ,157 ,1   ,0   ,224,,,,,,
 "Future Vol, veh/h               ",1   ,0   ,157 ,1   ,0   ,224,,,,,,
@@ -851,7 +851,7 @@ HCM Control Delay (s/veh)       ,    ,-   ,-   ,11.5,0   ,-,,,,,,
 HCM Lane LOS                    ,    ,-   ,-   ,B   ,A   ,-,,,,,,
 HCM 95th %tile Q(veh)           ,    ,-   ,-   ,0   ,0   ,-,,,,,,
 12,,,,,,,,,,,,
-Lane Group                      ,EBL ,EBT ,EBR ,WBL ,WBT ,WBR ,NBL ,NBT ,NBR ,SBL ,SBT ,SBR
+Lane Group,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
 Lane Configurations             ,    ,    ,    ,1>  ,    ,0   ,    ,1>  ,0   ,0   ,<1,
 Traffic Volume (vph)            ,    ,    ,    ,68  ,    ,119 ,    ,77  ,80  ,97  ,166,
 Future Volume (vph)             ,    ,    ,    ,68  ,    ,119 ,    ,77  ,80  ,97  ,166,
@@ -946,7 +946,7 @@ Intersection Signal Delay (s/veh): 9.0,Intersection LOS: A,,,,,,,,,,,
 Intersection Capacity Utilization 49.1%,ICU Level of Service A,,,,,,,,,,,
 Analysis Period (min) 15,,,,,,,,,,,,
 12,,,,,,,,,,,,
-Movement                        ,    ,    ,    ,WBL ,    ,WBR ,    ,NBT ,NBR ,SBL ,SBT,
+Movement,WBL,WBR,NBT,NBR,SBL,SBT,,,,,,
 Lane Configurations             ,    ,    ,    ,1>  ,    ,0   ,    ,1>  ,0   ,0   ,<1,
 Traffic Volume (veh/h)          ,    ,    ,    ,68  ,    ,119 ,    ,77  ,80  ,97  ,166,
 Future Volume (veh/h)           ,    ,    ,    ,68  ,    ,119 ,    ,77  ,80  ,97  ,166,
