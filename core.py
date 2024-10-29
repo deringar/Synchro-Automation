@@ -2345,8 +2345,8 @@ def extract_data_to_csv(file_path, output_file):
     ]
     
     # Use this for the keys of each dictionary in the list
-    movement_lane_group_keys = ['EBL', 'EBT', 'EBR', 'WBL', 'WBT',
-                                'WBR', 'NBL', 'NBT', 'NBR', 'SBL', 'SBT', 'SBR']
+    # movement_lane_group_keys = ['EBL', 'EBT', 'EBR', 'WBL', 'WBT',
+    #                             'WBR', 'NBL', 'NBT', 'NBR', 'SBL', 'SBT', 'SBR']
     
     # Initialize an empty dictionary to store row indices
     row_indices = {}
@@ -2401,7 +2401,7 @@ def extract_data_to_csv(file_path, output_file):
     
     # Process every three items in row_indices
     grouped_indices = list(row_indices.items())
-    # print(f"Grouped Indices (length = {len(grouped_indices)}): \n {grouped_indices}\n")
+    print(f"Grouped Indices (length = {len(grouped_indices)}): \n {grouped_indices}\n")
     
     # for i, idx in enumerate(lane_configurations, start=0):
     #     print(f"\nLane Configuration Intersection {i + 1}:\n{idx}\nRead data:{group_config_data[i]}")
@@ -2409,7 +2409,12 @@ def extract_data_to_csv(file_path, output_file):
     # print(lane_configurations)
     
     id_combined_list = [] 
-    # Initialize the id_combined_dict to store results   
+    # Initialize the id_combined_dict to store results
+    
+    """
+    *** Need to change how we separate the data for each intersection this is not reliable and can fail very easily
+    """
+    
     for i in range(0, len(grouped_indices), 5):
         # Extract five consecutive term-row_index pairs
         group = grouped_indices[i:i+5]
@@ -2781,6 +2786,13 @@ def parse_lane_configs(int_lane_groups, intersection_ids):
                     if number_part:
                         # Repeat based on the number
                         parsed_value += suffix * int(number_part)
+                        
+                        """
+                        *** Add code for detecting '0' and check if the column has data for v/c
+                            Look at the previous lane config and if it is also a member of the same direction list
+                            (EB, WB, NB, SB) find a way to signal the program to take the max of these two values
+                        """
+                        
                     else:
                         parsed_value += suffix
 
