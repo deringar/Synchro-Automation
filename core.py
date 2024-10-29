@@ -2294,9 +2294,7 @@ def extract_data_to_csv(file_path, output_file):
                     collecting = True  # Start collecting data when either is found
                     # Split the line based on double tabs or multiple spaces
                     new_row = re.split(r'\t\t|\s{2}\t|\s\t|\t', stripped_line.strip())
-                    # Clean values: strip whitespace and remove empty strings
-                    new_row = [cell.strip() for cell in new_row if cell.strip() != '']  # Remove empty cells after stripping
-            
+                    new_row = [cell.strip() for cell in new_row if cell]  # Remove empty cells after stripping
                     if new_row:  # Check if new_row is not empty after cleaning
                         data.append(new_row)  # Append the new row to data
                         lane_groups.append(new_row[1:])  # Append cleaned values to lane_groups
@@ -2327,7 +2325,9 @@ def extract_data_to_csv(file_path, output_file):
     
     # Step 5: Create a DataFrame and save to CSV
     df = pd.DataFrame(data)
+    
     df.to_csv(output_file, index=False)
+    
     # print(f"\nDataframe from collected data:\n{df}\n")
     df = df.map(lambda x: x.strip() if isinstance(x, str) else x)
     
@@ -2353,21 +2353,29 @@ def extract_data_to_csv(file_path, output_file):
     group_config_data = []  # List of dictionaries
     # Iterate through DataFrame rows
     j = 0
+    
     for index, row in df.iterrows():
+        # Detect rows containing "Lane Group" or "Movement"
         if "Lane Configurations" in row.values:
-            # Create a dictionary to hold the configurations
-            # Initialize with None
-            config_dict = {key: None for key in movement_lane_group_keys}
-
-            # Find the index of the row and extract values for each key
-            for i, key in enumerate(movement_lane_group_keys):
-                if i < len(row) - 1:  # Avoid the intersection ID column
-                    if i + 1 < len(row):  # Ensure there is a value to access
-                        # Assign None for empty strings
-                        config_dict[key] = row[i + 1] if row[i + 1] != '' else None
-            # Append the config_dict to the group_config_data list
-            group_config_data.append(config_dict)
-            j+=1
+            # Create an empty dictionary to hold the configurations
+            config_dict = {}
+    
+            # Iterate over lane_groups[j] and row values simultaneously, skipping empty values
+            for i, key in enumerate(lane_groups[j]):
+                if i + 1 < len(row):  # Ensure there's a corresponding value in the row
+                    value = str(row[i + 1]).strip()  # Get and clean the value in the row
+                    if value:  # Only add the key-value pair if the value is non-empty
+                        config_dict[key] = value
+    
+            # Print the resulting dictionary for debugging
+            print(f"\n{j + 1}: {config_dict}")
+    
+            # Append the config_dict to the group_config_data list if it contains data
+            if config_dict:
+                group_config_data.append(config_dict)
+    
+            # Move to the next set of lane groups
+            j += 1
         # Check for the presence of "LOS" first, as it is case-sensitive
         if "LOS" in row.values:
             row_indices[index] = "LOS"
@@ -2379,7 +2387,13 @@ def extract_data_to_csv(file_path, output_file):
                 break  # Exit the inner loop if a term is found
     
     lane_configurations = parse_lane_configs(group_config_data, intersection_ids)
-    print(group_config_data)
+    # print(group_config_data)
+    
+    # idx = 0
+    # for i in group_config_data:
+    #     idx += 1
+    #     print(f"Lane Configs Intersection #{idx}: \n{i}\n")
+    
     # print(f'{row_indices} \nlength = {len(row_indices)}')
     
     # Initialize an empty list to store the combined dictionaries
@@ -2387,11 +2401,11 @@ def extract_data_to_csv(file_path, output_file):
     
     # Process every three items in row_indices
     grouped_indices = list(row_indices.items())
-    print(f"Grouped Indices (length = {len(grouped_indices)}): \n {grouped_indices}\n")
+    # print(f"Grouped Indices (length = {len(grouped_indices)}): \n {grouped_indices}\n")
     
-    for i, idx in enumerate(lane_configurations, start=0):
-        print(f"\nLane Configuration Intersection {i + 1}:\n{idx}\nRead data:{group_config_data[i]}")
-    print()
+    # for i, idx in enumerate(lane_configurations, start=0):
+    #     print(f"\nLane Configuration Intersection {i + 1}:\n{idx}\nRead data:{group_config_data[i]}")
+    # print()
     # print(lane_configurations)
     
     id_combined_list = [] 
@@ -2668,7 +2682,6 @@ def extract_data_to_csv(file_path, output_file):
     
         # Append it to the final DataFrame
         final_df = pd.concat([final_df, intersection_df], ignore_index=True)
-    
     # Write the final DataFrame to a CSV file
     file_name, _ = os.path.splitext(file_path)
     final_df.to_csv(f"{file_name}-filtered.csv", index=False)
@@ -2780,22 +2793,18 @@ def parse_lane_configs(int_lane_groups, intersection_ids):
                     if direction_prefix in parsed_dict:
                         parsed_dict[direction_prefix][idx] = parsed_value or None
         
-        # Replace None values with '-' in each list in the parsed_dict
+        # Remove None values from each list in the parsed_dict
         for key in parsed_dict:
             if key != "Intersection ID":  # Don't touch the Intersection ID key
-                parsed_dict[key] = [value if value is not None else '-' for value in parsed_dict[key]]
-        
-        # Remove keys from parsed_dict where all elements in the value are '-'
-        keys_to_remove = [key for key in parsed_dict if key != "Intersection ID" and all(value == '-' for value in parsed_dict[key])]
-        
-        for key in keys_to_remove:
-            del parsed_dict[key]
+                parsed_dict[key] = [value for value in parsed_dict[key] if value is not None]
+                # If the list is empty (no valid values), set it to '-'
+                if not parsed_dict[key]:
+                    parsed_dict[key] = '-'
         
         # Append the parsed_dict for this lane group to the final list
         parsed_list.append(parsed_dict)
 
     return parsed_list
-
 
 if __name__ == "__main__":
     # read_input_file("test-input.xlsx")
