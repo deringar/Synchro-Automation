@@ -2154,6 +2154,11 @@ def parse_overall_data_v2(file_path):
 
 
 def parse_twsc_approach(df):
+    """
+        Parses the approach data for each direction of a TWSC intersection
+        Returns a list of dictionaries, one for each TWSC intersection found in the dataframe
+    """
+    
     approach_data = []  # List to hold all parsed data
     intersection_id = None # Store the ID of the intersection we are currently looking at
     
@@ -2364,15 +2369,15 @@ def extract_data_to_csv(file_path, output_file):
             for i, key in enumerate(lane_groups[j]):
                 if i + 1 < len(row):  # Ensure there's a corresponding value in the row
                     value = str(row[i + 1]).strip()  # Get and clean the value in the row
-                    if value:  # Only add the key-value pair if the value is non-empty
+                    if value != 'None' and value != '':  # Only add the key-value pair if the value is non-empty
                         config_dict[key] = value
-    
-            # Print the resulting dictionary for debugging
-            print(f"\n{j + 1}: {config_dict}")
-    
+        
             # Append the config_dict to the group_config_data list if it contains data
             if config_dict:
                 group_config_data.append(config_dict)
+                # Print the resulting dictionary for debugging
+                print(f"\n{j + 1}: {config_dict}")
+
     
             # Move to the next set of lane groups
             j += 1
@@ -2387,7 +2392,7 @@ def extract_data_to_csv(file_path, output_file):
                 break  # Exit the inner loop if a term is found
     
     lane_configurations = parse_lane_configs(group_config_data, intersection_ids)
-    # print(group_config_data)
+    print(lane_configurations)
     
     # idx = 0
     # for i in group_config_data:
@@ -2401,7 +2406,7 @@ def extract_data_to_csv(file_path, output_file):
     
     # Process every three items in row_indices
     grouped_indices = list(row_indices.items())
-    print(f"Grouped Indices (length = {len(grouped_indices)}): \n {grouped_indices}\n")
+    # print(f"Grouped Indices (length = {len(grouped_indices)}): \n {grouped_indices}\n")
     
     # for i, idx in enumerate(lane_configurations, start=0):
     #     print(f"\nLane Configuration Intersection {i + 1}:\n{idx}\nRead data:{group_config_data[i]}")
@@ -2695,6 +2700,7 @@ def extract_data_to_csv(file_path, output_file):
     """
     --- Output for testing ---
     """
+    i = 0
     # Initialize the intersection ID from id_combined_list
     for item in id_combined_list_sorted:
         
@@ -2736,7 +2742,10 @@ def extract_data_to_csv(file_path, output_file):
             print(f"  Lane Configurations: {lane_config_str}")
         else:
             print(f"  No lane configurations found for Intersection ID: {intersection_id}")
-    
+        
+        direction_config_str = ", ".join(f"{key}: {value}" for key, value in group_config_data[i].items())
+        print(f"  Direction Configurations: {direction_config_str}")
+        i+=1
         # Add a blank line for readability between intersections
         print("\n" + "-" * 40 + "\n")
         
