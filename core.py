@@ -2371,13 +2371,13 @@ def extract_data_to_csv(file_path, output_file):
     # Initialize an empty dictionary to store row indices
     # originally: row_indices = {}
     signalized_int_data = []
-    
+    row_indices = {}
     group_config_data = []  # List of dictionaries
     # Iterate through DataFrame rows
     j = 0
     
     for index, row in df.iterrows():
-        row_indices = {}
+        
         # Detect rows containing "Lane Group" or "Movement"
         if "Lane Configurations" in row.values:
             # Create an empty dictionary to hold the configurations
