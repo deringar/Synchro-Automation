@@ -2144,10 +2144,10 @@ def parse_overall_data_v2(file_path):
             if found_phrase:
                 break  # Stop looking at this block and move on to the next intersection
     
-    # Print the results
+    # Print the results for debugging
     print("\nSynchro Signalized Summary Results (Intersection Summary):", synchro_results)
     print("\nHCM Signalized Summary Results (Intersection Summary):", hcm_results)
-    print("\nTWSC Summary Results (Minor Lane/...):", twsc_results)
+    print("\nTWSC Summary Results (Minor Lane/...):", twsc_results, '\n')
 
 
     return twsc_results, synchro_results, hcm_results
@@ -2353,13 +2353,31 @@ def extract_data_to_csv(file_path, output_file):
     # movement_lane_group_keys = ['EBL', 'EBT', 'EBR', 'WBL', 'WBT',
     #                             'WBR', 'NBL', 'NBT', 'NBR', 'SBL', 'SBT', 'SBR']
     
+    
+    """
+    *** Starting from here, modify the code so there is a more clear separation between
+        signalized and unsignalized intersections. Replacing the row_indices dictionary with a
+        list of dictionaries to hold each signalized intersection will make it so we don't have to
+        use speculative indexing by assuming all data will be present every time
+        
+        lines of interest:
+            - 2409
+            - 2428
+            - 2443-2445
+            - 
+            
+            
+    """
     # Initialize an empty dictionary to store row indices
-    row_indices = {}
+    # originally: row_indices = {}
+    signalized_int_data = []
+    
     group_config_data = []  # List of dictionaries
     # Iterate through DataFrame rows
     j = 0
     
     for index, row in df.iterrows():
+        row_indices = {}
         # Detect rows containing "Lane Group" or "Movement"
         if "Lane Configurations" in row.values:
             # Create an empty dictionary to hold the configurations
@@ -2375,10 +2393,7 @@ def extract_data_to_csv(file_path, output_file):
             # Append the config_dict to the group_config_data list if it contains data
             if config_dict:
                 group_config_data.append(config_dict)
-                # Print the resulting dictionary for debugging
-                print(f"\n{j + 1}: {config_dict}")
 
-    
             # Move to the next set of lane groups
             j += 1
         # Check for the presence of "LOS" first, as it is case-sensitive
@@ -2390,8 +2405,10 @@ def extract_data_to_csv(file_path, output_file):
             if any(str(cell).lower() == term.lower() for cell in row if term.lower() != "los"):
                 row_indices[index] = term
                 break  # Exit the inner loop if a term is found
+        
+        signalized_int_data.append(row_indices)
     
-    lane_configurations = parse_lane_configs(group_config_data, intersection_ids)
+    lane_configurations, raw_lane_configs = parse_lane_configs(group_config_data, intersection_ids)
     print(lane_configurations)
     
     # idx = 0
@@ -2404,9 +2421,13 @@ def extract_data_to_csv(file_path, output_file):
     # Initialize an empty list to store the combined dictionaries
     combined_list = []
     
+    print(row_indices.items())
+    
     # Process every three items in row_indices
     grouped_indices = list(row_indices.items())
-    # print(f"Grouped Indices (length = {len(grouped_indices)}): \n {grouped_indices}\n")
+    # grouped_indices = list(signalized_int_data)
+    
+    print(f"Signalized intersection data (length = {len(grouped_indices)}): \n {grouped_indices}\n")
     
     # for i, idx in enumerate(lane_configurations, start=0):
     #     print(f"\nLane Configuration Intersection {i + 1}:\n{idx}\nRead data:{group_config_data[i]}")
@@ -2419,7 +2440,6 @@ def extract_data_to_csv(file_path, output_file):
     """
     *** Need to change how we separate the data for each intersection this is not reliable and can fail very easily
     """
-    
     for i in range(0, len(grouped_indices), 5):
         # Extract five consecutive term-row_index pairs
         group = grouped_indices[i:i+5]
@@ -2438,8 +2458,6 @@ def extract_data_to_csv(file_path, output_file):
         ln_grp_los_added = False
         los_added = False
         
-        lane_config = lane_configurations[i // 5]
-        
         intersection_id = None
         first_row_index = group[0][0]  # Get the row_index of the first term-row_index pair in the group
         for i in range(first_row_index - 1, -1, -1):  # Go upwards in the DataFrame
@@ -2451,6 +2469,9 @@ def extract_data_to_csv(file_path, output_file):
         if intersection_id is None:
             print(f"No intersection ID found above row index {first_row_index}.")
             continue  # Skip this iteration if no intersection ID is found
+        
+        lane_config = lane_configurations[int(intersection_id) - 1]
+        # print(lane_config)
         
         # Iterate over each term-row_index pair within this group
         for row_index, term in group:
@@ -2533,7 +2554,7 @@ def extract_data_to_csv(file_path, output_file):
         if combined_dict:
             combined_list.append(combined_dict)
             # print(combined_dict)
-    
+        
     # idx = 0
     # for i in id_combined_list:
     #     idx += 1
@@ -2546,7 +2567,7 @@ def extract_data_to_csv(file_path, output_file):
     twsc_intersections = parse_twsc_approach(df)
     twsc_intersection_directions = process_directions(twsc_overall)
     
-    print("\nTWSC Summary Directions: ", twsc_intersection_directions)
+    # print("\nTWSC Summary Directions: ", twsc_intersection_directions)
     
     for i in twsc_intersections: 
         id_combined_list.append(i)
@@ -2692,6 +2713,7 @@ def extract_data_to_csv(file_path, output_file):
     
         # Append it to the final DataFrame
         final_df = pd.concat([final_df, intersection_df], ignore_index=True)
+    
     # Write the final DataFrame to a CSV file
     file_name, _ = os.path.splitext(file_path)
     final_df.to_csv(f"{file_name}-filtered.csv", index=False)
@@ -2722,10 +2744,12 @@ def extract_data_to_csv(file_path, output_file):
                 else:
                     data_str = str(data)
                 print(f"  {term}: {data_str}")
-        
+
         # Print Approach Delay and LOS for each direction (EB, WB, NB, SB)
         for direction in ['EB', 'WB', 'NB', 'SB']:
             # Retrieve approach delay and LOS for the current direction
+            # print(f"Getting approach data for '{direction}'...")
+            # print(data_dict.get(direction, {}))
             approach_delay = data_dict.get(direction, {}).get("Approach Delay", '-')
             approach_los = data_dict.get(direction, {}).get("Approach LOS", '-')
             # Print the actual approach delay and LOS values for this direction
@@ -2733,7 +2757,8 @@ def extract_data_to_csv(file_path, output_file):
     
         # Find the matching lane configuration for this intersection ID in group_config_data
         lane_config = next((config for config in lane_configurations if config.get("Intersection ID") == intersection_id), None)
-
+        raw_config = next((raw for raw in raw_lane_configs if raw.get("Intersection ID") == intersection_id), None)
+        
         # Print lane configurations for the current intersection if available
         if lane_config:
             lane_config_str = ", ".join(
@@ -2743,8 +2768,15 @@ def extract_data_to_csv(file_path, output_file):
         else:
             print(f"  No lane configurations found for Intersection ID: {intersection_id}")
         
-        direction_config_str = ", ".join(f"{key}: {value}" for key, value in group_config_data[i].items())
-        print(f"  Direction Configurations: {direction_config_str}")
+        # Print raw direction configurations for the current intersection if available
+        if raw_config:
+            raw_config_str = ", ".join(
+                f"{key}: {value}" for key, value in raw_config.items() if key != "Intersection ID" and value != [None, None, None]
+            )
+            print(f"  Raw Direction Configurations: {raw_config_str}")
+        else:
+            print(f"  No raw direction configurations found for Intersection ID: {intersection_id}")
+
         i+=1
         # Add a blank line for readability between intersections
         print("\n" + "-" * 40 + "\n")
@@ -2754,7 +2786,8 @@ def extract_data_to_csv(file_path, output_file):
 
 def parse_lane_configs(int_lane_groups, intersection_ids):
     parsed_list = []  # This will store the parsed dictionaries for each group
-
+    raw_data_list = []
+    
     for idx, lane_dict in enumerate(int_lane_groups):
         
         intersection_id = intersection_ids[idx]
@@ -2766,6 +2799,15 @@ def parse_lane_configs(int_lane_groups, intersection_ids):
         parsed_dict = {
             "Intersection ID" : intersection_id,
             # Initialize with three None values for L, T, R
+            'EB': [None, None, None],
+            'WB': [None, None, None],
+            'NB': [None, None, None],
+            'SB': [None, None, None]
+        }
+        
+        # Initialize the raw data dictionary
+        raw_data_dict = {
+            "Intersection ID" : intersection_id,
             'EB': [None, None, None],
             'WB': [None, None, None],
             'NB': [None, None, None],
@@ -2784,8 +2826,13 @@ def parse_lane_configs(int_lane_groups, intersection_ids):
             }
 
             for suffix, idx in suffixes.items():
-                if direction.endswith(suffix):
-                    # Parse the value for numbers and special characters < and >
+                # Parse the value for numbers and special characters < and >
+                if direction.endswith(suffix):                    
+                    # Store the raw value directly in raw_data_dict in the correct position
+                    direction_prefix = direction[:-1]
+                    if direction_prefix in raw_data_dict:
+                        raw_data_dict[direction_prefix][idx] = value  # Store unparsed raw value
+                        
                     parsed_value = ''
 
                     if '<' in value:
@@ -2822,10 +2869,21 @@ def parse_lane_configs(int_lane_groups, intersection_ids):
                 if not parsed_dict[key]:
                     parsed_dict[key] = '-'
         
+        # Clean up the raw_data_dict in the same way
+        for key in raw_data_dict:
+            if key != "Intersection ID":
+                raw_data_dict[key] = [value for value in raw_data_dict[key]]
+                if not raw_data_dict[key]:
+                    raw_data_dict[key] = '-'
+        
+        # Debugging output
+        # print(f"\nParsed Lane Config (Intersection #{intersection_id}):\n{parsed_dict} \nRaw Lane Config (Intersection #{intersection_id}):\n{raw_data_dict}")
+        
         # Append the parsed_dict for this lane group to the final list
         parsed_list.append(parsed_dict)
+        raw_data_list.append(raw_data_dict)
 
-    return parsed_list
+    return parsed_list, raw_data_list
 
 if __name__ == "__main__":
     # read_input_file("test-input.xlsx")
