@@ -2303,7 +2303,7 @@ def extract_data_to_csv(file_path, output_file):
                     if new_row:  # Check if new_row is not empty after cleaning
                         data.append(new_row)  # Append the new row to data
                         lane_groups.append(new_row[1:])  # Append cleaned values to lane_groups
-                        print(new_row[1:])  # Print the cleaned values
+                        # print(new_row[1:])  # Print the cleaned values
                     # print(f"Collecting data for {intersection_count} under {stripped_line.strip()}")
                 # If we find "Intersection" before "Lane Group" or "Movement"
                 elif re.match(r'^\s*Intersection', stripped_line):
@@ -2364,20 +2364,48 @@ def extract_data_to_csv(file_path, output_file):
             - 2409
             - 2428
             - 2443-2445
-            - 
             
             
     """
     # Initialize an empty dictionary to store row indices
     # originally: row_indices = {}
     signalized_int_data = []
+    all_intersection_configs = []
     row_indices = {}
-    group_config_data = []  # List of dictionaries
-    # Iterate through DataFrame rows
+    group_config_data = {}  # List of dictionaries
+    
+    current_id = None
     j = 0
     
+    
+    """
+        Storing and grouping intersection data (signalized/unsignalized)
+    """
+    # Iterate through DataFrame rows
     for index, row in df.iterrows():
-        
+        # Check if the first column contains a new intersection ID that is in the intersection_ids list
+        first_column_value = str(row[0]).strip()
+        if first_column_value.isdigit():
+            potential_id = int(first_column_value)
+            if potential_id in intersection_ids:
+                # If we have an existing intersection ID, save the collected data for it
+                if current_id is not None and (group_config_data or row_indices):
+                    # Check if row_indices has at least one term from terms_to_match
+                    if any(term in row_indices.values() for term in terms_to_match):
+                        intersection_data = {
+                            "Intersection ID": current_id,
+                            "Configurations": group_config_data,
+                            **{term: line_num for line_num, term in row_indices.items()}
+                        }
+                        signalized_int_data.append(intersection_data)
+                        print(f"Saved data for Intersection ID {current_id}: {intersection_data}")
+                        
+                    # Reset data structures for the next intersection
+                    row_indices = {}
+                    group_config_data = {}
+                # Set the new intersection ID
+                current_id = potential_id
+                continue  # Move to the next iteration as we've identified a new intersection
         # Detect rows containing "Lane Group" or "Movement"
         if "Lane Configurations" in row.values:
             # Create an empty dictionary to hold the configurations
@@ -2392,7 +2420,8 @@ def extract_data_to_csv(file_path, output_file):
         
             # Append the config_dict to the group_config_data list if it contains data
             if config_dict:
-                group_config_data.append(config_dict)
+                group_config_data = config_dict
+                all_intersection_configs.append(config_dict)
 
             # Move to the next set of lane groups
             j += 1
@@ -2406,10 +2435,32 @@ def extract_data_to_csv(file_path, output_file):
                 row_indices[index] = term
                 break  # Exit the inner loop if a term is found
         
-        signalized_int_data.append(row_indices)
+    # Final addition for the last intersection data
+    if current_id is not None and (group_config_data or row_indices):
+        # Ensure the dictionary contains at least one of the terms_to_match
+        if any(term in row_indices.values() for term in terms_to_match):
+            intersection_data = {
+                "Intersection ID": current_id,
+                "Configurations": group_config_data,
+                **{term: line_num for line_num, term in row_indices.items()}
+            }
+            signalized_int_data.append(intersection_data)
     
-    lane_configurations, raw_lane_configs = parse_lane_configs(group_config_data, intersection_ids)
-    print(lane_configurations)
+    print(f"All intersection configurations: {all_intersection_configs}", f"\nlength = {len(all_intersection_configs)}")
+    
+    # Print the signalized intersection data for verification
+    print("Signalized Intersection Data:")
+    for entry in signalized_int_data:
+        print(entry, '\n')
+    
+    lane_configurations, raw_lane_configs = parse_lane_configs(all_intersection_configs, intersection_ids)
+    print('\nLane Configurations collected...', lane_configurations, f"\nlength = {len(lane_configurations)}")
+    print("\nRaw Lane Configurations read...", raw_lane_configs, f"\nlength = {len(raw_lane_configs)}")
+    
+    
+    """
+    *** ADAPT THE CODE BEYOND THIS POINT TO WORK WITH THE NEW DATA STRUCTURE ***
+    """
     
     # idx = 0
     # for i in group_config_data:
@@ -2418,145 +2469,111 @@ def extract_data_to_csv(file_path, output_file):
     
     # print(f'{row_indices} \nlength = {len(row_indices)}')
     
-    # Initialize an empty list to store the combined dictionaries
-    combined_list = []
-    
-    print(row_indices.items())
-    
     # Process every three items in row_indices
-    grouped_indices = list(row_indices.items())
+    # grouped_indices = list(row_indices.items())
     # grouped_indices = list(signalized_int_data)
     
-    print(f"Signalized intersection data (length = {len(grouped_indices)}): \n {grouped_indices}\n")
+    # print(f"Signalized intersection data (length = {len(grouped_indices)}): \n {grouped_indices}\n")
     
     # for i, idx in enumerate(lane_configurations, start=0):
     #     print(f"\nLane Configuration Intersection {i + 1}:\n{idx}\nRead data:{group_config_data[i]}")
     # print()
     # print(lane_configurations)
     
-    id_combined_list = [] 
-    # Initialize the id_combined_dict to store results
     
-    """
-    *** Need to change how we separate the data for each intersection this is not reliable and can fail very easily
-    """
-    for i in range(0, len(grouped_indices), 5):
-        # Extract five consecutive term-row_index pairs
-        group = grouped_indices[i:i+5]
-        # print(group)
-        # Initialize a dictionary to hold the grouped data
-        combined_dict = {}
-        
+    # Initialize an empty list to store the combined dictionaries
+    combined_list = []
+    id_combined_list = [] # Initialize the id_combined_dict to store results
+    
+    # Iterate through the list of signalized intersections
+    for intersection in signalized_int_data:
+        intersection_id = intersection.get("Intersection ID")
+        combined_dict = {"Intersection ID": intersection_id}
         approach_data = {
             "EB": {"Approach Delay": None, "Approach LOS": None},
             "WB": {"Approach Delay": None, "Approach LOS": None},
             "NB": {"Approach Delay": None, "Approach LOS": None},
             "SB": {"Approach Delay": None, "Approach LOS": None}
         }
-        
+    
+        # Access lane configurations and group configuration data
+        lane_config = lane_configurations[int(intersection_id) - 1]  # Get corresponding lane config by intersection ID
+    
+        # Process terms_to_match in intersection data
         vc_ratio_added = False
         ln_grp_los_added = False
         los_added = False
-        
-        intersection_id = None
-        first_row_index = group[0][0]  # Get the row_index of the first term-row_index pair in the group
-        for i in range(first_row_index - 1, -1, -1):  # Go upwards in the DataFrame
-            if str(df.iloc[i, 0]).strip().isdigit():  # Check if the first column starts with a digit
-                intersection_id = str(df.iloc[i, 0]).strip()
-                print(f"Found intersection ID '{intersection_id}' above term (line {first_row_index}).")
-                break  # Exit loop once the first intersection ID is found
     
-        if intersection_id is None:
-            print(f"No intersection ID found above row index {first_row_index}.")
-            continue  # Skip this iteration if no intersection ID is found
-        
-        lane_config = lane_configurations[int(intersection_id) - 1]
-        # print(lane_config)
-        
-        # Iterate over each term-row_index pair within this group
-        for row_index, term in group:
-            term_lower = term.lower()  # Make case-insensitive comparison
-            row_data = df.iloc[row_index].replace("", "-").fillna("-").tolist()
-            row_data_without_first = row_data[1:]
-            # print(row_data_without_first)
+        for term, row_index in intersection.items():
+            if term not in terms_to_match:
+                continue  # Skip terms not in the list
             
-            # Check if the current term is in the list of terms to match
-            for specific_term in terms_to_match:
-                # print(specific_term)
-                if specific_term.lower() in term_lower:
-                    
-                    # Exact match for "v/c ratio(x)" - prioritize this term
-                    if "v/c ratio(x)" == specific_term.lower() and not vc_ratio_added:
-                        combined_dict[specific_term] = [value for value in row_data_without_first if value != '-']
-                        vc_ratio_added = True
-                        continue  # Skip further checks for this term
-                    
-                    # Exact match for "LnGrp LOS" - prioritize this term
-                    if "lngrp los" == specific_term.lower() and not ln_grp_los_added:
-                        combined_dict[specific_term] = [value for value in row_data_without_first if value != '-']
-                        ln_grp_los_added = True
-                        continue  # Skip further checks for this term
-                    
-                    # If "v/c ratio" is found, but "v/c ratio(x)" is already added, skip it
-                    if "v/c ratio" == specific_term.lower() and not vc_ratio_added:
-                        combined_dict[specific_term] = [value for value in row_data_without_first if value != '-']
-                        vc_ratio_added = True
-                        continue  # Skip further checks for this term
-                    
-                    # If "LOS" is found, but "LnGrp LOS" is already added, skip it
-                    if "los" == specific_term.lower() and not ln_grp_los_added and not los_added:
-                        combined_dict[specific_term] = [value for value in row_data_without_first if value != '-']
-                        los_added = True
-                        continue  # Skip further checks for this term
-                    
-                    if "approach delay" in specific_term.lower():
-                        # Filter out any entries that are '-'
-                        filtered_row_data = [value for value in row_data_without_first if value != '-']
-                        # Insert '-' based on lane_config for corresponding direction
-                        for idx, direction in enumerate(['EB', 'WB', 'NB', 'SB']):
-                            # If lane_config has '-' for a direction, insert it in filtered_row_data
-                            if lane_config.get(direction) == '-':
-                                filtered_row_data.insert(idx, '-')
-                        # print(filtered_row_data)
-                        # Ensure at least 4 values for each direction
-                        if len(filtered_row_data) >= 4:
-                            approach_data["EB"]["Approach Delay"] = filtered_row_data[0]
-                            approach_data["WB"]["Approach Delay"] = filtered_row_data[1]
-                            approach_data["NB"]["Approach Delay"] = filtered_row_data[2]
-                            approach_data["SB"]["Approach Delay"] = filtered_row_data[3]
-                        continue
-                    if specific_term.lower() == "approach los":
-                        # Filter out any entries that are '-'
-                        filtered_row_data = [value for value in row_data_without_first if value != '-']
-                        for idx, direction in enumerate(['EB', 'WB', 'NB', 'SB']):
-                            # If lane_config has '-' for a direction, insert it in filtered_row_data
-                            if lane_config.get(direction) == '-':
-                                filtered_row_data.insert(idx, '-')
-                        # print(filtered_row_data)
-                        # Ensure at least 4 values for each direction
-                        if len(filtered_row_data) >= 4:
-                            approach_data["EB"]["Approach LOS"] = filtered_row_data[0]
-                            approach_data["WB"]["Approach LOS"] = filtered_row_data[1]
-                            approach_data["NB"]["Approach LOS"] = filtered_row_data[2]
-                            approach_data["SB"]["Approach LOS"] = filtered_row_data[3]
-                        continue
-                        
-                    # For other terms, add them to the combined_dict if they are not duplicates
-                    if specific_term.lower() not in ["v/c ratio", "los", "v/c ratio(x)", "lngrp los"]:
-                        combined_dict[specific_term] = [value for value in row_data_without_first if value != '-']
-                    # print(f"\nApproach data: {approach_data}\n")
+            term_lower = term.lower()
+            row_data = df.iloc[row_index].replace("", "-").fillna("-").tolist()[1:]  # Exclude first column value
             
-        # Append the tuple (intersection ID, combined dictionary) to the list
-        id_combined_list.append((intersection_id, combined_dict))
-        # Merge approach data into the combined dictionary
+            # Print row data for each term
+            # print(f"Row data for '{term}' at row index {row_index}: {row_data}")
+            
+            if "v/c ratio(x)" == term_lower and not vc_ratio_added:
+                combined_dict[term] = [value for value in row_data if value != '-']
+                vc_ratio_added = True
+                continue
+            
+            if "lngrp los" == term_lower and not ln_grp_los_added:
+                combined_dict[term] = [value for value in row_data if value != '-']
+                ln_grp_los_added = True
+                continue
+    
+            if "v/c ratio" == term_lower and not vc_ratio_added:
+                combined_dict[term] = [value for value in row_data if value != '-']
+                vc_ratio_added = True
+                continue
+    
+            if "los" == term_lower and not los_added and not ln_grp_los_added:
+                combined_dict[term] = [value for value in row_data if value != '-']
+                los_added = True
+                continue
+    
+            if "approach delay" in term_lower:
+                filtered_row_data = [value for value in row_data if value != '-']
+                for idx, direction in enumerate(['EB', 'WB', 'NB', 'SB']):
+                    if lane_config.get(direction) == '-':
+                        filtered_row_data.insert(idx, '-')
+                if len(filtered_row_data) >= 4:
+                    approach_data["EB"]["Approach Delay"] = filtered_row_data[0]
+                    approach_data["WB"]["Approach Delay"] = filtered_row_data[1]
+                    approach_data["NB"]["Approach Delay"] = filtered_row_data[2]
+                    approach_data["SB"]["Approach Delay"] = filtered_row_data[3]
+                continue
+    
+            if term_lower == "approach los":
+                filtered_row_data = [value for value in row_data if value != '-']
+                for idx, direction in enumerate(['EB', 'WB', 'NB', 'SB']):
+                    if lane_config.get(direction) == '-':
+                        filtered_row_data.insert(idx, '-')
+                if len(filtered_row_data) >= 4:
+                    approach_data["EB"]["Approach LOS"] = filtered_row_data[0]
+                    approach_data["WB"]["Approach LOS"] = filtered_row_data[1]
+                    approach_data["NB"]["Approach LOS"] = filtered_row_data[2]
+                    approach_data["SB"]["Approach LOS"] = filtered_row_data[3]
+                continue
+    
+            if term_lower not in ["v/c ratio", "los", "v/c ratio(x)", "lngrp los"]:
+                combined_dict[term] = [value for value in row_data if value != '-']
+    
+        # Merge approach data into combined_dict and append to final lists
         combined_dict.update(approach_data)
-        # print(f"Combined Dictionary (with Approach): {combined_dict}\n")
-        if combined_dict:
-            combined_list.append(combined_dict)
-            # print(combined_dict)
+        combined_list.append(combined_dict)
+        id_combined_list.append((intersection_id, combined_dict))
         
-    # idx = 0
-    # for i in id_combined_list:
+        print(f"\nCombined data for signalized Intersection ID {intersection_id}: \n{combined_dict}")
+        
+        # if combined_dict:
+        #     combined_list.append(combined_dict)
+            # print(combined_dict)
+    print()
+    idx = 0
+    # for i in combined_list:
     #     idx += 1
     #     print(f"Signalized Intersection #{idx}: \n{i}\n")
     # print(f"ID combined list: {id_combined_list}")
@@ -2572,11 +2589,11 @@ def extract_data_to_csv(file_path, output_file):
     for i in twsc_intersections: 
         id_combined_list.append(i)
     
-    # idx = 0
-    # for i in id_combined_list:
-    #     idx += 1
-    #     print(f"\nID Combined list (Result Set #{idx}): {i}")
-    
+    idx = 0
+    for i in combined_list:
+        idx += 1
+        print(f"\nCombined list (Result Set #{idx}): {i}")
+    print()
     # print(f"\nCombined list with TWSC data (length = {len(combined_list)}):\n{combined_list}\n")
     # combined_list.append(parse_twsc_approach(df))
     # Create an empty DataFrame to hold all intersections' data
@@ -2704,8 +2721,9 @@ def extract_data_to_csv(file_path, output_file):
     
                 # Add an overall row for this direction
                 intersection_data.append(['', f"{direction} Overall", '', '-', f'{approach_los}', f'{approach_delay}'])
-    
-        
+            
+            intersection_data.append(['', "Overall", '', '-', '-', '-'])
+
         intersection_data.append([''] * 6)
     
         # Create a DataFrame for the current intersection's data
@@ -2845,7 +2863,8 @@ def parse_lane_configs(int_lane_groups, intersection_ids):
                         
                         """
                         *** Add code for detecting '0' and check if the column has data for v/c
-                            Look at the previous lane config and if it is also a member of the same direction list
+                            Look at the rest of the list and check for non-None and non-zero number_parts.
+                            If one is found, use the higher value of the v/c ratios
                             (EB, WB, NB, SB) find a way to signal the program to take the max of these two values
                         """
                         
