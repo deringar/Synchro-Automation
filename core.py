@@ -2497,8 +2497,17 @@ def extract_data_to_csv(file_path, output_file):
         }
     
         # Access lane configurations and group configuration data
-        lane_config = lane_configurations[int(intersection_id) - 1]  # Get corresponding lane config by intersection ID
-    
+        lane_config = lane_configurations[int(intersection_id) - 1]
+        raw_lane_config = raw_lane_configs[int(intersection_id) - 1]
+        
+        # Initialize the dictionary to store v/c ratio values if not already done
+        vc_ratio_values = {
+            'EB': [None, None, None],  # Left, Through, Right
+            'WB': [None, None, None],
+            'NB': [None, None, None],
+            'SB': [None, None, None]
+        }
+        
         # Process terms_to_match in intersection data
         vc_ratio_added = False
         ln_grp_los_added = False
@@ -2514,6 +2523,22 @@ def extract_data_to_csv(file_path, output_file):
             # Print row data for each term
             # print(f"Row data for '{term}' at row index {row_index}: {row_data}")
             
+            # Collect v/c ratio values
+            if "v/c ratio(x)" == term_lower or "v/c ratio" == term_lower:
+                for idx, direction in enumerate(['EB', 'WB', 'NB', 'SB']):
+                    # Assuming the order of row_data for each direction is left, through, right
+                    vc_ratio_values[direction] = [row_data[idx * 3], row_data[idx * 3 + 1], row_data[idx * 3 + 2]]
+                    
+                    """
+                        Add logic to do what I specified in my initial message following the example.
+                        Do not modify any code beyond this unless absolutely necessary. All we want
+                        to do is filter and reorganize the v/c ratio data based on the raw lane configurations.
+                    """
+                    
+                # Debug print for v/c ratios collected
+                print(f"\nV/c Ratio Values for Intersection {intersection_id}: {vc_ratio_values}")            
+                print(f"Raw Lane Configurations for Intersection {intersection_id}: {raw_lane_config}")
+                
             if "v/c ratio(x)" == term_lower and not vc_ratio_added:
                 combined_dict[term] = [value for value in row_data if value != '-']
                 vc_ratio_added = True
@@ -2560,14 +2585,83 @@ def extract_data_to_csv(file_path, output_file):
     
             if term_lower not in ["v/c ratio", "los", "v/c ratio(x)", "lngrp los"]:
                 combined_dict[term] = [value for value in row_data if value != '-']
+        
+        # Post-process v/c ratios to replace the lowest non-zero value with '-'
+        for direction in ['EB', 'WB', 'NB', 'SB']:
+            non_zero_values = [float(value) if value not in ["-", "0", None] else float('inf') for value in vc_ratio_values[direction]]
+            
+            # Debug print: show non-zero values and their conversion
+            print(f"\nNon-zero values for {direction}: {non_zero_values}")
+            
+            non_inf_values = [value for value in non_zero_values if value != float('inf')]
+            
+            min_non_zero_value = min(non_zero_values)
+            # Ensure there's at least one non-inf value
+            if non_inf_values:
+                max_non_zero_value = max(non_inf_values)
+            else:
+                max_non_zero_value = float('-inf')
+            # Debug print: show the lowest non-zero v/c ratio value
+            print(f"Lowest non-zero value for {direction}: {min_non_zero_value}")
+            print(f"Highest non-zero value for {direction}: {max_non_zero_value}")
+            
+            # Check if there are any invalid (zero or None) lane configurations corresponding to non-zero vc ratio values
+            needs_update = False
+            for vc_value, lane_config in zip(vc_ratio_values[direction], raw_lane_config[direction]):
+                if vc_value not in ["-", "0", None] and lane_config in ["0", None]: 
+                    needs_update = True
+                    break
+            
+            # Skip updating if all corresponding lane configurations are valid (non-zero, non-None)
+            if not needs_update:
+                print(f"Skipping updates for {direction} as all configurations are valid.")
+                continue
+            
+            # Find the index of the closest non-zero, non-None value in the lane configuration
+            closest_lane_config_index = None
+            closest_distance = float('inf')
+            for i, lane_value in enumerate(raw_lane_config[direction]):
+                # Only consider valid non-zero, non-None values
+                if lane_value not in ["0", None, "-", "inf"]:
+                    # Calculate the "closeness" by comparing the values to the min_non_zero_value
+                    distance = abs(len(lane_value) - len(non_zero_values))  # Compare based on string length as a simple heuristic
+                    if distance < closest_distance:
+                        closest_distance = distance
+                        closest_lane_config_index = i
+        
+            # Replace the lowest non-zero v/c ratio value with '-'
+            if min_non_zero_value != float('inf') and closest_lane_config_index is not None:
+                min_index = non_zero_values.index(min_non_zero_value)
+                print(f"Index of lower value: {min_index}")
+                print(f"Index of higher value: {non_zero_values.index(max_non_zero_value)}")
+                print(f"Raw Lane Configuration for {direction}: {raw_lane_configs[intersection_id - 1][direction]}")
+                print(f"Index of Closest Valid Lane Configuration for {direction}: {closest_lane_config_index}")
+                vc_ratio_values[direction][closest_lane_config_index], vc_ratio_values[direction][min_index] = str(max_non_zero_value), '-'
+            
+                # Debug print: show the updated v/c ratio values after replacement
+                print(f"Updated v/c ratio values for {direction}: {vc_ratio_values[direction]}")
+                
+        # Filter out '-' values before adding the v/c ratio data to the combined_dict
+        vc_ratio_filtered_values = {direction: [value for value in vc_ratio_values[direction] if value != '-'] for direction in vc_ratio_values}
+        
+        # Debug print: show the filtered v/c ratio values
+        print(f"\nFiltered v/c ratio values: {vc_ratio_filtered_values}")
+        
+        # Check for the key in combined_dict and add the modified v/c ratios accordingly
+        if "V/c ratio(x)" in combined_dict:
+            combined_dict["V/c ratio(x)"] = [value for sublist in vc_ratio_filtered_values.values() for value in sublist]
+            print(f"Added to 'V/c ratio(x)': {combined_dict['V/c ratio(x)']}")
+        elif "V/c ratio" in combined_dict:
+            combined_dict["V/c ratio"] = [value for sublist in vc_ratio_filtered_values.values() for value in sublist]
+            print(f"Added to 'V/c ratio': {combined_dict['V/c ratio']}")
     
+        
         # Merge approach data into combined_dict and append to final lists
         combined_dict.update(approach_data)
         combined_list.append(combined_dict)
         id_combined_list.append((intersection_id, combined_dict))
         
         print(f"\nCombined data for signalized Intersection ID {intersection_id}: \n{combined_dict}")
-        
         # if combined_dict:
         #     combined_list.append(combined_dict)
             # print(combined_dict)
@@ -2589,11 +2683,11 @@ def extract_data_to_csv(file_path, output_file):
     for i in twsc_intersections: 
         id_combined_list.append(i)
     
-    idx = 0
-    for i in combined_list:
-        idx += 1
-        print(f"\nCombined list (Result Set #{idx}): {i}")
-    print()
+    # idx = 0
+    # for i in id_combined_list:
+    #     idx += 1
+    #     print(f"\nCombined list (Result Set #{idx}): {i}")
+    # print()
     # print(f"\nCombined list with TWSC data (length = {len(combined_list)}):\n{combined_list}\n")
     # combined_list.append(parse_twsc_approach(df))
     # Create an empty DataFrame to hold all intersections' data
@@ -2727,7 +2821,7 @@ def extract_data_to_csv(file_path, output_file):
         intersection_data.append([''] * 6)
     
         # Create a DataFrame for the current intersection's data
-        intersection_df = pd.DataFrame(intersection_data, columns=['Intersection ID', 'Direction', 'Lane', 'v/c', 'LOS', 'Delay'])
+        intersection_df = pd.DataFrame(intersection_data, columns=['Intersection ID', 'Direction', 'Lane', 'V/c', 'LOS', 'Delay'])
     
         # Append it to the final DataFrame
         final_df = pd.concat([final_df, intersection_df], ignore_index=True)
