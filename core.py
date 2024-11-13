@@ -1958,7 +1958,9 @@ def parse_overall_data_v2(file_path):
     for line_number, line in enumerate(lines, start=1):
         if re.match(int_regex, line):  # Use re.match to check if the line starts with the regex
             matching_lines.append(line_number)
-
+    
+    intersection_index = 0
+    
     # Now search from each line in matching_lines until the next line matching the regex
     for start_line in matching_lines:
         # Get the ID from the corresponding line in 'lines'
@@ -2040,10 +2042,12 @@ def parse_overall_data_v2(file_path):
                     if not any(result['ID'] == id_value for result in synchro_results):
                         synchro_results.append({
                                 'ID': id_value,
-                                'v/c ratio': vc_ratio_value if vc_ratio_value is not None else 'None',
-                                'los': los_value if los_value is not None else 'None',
-                                'delay': delay_value if delay_value is not None else 'None'
+                                'v/c ratio': vc_ratio_value if vc_ratio_value is not None else '-',
+                                'los': los_value if los_value is not None else '-',
+                                'delay': delay_value if delay_value is not None else '-',
+                                'index': intersection_index
                             })
+                        intersection_index += 1
 
                 # Stop further processing of Synchro block and move on to HCM
                 break  # Exit after processing this block for Synchro
@@ -2051,7 +2055,7 @@ def parse_overall_data_v2(file_path):
             # Skip lines between the ID and the next search phrase
             if found_phrase:
                 break  # Stop looking at this block and continue with HCM
-
+                
         # Now search for HCM Results
         found_phrase = False  # Reset for HCM block
         for line_number in range(start_line, len(lines)):
@@ -2120,10 +2124,12 @@ def parse_overall_data_v2(file_path):
                         if phrase_found == "Intersection Summary":
                             hcm_results.append({
                                 'ID': id_value,
-                                'v/c ratio': vc_ratio_value,
-                                'los': los_value,
-                                'delay': delay_value
+                                'v/c ratio': vc_ratio_value if vc_ratio_value is not None else '-',
+                                'los': los_value if los_value is not None else '-',
+                                'delay': delay_value if delay_value is not None else '-',
+                                'index': intersection_index
                             })
+                            intersection_index += 1
                         elif phrase_found == "Minor Lane/Major Mvmt":
                             # Now we parse with the other function
                             movement_results, merged_results = parse_minor_lane_mvmt(
@@ -2136,7 +2142,6 @@ def parse_overall_data_v2(file_path):
                                 hcm_entry[movement_results[i]] = merged_results[i]
                             twsc_results.append(hcm_entry)
                             # hcm_results.append(hcm_entry)
-                            
 
                     break  # Exit after processing the HCM block
 
@@ -2398,7 +2403,7 @@ def extract_data_to_csv(file_path, output_file):
                             **{term: line_num for line_num, term in row_indices.items()}
                         }
                         signalized_int_data.append(intersection_data)
-                        print(f"Saved data for Intersection ID {current_id}: {intersection_data}")
+                        # print(f"Saved data for Intersection ID {current_id}: {intersection_data}")
                         
                     # Reset data structures for the next intersection
                     row_indices = {}
@@ -2446,21 +2451,16 @@ def extract_data_to_csv(file_path, output_file):
             }
             signalized_int_data.append(intersection_data)
     
-    print(f"All intersection configurations: {all_intersection_configs}", f"\nlength = {len(all_intersection_configs)}")
+    # print(f"All intersection configurations: {all_intersection_configs}", f"\nlength = {len(all_intersection_configs)}")
     
     # Print the signalized intersection data for verification
-    print("Signalized Intersection Data:")
-    for entry in signalized_int_data:
-        print(entry, '\n')
+    # print("Signalized Intersection Data:")
+    # for entry in signalized_int_data:
+    #     print(entry, '\n')
     
     lane_configurations, raw_lane_configs = parse_lane_configs(all_intersection_configs, intersection_ids)
-    print('\nLane Configurations collected...', lane_configurations, f"\nlength = {len(lane_configurations)}")
-    print("\nRaw Lane Configurations read...", raw_lane_configs, f"\nlength = {len(raw_lane_configs)}")
-    
-    
-    """
-    *** ADAPT THE CODE BEYOND THIS POINT TO WORK WITH THE NEW DATA STRUCTURE ***
-    """
+    # print('\nLane Configurations collected...', lane_configurations, f"\nlength = {len(lane_configurations)}")
+    # print("\nRaw Lane Configurations read...", raw_lane_configs, f"\nlength = {len(raw_lane_configs)}")
     
     # idx = 0
     # for i in group_config_data:
@@ -2479,7 +2479,6 @@ def extract_data_to_csv(file_path, output_file):
     #     print(f"\nLane Configuration Intersection {i + 1}:\n{idx}\nRead data:{group_config_data[i]}")
     # print()
     # print(lane_configurations)
-    
     
     # Initialize an empty list to store the combined dictionaries
     combined_list = []
@@ -2508,6 +2507,20 @@ def extract_data_to_csv(file_path, output_file):
             'SB': [None, None, None]
         }
         
+        los_values = {
+            'EB': [None, None, None],  # Left, Through, Right
+            'WB': [None, None, None],
+            'NB': [None, None, None],
+            'SB': [None, None, None]
+        }
+        
+        delay_values = {
+            'EB': [None, None, None],  # Left, Through, Right
+            'WB': [None, None, None],
+            'NB': [None, None, None],
+            'SB': [None, None, None]
+        }
+        
         # Process terms_to_match in intersection data
         vc_ratio_added = False
         ln_grp_los_added = False
@@ -2529,15 +2542,29 @@ def extract_data_to_csv(file_path, output_file):
                     # Assuming the order of row_data for each direction is left, through, right
                     vc_ratio_values[direction] = [row_data[idx * 3], row_data[idx * 3 + 1], row_data[idx * 3 + 2]]
                     
-                    """
-                        Add logic to do what I specified in my initial message following the example.
-                        Do not modify any code beyond this unless absolutely necessary. All we want
-                        to do is filter and reorganize the v/c ratio data based on the raw lane configurations.
-                    """
+                # Debug print for v/c ratios collected
+                # print(f"\nV/c Ratio Values for Intersection {intersection_id}: {vc_ratio_values}")            
+                # print(f"Raw Lane Configurations for Intersection {intersection_id}: {raw_lane_config}")
+            
+            # Collect LOS values
+            if "lngrp los" == term_lower or "los" == term_lower:
+                for idx, direction in enumerate(['EB', 'WB', 'NB', 'SB']):
+                    # Assuming the order of row_data for each direction is left, through, right
+                    los_values[direction] = [row_data[idx * 3], row_data[idx * 3 + 1], row_data[idx * 3 + 2]]
                     
                 # Debug print for v/c ratios collected
-                print(f"\nV/c Ratio Values for Intersection {intersection_id}: {vc_ratio_values}")            
-                print(f"Raw Lane Configurations for Intersection {intersection_id}: {raw_lane_config}")
+                # print(f"\nLOS Values for Intersection {intersection_id}: {los_values}")            
+                # print(f"Raw Lane Configurations for Intersection {intersection_id}: {raw_lane_config}")
+                
+            # Collect delay values
+            if "control delay (s/veh)" == term_lower or "lngrp delay(d), s/veh" == term_lower:
+                for idx, direction in enumerate(['EB', 'WB', 'NB', 'SB']):
+                    # Assuming the order of row_data for each direction is left, through, right
+                    delay_values[direction] = [row_data[idx * 3], row_data[idx * 3 + 1], row_data[idx * 3 + 2]]
+                    
+                # Debug print for v/c ratios collected
+                # print(f"\nDelay Values for Intersection {intersection_id}: {delay_values}")            
+                # print(f"Raw Lane Configurations for Intersection {intersection_id}: {raw_lane_config}")
                 
             if "v/c ratio(x)" == term_lower and not vc_ratio_added:
                 combined_dict[term] = [value for value in row_data if value != '-']
@@ -2586,76 +2613,64 @@ def extract_data_to_csv(file_path, output_file):
             if term_lower not in ["v/c ratio", "los", "v/c ratio(x)", "lngrp los"]:
                 combined_dict[term] = [value for value in row_data if value != '-']
         
-        # Post-process v/c ratios to replace the lowest non-zero value with '-'
-        for direction in ['EB', 'WB', 'NB', 'SB']:
-            non_zero_values = [float(value) if value not in ["-", "0", None] else float('inf') for value in vc_ratio_values[direction]]
-            
-            # Debug print: show non-zero values and their conversion
-            print(f"\nNon-zero values for {direction}: {non_zero_values}")
-            
-            non_inf_values = [value for value in non_zero_values if value != float('inf')]
-            
-            min_non_zero_value = min(non_zero_values)
-            # Ensure there's at least one non-inf value
-            if non_inf_values:
-                max_non_zero_value = max(non_inf_values)
-            else:
-                max_non_zero_value = float('-inf')
-            # Debug print: show the lowest non-zero v/c ratio value
-            print(f"Lowest non-zero value for {direction}: {min_non_zero_value}")
-            print(f"Highest non-zero value for {direction}: {max_non_zero_value}")
-            
-            # Check if there are any invalid (zero or None) lane configurations corresponding to non-zero vc ratio values
-            needs_update = False
-            for vc_value, lane_config in zip(vc_ratio_values[direction], raw_lane_config[direction]):
-                if vc_value not in ["-", "0", None] and lane_config in ["0", None]: 
-                    needs_update = True
-                    break
-            
-            # Skip updating if all corresponding lane configurations are valid (non-zero, non-None)
-            if not needs_update:
-                print(f"Skipping updates for {direction} as all configurations are valid.")
-                continue
-            
-            # Find the index of the closest non-zero, non-None value in the lane configuration
-            closest_lane_config_index = None
-            closest_distance = float('inf')
-            for i, lane_value in enumerate(raw_lane_config[direction]):
-                # Only consider valid non-zero, non-None values
-                if lane_value not in ["0", None, "-", "inf"]:
-                    # Calculate the "closeness" by comparing the values to the min_non_zero_value
-                    distance = abs(len(lane_value) - len(non_zero_values))  # Compare based on string length as a simple heuristic
-                    if distance < closest_distance:
-                        closest_distance = distance
-                        closest_lane_config_index = i
+        value_set = [vc_ratio_values, delay_values, los_values]
+        directions = ['EB', 'WB', 'NB', 'SB']
         
-            # Replace the lowest non-zero v/c ratio value with '-'
-            if min_non_zero_value != float('inf') and closest_lane_config_index is not None:
-                min_index = non_zero_values.index(min_non_zero_value)
-                print(f"Index of lower value: {min_index}")
-                print(f"Index of higher value: {non_zero_values.index(max_non_zero_value)}")
-                print(f"Raw Lane Configuration for {direction}: {raw_lane_configs[intersection_id - 1][direction]}")
-                print(f"Index of Closest Valid Lane Configuration for {direction}: {closest_lane_config_index}")
-                vc_ratio_values[direction][closest_lane_config_index], vc_ratio_values[direction][min_index] = str(max_non_zero_value), '-'
-            
-                # Debug print: show the updated v/c ratio values after replacement
-                print(f"Updated v/c ratio values for {direction}: {vc_ratio_values[direction]}")
+        # Process each type of value set: vc_ratio, los, and delay
+        for values, term in zip(value_set, list(combined_dict.keys())[1:]):
+            for direction in directions:
+                # Identify non-zero values based on the type of data
+                if values == los_values:
+                    # For LOS values, consider grades A-F (skipping '-' or None)
+                    non_zero_values = [value if value not in ["-", None] else "Z" for value in values[direction]]
+                    max_non_zero_value = max(non_zero_values)
+                else:
+                    # For vc_ratio and delay values, treat them as floats
+                    non_zero_values = [float(value) if value not in ["-", "0", None] else float('inf') for value in values[direction]]
+                    non_inf_values = [v for v in non_zero_values if v != float('inf')]
+                    min_non_zero_value = min(non_zero_values)
+                    max_non_zero_value = max(non_inf_values) if non_inf_values else float('-inf')
+        
+                # Determine if we need to update based on raw lane configuration
+                needs_update = any(
+                    value not in ["-", "0", None] and lane_config in ["0", None]
+                    for value, lane_config in zip(values[direction], raw_lane_config[direction])
+                )
                 
-        # Filter out '-' values before adding the v/c ratio data to the combined_dict
-        vc_ratio_filtered_values = {direction: [value for value in vc_ratio_values[direction] if value != '-'] for direction in vc_ratio_values}
+                # Skip updating if all configurations are valid
+                if not needs_update:
+                    # print(f"Skipping updates for {direction} in {values} as all configurations are valid.")
+                    continue
+                
+                # Apply the update logic based on the type of data
+                for i, (value, lane_config) in enumerate(zip(values[direction], raw_lane_config[direction])):
+                    if value in ["-", "0", None] and lane_config not in ["0", None]:
+                        if values == los_values:
+                            values[direction][i] = max_non_zero_value  # Higher letter for LOS
+                        else:
+                            values[direction][i] = str(max_non_zero_value)
+                
+                # Replace the lowest non-zero value with '-'
+                if min_non_zero_value != float('inf') and values != los_values:
+                    min_index = non_zero_values.index(min_non_zero_value)
+                    values[direction][min_index] = '-'
+                
+                # Debug print
+                # print(f"Updated {direction} for {term}: {values[direction]}")
+            
+            # Filter out '-' values and add to combined_dict
+            filtered_values = {direction: [value for value in values[direction] if value != '-' and value != 'Z'] for direction in directions}
+            combined_dict[term] = [value for sublist in filtered_values.values() for value in sublist]
         
-        # Debug print: show the filtered v/c ratio values
-        print(f"\nFiltered v/c ratio values: {vc_ratio_filtered_values}")
-        
-        # Check for the key in combined_dict and add the modified v/c ratios accordingly
-        if "V/c ratio(x)" in combined_dict:
-            combined_dict["V/c ratio(x)"] = [value for sublist in vc_ratio_filtered_values.values() for value in sublist]
-            print(f"Added to 'V/c ratio(x)': {combined_dict['V/c ratio(x)']}")
-        elif "V/c ratio" in combined_dict:
-            combined_dict["V/c ratio"] = [value for sublist in vc_ratio_filtered_values.values() for value in sublist]
-            print(f"Added to 'V/c ratio': {combined_dict['V/c ratio']}")
+            # Debug print for combined_dict update
+            # print(f"Added to '{term}': {combined_dict[term]}")
     
-        
+        # Loop through each direction (EB, WB, NB, SB)
+        for direction in ['EB', 'WB', 'NB', 'SB']:
+            # Check if both "Approach Delay" and "Approach LOS" are '-'
+            if approach_data.get(direction) and all(value == '-' for value in approach_data[direction].values()):
+                del approach_data[direction]
+
         # Merge approach data into combined_dict and append to final lists
         combined_dict.update(approach_data)
         combined_list.append(combined_dict)
@@ -2665,8 +2680,15 @@ def extract_data_to_csv(file_path, output_file):
         # if combined_dict:
         #     combined_list.append(combined_dict)
             # print(combined_dict)
-    print()
-    idx = 0
+    
+    # Remove empty lane configurations
+    for direction in ['EB', 'WB', 'NB', 'SB']:
+        for config in lane_configurations:
+            if config.get(direction) == '-':
+                del config[direction]
+    
+    # print()
+    # idx = 0
     # for i in combined_list:
     #     idx += 1
     #     print(f"Signalized Intersection #{idx}: \n{i}\n")
@@ -2680,8 +2702,8 @@ def extract_data_to_csv(file_path, output_file):
     
     # print("\nTWSC Summary Directions: ", twsc_intersection_directions)
     
-    for i in twsc_intersections: 
-        id_combined_list.append(i)
+    # for i in twsc_intersections: 
+    #     id_combined_list.append(i)
     
     # idx = 0
     # for i in id_combined_list:
@@ -2689,7 +2711,8 @@ def extract_data_to_csv(file_path, output_file):
     #     print(f"\nCombined list (Result Set #{idx}): {i}")
     # print()
     # print(f"\nCombined list with TWSC data (length = {len(combined_list)}):\n{combined_list}\n")
-    # combined_list.append(parse_twsc_approach(df))
+    combined_list.extend(twsc_intersections)
+    
     # Create an empty DataFrame to hold all intersections' data
     final_df = pd.DataFrame()
     
@@ -2699,46 +2722,67 @@ def extract_data_to_csv(file_path, output_file):
         'los': ['LOS', 'LnGrp LOS']
     }
     
-    # Sort the id_combined_list by Intersection ID before processing
-    id_combined_list_sorted = sorted(id_combined_list, key=lambda x: int(x[0]) if isinstance(x, tuple) else x.get("Intersection ID", 0))
+    # Sort combined_list by Intersection ID for ordered processing
+    combined_list_sorted = sorted(combined_list, key=lambda x: int(x.get("Intersection ID", 0)))
     
-    # Prepare data for each intersection using the combined_list and lane_configurations
-    for item in id_combined_list_sorted:
-    
-        # Determine the intersection ID and the data dictionary based on whether the item is a tuple or dictionary
-        if isinstance(item, tuple):
-            intersection_id = int(item[0])
-            data_dict = item[1]
-        elif isinstance(item, dict):
-            intersection_id = item.get("Intersection ID")
-            data_dict = item
-    
-        # Find the matching lane configuration for this intersection based on the intersection ID
-        lane_config = next((config for config in lane_configurations if config.get("Intersection ID") == intersection_id), None)
+    # Iterate over each item in the sorted combined_list
+    for idx, item in enumerate(combined_list_sorted, 1):
+        print(f"Intersection #{idx} (ID: {item.get('Intersection ID')}):")
         
-        # Check if the intersection has TWSC data based on intersection ID
+        # Iterate over the keys and values of each dictionary
+        for key, value in item.items():
+            # If the value is a list, print it in a readable format
+            if isinstance(value, list):
+                value_str = ', '.join(map(str, value))
+                print(f"  {key}: [{value_str}]")
+            else:
+                print(f"  {key}: {value}")
+        
+        print("\n" + "-"*50)  # Add a separator line between intersections
+    
+    # Combine both lists and sort by the "index" key
+    combined_overall_data = sorted(synchro_overall + hcm_overall, key=lambda x: x.get('index', 0))
+    overall_idx = 0
+    # Process each intersection in the sorted list
+    for data_dict in combined_list_sorted:
+        intersection_id = data_dict.get("Intersection ID")
+    
+        # Find the matching lane configuration for this intersection
+        lane_config = next((config for config in lane_configurations if config.get("Intersection ID") == intersection_id), None)
+    
+        # Check if the intersection has TWSC data
         twsc_summary_result = next((twsc for twsc in twsc_overall if twsc.get("ID") == str(intersection_id)), None)
         twsc_summary_directions = next((twsc_dir for twsc_dir in twsc_intersection_directions if twsc_dir.get("ID") == str(intersection_id)), None)
-        
-        # If TWSC summary exists, prefer it over lane configurations
+    
+        # Prefer TWSC summary if available
         if twsc_summary_result and twsc_summary_directions:
             lane_config = None
-        
+    
+        # Skip intersections without lane config or TWSC summary
         if not lane_config and not twsc_summary_result:
             print(f"No lane configuration or TWSC summary found for Intersection ID: {intersection_id}")
-            continue  # Skip this intersection if no matching lane configuration or TWSC summary is found
-        
-        # Prepare the intersection's DataFrame
+            continue
+    
+        # Prepare data for the intersection's DataFrame
         intersection_data = []
     
-        # Flag to control printing of the Intersection ID only once for each direction set (NB, EB, etc.)
+        # Control printing of Intersection ID only once per direction set
         intersection_id_printed = False
-        
-        # Prepare separate indexing for v/c, LOS, and Delay values
+    
+        # Separate indexing for v/c, LOS, and Delay values
         j = 0
         
+        # Retrieve all entries from combined_overall_data for this intersection
+        overall_data = [item for item in combined_overall_data if item['ID'] == str(intersection_id)]
+        
+        # Default values for the overall data row (to be updated if data is found)
+        overall_vc = '-'
+        overall_los = '-'
+        overall_delay = '-'
+
         # Processing if lane configuration is available
         if lane_config:
+            
             for direction, lanes in lane_config.items():
                 # Skip the "Intersection ID" key in lane_config
                 if direction == "Intersection ID":
@@ -2783,12 +2827,21 @@ def extract_data_to_csv(file_path, output_file):
     
                     # Increment the indices for v/c, LOS, and Delay values
                     j += 1
-    
+                    
                 # Add an overall row for this direction
                 intersection_data.append(['', f"{direction} Overall", '', '-', f'{approach_los}', f'{approach_delay}'])
-            
-            # Add an overall row for this intersection
-            intersection_data.append(['', "Overall", '', '-', '-', '-'])
+            if overall_idx == 0:
+                overall_vc = overall_data[0].get("v/c ratio")
+                overall_los = overall_data[0].get("los")
+                overall_delay = overall_data[0].get("delay")
+                overall_idx += 1
+            else:
+                overall_vc = overall_data[1].get("v/c ratio")
+                overall_los = overall_data[1].get("los")
+                overall_delay = overall_data[1].get("delay")
+                overall_idx = 0
+            # Add an overall row for this intersection, including data from Synchro and HCM
+            intersection_data.append(['', "Overall", '', overall_vc, overall_los, overall_delay])
             
         # Processing if TWSC summary data is available
         if twsc_summary_result:
@@ -2816,7 +2869,7 @@ def extract_data_to_csv(file_path, output_file):
                 # Add an overall row for this direction
                 intersection_data.append(['', f"{direction} Overall", '', '-', f'{approach_los}', f'{approach_delay}'])
             
-            intersection_data.append(['', "Overall", '', '-', '-', '-'])
+            # intersection_data.append(['', "Overall", '', '-', '-', '-'])
 
         intersection_data.append([''] * 6)
     
@@ -2836,7 +2889,7 @@ def extract_data_to_csv(file_path, output_file):
     """
     i = 0
     # Initialize the intersection ID from id_combined_list
-    for item in id_combined_list_sorted:
+    for item in combined_list_sorted:
         
         # Determine the intersection ID and the data dictionary based on whether the item is a tuple or dictionary
         if isinstance(item, tuple):
@@ -2893,7 +2946,7 @@ def extract_data_to_csv(file_path, output_file):
         # Add a blank line for readability between intersections
         print("\n" + "-" * 40 + "\n")
         
-    print(f"Total number of useable datasets found: {len(id_combined_list_sorted)}")
+    print(f"Total number of useable datasets found: {len(combined_list_sorted)}")
 
 
 def parse_lane_configs(int_lane_groups, intersection_ids):
@@ -2955,13 +3008,6 @@ def parse_lane_configs(int_lane_groups, intersection_ids):
                         # Repeat based on the number
                         parsed_value += suffix * int(number_part)
                         
-                        """
-                        *** Add code for detecting '0' and check if the column has data for v/c
-                            Look at the rest of the list and check for non-None and non-zero number_parts.
-                            If one is found, use the higher value of the v/c ratios
-                            (EB, WB, NB, SB) find a way to signal the program to take the max of these two values
-                        """
-                        
                     else:
                         parsed_value += suffix
 
@@ -2975,13 +3021,13 @@ def parse_lane_configs(int_lane_groups, intersection_ids):
                         parsed_dict[direction_prefix][idx] = parsed_value or None
         
         # Remove None values from each list in the parsed_dict
-        for key in parsed_dict:
+        for key in list(parsed_dict.keys()):
             if key != "Intersection ID":  # Don't touch the Intersection ID key
                 parsed_dict[key] = [value for value in parsed_dict[key] if value is not None]
                 # If the list is empty (no valid values), set it to '-'
                 if not parsed_dict[key]:
                     parsed_dict[key] = '-'
-        
+                    
         # Clean up the raw_data_dict in the same way
         for key in raw_data_dict:
             if key != "Intersection ID":
