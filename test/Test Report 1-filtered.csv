@@ -1,4 +1,4 @@
-Intersection ID,Direction,Lane,v/c,LOS,Delay
+Intersection ID,Direction,Lane,V/c,LOS,Delay
 1,EB,T,-,-,-
 ,,R,-,-,-
 ,EB Overall,,-,-,0
@@ -38,26 +38,26 @@ Intersection ID,Direction,Lane,v/c,LOS,Delay
 ,WB Overall,,-,A,0.1
 ,NB,L,0.85,D,45.2
 ,,TTR,0.77,B,17.1
-,NB Overall,,-,-,-
+,NB Overall,,-,C,21.2
 ,SB,L,0.21,C,28.1
 ,,TT,0.91,D,39.9
 ,,R,0.27,A,4.2
-,SB Overall,,-,-,-
-,Overall,,-,-,-
+,SB Overall,,-,C,34.7
+,Overall,,0.93,C,28.3
 ,,,,,
 7,EB,LT,0.74,D,36.3
-,,R,0.00,C,0.0
-,EB Overall,,-,-,-
-,WB,LTR,0.03,C,0.0
-,WB Overall,,-,D,36.3
-,NB,L,0.00,B,24.8
-,,TTR,0.00,B,0.0
-,NB Overall,,-,-,-
-,SB,L,0.82,C,0.0
-,,TT,0.72,C,26.4
-,,R,0.72,-,15.5
-,SB Overall,,-,-,-
-,Overall,,-,-,-
+,,R,0.74,C,0.0
+,EB Overall,,-,D,36.3
+,WB,LTR,0.03,C,24.8
+,WB Overall,,-,C,24.8
+,NB,L,0.00,B,0.0
+,,TTR,0.82,B,26.4
+,NB Overall,,-,B,17.0
+,SB,L,0.72,C,15.5
+,,TT,0.10,C,23.1
+,,R,0.79,-,25.6
+,SB Overall,,-,C,25.6
+,Overall,,-,C,21.9
 ,,,,,
 8,NB,T,-,-,-
 ,NB Overall,,-,-,0

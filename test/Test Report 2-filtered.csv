@@ -42,7 +42,7 @@ Intersection ID,Direction,Lane,V/c,LOS,Delay
 ,NB Overall,,-,B,18.8
 ,SB,LTR,0.07,C,20.7
 ,SB Overall,,-,C,20.8
-,Overall,,0.4,B,13.0
+,Overall,,-,B,14.6
 ,,,,,
 2,EB,L,0.01,B,10.1
 ,,TR,0.23,A,9.0
@@ -145,7 +145,7 @@ Intersection ID,Direction,Lane,V/c,LOS,Delay
 ,NB Overall,,-,A,5.4
 ,SB,LT,0.46,B,11.1
 ,SB Overall,,-,B,11.1
-,Overall,,0.48,A,9.0
+,Overall,,-,A,8.8
 ,,,,,
 12,WB,LR,0.71,B,12.2
 ,WB Overall,,-,B,12.2
