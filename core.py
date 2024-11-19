@@ -1831,9 +1831,9 @@ def read_input_file(file_path):
 
 def parse_minor_lane_mvmt(lines, start_line, end_line):
     """
-    Parse the "Minor Lane/Major Mvmt" data between the start and end lines.
-    This function extracts the delay, V/C ratio, and LOS from lines containing these terms.
-    Helper function to the parse_overall_data function.
+        Parse the "Minor Lane/Major Mvmt" data between the start and end lines.
+        This function extracts the delay, V/C ratio, and LOS from lines containing these terms.
+        Helper function to the parse_overall_data function.
     """
     
     search_phrase = "Minor Lane/Major Mvmt"
@@ -1893,33 +1893,80 @@ def parse_minor_lane_mvmt(lines, start_line, end_line):
     return result, merged_results
 
 
-def process_directions(twsc_summary_results):
+def process_directions(twsc_summary_results, lane_configs):
     processed_list = []
-
+    original_key_list = []
+    combined_mvmt_names = []
+    
     for entry in twsc_summary_results:
         # Start with a dictionary containing just the ID
         processed_dict = {"ID": entry["ID"]}
-
+        original_key_dict = {"ID": entry["ID"]}
+        
+        # Retrieve the lane configuration for the current intersection
+        intersection_id = int(entry["ID"])
+        lane_config = next(
+            (config for config in lane_configs if config["Intersection ID"] == intersection_id), None
+        )
+        
+        # print(lane_config, '\n')
+        
         # Loop through the dictionary to process directional keys
         for key, value in entry.items():
             if key == "ID":
                 continue  # Skip the ID key itself
-
+            
             # Split the direction from the suffix
-            direction = key[:2]  # The first two characters are the direction (EB, WB, NB, SB)
+            direction = key[:2]  # The first two characters are the direction (EB, WB, NB, SfB)
             suffix = key[2:]  # The remaining part is the suffix (Ln1, T, etc.)
-
+            
             # Add suffixes to the appropriate direction key in the processed_dict
-            if direction in ["EB", "WB", "NB", "SB"]:
+            if direction in ["EB", "WB", "NB", "SB", "NE", "NW", "SE", "SW"]:
+                if direction not in original_key_dict:
+                    original_key_dict[direction] = []  # Initialize list if direction not already present
+                original_key_dict[direction].append(suffix)
+            
+            # Add suffixes to the appropriate direction key in the processed_dict
+            if direction in ["EB", "WB", "NB", "SB", "NE", "NW", "SE", "SW"]:
                 if direction not in processed_dict:
                     processed_dict[direction] = []  # Initialize list if direction not already present
                 processed_dict[direction].append(suffix)  # Add the suffix to the list
-
+        
+        print(processed_dict)
+        print(original_key_dict)
+        
         # Only add the processed dict to the list if it has directional values (excluding ID)
-        if any(key in processed_dict for key in ["EB", "WB", "NB", "SB"]):
+        if any(key in processed_dict for key in ["EB", "WB", "NB", "SB", "NE", "NW", "SE", "SW"]):
             processed_list.append(processed_dict)
-
-    return processed_list
+                
+        # Only add the processed dict to the list if it has directional values (excluding ID)
+        if any(key in original_key_dict for key in ["EB", "WB", "NB", "SB", "NE", "NW", "SE", "SW"]):
+            original_key_list.append(original_key_dict)
+            # print(processed_dict)
+            # print(processed_list)
+        print()
+        for k, v in processed_dict.items():
+            if 'Ln' in v[0] and k != "ID":  # Handle Ln suffix
+                suffix = 
+                # Extract the index from Ln suffix and subtract 1 (Ln1 -> index 0)
+                print(f" ... Key-value pair containing 'Ln' found in '{k}:{v}'")
+                try:
+                    lane_index = int(suffix[2:]) - 1
+                    # Retrieve the lane type from the lane configuration
+                    if 0 <= lane_index < len(processed_list) and k != "ID":
+                        suffix = k + v[0]
+                except (ValueError, IndexError):
+                    pass  # If parsing or index retrieval fails, keep the original suffix
+            
+                print(f" ...... Added '{suffix}' to combined_mvmt_names!")
+                combined_mvmt_names.append(suffix)
+                print(f" = Key-Value: {k} : {v[0]}\n")
+    
+    print("\nProcessed list: ", processed_list, '\n')
+    print("Original keys list:", original_key_list, '\n')
+    print(f"Combined movement names: {combined_mvmt_names}\n")
+    
+    return processed_list, original_key_list, combined_mvmt_names
 
 
 def parse_overall_data_v2(file_path):
@@ -2019,11 +2066,11 @@ def parse_overall_data_v2(file_path):
 
                     
                     # Check for 'v/c ratio' and extract the next float
-                    if re.search(r'v/c ratio', line, re.IGNORECASE):
-                        float_match = re.search(r'(\d+\.\d+|\d+)', line)
-                        if float_match:
-                            vc_ratio_value = float(float_match.group(0))
-                            # print(f"Extracted v/c ratio: {vc_ratio_value}")
+                    # if re.search(r'v/c ratio', line, re.IGNORECASE):
+                    #     float_match = re.search(r'(\d+\.\d+|\d+)', line)
+                    #     if float_match:
+                    #         vc_ratio_value = float(float_match.group(0))
+                    #         # print(f"Extracted v/c ratio: {vc_ratio_value}")
 
                     # Check for 'delay' and extract the next float
                     if re.search(r'delay', line, re.IGNORECASE):
@@ -2039,11 +2086,10 @@ def parse_overall_data_v2(file_path):
                             los_value = capital_match.group(0)
                             # print(f"Extracted LOS: {los_value}")
                             
-                            
                 # print(f"Final Synchro values for ID {id_value}: v/c ratio={vc_ratio_value}, delay={delay_value}, LOS={los_value}")
 
                 # Store Synchro results only if ID is not already present
-                if not (vc_ratio_value is None and los_value is None and delay_value is None) and found_phrase:
+                if not (los_value is None and delay_value is None) and found_phrase:
                     if not any(result['ID'] == id_value for result in synchro_results):
                         synchro_results.append({
                                 'ID': id_value,
@@ -2084,7 +2130,7 @@ def parse_overall_data_v2(file_path):
                         end_line += 1  # Continue until we find an empty line
 
                     # Initialize values to None
-                    vc_ratio_value = None
+                    vc_ratio_value = '-'
                     los_value = None
                     delay_value = None
                     found_hcm = False  # Flag to track if we found HCM lines
@@ -2139,7 +2185,6 @@ def parse_overall_data_v2(file_path):
                             # Now we parse with the other function
                             movement_results, merged_results = parse_minor_lane_mvmt(
                                 lines, line_number, end_line)
-
                             # Create a dictionary where keys are from the movement results
                             hcm_entry = {'ID': id_value}
                             for i in range(len(movement_results)):
@@ -2157,8 +2202,7 @@ def parse_overall_data_v2(file_path):
     # Print the results for debugging
     # print("\nSynchro Signalized Summary Results (Intersection Summary):", synchro_results)
     # print("\nHCM Signalized Summary Results (Intersection Summary):", hcm_results)
-    # print("\nTWSC Summary Results (Minor Lane/...):", twsc_results, '\n')
-
+    print("\nTWSC Summary Results (Minor Lane/...):", twsc_results, '\n')
 
     return twsc_results, synchro_results, hcm_results
 
@@ -2168,7 +2212,6 @@ def parse_twsc_approach(df):
         Parses the approach data for each direction of a TWSC intersection
         Returns a list of dictionaries, one for each TWSC intersection found in the dataframe
     """
-    
     approach_data = []  # List to hold all parsed data
     intersection_id = None # Store the ID of the intersection we are currently looking at
     
@@ -2208,12 +2251,14 @@ def parse_twsc_approach(df):
                 "SW": {"Approach Delay": None, "Approach LOS": '-'},
             }
             
+            # pd.set_option('display.max_columns', 100)  # Show all columns
+            
             # Step 1: Record the positions (columns) of directions
             direction_columns = {}
             for direction in ["EB", "WB", "NB", "SB", 'NE', 'NW', 'SE', 'SW']:
                 if present_directions[direction]:
                     direction_columns[direction] = row[row == direction].index[0]  # Find the column where the direction was found
-                    # print(f"Direction {direction} found in column {direction_columns[direction]}.")
+                    # print(f"Direction {direction} found") # in column {direction_columns[direction]}.")
                     
             # Now check subsequent rows for "HCM Control Delay" and "HCM LOS"
             next_row_index = index + 1
@@ -2470,173 +2515,100 @@ def extract_data_to_csv(file_path, output_file):
     for intersection in signalized_int_data:
         intersection_id = intersection.get("Intersection ID")
         combined_dict = {"Intersection ID": intersection_id}
+    
+        # Initialize approach data for all possible directions
         approach_data = {
-            "EB": {"Approach Delay": None, "Approach LOS": None},
-            "WB": {"Approach Delay": None, "Approach LOS": None},
-            "NB": {"Approach Delay": None, "Approach LOS": None},
-            "SB": {"Approach Delay": None, "Approach LOS": None},
-            "NE": {"Approach Delay": None, "Approach LOS": None},
-            "NW": {"Approach Delay": None, "Approach LOS": None},
-            "SE": {"Approach Delay": None, "Approach LOS": None},
-            "SW": {"Approach Delay": None, "Approach LOS": None}
+            direction: {"Approach Delay": None, "Approach LOS": None}
+            for direction in ['EB', 'WB', 'NB', 'SB', 'NE', 'NW', 'SE', 'SW']
         }
     
-        # Access lane configurations and group configuration data
+        # Access lane configurations for the current intersection
         lane_config = lane_configurations[int(intersection_id) - 1]
         raw_lane_config = raw_lane_configs[int(intersection_id) - 1]
-        
-        # Initialize the dictionary to store v/c ratio values if not already done
-        vc_ratio_values = {
-            'EB': [None, None, None],  # Left, Through, Right
-            'WB': [None, None, None],
-            'NB': [None, None, None],
-            'SB': [None, None, None],
-            'NE': [None, None, None],
-            'NW': [None, None, None],
-            'SE': [None, None, None],
-            'SW': [None, None, None]
-        }
-        
-        los_values = {
-            'EB': [None, None, None],  # Left, Through, Right
-            'WB': [None, None, None],
-            'NB': [None, None, None],
-            'SB': [None, None, None],
-            'NE': [None, None, None],
-            'NW': [None, None, None],
-            'SE': [None, None, None],
-            'SW': [None, None, None]
-        }
-        
-        delay_values = {
-            'EB': [None, None, None],  # Left, Through, Right
-            'WB': [None, None, None],
-            'NB': [None, None, None],
-            'SB': [None, None, None],
-            'NE': [None, None, None],
-            'NW': [None, None, None],
-            'SE': [None, None, None],
-            'SW': [None, None, None]
-        }
-        
+    
+        # Initialize dictionaries to store v/c ratio, LOS, and delay values
         directions = ['EB', 'WB', 'NB', 'SB', 'NE', 'NW', 'SE', 'SW']
-        
-        # Process terms_to_match in intersection data
+        vc_ratio_values = {direction: [None, None, None] for direction in directions}
+        los_values = {direction: [None, None, None] for direction in directions}
+        delay_values = {direction: [None, None, None] for direction in directions}
+    
+        # Flags to ensure each type of data is added once
         vc_ratio_added = False
         ln_grp_los_added = False
         los_added = False
     
+        # Process each term in the intersection data
         for term, row_index in intersection.items():
             if term not in terms_to_match:
                 continue  # Skip terms not in the list
-            
+    
             term_lower = term.lower()
             row_data = df.iloc[row_index].replace("", "-").fillna("-").tolist()[1:]  # Exclude first column value
-
-            # Print row data for each term
-            # print(f"Row data for '{term}' at row index {row_index}: {row_data}")
-            
+    
             # Process v/c ratio values
             if "v/c ratio(x)" == term_lower or "v/c ratio" == term_lower:
                 for idx, direction in enumerate(directions):
                     start_index = idx * 3  # Adjust based on 3 values per direction
-                    if start_index + 2 < len(row_data):  # Ensure there are enough elements
-                        vc_ratio_values[direction] = [
-                            row_data[start_index],
-                            row_data[start_index + 1],
-                            row_data[start_index + 2]
-                        ]
+                    if start_index + 2 < len(row_data):
+                        vc_ratio_values[direction] = row_data[start_index:start_index + 3]
                     else:
-                        vc_ratio_values[direction] = ["-", "-", "-"]  # Fill missing data with '-'
-        
+                        vc_ratio_values[direction] = ["-", "-", "-"]
+                if not vc_ratio_added:
+                    combined_dict[term] = [value for value in row_data if value != '-']
+                    vc_ratio_added = True
+    
             # Process LOS values
             if "lngrp los" == term_lower or "los" == term_lower:
                 for idx, direction in enumerate(directions):
                     start_index = idx * 3
-                    if start_index + 2 < len(row_data):  # Ensure there are enough elements
-                        los_values[direction] = [
-                            row_data[start_index],
-                            row_data[start_index + 1],
-                            row_data[start_index + 2]
-                        ]
+                    if start_index + 2 < len(row_data):
+                        los_values[direction] = row_data[start_index:start_index + 3]
                     else:
-                        los_values[direction] = ["-", "-", "-"]  # Fill missing data with '-'
-        
+                        los_values[direction] = ["-", "-", "-"]
+                if "lngrp los" == term_lower and not ln_grp_los_added:
+                    combined_dict[term] = [value for value in row_data if value != '-']
+                    ln_grp_los_added = True
+                elif "los" == term_lower and not los_added and not ln_grp_los_added:
+                    combined_dict[term] = [value for value in row_data if value != '-']
+                    los_added = True
+    
             # Process delay values
             if "control delay (s/veh)" == term_lower or "lngrp delay(d), s/veh" == term_lower:
                 for idx, direction in enumerate(directions):
                     start_index = idx * 3
-                    if start_index + 2 < len(row_data):  # Ensure there are enough elements
-                        delay_values[direction] = [
-                            row_data[start_index],
-                            row_data[start_index + 1],
-                            row_data[start_index + 2]
-                        ]
+                    if start_index + 2 < len(row_data):
+                        delay_values[direction] = row_data[start_index:start_index + 3]
                     else:
-                        delay_values[direction] = ["-", "-", "-"]  # Fill missing data with '-'       
-                    
-                # Debug print for v/c ratios collected
-                # print(f"\nDelay Values for Intersection {intersection_id}: {delay_values}")            
-                # print(f"Raw Lane Configurations for Intersection {intersection_id}: {raw_lane_config}")
-            
-            # Debug prints for collected values (optional)
-            print(f"V/c Ratio Values: {vc_ratio_values}\n")
-            print(f"LOS Values: {los_values}\n")
-            print(f"Delay Values: {delay_values}\n")
-            
-            if "v/c ratio(x)" == term_lower and not vc_ratio_added:
-                combined_dict[term] = [value for value in row_data if value != '-']
-                vc_ratio_added = True
-                continue
-            
-            if "lngrp los" == term_lower and not ln_grp_los_added:
-                combined_dict[term] = [value for value in row_data if value != '-']
-                ln_grp_los_added = True
-                continue
+                        delay_values[direction] = ["-", "-", "-"]
     
-            if "v/c ratio" == term_lower and not vc_ratio_added:
-                combined_dict[term] = [value for value in row_data if value != '-']
-                vc_ratio_added = True
-                continue
-    
-            if "los" == term_lower and not los_added and not ln_grp_los_added:
-                combined_dict[term] = [value for value in row_data if value != '-']
-                los_added = True
-                continue
-    
+            # Process approach delay
             if "approach delay" in term_lower:
                 filtered_row_data = [value for value in row_data if value != '-']
-                for idx, direction in enumerate(['EB', 'WB', 'NB', 'SB', 'NE', 'NW', 'SE', 'SW']):
+                for idx, direction in enumerate(directions):
                     if lane_config.get(direction) == '-':
                         filtered_row_data.insert(idx, '-')
-                print(filtered_row_data)
-                if len(filtered_row_data) >= 4:
-                    approach_data["EB"]["Approach Delay"] = filtered_row_data[0]
-                    approach_data["WB"]["Approach Delay"] = filtered_row_data[1]
-                    approach_data["NB"]["Approach Delay"] = filtered_row_data[2]
-                    approach_data["SB"]["Approach Delay"] = filtered_row_data[3]
-                continue
+                for idx, direction in enumerate(directions[:len(filtered_row_data)]):
+                    approach_data[direction]["Approach Delay"] = filtered_row_data[idx]
     
+            # Process approach LOS
             if term_lower == "approach los":
                 filtered_row_data = [value for value in row_data if value != '-']
-                for idx, direction in enumerate(['EB', 'WB', 'NB', 'SB', 'NE', 'NW', 'SE', 'SW']):
+                for idx, direction in enumerate(directions):
                     if lane_config.get(direction) == '-':
                         filtered_row_data.insert(idx, '-')
-                        
-                print(filtered_row_data)
-                if len(filtered_row_data) >= 4:
-                    approach_data["EB"]["Approach LOS"] = filtered_row_data[0]
-                    approach_data["WB"]["Approach LOS"] = filtered_row_data[1]
-                    approach_data["NB"]["Approach LOS"] = filtered_row_data[2]
-                    approach_data["SB"]["Approach LOS"] = filtered_row_data[3]
-                continue
+                for idx, direction in enumerate(directions[:len(filtered_row_data)]):
+                    approach_data[direction]["Approach LOS"] = filtered_row_data[idx]
     
+            # Add other terms to combined_dict
             if term_lower not in ["v/c ratio", "los", "v/c ratio(x)", "lngrp los"]:
                 combined_dict[term] = [value for value in row_data if value != '-']
-        
+    
+        # Finalize combined_dict
         value_set = [vc_ratio_values, delay_values, los_values]
-        directions = ['EB', 'WB', 'NB', 'SB', 'NE', 'NW', 'SE', 'SW']
         
+        """
+        *** Preference algorithm
+        """
         # Process each type of value set: vc_ratio, los, and delay
         for values, term in zip(value_set, list(combined_dict.keys())[1:]):
             for direction in directions:
@@ -2677,21 +2649,15 @@ def extract_data_to_csv(file_path, output_file):
                     values[direction][min_index] = '-'
                 
                 # Debug print
-                # print(f"Updated {direction} for {term}: {values[direction]}")
+                print(f"Updated {direction} for {term}: {values[direction]}")
             
             # Filter out '-' values and add to combined_dict
             filtered_values = {direction: [value for value in values[direction] if value != '-' and value != 'Z'] for direction in directions}
             combined_dict[term] = [value for sublist in filtered_values.values() for value in sublist]
         
             # Debug print for combined_dict update
-            # print(f"Added to '{term}': {combined_dict[term]}")
-    
-        # Loop through each direction (EB, WB, NB, SB)
-        for direction in ['EB', 'WB', 'NB', 'SB', 'NE', 'NW', 'SE', 'SW']:
-            # Check if both "Approach Delay" and "Approach LOS" are '-'
-            if approach_data.get(direction) and all(value == '-' for value in approach_data[direction].values()):
-                approach_data[direction] = '-'
-
+            print(f"Added to '{term}': {combined_dict[term]}")
+            
         # Merge approach data into combined_dict and append to final lists
         combined_dict.update(approach_data)
         combined_list.append(combined_dict)
@@ -2716,7 +2682,7 @@ def extract_data_to_csv(file_path, output_file):
     
     twsc_overall, synchro_overall, hcm_overall = parse_overall_data_v2(file_path)
     twsc_intersections = parse_twsc_approach(df)
-    twsc_intersection_directions = process_directions(twsc_overall)
+    twsc_intersection_directions, original_twsc_directions, combined_mvmt_names = process_directions(twsc_overall, lane_configurations)
     
     # print("\nTWSC Summary Directions: ", twsc_intersection_directions)
     
@@ -2801,7 +2767,6 @@ def extract_data_to_csv(file_path, output_file):
 
         # Processing if lane configuration is available
         if lane_config:
-            
             for direction, lanes in lane_config.items():
                 # Skip the "Intersection ID" key in lane_config
                 if direction == "Intersection ID":
@@ -2810,6 +2775,8 @@ def extract_data_to_csv(file_path, output_file):
                 # Retrieve approach delay and LOS for the current direction
                 approach_delay = data_dict.get(direction, {}).get("Approach Delay", '-')
                 approach_los = data_dict.get(direction, {}).get("Approach LOS", '-')
+                
+                # print(approach_delay)
     
                 # Loop through each lane in the direction
                 for i, lane in enumerate(lanes):
@@ -2840,15 +2807,17 @@ def extract_data_to_csv(file_path, output_file):
                         if term in data_dict:
                             delay_value = data_dict[term][j] if j < len(data_dict[term]) else '-'
                             break
-    
-                    # Append the row for this lane
-                    intersection_data.append([intersection_id_str, direction_value, lane, vc_value, los_value, delay_value])
+                    
+                    if vc_value and los_value and delay_value != '-':
+                        # Append the row for this lane
+                        intersection_data.append([intersection_id_str, direction_value, lane, vc_value, los_value, delay_value])
     
                     # Increment the indices for v/c, LOS, and Delay values
                     j += 1
-                    
-                # Add an overall row for this direction
-                intersection_data.append(['', f"{direction} Overall", '', '-', f'{approach_los}', f'{approach_delay}'])
+                
+                if approach_delay != 0:
+                    # Add an overall row for this direction
+                    intersection_data.append(['', f"{direction} Overall", '', '-', f'{approach_los}', f'{approach_delay}'])
 
             if overall_idx == 0:
                 overall_vc = overall_data[0].get("v/c ratio")
@@ -2875,12 +2844,13 @@ def extract_data_to_csv(file_path, output_file):
                         overall_los = '-'
                         overall_delay = '-'
                         overall_idx = None  # No data available
+            if overall_delay != 0 or '-':
+                # Add an overall row for this intersection, including data from Synchro and HCM
+                intersection_data.append(['', "Overall", '', '-', overall_los, overall_delay])
                 
-            # Add an overall row for this intersection, including data from Synchro and HCM
-            intersection_data.append(['', "Overall", '', overall_vc, overall_los, overall_delay])
-            
         # Processing if TWSC summary data is available
         if twsc_summary_result:
+            # print("\nDirections: ", twsc_summary_result, '\n')
             for direction, lanes in twsc_summary_directions.items():
                 # Skip the "ID" key in TWSC summary
                 if direction == "ID":
@@ -2889,19 +2859,26 @@ def extract_data_to_csv(file_path, output_file):
                 # Retrieve approach delay and LOS for the current direction
                 approach_delay = data_dict.get(direction, {}).get("Approach Delay", '-')
                 approach_los = data_dict.get(direction, {}).get("Approach LOS", '-')
-                
                 # Loop through each lane in the direction
                 for i, lane in enumerate(lanes):
+                    # Check if the lane suffix matches "Ln<number>" and map it to its actual suffix
+                    original_lane_key = direction + lane
+                    
                     # Print the Intersection ID only once at the start of the set
                     intersection_id_str = str(intersection_id) if not intersection_id_printed else ''
                     intersection_id_printed = True
                     
-                    lane_data = twsc_summary_result.get(direction + lane, ('-', '-', '-'))
+                    # print(direction)
+                    # print(lane)
+                    
+                    lane_data = twsc_summary_result.get(original_lane_key, ('-', '-', '-'))
                     direction_value = direction if i == 0 else ''  # Only print direction once
+                    
+                    # print(lane_data)
                     
                     # Append the row for this lane (v/c, LOS, Delay)
                     intersection_data.append([intersection_id_str, direction_value, lane, lane_data[0], lane_data[1], lane_data[2]])
-    
+
                 # Add an overall row for this direction
                 intersection_data.append(['', f"{direction} Overall", '', '-', f'{approach_los}', f'{approach_delay}'])
             
@@ -3090,10 +3067,13 @@ if __name__ == "__main__":
     test_report_1 = "test/Test Report 1.txt"
     test_report_2 = "test/Test Report 2.txt"
     test_report_3 = "test/Test Report 3.txt"
+    test_report_4 = "test/Test Report 4.txt"
 
-    test_report_1_csv = "test-report-1"
-    test_report_2_csv = "test-report-2"
-    test_report_3_csv = "test-report-3"
+    test_report_1_csv = "test-report-1.csv"
+    test_report_2_csv = "test-report-2.csv"
+    test_report_3_csv = "test-report-3.csv"
+    test_report_4_csv = "test-report-4.csv"
+    
     # parse_overall_data_v2(file)  # Gets the data for overall
     
     # Testing with Test Report 1.txt
@@ -3107,6 +3087,10 @@ if __name__ == "__main__":
     # Testing with Test Report 3.txt
     print('\n' + "*"*35 + "\n| Results for 'Test Report 3.txt' |\n" + "*"*35 +'\n')
     extract_data_to_csv(test_report_3, test_report_3_csv)
+    
+    # Testing with Test Report 3.txt
+    print('\n' + "*"*35 + "\n| Results for 'Test Report 4.txt' |\n" + "*"*35 +'\n')
+    extract_data_to_csv(test_report_4, test_report_4_csv)
     
     # lane_groups = separate_characters(movement)
     # print(f"\nLane groups:\n{lane_groups}")

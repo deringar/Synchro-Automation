@@ -81,11 +81,13 @@ Intersection ID,Direction,Lane,V/c,LOS,Delay
 ,NB Overall,,-,A,8.7
 ,SB,L,0.52,B,8.0
 ,,TT,0.03,B,10.3
-,,R,0.61,,14.4
+,,R,0.61,-,14.4
 ,SB Overall,,-,B,14.4
 ,Overall,,-,B,13.2
 ,,,,,
-5,EB,T,-,-,-
+5,NW,Ln1,0.744,E,46.2
+,NW Overall,,-,E,46.22
+,EB,T,-,-,-
 ,,R,-,-,-
 ,EB Overall,,-,-,0
 ,WB,L,0.053,A,8.6

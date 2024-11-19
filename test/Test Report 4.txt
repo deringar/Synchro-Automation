@@ -1,0 +1,113 @@
+﻿	Baseline
+1: 	11/15/2024
+
+
+
+Intersection                      		      	      	      	      	      	      	      	      	      	      	      	
+Int Delay, s/veh                  		6.9   	      	      	      	      	      	      	      	      	      	      	
+
+Movement                          		SEL   	SET   	SER   	NWL   	NWT   	NWR   	NEL   	NET   	NER   	SWL   	SWT   	SWR
+Lane Configurations               		0     	<1>   	0     	0     	<1>   	0     	0     	<1>   	0     	0     	<1>   	0
+Traffic Vol, veh/h                		5     	10    	15    	30    	40    	50    	25    	50    	25    	50    	40    	10
+Future Vol, veh/h                 		5     	10    	15    	30    	40    	50    	25    	50    	25    	50    	40    	10
+Conflicting Peds, #/hr            		0     	0     	0     	0     	0     	0     	0     	0     	0     	0     	0     	0
+Sign Control                      		Free  	Free  	Free  	Free  	Free  	Free  	Stop  	Stop  	Stop  	Stop  	Stop  	Stop
+RT Channelized                    		-     	-     	None  	-     	-     	None  	-     	-     	None  	-     	-     	None
+Storage Length                    		-     	-     	-     	-     	-     	-     	-     	-     	-     	-     	-     	-
+Veh in Median Storage, #          		-     	0     	-     	-     	0     	-     	-     	0     	-     	-     	0     	-
+Grade, %                          		-     	0     	-     	-     	0     	-     	-     	0     	-     	-     	0     	-
+Peak Hour Factor                  		92    	92    	92    	92    	92    	92    	92    	92    	92    	92    	92    	92
+Heavy Vehicles, %                 		2     	2     	2     	2     	2     	2     	2     	2     	2     	2     	2     	2
+Mvmt Flow                         		5     	11    	16    	33    	43    	54    	27    	54    	27    	54    	43    	11
+                                  		      	      	      	      	      	      	      	      	      	      	      	
+
+Major/Minor                       		Major1	      	      	Major2	      	      	Minor1	      	      	Minor2	      	
+Conflicting Flow All              		98    	0     	0     	27    	0     	0     	160   	193   	19    	185   	174   	71
+          Stage 1                 		-     	-     	-     	-     	-     	-     	30    	30    	-     	136   	136   	-
+          Stage 2                 		-     	-     	-     	-     	-     	-     	130   	163   	-     	49    	38    	-
+Critical Hdwy                     		4.12  	-     	-     	4.12  	-     	-     	7.12  	6.52  	6.22  	7.12  	6.52  	6.22
+Critical Hdwy Stg 1               		-     	-     	-     	-     	-     	-     	6.12  	5.52  	-     	6.12  	5.52  	-
+Critical Hdwy Stg 2               		-     	-     	-     	-     	-     	-     	6.12  	5.52  	-     	6.12  	5.52  	-
+Follow-up Hdwy                    		2.218 	-     	-     	2.218 	-     	-     	3.518 	4.018 	3.318 	3.518 	4.018 	3.318
+Pot Cap-1 Maneuver                		1495  	-     	-     	1587  	-     	-     	805   	702   	1059  	776   	719   	992
+          Stage 1                 		-     	-     	-     	-     	-     	-     	987   	870   	-     	867   	784   	-
+          Stage 2                 		-     	-     	-     	-     	-     	-     	873   	763   	-     	964   	863   	-
+Platoon blocked, %                		      	-     	-     	      	-     	-     	      	      	      	      	      	
+Mov Cap-1 Maneuver                		1495  	-     	-     	1587  	-     	-     	729   	684   	1059  	680   	701   	992
+Mov Cap-2 Maneuver                		-     	-     	-     	-     	-     	-     	729   	684   	-     	680   	701   	-
+          Stage 1                 		-     	-     	-     	-     	-     	-     	983   	867   	-     	848   	767   	-
+          Stage 2                 		-     	-     	-     	-     	-     	-     	797   	747   	-     	877   	860   	-
+                                  		      	      	      	      	      	      	      	      	      	      	      	
+
+Approach                          		SE    	      	      	NW    	      	      	NE    	      	      	SW    	      	
+HCM Control Delay, s/v            		1.24  	      	      	1.83  	      	      	10.5  	      	      	10.98 	      	
+HCM LOS                           		      	      	      	      	      	      	B     	      	      	B     	      	
+                                  		      	      	      	      	      	      	      	      	      	      	      	
+
+Minor Lane/Major Mvmt             		      	NELn1 	NWL   	NWT   	NWR   	SEL   	SET   	SER   	SWLn1
+Capacity (veh/h)                  		      	764   	405   	-     	-     	268   	-     	-     	711
+HCM Lane V/C Ratio                		      	0.142 	0.021 	-     	-     	0.004 	-     	-     	0.153
+HCM Control Delay (s/veh)         		      	10.5  	7.3   	0     	-     	7.4   	0     	-     	11
+HCM Lane LOS                      		      	B     	A     	A     	-     	A     	A     	-     	B
+HCM 95th %tile Q(veh)             		      	0.5   	0.1   	-     	-     	0     	-     	-     	0.5
+
+
+	Synchro 12 Report
+	Page 0
+
+	Baseline
+2: 	11/15/2024
+
+
+
+Intersection                      		      	      	      	      	      	      	      	      	      	
+Int Delay, s/veh                  		5.9   	      	      	      	      	      	      	      	      	
+
+Movement                          		EBL   	EBT   	EBR   	WBL   	WBT   	WBR   	NBL   	NBR   	SWL   	SWR
+Lane Configurations               		0     	<1>   	0     	0     	<1>   	0     	0     	1>    	<1>   	0
+Traffic Vol, veh/h                		10    	20    	30    	50    	100   	50    	25    	50    	30    	20
+Future Vol, veh/h                 		10    	20    	30    	50    	100   	50    	25    	50    	30    	20
+Conflicting Peds, #/hr            		0     	0     	0     	0     	0     	0     	0     	0     	0     	0
+Sign Control                      		Free  	Free  	Free  	Free  	Free  	Free  	Stop  	Stop  	Stop  	Stop
+RT Channelized                    		-     	-     	None  	-     	-     	None  	-     	-     	-     	None
+Storage Length                    		-     	-     	-     	-     	-     	-     	-     	-     	-     	-
+Veh in Median Storage, #          		-     	0     	-     	-     	0     	-     	0     	-     	0     	-
+Grade, %                          		-     	0     	-     	-     	0     	-     	0     	-     	0     	-
+Peak Hour Factor                  		92    	92    	92    	92    	92    	92    	92    	92    	92    	92
+Heavy Vehicles, %                 		2     	2     	2     	2     	2     	2     	2     	2     	2     	2
+Mvmt Flow                         		11    	22    	33    	54    	109   	54    	27    	54    	33    	22
+                                  		      	      	      	      	      	      	      	      	      	
+
+Major/Minor                       		Major1	      	      	Major2	      	      	Minor1	      	Minor2	
+Conflicting Flow All              		163   	0     	0     	54    	0     	0     	293   	38    	315   	136
+          Stage 1                 		-     	-     	-     	-     	-     	-     	60    	-     	245   	-
+          Stage 2                 		-     	-     	-     	-     	-     	-     	234   	-     	71    	-
+Critical Hdwy                     		4.12  	-     	-     	4.12  	-     	-     	7.12  	6.22  	7.12  	6.22
+Critical Hdwy Stg 1               		-     	-     	-     	-     	-     	-     	6.12  	-     	6.12  	-
+Critical Hdwy Stg 2               		-     	-     	-     	-     	-     	-     	6.12  	-     	6.12  	-
+Follow-up Hdwy                    		2.218 	-     	-     	2.218 	-     	-     	3.518 	3.318 	3.518 	3.318
+Pot Cap-1 Maneuver                		1416  	-     	-     	1551  	-     	-     	659   	1034  	637   	913
+          Stage 1                 		-     	-     	-     	-     	-     	-     	952   	-     	759   	-
+          Stage 2                 		-     	-     	-     	-     	-     	-     	769   	-     	939   	-
+Platoon blocked, %                		      	-     	-     	      	-     	-     	      	      	      	
+Mov Cap-1 Maneuver                		1416  	-     	-     	1551  	-     	-     	580   	1034  	537   	913
+Mov Cap-2 Maneuver                		-     	-     	-     	-     	-     	-     	580   	-     	537   	-
+          Stage 1                 		-     	-     	-     	-     	-     	-     	944   	-     	730   	-
+          Stage 2                 		-     	-     	-     	-     	-     	-     	687   	-     	848   	-
+                                  		      	      	      	      	      	      	      	      	      	
+
+Approach                          		EB    	      	      	WB    	      	      	NB    	      	SW    	
+HCM Control Delay, s/v            		1.26  	      	      	1.85  	      	      	11.2  	      	12.12 	
+HCM LOS                           		      	      	      	      	      	      	B     	      	B     	
+                                  		      	      	      	      	      	      	      	      	      	
+
+Minor Lane/Major Mvmt             		      	NBLn1 	EBL   	EBT   	EBR   	WBL   	WBT   	WBR   	SWLn1
+Capacity (veh/h)                  		      	662   	268   	-     	-     	422   	-     	-     	603
+HCM Lane V/C Ratio                		      	0.123 	0.008 	-     	-     	0.035 	-     	-     	0.162
+HCM Control Delay (s/veh)         		      	11.2  	7.6   	0     	-     	7.4   	0     	-     	12.1
+HCM Lane LOS                      		      	B     	A     	A     	-     	A     	A     	-     	B
+HCM 95th %tile Q(veh)             		      	0.4   	0     	-     	-     	0.1   	-     	-     	0.6
+
+
+	Synchro 12 Report
+	Page 0

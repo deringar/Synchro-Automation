@@ -13,7 +13,7 @@ Intersection ID,Direction,Lane,V/c,LOS,Delay
 ,,TT,0.13,B,16.4
 ,,R,0.28,A,0.5
 ,SB Overall,,-,C,23.2
-,Overall,,0.67,C,29.7
+,Overall,,-,C,29.7
 ,,,,,
 1,EB,L,0.85,E,77.5
 ,,TTR,0.44,D,42.9
