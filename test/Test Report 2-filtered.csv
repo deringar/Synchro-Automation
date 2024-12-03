@@ -57,86 +57,53 @@ Intersection ID,Direction,Lane,V/c,LOS,Delay
 ,SB Overall,,-,C,25.0
 ,Overall,,-,B,14.6
 ,,,,,
-3,NB,L,0.001,A,8.2
-,,T,-,A,0.0
+3,NB,LT,0.001,A,8.2
 ,NB Overall,,-,-,0.27
-,EB,Ln1,0.001,A,9.4
+,EB,LR,0.001,A,9.4
 ,EB Overall,,-,A,9.43
-,SB,T,-,-,-
-,,R,-,-,-
 ,SB Overall,,-,-,0
 ,,,,,
-4,NB,L,0.001,A,7.3
-,,T,-,A,0.0
+4,NB,LT,0.001,A,7.3
 ,NB Overall,,-,-,0.27
-,EB,Ln1,0.002,A,8.4
+,EB,LR,0.002,A,8.4
 ,EB Overall,,-,A,8.43
-,SB,T,-,-,-
-,,R,-,-,-
 ,SB Overall,,-,-,0
 ,,,,,
-5,NB,T,-,-,-
-,,R,-,-,-
 ,NB Overall,,-,-,0
-,WB,Ln1,-,A,0.0
-,,Ln2,-,A,0.0
 ,WB Overall,,-,A,0
-,SB,L,-,A,0.0
-,,T,-,-,-
 ,SB Overall,,-,-,0
 ,,,,,
-6,NB,L,-,A,0.0
-,,T,-,-,-
 ,NB Overall,,-,-,0
-,EB,Ln1,-,A,0.0
 ,EB Overall,,-,A,0
-,SB,T,-,-,-
-,,R,-,-,-
 ,SB Overall,,-,-,0
 ,,,,,
-7,NB,L,0.001,A,7.3
-,,T,-,A,0.0
+7,NB,LT,0.001,A,7.3
 ,NB Overall,,-,-,0.63
-,EB,Ln1,0.014,A,8.7
+,EB,LR,0.014,A,8.7
 ,EB Overall,,-,A,8.71
-,SB,T,-,-,-
-,,R,-,-,-
 ,SB Overall,,-,-,0
 ,,,,,
-8,EB,L,0.001,A,7.6
-,,T,-,A,0.0
+8,EB,LT,0.001,A,7.6
 ,EB Overall,,-,-,0.08
-,WB,T,-,-,-
-,,R,-,-,-
 ,WB Overall,,-,-,0
-,SB,Ln1,0.008,A,9.5
+,SB,LR,0.008,A,9.5
 ,SB Overall,,-,A,9.52
 ,,,,,
-9,EB,L,0.011,A,7.7
-,,T,-,A,0.0
+9,EB,LT,0.011,A,7.7
 ,EB Overall,,-,-,1
-,WB,T,-,-,-
-,,R,-,-,-
 ,WB Overall,,-,-,0
-,SB,Ln1,0.064,A,9.9
+,SB,LR,0.064,A,9.9
 ,SB Overall,,-,A,9.89
 ,,,,,
-10,EB,L,0.128,A,8.0
-,,T,-,A,0.0
+10,EB,LT,0.128,A,8.0
 ,EB Overall,,-,-,4.74
-,WB,T,-,-,-
-,,R,-,-,-
 ,WB Overall,,-,-,0
-,SB,Ln1,0.357,B,12.4
+,SB,LR,0.357,B,12.4
 ,SB Overall,,-,B,12.36
 ,,,,,
-11,NB,T,-,-,-
-,,R,-,-,-
 ,NB Overall,,-,-,0
-,WB,Ln1,0.002,B,11.5
+,WB,LR,0.002,B,11.5
 ,WB Overall,,-,B,11.52
-,SB,L,-,A,0.0
-,,T,-,-,-
 ,SB Overall,,-,-,0
 ,,,,,
 12,WB,LR,0.48,A,9.1
