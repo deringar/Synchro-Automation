@@ -1,19 +1,11 @@
 Intersection ID,Direction,Lane,V/c,LOS,Delay
 1,NE,LTR,0.142,B,10.5
-,NE Overall,,-,B,10.5
 ,NW,LTR,0.021,A,7.3
-,NW Overall,,-,-,1.83
 ,SE,LTR,0.004,A,7.4
-,SE Overall,,-,-,1.24
 ,SW,LTR,0.153,B,11.0
-,SW Overall,,-,B,10.98
 ,,,,,
 2,NB,RR,0.123,B,11.2
-,NB Overall,,-,B,11.2
 ,EB,LTR,0.008,A,7.6
-,EB Overall,,-,-,1.26
 ,WB,LTR,0.035,A,7.4
-,WB Overall,,-,-,1.85
 ,SW,LLR,0.162,B,12.1
-,SW Overall,,-,B,12.12
 ,,,,,
