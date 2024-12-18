@@ -1,4 +1,3 @@
-0,1,2,3,4,5,6,7,8,9,10,11,12
 1,,,,,,,,,,,,
 Lane Group,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
 Lane Configurations             ,1  ,2> ,0  ,1  ,1  ,1  ,1  ,2> ,0  ,2  ,2  ,1
@@ -136,7 +135,6 @@ Approach LOS                    ,   ,D  ,   ,   ,D  ,   ,   ,C  ,   ,   ,D,
 Intersection Summary,,,,,,,,,,,,
 "HCM 7th Control Delay, s/veh    ",44.8,,,,,,,,,,,
 HCM 7th LOS                     ,D,,,,,,,,,,,
-"Lanes, Volumes, Timings",,,,,,,,,,,,
 2,,,,,,,,,,,,
 Lane Group,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
 Lane Configurations             ,1  ,1> ,0  ,1  ,1> ,0  ,0  ,<1 ,1  ,0  ,<1>,0
@@ -274,7 +272,6 @@ Approach LOS                    ,   ,A  ,   ,   ,B  ,   ,   ,C  ,   ,   ,C,
 Intersection Summary,,,,,,,,,,,,
 "HCM 7th Control Delay, s/veh    ",14.6,,,,,,,,,,,
 HCM 7th LOS                     ,B,,,,,,,,,,,
-"Lanes, Volumes, Timings",,,,,,,,,,,,
 3,,,,,,,,,,,,
 Lane Group,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
 Lane Configurations             ,1> ,   ,0  ,   ,   ,   ,0  ,<1 ,   ,   ,1> ,0
@@ -338,7 +335,6 @@ HCM Lane V/C Ratio              ,    ,0.001,-   ,0.001,-   ,-,,,,,,
 HCM Control Delay (s/veh)       ,    ,8.2 ,0   ,9.4 ,-   ,-,,,,,,
 HCM Lane LOS                    ,    ,A   ,A   ,A   ,-   ,-,,,,,,
 HCM 95th %tile Q(veh)           ,    ,0   ,-   ,0   ,-   ,-,,,,,,
-"Lanes, Volumes, Timings",,,,,,,,,,,,
 4,,,,,,,,,,,,
 Lane Group,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
 Lane Configurations             ,1>  ,    ,0   ,    ,    ,    ,0   ,<1  ,    ,    ,1>  ,0
@@ -402,7 +398,6 @@ HCM Lane V/C Ratio              ,    ,0.001,-   ,0.002,-   ,-,,,,,,
 HCM Control Delay (s/veh)       ,    ,7.3 ,0   ,8.4 ,-   ,-,,,,,,
 HCM Lane LOS                    ,    ,A   ,A   ,A   ,-   ,-,,,,,,
 HCM 95th %tile Q(veh)           ,    ,0   ,-   ,0   ,-   ,-,,,,,,
-"Lanes, Volumes, Timings",,,,,,,,,,,,
 5,,,,,,,,,,,,
 Lane Group,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
 Lane Configurations             ,    ,    ,    ,1   ,    ,1   ,    ,1>  ,0   ,0   ,<1,
@@ -469,7 +464,6 @@ HCM Lane V/C Ratio              ,    ,-   ,-   ,-   ,-   ,-   ,-,,,,,
 HCM Control Delay (s/veh)       ,    ,-   ,-   ,0   ,0   ,0   ,-,,,,,
 HCM Lane LOS                    ,    ,-   ,-   ,A   ,A   ,A   ,-,,,,,
 HCM 95th %tile Q(veh)           ,    ,-   ,-   ,-   ,-   ,0   ,-,,,,,
-"Lanes, Volumes, Timings",,,,,,,,,,,,
 6,,,,,,,,,,,,
 Lane Group,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
 Lane Configurations             ,1>  ,    ,0   ,    ,    ,    ,0   ,<1  ,    ,    ,1>  ,0
@@ -533,7 +527,6 @@ HCM Lane V/C Ratio              ,    ,-   ,-   ,-   ,-   ,-,,,,,,
 HCM Control Delay (s/veh)       ,    ,0   ,-   ,0   ,-   ,-,,,,,,
 HCM Lane LOS                    ,    ,A   ,-   ,A   ,-   ,-,,,,,,
 HCM 95th %tile Q(veh)           ,    ,0   ,-   ,-   ,-   ,-,,,,,,
-"Lanes, Volumes, Timings",,,,,,,,,,,,
 7,,,,,,,,,,,,
 Lane Group,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
 Lane Configurations             ,1>  ,    ,0   ,    ,    ,    ,0   ,<1  ,    ,    ,1>  ,0
@@ -597,7 +590,6 @@ HCM Lane V/C Ratio              ,    ,0.001,-   ,0.014,-   ,-,,,,,,
 HCM Control Delay (s/veh)       ,    ,7.3 ,0   ,8.7 ,-   ,-,,,,,,
 HCM Lane LOS                    ,    ,A   ,A   ,A   ,-   ,-,,,,,,
 HCM 95th %tile Q(veh)           ,    ,0   ,-   ,0   ,-   ,-,,,,,,
-"Lanes, Volumes, Timings",,,,,,,,,,,,
 8,,,,,,,,,,,,
 Lane Group,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
 Lane Configurations             ,0   ,<1  ,    ,    ,1>  ,0   ,    ,    ,    ,1>  ,    ,0
@@ -663,7 +655,6 @@ HCM Lane V/C Ratio              ,    ,0.001,-   ,-   ,-   ,0.008,,,,,,
 HCM Control Delay (s/veh)       ,    ,7.6 ,0   ,-   ,-   ,9.5,,,,,,
 HCM Lane LOS                    ,    ,A   ,A   ,-   ,-   ,A,,,,,,
 HCM 95th %tile Q(veh)           ,    ,0   ,-   ,-   ,-   ,0,,,,,,
-"Lanes, Volumes, Timings",,,,,,,,,,,,
 9,,,,,,,,,,,,
 Lane Group,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
 Lane Configurations             ,0   ,<1  ,    ,    ,1>  ,0   ,    ,    ,    ,1>  ,    ,0
@@ -727,7 +718,6 @@ HCM Lane V/C Ratio              ,    ,0.011,-   ,-   ,-   ,0.064,,,,,,
 HCM Control Delay (s/veh)       ,    ,7.7 ,0   ,-   ,-   ,9.9,,,,,,
 HCM Lane LOS                    ,    ,A   ,A   ,-   ,-   ,A,,,,,,
 HCM 95th %tile Q(veh)           ,    ,0   ,-   ,-   ,-   ,0.2,,,,,,
-"Lanes, Volumes, Timings",,,,,,,,,,,,
 10,,,,,,,,,,,,
 Lane Group,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
 Lane Configurations             ,0   ,<1  ,    ,    ,1   ,1   ,    ,    ,    ,1>  ,    ,0
@@ -793,7 +783,6 @@ HCM Lane V/C Ratio              ,    ,0.128,-   ,-   ,-   ,0.357,,,,,,
 HCM Control Delay (s/veh)       ,    ,8   ,0   ,-   ,-   ,12.4,,,,,,
 HCM Lane LOS                    ,    ,A   ,A   ,-   ,-   ,B,,,,,,
 HCM 95th %tile Q(veh)           ,    ,0.4 ,-   ,-   ,-   ,1.6,,,,,,
-"Lanes, Volumes, Timings",,,,,,,,,,,,
 11,,,,,,,,,,,,
 Lane Group,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
 Lane Configurations             ,    ,    ,    ,1>  ,    ,0   ,    ,1>  ,0   ,0   ,<1,
@@ -860,7 +849,6 @@ HCM Lane V/C Ratio              ,    ,-   ,-   ,0.002,-   ,-,,,,,,
 HCM Control Delay (s/veh)       ,    ,-   ,-   ,11.5,0   ,-,,,,,,
 HCM Lane LOS                    ,    ,-   ,-   ,B   ,A   ,-,,,,,,
 HCM 95th %tile Q(veh)           ,    ,-   ,-   ,0   ,0   ,-,,,,,,
-"Lanes, Volumes, Timings",,,,,,,,,,,,
 12,,,,,,,,,,,,
 Lane Group,EBL,EBT,EBR,WBL,WBT,WBR,NBL,NBT,NBR,SBL,SBT,SBR
 Lane Configurations             ,    ,    ,    ,1>  ,    ,0   ,    ,1>  ,0   ,0   ,<1,
