@@ -63,9 +63,9 @@ Intersection ID,Direction,Lane,V/c,LOS,Delay
 4,NB,LT,0.001,A,7.3
 ,EB,LR,0.002,A,8.4
 ,,,,,
-5,SB,LT,0,A,0.0
+5,SB,LT,-,A,0.0
 ,,,,,
-6,NB,LT,0,A,0.0
+6,NB,LT,-,A,0.0
 ,,,,,
 7,NB,LT,0.001,A,7.3
 ,EB,LR,0.014,A,8.7
@@ -80,7 +80,7 @@ Intersection ID,Direction,Lane,V/c,LOS,Delay
 ,SB,LR,0.357,B,12.4
 ,,,,,
 11,WB,LR,0.002,B,11.5
-,SB,LT,0,A,0.0
+,SB,LT,-,A,0.0
 ,,,,,
 12,WB,LR,0.48,A,9.1
 ,WB Overall,,-,A,9.1

@@ -8,14 +8,14 @@ Intersection ID,Direction,Lane,V/c,LOS,Delay
 3,NE,LT,0.015,A,7.8
 ,EB,LR,0.329,C,24.9
 ,,,,,
-4,EB,LT,0,A,0.0
+4,EB,LT,-,A,0.0
 ,SE,LR,0.008,C,17.4
 ,,,,,
 5,NB,LR,0.012,B,14.7
 ,WB,LT,0.005,A,9.7
 ,,,,,
 6,WB,LR,0.292,C,20.9
-,SW,"['L', 'T']",0.069,A,9.2
+,SW,L,0.069,A,9.2
 ,,,,,
 7,EB,LT,0.92,E,66.7
 ,,R,0.60,A,9.0
