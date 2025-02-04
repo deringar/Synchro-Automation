@@ -3,23 +3,23 @@ Intersection ID,Direction,Lane,V/c,LOS,Delay
 ,WB Overall,,-,-,0
 ,NB Overall,,-,-,0
 ,SB Overall,,-,-,0
-,Overall,,-,-,-
+,Overall,,-,A,9.3
 ,,,,,
 ,EB Overall,,-,A,9.5
 ,WB Overall,,-,A,9.5
 ,NB Overall,,-,A,8.9
 ,SB Overall,,-,A,8.9
-,Overall,,-,-,-
+,Overall,,-,A,9.5
 ,,,,,
 ,EB Overall,,-,A,9.4
 ,WB Overall,,-,A,9.4
 ,NB Overall,,-,A,9.2
 ,SB Overall,,-,A,9.2
-,Overall,,-,-,-
+,Overall,,-,A,9.4
 ,,,,,
 ,EB Overall,,-,A,9.1
 ,WB Overall,,-,A,9.1
 ,NB Overall,,-,A,9.1
 ,SB Overall,,-,A,9.1
-,Overall,,-,-,-
+,Overall,,-,A,9.1
 ,,,,,
