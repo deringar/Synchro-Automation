@@ -28,6 +28,9 @@ from shutil import copy  # Used to copy files or directories.
 from openpyxl import load_workbook, Workbook
 import pandas as pd
 
+
+""" Part 1 """
+
 def write_to_excel(file_path, lane_groups, delay, vc_ratio, los):
     # Helper function to transform each sublist into a dictionary with lane directions
     def separate_characters(sublist):
@@ -300,8 +303,7 @@ def write_direction_data_to_files(sheet, matched_results, relevant_columns, head
     return
 
 
-""" STEP 1 """
-
+""" Part 2 """
 
 def read_input_file(file_path):
     # Load the input workbook and select the active sheet
@@ -404,7 +406,7 @@ def read_input_file(file_path):
 
 
 """
- ~ Data extraction functions ~
+Part 3: Data extraction
 
     * parse_minor_lane_mvmt(lines, start_line, end_line)
     * process_directions(twsc_summary_results)
@@ -475,7 +477,7 @@ def parse_minor_lane_mvmt(lines, start_line, end_line):
                 elif 'capacity' or r'^cap' in term.lower():
                     capacity_results.append(
                         term_results if term_results else ['-'])
-
+                print(f"Term results for term '{term}': {term_results}")
     # Combine the results into tuples for easier reading
     merged_results = []
     for vc_list, los_list, delay_list, capacity_list in zip(vc_ratio_results, los_results, delay_results, capacity_results):
@@ -491,6 +493,8 @@ def integrate_awsc_data(awsc_data, combined_data):
     Merges the AWSC lane data into the existing data handling structure,
     ensuring each intersection is collected correctly.
     """
+    # print(f"\nAWSC Data: {awsc_data}")
+    # print(f"\nCombined Data: {combined_data}")
     for awsc_entry in awsc_data:
         intersection_id = awsc_entry.get("ID")
         if not intersection_id:
@@ -510,24 +514,36 @@ def integrate_awsc_data(awsc_data, combined_data):
     return combined_data
 
 
-def process_directions_awsc(lane_data):
+def process_directions_awsc(lane_data, lane_configs):
     """
     Processes lane names using process_directions to get actual movement labels.
     """
     processed_data = []
-    
-    for entry in lane_data:
-        processed_entry = {"ID": entry["ID"]}
-        
-        for lane, values in entry.items():
-            if lane == "ID":
+
+    # ✅ Process all lane data at once
+    processed_list, _, _ = process_directions(lane_data, lane_configs)
+
+    for original_entry, processed_entry in zip(lane_data, processed_list):
+        processed_result = {"ID": original_entry["ID"]}
+
+        # Map processed lane names back to their values
+        for direction, suffixes in processed_entry.items():
+            if direction == "ID":
                 continue
-            processed_lane = process_directions(lane)
-            processed_entry[processed_lane] = values
-        
-        processed_data.append(processed_entry)
-    
+            if isinstance(suffixes, list):
+                for suffix in suffixes:
+                    key = direction + suffix
+                    if key in original_entry:
+                        processed_result[key] = original_entry[key]
+            else:
+                key = direction + suffixes
+                if key in original_entry:
+                    processed_result[key] = original_entry[key]
+
+        processed_data.append(processed_result)
+
     return processed_data
+
 
 
 def parse_awsc_data(df):
@@ -540,61 +556,77 @@ def parse_awsc_data(df):
 
     for index, row in df.iterrows():
         line = str(row[0]).strip()
-        print(line)
+        
+        # Detect new intersection
         if line.isdigit():
             intersection_id = int(line)
-            print(f"Found intersection ID: {intersection_id} at row {index}")
+            # print(f"Found intersection ID: {intersection_id} at row {index}")
             continue
 
         if line.lower() == "lane":
-            print(f"Processing lane data for intersection ID: {intersection_id} at row {index}...{row}")
             lane_data = {"ID": str(intersection_id)}
-            direction_columns = {}
+            lane_columns = {}
 
-            for direction in ["EB", "WB", "NB", "SB", "NE", "NW", "SE", "SW"]:
-                for col_index, cell in enumerate(row.values):
-                    if re.fullmatch(f'{direction}(Ln\d+)?', str(cell)):
-                        direction_columns[direction] = col_index
-                        print(f"Found direction '{direction}' in column {col_index}")
+            # Step 1: Identify all lanes (e.g., NBLn1, EBLn1)
+            for col_index, cell in enumerate(row.values):
+                if re.fullmatch(r'(EB|WB|NB|SB|NE|NW|SE|SW)(Ln\d+)?', str(cell)):
+                    lane_columns[str(cell)] = col_index
+                    # print(f"Found lane '{cell}' in column {col_index}")
 
+            # Step 2: Collect V/C Ratio, LOS, Delay, Capacity
             next_row_index = index + 1
-            while next_row_index + 1 < len(df):
+
+            # ✅ Initialize temp_data fresh for each intersection
+            temp_data = {lane: ("-", "-", "-", "-") for lane in lane_columns.keys()}
+
+            while next_row_index < len(df):
                 next_row = df.iloc[next_row_index]
-                print(df.iloc[next_row_index + 1])
-                print(f"Line {next_row_index}: {next_row[0]}")
+                row_label = str(next_row.iloc[0]).strip()
 
-                for direction, col in direction_columns.items():
-                    lane_data.setdefault(direction, ("-", "-", "-", "-"))
-                    v_c_ratio, los, delay, cap = lane_data[direction]
-
-                    if "V/C Ratio" in str(next_row.iloc[0]):
-                        print(f"Found V/C Ratio at row {next_row_index}")
-                        v_c_ratio = next_row[col] if pd.notna(next_row[col]) else '-'
-                        print(f"  {direction} V/C Ratio: {v_c_ratio}")
-                    elif "LOS" in str(next_row.iloc[0]):
-                        print(f"Found LOS at row {next_row_index}")
-                        los = next_row[col] if pd.notna(next_row[col]) else '-'
-                        print(f"  {direction} LOS: {los}")
-                    elif "Delay" in str(next_row.iloc[0]):
-                        print(f"Found Delay at row {next_row_index}")
-                        delay = next_row[col] if pd.notna(next_row[col]) else '-'
-                        print(f"  {direction} Delay: {delay}")
-                    elif "Cap" in str(next_row.iloc[0]):
-                        print(f"Found Capacity at row {next_row_index}")
-                        cap = next_row[col] if pd.notna(next_row[col]) else '-'
-                        print(f"  {direction} Capacity: {cap}")
-
-                    lane_data[direction] = (v_c_ratio, los, delay, cap)
-
-                next_row_index += 1
-                if re.match(r'^\d+:', str(next_row[0])):
-                    print(f"Encountered new intersection or empty row at {next_row_index}, stopping data collection for current intersection.")
+                # ✅ Stop when a new intersection starts
+                if re.match(r'^\d+$', str(next_row[0])):
+                    # print(f"Encountered new intersection at row {next_row_index}, stopping data collection.")
                     break
 
-            awsc_data.append(lane_data)
-            print(f"Completed data collection for intersection ID: {intersection_id} -> {lane_data}")
+                # Process relevant rows only
+                if any(keyword in row_label for keyword in ["V/C Ratio", "LOS", "Delay", "Cap"]):
+                    # print(f"Processing data row '{row_label}' at index {next_row_index}")
 
-    print(f"AWSC Data Parsed: {awsc_data}")
+                    for lane, col in lane_columns.items():
+                        v_c_ratio, los, delay, cap = temp_data[lane]
+
+                        # ✅ Only update if the new data is valid (non-empty and not '-')
+                        if "V/C Ratio" in row_label:
+                            new_value = next_row[col] if pd.notna(next_row[col]) else '-'
+                            v_c_ratio = new_value if new_value != '-' else v_c_ratio
+                            # print(f"{lane} V/C Ratio: {v_c_ratio}")
+
+                        elif "LOS" in row_label:
+                            new_value = next_row[col] if pd.notna(next_row[col]) else '-'
+                            los = new_value if new_value != '-' else los
+                            # print(f"{lane} LOS: {los}")
+
+                        elif "Delay" in row_label:
+                            new_value = next_row[col] if pd.notna(next_row[col]) else '-'
+                            delay = new_value if new_value != '-' else delay
+                            # print(f"{lane} Delay: {delay}")
+
+                        elif "Cap" in row_label:
+                            new_value = next_row[col] if pd.notna(next_row[col]) else '-'
+                            cap = new_value if new_value != '-' else cap
+                            # print(f"{lane} Capacity: {cap}")
+
+                        # Update lane data
+                        temp_data[lane] = (v_c_ratio, los, delay, cap)
+
+                next_row_index += 1
+
+            # ✅ Add lane data specific to this intersection
+            lane_data.update(temp_data)
+            awsc_data.append(lane_data)
+            print(f"\nCompleted data collection for intersection ID: {intersection_id} -> {lane_data}")
+    
+    print(f"\nAWSC data: \n{awsc_data}")
     return awsc_data
 
 
@@ -890,9 +922,13 @@ def parse_overall_data_v2(file_path, df):
                                 lines, line_number, end_line)
                     
                             # Create a dictionary where keys are from the movement results
+                            
                             hcm_entry = {'ID': id_value}
-                    
+                            print(f"\nMerged results: {merged_results}\n")
+                            print(f"\nMovement results: {movement_results}\n")
+                            
                             for i in range(len(movement_results)):
+                                print(i)
                                 # Using the movement results as keys
                                 hcm_entry[movement_results[i]] = merged_results[i]
                             twsc_results.append(hcm_entry)
@@ -908,13 +944,12 @@ def parse_overall_data_v2(file_path, df):
                         print(f"Found phrase at line {line_number}: {phrase_found}")  # Debugging output
                         break  # Stop looking at this block and move on to the next intersection
 
-    # awsc_results = parse_lane_data_from_df()
     # Print for debugging
-    print("\nSynchro Signalized Summary Results (Intersection Summary):",
-          synchro_results)
-    print("\nHCM Signalized Summary Results (Intersection Summary):", hcm_results)
-    print("\nTWSC Summary Results (Minor Lane/...):", twsc_results)
-    print("\nAWSC Summary Results (Lane):", awsc_results, '\n')
+    # print("\nSynchro Signalized Summary Results (Intersection Summary):",
+    #       synchro_results)
+    # print("\nHCM Signalized Summary Results (Intersection Summary):", hcm_results)
+    # print("\nTWSC Summary Results (Minor Lane/...):", twsc_results)
+    # print("\nAWSC Summary Results (Lane):", awsc_results, '\n')
 
     return twsc_results, synchro_results, hcm_results, awsc_results
     
@@ -1121,11 +1156,6 @@ def extract_data_to_csv(file_path, output_file):
     df.to_csv(output_file, index=False)
     df = df.map(lambda x: x.strip() if isinstance(x, str) else x)
     
-    awsc_data = parse_awsc_data(df)
-    combined_data = integrate_awsc_data(awsc_data, [])
-    formatted_awsc_data = process_directions_awsc(combined_data)
-    print(formatted_awsc_data)
-    
     # Define the terms to search for
     terms_to_match = [
         "V/c ratio(x)",
@@ -1219,23 +1249,19 @@ def extract_data_to_csv(file_path, output_file):
             }
             signalized_int_data.append(intersection_data)
 
-    # print(f"All intersection configurations: {all_intersection_configs}", f"\nlength = {len(all_intersection_configs)}")
-    # print("Signalized Intersection Data:")
-    # for entry in signalized_int_data:
-    #     print(entry, '\n')
-
+    
     lane_configurations, raw_lane_configs = parse_lane_configs(
         all_intersection_configs, intersection_ids)
-    # print('\nLane Configurations collected...', lane_configurations,
-    #       f"\nlength = {len(lane_configurations)}")
-    # print("\nRaw Lane Configurations read...", raw_lane_configs, f"\nlength = {len(raw_lane_configs)}")
-
+    
+    print(lane_configurations)
+    
     # Initialize an empty list to store the combined dictionaries
     combined_list = []
 
     """
         Iterate through the list of signalized intersections
     """
+    i = 0
     for intersection in signalized_int_data:
         intersection_id = intersection.get("Intersection ID")
         combined_dict = {"Intersection ID": intersection_id}
@@ -1247,8 +1273,10 @@ def extract_data_to_csv(file_path, output_file):
         }
 
         # Access lane configurations for the current intersection
-        lane_config = lane_configurations[int(intersection_id) - 1]
-        raw_lane_config = raw_lane_configs[int(intersection_id) - 1]
+        lane_config = lane_configurations[i]
+        raw_lane_config = raw_lane_configs[i]
+        
+        i += 1
 
         # Initialize dictionaries to store v/c ratio, LOS, and delay values
         directions = ['EB', 'WB', 'NB', 'SB', 'NE', 'NW', 'SE', 'SW']
@@ -1402,21 +1430,30 @@ def extract_data_to_csv(file_path, output_file):
 
         # print(f"\nCombined data for signalized Intersection {intersection_id}: \n{combined_dict}")
 
-    # Remove empty lane configurations
+    # Dump empty lane configurations
     for direction in ['EB', 'WB', 'NB', 'SB', 'NE', 'NW', 'SE', 'SW']:
         for config in lane_configurations:
             if config.get(direction) == '-':
                 del config[direction]
-
-    twsc_overall, synchro_overall, hcm_overall, awsc_overall = parse_overall_data_v2(
+    
+    awsc_overall = parse_awsc_data(df)
+    awsc_combined_data = integrate_awsc_data(awsc_overall, [])
+    awsc_dir_formatted, _, _ = process_directions(awsc_overall, lane_configurations)
+    
+    # print(f"\nCombined data: {awsc_combined_data}")
+    # print(f"\nDirections: {awsc_dir_formatted}")
+    
+    twsc_overall, synchro_overall, hcm_overall, _ = parse_overall_data_v2(
         file_path, df)
     twsc_intersections = parse_twsc_approach(df)
-    twsc_intersection_directions, original_twsc_directions, combined_mvmt_names = process_directions(
+    twsc_intersection_directions, _, _ = process_directions(
         twsc_overall, lane_configurations)
-
-    # print(f"\ntwsc_overall:\n{twsc_overall}\n")
+    
     combined_list.extend(twsc_intersections)
-    combined_list.extend(formatted_awsc_data)
+    
+    # print(f"\nTWSC directions: {twsc_intersection_directions}")
+    # print(f"\nCombined list: \n{combined_list}")
+    # print(f"\ntwsc_overall:\n{twsc_overall}\n")
     
     # Create an empty DataFrame to hold all intersections' data
     final_df = pd.DataFrame()
@@ -1427,312 +1464,320 @@ def extract_data_to_csv(file_path, output_file):
         'los': ['LOS', 'LnGrp LOS']
     }
 
+
     # Sort combined_list by Intersection ID for ordered processing
     combined_list_sorted = sorted(
         combined_list, key=lambda x: int(x.get("Intersection ID", "ID")))
 
-    # print(f"Combined list for '{file_path}': {combined_list_sorted}")
-
-    # print(f"Combined list for '{file_path}':")
-    # for entry in combined_list_sorted:
-    #     print(entry, '\n')
-
-    # Iterate over each item in the sorted combined_list
-    # for idx, item in enumerate(combined_list_sorted, 1):
-    #     print(f"Intersection #{idx} (ID: {item.get('Intersection ID')}):")
-
-    #     # Iterate over the keys and values of each dictionary
-    #     for key, value in item.items():
-    #         # If the value is a list, print it in a readable format
-    #         if isinstance(value, list):
-    #             value_str = ', '.join(map(str, value))
-    #             print(f"  {key}: [{value_str}]")
-    #         else:
-    #             print(f"  {key}: {value}")
-
-    #     print("\n" + "-"*50)  # Add a separator line between intersections
-
+    
     # Combine both lists and sort by the "index" key
     combined_overall_data = sorted(
-        synchro_overall + hcm_overall + twsc_overall + awsc_overall, key=lambda x: x.get('index', 0))
+        synchro_overall + hcm_overall + twsc_overall + awsc_combined_data, key=lambda x: x.get('index', 0))
     overall_idx = 0
 
+    
     # print(f"\nOverall Data = \n{combined_overall_data}", '\n')
+
 
     # Process each intersection in the sorted list
     for data_dict in combined_list_sorted:
+        
+        # Control printing of Intersection ID only once per direction set        
         intersection_id = data_dict.get("Intersection ID")
-
-        # Control printing of Intersection ID only once per direction set
         intersection_id_printed = False
 
-        # Find the matching lane configuration for this intersection
+        """ Find the matching lane configuration for this intersection """
         lane_config = next((config for config in lane_configurations if config.get(
             "Intersection ID") == intersection_id), None)
 
-        # Check if the intersection has TWSC data
+        """ Check if the intersection has TWSC data """
         twsc_summary_result = next(
             (twsc for twsc in twsc_overall if twsc.get("ID") == str(intersection_id)), None)
         twsc_summary_directions = next((twsc_dir for twsc_dir in twsc_intersection_directions if twsc_dir.get(
             "ID") == str(intersection_id)), None)
-        # original_twsc = next((og_dir for og_dir in original_twsc_directions if og_dir.get("ID") == str(intersection_id)), None)
 
-        # Prefer TWSC summary if available
-        if twsc_summary_result and twsc_summary_directions:
+        """ Check if the intersection has AWSC data """
+        awsc_summary_result = next(
+            (awsc for awsc in awsc_overall if awsc.get("ID") == str(intersection_id)), None)
+        awsc_summary_directions = next(
+            (awsc_dir for awsc_dir in awsc_dir_formatted if awsc_dir.get("ID") == str(intersection_id)), None)
+
+
+        # Prefer AWSC then TWSC summary if available, otherwise use lane_config
+        if awsc_summary_result and awsc_summary_directions:
             lane_config = None
-        # Skip intersections without lane config or TWSC summary
-        if not lane_config and not twsc_summary_result:
-            print(
-                f"No lane configuration or TWSC summary found for Intersection ID: {intersection_id}")
+        elif twsc_summary_result and twsc_summary_directions:
+            lane_config = None
+        
+        # Skip intersections without lane config, TWSC, or AWSC summary
+        if not lane_config and not twsc_summary_result and not awsc_summary_result:
+            print(f"No lane configuration, TWSC, or AWSC summary found for Intersection ID: {intersection_id}")
             continue
-
-        # print(data_dict, '\n')
-
+        
         # Prepare data for the intersection's DataFrame
         intersection_data = []
-
+        
         # Separate indexing for v/c, LOS, and Delay values
         j = 0
-
+        
         # Retrieve all entries from combined_overall_data for this intersection
-        overall_data = [
-            item for item in combined_overall_data if item['ID'] == str(intersection_id)]
+        overall_data = [item for item in combined_overall_data if item['ID'] == str(intersection_id)]
+        
         # Default values for the overall data row (to be updated if data is found)
         overall_los = '-'
         overall_delay = '-'
-
-        # Processing if lane configuration is available
+        
+        
+        """ Processing if lane configuration is available"""
         if lane_config:
             for direction, lanes in lane_config.items():
-                # Skip the "Intersection ID" key in lane_config
                 if direction == "Intersection ID":
                     continue
-
+        
                 # Retrieve approach delay and LOS for the current direction
-                approach_delay = data_dict.get(
-                    direction, {}).get("Approach Delay", '-')
-                approach_los = data_dict.get(
-                    direction, {}).get("Approach LOS", '-')
-
+                approach_delay = data_dict.get(direction, {}).get("Approach Delay", '-')
+                approach_los = data_dict.get(direction, {}).get("Approach LOS", '-')
+        
                 if approach_delay is None:
                     approach_delay = '-'
                 if approach_los is None:
                     approach_los = '-'
-
+        
                 # Loop through each lane in the direction
                 for i, lane in enumerate(lanes):
-                    # Print the Intersection ID only once at the start of the set
-                    intersection_id_str = str(
-                        intersection_id) if not intersection_id_printed else ''
+                    intersection_id_str = str(intersection_id) if not intersection_id_printed else ''
                     intersection_id_printed = True
                     direction_value = direction if i == 0 else ''  # Only print direction once
-
+        
                     # Get v/c, LOS, and Delay values based on general terms dictionary
                     vc_value = los_value = delay_value = '-'
-
-                    # Check and get v/c value from general terms
+        
                     for term in general_terms['v/c']:
                         if term in data_dict:
-                            vc_value = data_dict[term][j] if j < len(
-                                data_dict[term]) else '-'
+                            vc_value = data_dict[term][j] if j < len(data_dict[term]) else '-'
                             break
-
-                    # Check and get LOS value from general terms
+        
                     for term in general_terms['los']:
                         if term in data_dict:
-                            los_value = data_dict[term][j] if j < len(
-                                data_dict[term]) else '-'
+                            los_value = data_dict[term][j] if j < len(data_dict[term]) else '-'
                             break
-
-                    # Check and get Delay value from general terms
+        
                     for term in general_terms['delay']:
                         if term in data_dict:
-                            delay_value = data_dict[term][j] if j < len(
-                                data_dict[term]) else '-'
+                            delay_value = data_dict[term][j] if j < len(data_dict[term]) else '-'
                             break
-
+        
                     if vc_value and los_value and delay_value != '-':
-                        # Append the row for this lane
-                        intersection_data.append(
-                            [intersection_id_str, direction_value, lane, vc_value, los_value, delay_value])
-
-                    # Increment the indices for v/c, LOS, and Delay values
+                        intersection_data.append([intersection_id_str, direction_value, lane, vc_value, los_value, delay_value])
+        
                     j += 1
-
+        
                 if approach_delay != '-':
-                    # Add an overall row for this direction
-                    intersection_data.append(
-                        ['', f"{direction} Overall", '', '-', f'{approach_los}', f'{approach_delay}'])
-
+                    intersection_data.append(['', f"{direction} Overall", '', '-', f'{approach_los}', f'{approach_delay}'])
+        
             if overall_idx == 0:
                 overall_los = overall_data[0].get("los")
                 overall_delay = overall_data[0].get("delay")
                 overall_idx += 1
             else:
                 try:
-                    # Attempt to access the second element in the overall_data list
                     overall_los = overall_data[1].get("los")
                     overall_delay = overall_data[1].get("delay")
-                    overall_idx = 1  # Indicate that the second item was used
+                    overall_idx = 1
                 except IndexError:
-                    # If the second element does not exist, fall back to the first element
                     if overall_data:
                         overall_los = overall_data[0].get("los")
                         overall_delay = overall_data[0].get("delay")
-                        overall_idx = 0  # Indicate that the first item was used
+                        overall_idx = 0
                     else:
-                        # If overall_data is empty, set default values
                         overall_los = '-'
                         overall_delay = '-'
-                        overall_idx = None  # No data available
+                        overall_idx = None
+        
             if overall_delay != 0 or '-':
-                # Add an overall row for this intersection, including data from Synchro and HCM
-                intersection_data.append(
-                    ['', "Overall", '', '-', overall_los, overall_delay])
-
-        # Processing if TWSC summary data is available
+                intersection_data.append(['', "Overall", '', '-', overall_los, overall_delay])
+        
+        
+        
+        """ Processing TWSC summary data"""
         if twsc_summary_result:
-            # print(f"\nIntersection {intersection_id}")
-            # print("\nDirections: ", twsc_summary_directions, '\n')
-            # print("Values:", twsc_summary_result)
-
-            # Iterate through TWSC summary directions
             for direction, movement_values in twsc_summary_result.items():
-                # Skip the "ID" key in TWSC summary
                 if direction == "ID":
                     continue
-
-                # Find the lane configuration in the TWSC summary for this direction
+        
                 if direction in twsc_summary_result:
                     if movement_values[3] == '-':
                         continue
                     lane_data = twsc_summary_result[direction]
                 else:
-                    # Default or placeholder value
                     lane_data = ('-', '-', '-', '-')
-
-                # Unpack v/c, LOS, and Delay values from TWSC data
+        
                 vc_value, los_value, delay_value, capacity_value = (
-                    lane_data if isinstance(
-                        lane_data, tuple) else ('-', '-', '-', '-')
+                    lane_data if isinstance(lane_data, tuple) else ('-', '-', '-', '-')
                 )
-
-                # Add an entry for the TWSC summary direction
-                intersection_id_str = str(
-                    intersection_id) if not intersection_id_printed else ''
+        
+                intersection_id_str = str(intersection_id) if not intersection_id_printed else ''
                 direction_value = twsc_summary_directions[direction[:2]]
-
-                # Append the row for this direction (from TWSC summary)
+        
                 if isinstance(direction_value, list):
                     for dir_val in direction_value:
                         key = direction[:2] + dir_val
                         lane_data = twsc_summary_result[key]
-
-                        # For each lane, append a row with the lane and corresponding values
+        
                         if lane_data != ('-', '-', '-', '-'):
-                            intersection_data.append([
-                                # Intersection ID (if not printed)
-                                intersection_id_str,
-                                # Direction value (e.g., 'SW')
-                                direction[:2],
-                                # Lane value (e.g., 'L', 'T')
-                                dir_val,
-                                vc_value,              # V/c value
-                                los_value,             # LOS value
-                                delay_value            # Delay value
-                            ])
+                            intersection_data.append([intersection_id_str, direction[:2], dir_val, vc_value, los_value, delay_value])
                 else:
-                    # If not a list, process the single direction normally
-                    intersection_data.append([
-                        # Intersection ID (if not printed)
-                        intersection_id_str,
-                        direction[:2],         # Direction value (e.g., 'WB')
-                        # Lane data (since it's not a list here)
-                        direction_value,
-                        vc_value,              # V/c value
-                        los_value,             # LOS value
-                        delay_value            # Delay value
-                    ])
+                    intersection_data.append([intersection_id_str, direction[:2], direction_value, vc_value, los_value, delay_value])
+        
                 intersection_id_printed = True
-                # print(intersection_data)
-
-        if intersection_data != []:
-            # Add a blank row to separate intersections
+        
+        
+        
+        """ Processing AWSC summary data"""
+        if awsc_summary_result:
+            # print(f"\nAWSC Summary Result: {awsc_summary_result}")
+            # print(f"AWSC Summary Directions: {awsc_summary_directions}")
+        
+            intersection_id_str = str(intersection_id) # Ensure intersection ID is available
+            
+            # ✅ First loop through `awsc_summary_directions` to process movements
+            for base_direction, movements in awsc_summary_directions.items():
+                if base_direction == "ID":
+                    continue  # Skip ID field
+        
+                # print(f"\nProcessing base direction: {base_direction} with movements: {movements}")
+        
+                # ✅ Collect lane keys dynamically from `awsc_summary_result`
+                lane_keys = sorted(
+                    [key for key in awsc_summary_result.keys() if key.startswith(base_direction) and "Ln" in key]
+                )
+                # print(f"Lanes found for {base_direction}: {lane_keys}")
+                
+                intersection_id_str = str(intersection_id) if not intersection_id_printed else ''
+                
+                # ✅ Handle case where movements are a string (e.g., "LTR")
+                if isinstance(movements, str):
+                    if len(lane_keys) == 1:
+                        movement = movements  # Assign the entire string to Ln1
+                        lane_key = lane_keys[0]
+        
+                        # print(f"Mapping lane {lane_key} to movement {movement}")
+        
+                        if lane_key in awsc_summary_result:
+                            lane_data = awsc_summary_result[lane_key]
+                            # print(f"Found lane data for {lane_key}: {lane_data}")
+        
+                            # Extract V/C, LOS, Delay, Capacity values
+                            vc_value, los_value, delay_value, capacity_value = lane_data if isinstance(lane_data, tuple) else ('-', '-', '-', '-')
+                            # print(f"Extracted values -> V/C: {vc_value}, LOS: {los_value}, Delay: {delay_value}, Capacity: {capacity_value}")
+        
+                            # ✅ Append lane data to `intersection_data`
+                            if lane_data != ('-', '-', '-', '-'):
+                                intersection_data.append([intersection_id_str, base_direction, movement, vc_value, los_value, delay_value])
+                                intersection_id_printed = True
+                        else:
+                            print(f"Lane {lane_key} not found in AWSC summary result")
+                            
+                    else:
+                        print(f"Warning: Expected 1 lane but found multiple for {base_direction}. Skipping string movement assignment.")
+        
+                # ✅ Handle case where movements are a list (e.g., ['L', 'T', 'R'])
+                elif isinstance(movements, list):
+                    # print(f"Processing multiple movements for {base_direction}: {movements}")
+        
+                    # ✅ Match each lane (`Ln1, Ln2, Ln3`) with a movement (`L, T, R`)
+                    for lane_key, movement in zip(lane_keys, movements):
+                        intersection_id_str = str(intersection_id) if not intersection_id_printed else ''
+                        # print(f"Mapping lane {lane_key} to movement {movement}")
+        
+                        if lane_key in awsc_summary_result:
+                            lane_data = awsc_summary_result[lane_key]
+                            # print(f"Found lane data for {lane_key}: {lane_data}")
+        
+                            # Extract V/C, LOS, Delay, Capacity values
+                            vc_value, los_value, delay_value, capacity_value = lane_data if isinstance(lane_data, tuple) else ('-', '-', '-', '-')
+                            # print(f"Extracted values -> V/C: {vc_value}, LOS: {los_value}, Delay: {delay_value}, Capacity: {capacity_value}")
+        
+                            # ✅ Append lane data to `intersection_data`
+                            if lane_data != ('-', '-', '-', '-'):
+                                intersection_data.append([intersection_id_str, base_direction, movement, vc_value, los_value, delay_value])
+                                intersection_id_printed = True
+                        else:
+                            print(f"Lane {lane_key} not found in AWSC summary result")
+                            
+        
+        
+        """ Add final data if it exists"""
+        if intersection_data:
             intersection_data.append([''] * 6)
-
-            # Create a DataFrame for the current intersection's data
-            intersection_df = pd.DataFrame(intersection_data, columns=[
-                                           'Intersection ID', 'Direction', 'Lane', 'V/c', 'LOS', 'Delay'])
-
-            # Append it to the final DataFrame
-            final_df = pd.concat(
-                [final_df, intersection_df], ignore_index=True)
-
-    # Write the final DataFrame to a CSV file
-    file_name, _ = os.path.splitext(file_path)
-    final_df.to_csv(f"{file_name}-filtered.csv", index=False)
+            intersection_df = pd.DataFrame(intersection_data, columns=['Intersection ID', 'Direction', 'Lane', 'V/c', 'LOS', 'Delay'])
+            final_df = pd.concat([final_df, intersection_df], ignore_index=True)
+        
+            # Write the final DataFrame to a CSV file
+            file_name, _ = os.path.splitext(file_path)
+            final_df.to_csv(f"{file_name}-filtered.csv", index=False)
 
     """
         Output finalized data for debugging and testing
     """
     i = 0
     # Initialize the intersection ID from id_combined_list
-    # for item in combined_list_sorted:
+    for item in combined_list_sorted:
 
-    #     # Determine the intersection ID and the data dictionary based on whether the item is a tuple or dictionary
+        # Determine the intersection ID and the data dictionary based on whether the item is a tuple or dictionary
 
-    #     intersection_id = item.get("Intersection ID")
-    #     data_dict = item
+        intersection_id = item.get("Intersection ID")
+        data_dict = item
 
-    #     # Print each term and its data in a readable format, excluding direction data (EB, WB, NB, SB)
-    #     print(f"Intersection {intersection_id}:")
-    #     for term, data in data_dict.items():
-    #         if term not in ['EB', 'WB', 'NB', 'SB', 'NE', 'NW', 'SE', 'SW']:  # Only print non-directional data here
-    #             # Join data if it's a list, otherwise convert it to a string
-    #             if isinstance(data, list):
-    #                 data_str = ", ".join(map(str, data))
-    #             else:
-    #                 data_str = str(data)
-    #             print(f"  {term}: {data_str}")
-    #     print()
-    #     # Print Approach Delay and LOS for each direction (EB, WB, NB, SB)
-    #     for direction in ['EB', 'WB', 'NB', 'SB', 'NE', 'NW', 'SE', 'SW']:
-    #         # Retrieve approach delay and LOS for the current direction
-    #         # print(f"Getting approach data for '{direction}'...")
-    #         # print(data_dict.get(direction, {}))
-    #         approach_delay = data_dict.get(direction, {}).get("Approach Delay", '-')
-    #         approach_los = data_dict.get(direction, {}).get("Approach LOS", '-')
-    #         # Only delete if the direction exists in data_dict and conditions are met
-    #         print(f"  {direction}: Approach Delay = {approach_delay}, Approach LOS = {approach_los}")
-    #     print()
-    #     # Find the matching lane configuration for this intersection ID in group_config_data
-    #     lane_config = next((config for config in lane_configurations if config.get("Intersection ID") == intersection_id), None)
-    #     raw_config = next((raw for raw in raw_lane_configs if raw.get("Intersection ID") == intersection_id), None)
+        # Print each term and its data in a readable format, excluding direction data (EB, WB, NB, SB)
+        print(f"Intersection {intersection_id}:")
+        for term, data in data_dict.items():
+            if term not in ['EB', 'WB', 'NB', 'SB', 'NE', 'NW', 'SE', 'SW']:  # Only print non-directional data here
+                # Join data if it's a list, otherwise convert it to a string
+                if isinstance(data, list):
+                    data_str = ", ".join(map(str, data))
+                else:
+                    data_str = str(data)
+                print(f"  {term}: {data_str}")
+        print()
+        # Print Approach Delay and LOS for each direction (EB, WB, NB, SB)
+        for direction in ['EB', 'WB', 'NB', 'SB', 'NE', 'NW', 'SE', 'SW']:
+            # Retrieve approach delay and LOS for the current direction
+            # print(f"Getting approach data for '{direction}'...")
+            # print(data_dict.get(direction, {}))
+            approach_delay = data_dict.get(direction, {}).get("Approach Delay", '-')
+            approach_los = data_dict.get(direction, {}).get("Approach LOS", '-')
+            # Only delete if the direction exists in data_dict and conditions are met
+            print(f"  {direction}: Approach Delay = {approach_delay}, Approach LOS = {approach_los}")
+        print()
+        # Find the matching lane configuration for this intersection ID in group_config_data
+        lane_config = next((config for config in lane_configurations if config.get("Intersection ID") == intersection_id), None)
+        raw_config = next((raw for raw in raw_lane_configs if raw.get("Intersection ID") == intersection_id), None)
 
-    #     # Print lane configurations for the current intersection if available
-    #     if lane_config:
-    #         lane_config_str = ", ".join(
-    #             f"{key}: {value}" for key, value in lane_config.items() if key != "Intersection ID" and value != '-'
-    #         )
-    #         print(f"  Lane Configurations: {lane_config_str}")
-    #     else:
-    #         print(f"  No lane configurations found for Intersection ID: {intersection_id}")
+        # Print lane configurations for the current intersection if available
+        if lane_config:
+            lane_config_str = ", ".join(
+                f"{key}: {value}" for key, value in lane_config.items() if key != "Intersection ID" and value != '-'
+            )
+            print(f"  Lane Configurations: {lane_config_str}")
+        else:
+            print(f"  No lane configurations found for Intersection ID: {intersection_id}")
 
-    #     # Print raw direction configurations for the current intersection if available
-    #     if raw_config:
-    #         raw_config_str = ", ".join(
-    #             f"{key}: {value}" for key, value in raw_config.items() if key != "Intersection ID" and value != [None, None, None]
-    #         )
-    #         print(f"  Raw Direction Configurations: {raw_config_str}")
-    #     else:
-    #         print(f"  No raw direction configurations found for Intersection ID: {intersection_id}")
+        # Print raw direction configurations for the current intersection if available
+        if raw_config:
+            raw_config_str = ", ".join(
+                f"{key}: {value}" for key, value in raw_config.items() if key != "Intersection ID" and value != [None, None, None]
+            )
+            print(f"  Raw Direction Configurations: {raw_config_str}")
+        else:
+            print(f"  No raw direction configurations found for Intersection ID: {intersection_id}")
 
-    #     i+=1
-    #     # Add a blank line for readability between intersections
-    #     print("\n" + "_" * 40 + "\n")
+        i+=1
+        # Add a blank line for readability between intersections
+        print("\n" + "_" * 40 + "\n")
 
-    # print(f"Total number of useable datasets found: {len(combined_list_sorted)}")
-    # print("_" * 40 + "\n")
+    print(f"Total number of useable datasets found: {len(combined_list_sorted)}")
+    print("_" * 40 + "\n")
 
 
 def parse_lane_configs(int_lane_groups, intersection_ids):
@@ -1843,7 +1888,7 @@ def parse_lane_configs(int_lane_groups, intersection_ids):
 
 
 if __name__ == "__main__":
-    # read_input_file("test-input.xlsx")
+    # Test input/ouput files
     test_report_1 = "test/Test Report 1.txt"
     test_report_2 = "test/Test Report 2.txt"
     test_report_3 = "test/Test Report 3.txt"
@@ -1857,6 +1902,9 @@ if __name__ == "__main__":
     test_report_4_csv = "test-report-4.csv"
     test_twsc_csv = "test-twsc.csv"
     test_awsc_csv = "test-awsc.csv"
+    
+    test_report_alpha = "test/Test Report Alpha.txt"
+    test_alpha_csv = "test-alpha.csv"
 
     # parse_overall_data_v2(file)  # Gets the data for overall
 
@@ -1881,6 +1929,9 @@ if __name__ == "__main__":
 
     print('\n' + "*"*35 + "\n| Results for 'TEST AWSC.txt' |\n" + "*"*35 + '\n')
     extract_data_to_csv(test_awsc, test_awsc_csv)
+    
+    print('\n' + "*"*35 + "\n| Results for 'Test Report Alpha.txt' |\n" + "*"*35 + '\n')
+    extract_data_to_csv(test_report_alpha, test_alpha_csv)
 
     # lane_groups = separate_characters(movement)
     # print(f"\nLane groups:\n{lane_groups}")
