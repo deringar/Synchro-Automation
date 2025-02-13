@@ -425,7 +425,7 @@ def parse_minor_lane_mvmt(lines, start_line, end_line):
     """
 
     search_phrase = "Minor Lane/Major Mvmt"
-    search_terms = [r'\bControl Delay\b',
+    search_terms = [r'\bControl Delay\b', r'\bCtrl Dly\b',
                     r'\bV/C Ratio\b', r'\bLOS\b', r'\bCapacity\b']
 
     # Initialize lists for each search term
@@ -454,7 +454,7 @@ def parse_minor_lane_mvmt(lines, start_line, end_line):
                         # Extract values after the term
                         # print(f"Found term: {term} in line: {line}")
 
-                        if 'control delay' in term.lower() or 'v/c ratio' in term.lower() or 'capacity' in term.lower():
+                        if 'control delay' in term.lower() or 'ctrl dly' in term.lower() or 'v/c ratio' in term.lower() or 'capacity' in term.lower():
                             # For control delay or V/C ratio, we extract numbers (floats or '-')
                             numbers = re.findall(r'(\d+\.\d+|\d+|-)', line)
                             term_results.extend(
@@ -466,23 +466,37 @@ def parse_minor_lane_mvmt(lines, start_line, end_line):
                             term_results.extend(capital_letters)
 
                 # Add the term results to the corresponding results list
-                if 'control delay' in term.lower():
-                    delay_results.append(
-                        term_results if term_results else ['-'])
+                if 'control delay' in term.lower() or 'ctrl dly' in term.lower():
+                    if term_results:
+                        delay_results.append(term_results)
                 elif 'v/c ratio' in term.lower():
-                    vc_ratio_results.append(
-                        term_results if term_results else ['-'])
+                    if term_results:
+                        vc_ratio_results.append(term_results)
                 elif 'los' in term.lower():
-                    los_results.append(term_results if term_results else ['-'])
+                    if term_results:
+                        los_results.append(term_results)
                 elif 'capacity' or r'^cap' in term.lower():
-                    capacity_results.append(
-                        term_results if term_results else ['-'])
-                print(f"Term results for term '{term}': {term_results}")
+                    if term_results:
+                        capacity_results.append(term_results)
+
     # Combine the results into tuples for easier reading
     merged_results = []
-    for vc_list, los_list, delay_list, capacity_list in zip(vc_ratio_results, los_results, delay_results, capacity_results):
-        merged_results = (
-            list(zip(vc_list, los_list, delay_list, capacity_list)))
+    
+    # Iterate over the outer lists
+    for i in range(len(vc_ratio_results)):  # Number of sublists
+        # print(f"Index {i}:")
+        # print(f"V/C Ratio: {vc_ratio_results[i]}")
+        # print(f"LOS: {los_results[i]}")
+        # print(f"Delay: {delay_results[i]}")  # Should now match other lists
+        # print(f"Capacity: {capacity_results[i]}")
+        # print("-" * 40)
+        for j in range(len(vc_ratio_results[i])):  # Number of elements in each sublist
+            merged_results.append((
+                vc_ratio_results[i][j],  # Extract single element
+                los_results[i][j],       # Extract single element
+                delay_results[i][j],     # Extract single element
+                capacity_results[i][j]   # Extract single element
+            ))
 
     # Return the parsed results for integration with other parsing logic
     return result, merged_results
@@ -514,7 +528,7 @@ def integrate_awsc_data(awsc_data, combined_data):
     return combined_data
 
 
-def process_directions_awsc(lane_data, lane_configs):
+def process_directions_sc(lane_data, lane_configs):
     """
     Processes lane names using process_directions to get actual movement labels.
     """
@@ -543,7 +557,6 @@ def process_directions_awsc(lane_data, lane_configs):
         processed_data.append(processed_result)
 
     return processed_data
-
 
 
 def parse_awsc_data(df):
@@ -650,18 +663,18 @@ def process_directions(twsc_summary_results, lane_configs):
             (config for config in lane_configs if config["Intersection ID"]
              == intersection_id), None
         )
-
         combined_mvmt = []
 
         # Loop through the dictionary to process directional keys
         for key, value in entry.items():
             if key == "ID":
                 continue  # Skip the ID key itself
+            
             # Split the direction from the suffix
             # The first two characters are the direction (EB, WB, NB, SB, NE, NW, SE, SW)
             direction = key[:2]
             suffix = key[2:]  # The remaining part is the suffix (Ln1, T, etc.)
-
+            
             config_amount = len(lane_config[direction]) if (
                 lane_config and direction in lane_config) else 1
 
@@ -747,8 +760,8 @@ def parse_overall_data_v2(file_path, df):
         id_value = id_match.group(0).strip(
             ':') if id_match else None  # Get the ID before the colon
 
-        # print(f"\nProcessing ID {id_value} at line {start_line}")
-
+        print(f"\n\t---\nIntersection {id_value}\n\t---")
+    
         # Process Synchro Results first
         found_phrase = False
         for line_number in range(start_line, len(lines)):
@@ -901,12 +914,8 @@ def parse_overall_data_v2(file_path, df):
 
                     # Store HCM results only if we processed HCM lines
                     if found_hcm:
-                        print(f"Found HCM block at line {line_number}")  # Confirm the HCM block is found
-                        print(f"Current phrase_found: {phrase_found}")  # Print phrase_found value to check what is being evaluated
-                    
                         # Check which search phrase was found and structure the result accordingly
                         if phrase_found == "Intersection Summary":
-                            print(f"Processing 'Intersection Summary' at line {line_number}")  # Debugging output
                             hcm_results.append({
                                 'ID': id_value,
                                 'v/c ratio': vc_ratio_value if vc_ratio_value is not None else '-',
@@ -917,36 +926,34 @@ def parse_overall_data_v2(file_path, df):
                             })
                             intersection_index += 1
                         elif phrase_found == "Minor Lane/Major Mvmt":
-                            print(f"Processing 'Minor Lane/Major Mvmt' at line {line_number}")  # Debugging output
                             movement_results, merged_results = parse_minor_lane_mvmt(
                                 lines, line_number, end_line)
                     
                             # Create a dictionary where keys are from the movement results
-                            
                             hcm_entry = {'ID': id_value}
-                            print(f"\nMerged results: {merged_results}\n")
-                            print(f"\nMovement results: {movement_results}\n")
                             
                             for i in range(len(movement_results)):
-                                print(i)
+                                # print(i)
                                 # Using the movement results as keys
                                 hcm_entry[movement_results[i]] = merged_results[i]
                             twsc_results.append(hcm_entry)
+                            
+                            print(f"\nMerged entry: {hcm_entry}")
                         
                         # Stop collecting on a blank line
                         if line.strip() == "":
                             print(f"Blank line encountered at line {line_number}")  # Debugging output
                             break
+                        
                         break  # Exit after processing the HCM block
                     
                     # Skip lines between the ID and the next search phrase
                     if found_phrase:
-                        print(f"Found phrase at line {line_number}: {phrase_found}")  # Debugging output
+                        # print(f"Found phrase at line {line_number}: {phrase_found}")  # Debugging output
                         break  # Stop looking at this block and move on to the next intersection
 
     # Print for debugging
-    # print("\nSynchro Signalized Summary Results (Intersection Summary):",
-    #       synchro_results)
+    # print("\nSynchro Signalized Summary Results (Intersection Summary):", synchro_results)
     # print("\nHCM Signalized Summary Results (Intersection Summary):", hcm_results)
     # print("\nTWSC Summary Results (Minor Lane/...):", twsc_results)
     # print("\nAWSC Summary Results (Lane):", awsc_results, '\n')
@@ -1253,7 +1260,7 @@ def extract_data_to_csv(file_path, output_file):
     lane_configurations, raw_lane_configs = parse_lane_configs(
         all_intersection_configs, intersection_ids)
     
-    print(lane_configurations)
+    print(f"\nLane configs: {lane_configurations}")
     
     # Initialize an empty list to store the combined dictionaries
     combined_list = []
@@ -1436,6 +1443,7 @@ def extract_data_to_csv(file_path, output_file):
             if config.get(direction) == '-':
                 del config[direction]
     
+    
     awsc_overall = parse_awsc_data(df)
     awsc_combined_data = integrate_awsc_data(awsc_overall, [])
     awsc_dir_formatted, _, _ = process_directions(awsc_overall, lane_configurations)
@@ -1475,9 +1483,7 @@ def extract_data_to_csv(file_path, output_file):
         synchro_overall + hcm_overall + twsc_overall + awsc_combined_data, key=lambda x: x.get('index', 0))
     overall_idx = 0
 
-    
-    # print(f"\nOverall Data = \n{combined_overall_data}", '\n')
-
+    # print(f"\nSorted combined list: \n{combined_list_sorted}")
 
     # Process each intersection in the sorted list
     for data_dict in combined_list_sorted:
@@ -1508,6 +1514,10 @@ def extract_data_to_csv(file_path, output_file):
             lane_config = None
         elif twsc_summary_result and twsc_summary_directions:
             lane_config = None
+            awsc_summary_result = None
+        else:
+            awsc_summary_result = None
+            twsc_summary_result = None
         
         # Skip intersections without lane config, TWSC, or AWSC summary
         if not lane_config and not twsc_summary_result and not awsc_summary_result:
@@ -1537,7 +1547,7 @@ def extract_data_to_csv(file_path, output_file):
                 # Retrieve approach delay and LOS for the current direction
                 approach_delay = data_dict.get(direction, {}).get("Approach Delay", '-')
                 approach_los = data_dict.get(direction, {}).get("Approach LOS", '-')
-        
+                
                 if approach_delay is None:
                     approach_delay = '-'
                 if approach_los is None:
@@ -1553,8 +1563,9 @@ def extract_data_to_csv(file_path, output_file):
                     vc_value = los_value = delay_value = '-'
         
                     for term in general_terms['v/c']:
-                        if term in data_dict:
-                            vc_value = data_dict[term][j] if j < len(data_dict[term]) else '-'
+                        matching_key = next((key for key in data_dict if key.lower() == term.lower()), None)
+                        if matching_key:
+                            vc_value = data_dict[matching_key][j] if j < len(data_dict[matching_key]) else '-'
                             break
         
                     for term in general_terms['los']:
@@ -1597,13 +1608,12 @@ def extract_data_to_csv(file_path, output_file):
             if overall_delay != 0 or '-':
                 intersection_data.append(['', "Overall", '', '-', overall_los, overall_delay])
         
-        
-        
-        """ Processing TWSC summary data"""
-        if twsc_summary_result:
+        # """ Processing TWSC summary data"""
+        elif twsc_summary_result:
             for direction, movement_values in twsc_summary_result.items():
                 if direction == "ID":
                     continue
+                base_direction_printed = False
         
                 if direction in twsc_summary_result:
                     if movement_values[3] == '-':
@@ -1618,33 +1628,45 @@ def extract_data_to_csv(file_path, output_file):
         
                 intersection_id_str = str(intersection_id) if not intersection_id_printed else ''
                 direction_value = twsc_summary_directions[direction[:2]]
-        
+                
+                print(f"\nTWSC Summary Directions:\n{twsc_summary_directions}")
+                print(direction_value)
+                # Ensure that Ln1 is replaced with the actual recorded direction
+                base_direction = direction[:2]
                 if isinstance(direction_value, list):
                     for dir_val in direction_value:
-                        key = direction[:2] + dir_val
+                        if "Ln" in dir_val:  # Replace 'Ln1' with the actual direction
+                            dir_val = base_direction  # Use the base direction from lane config
+                        
+                        intersection_id_str = str(intersection_id) if not intersection_id_printed else ''
+                        base_direction_str = str(direction) if not base_direction_printed else ''
+                        key = direction
                         lane_data = twsc_summary_result[key]
-        
+                
                         if lane_data != ('-', '-', '-', '-'):
                             intersection_data.append([intersection_id_str, direction[:2], dir_val, vc_value, los_value, delay_value])
+                            intersection_id_printed = True
+
                 else:
                     intersection_data.append([intersection_id_str, direction[:2], direction_value, vc_value, los_value, delay_value])
-        
+                # print(intersection_data)
                 intersection_id_printed = True
-        
-        
-        
-        """ Processing AWSC summary data"""
-        if awsc_summary_result:
+
+                
+        # """ Processing AWSC summary data"""
+        elif awsc_summary_result:
             # print(f"\nAWSC Summary Result: {awsc_summary_result}")
             # print(f"AWSC Summary Directions: {awsc_summary_directions}")
         
             intersection_id_str = str(intersection_id) # Ensure intersection ID is available
             
+            
             # ✅ First loop through `awsc_summary_directions` to process movements
             for base_direction, movements in awsc_summary_directions.items():
                 if base_direction == "ID":
                     continue  # Skip ID field
-        
+                
+                base_direction_printed = False
                 # print(f"\nProcessing base direction: {base_direction} with movements: {movements}")
         
                 # ✅ Collect lane keys dynamically from `awsc_summary_result`
@@ -1688,6 +1710,8 @@ def extract_data_to_csv(file_path, output_file):
                     # ✅ Match each lane (`Ln1, Ln2, Ln3`) with a movement (`L, T, R`)
                     for lane_key, movement in zip(lane_keys, movements):
                         intersection_id_str = str(intersection_id) if not intersection_id_printed else ''
+                        base_direction_str = str(base_direction) if not base_direction_printed else ''
+                        
                         # print(f"Mapping lane {lane_key} to movement {movement}")
         
                         if lane_key in awsc_summary_result:
@@ -1700,15 +1724,19 @@ def extract_data_to_csv(file_path, output_file):
         
                             # ✅ Append lane data to `intersection_data`
                             if lane_data != ('-', '-', '-', '-'):
-                                intersection_data.append([intersection_id_str, base_direction, movement, vc_value, los_value, delay_value])
+                                intersection_data.append([intersection_id_str, base_direction_str, movement, vc_value, los_value, delay_value])
                                 intersection_id_printed = True
+                                base_direction_printed = True
                         else:
                             print(f"Lane {lane_key} not found in AWSC summary result")
+                        
+                        print("")
+                    base_direction_printed = False
                             
-        
         
         """ Add final data if it exists"""
         if intersection_data:
+            print(f"\nIntersection {intersection_id} data: \n{intersection_data}")
             intersection_data.append([''] * 6)
             intersection_df = pd.DataFrame(intersection_data, columns=['Intersection ID', 'Direction', 'Lane', 'V/c', 'LOS', 'Delay'])
             final_df = pd.concat([final_df, intersection_df], ignore_index=True)
@@ -1719,7 +1747,7 @@ def extract_data_to_csv(file_path, output_file):
 
     """
         Output finalized data for debugging and testing
-    """
+        
     i = 0
     # Initialize the intersection ID from id_combined_list
     for item in combined_list_sorted:
@@ -1778,7 +1806,7 @@ def extract_data_to_csv(file_path, output_file):
 
     print(f"Total number of useable datasets found: {len(combined_list_sorted)}")
     print("_" * 40 + "\n")
-
+    """
 
 def parse_lane_configs(int_lane_groups, intersection_ids):
     parsed_list = []  # This will store the parsed dictionaries for each group
