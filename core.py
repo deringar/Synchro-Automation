@@ -8,23 +8,18 @@ Last modified on Thurs Oct 3 2024
 
 # main_window.py
 
-import tkinter as tk  # Import the Tkinter module for GUI development.
-# Import themed widgets from Tkinter for better styling.
-import tkinter.ttk as ttk
-# Used for comparing sequences and finding similarities.
-from difflib import SequenceMatcher
-# Import specific Tkinter features for message boxes and file dialogs.
-from tkinter import messagebox, filedialog
+# import tkinter as tk  # Import the Tkinter module for GUI development.
+# import tkinter.ttk as ttk
+# from difflib import SequenceMatcher
+# from tkinter import messagebox, filedialog
 import csv  # Module to handle CSV file operations.
-import openpyxl as xl  # Used for working with Excel files (.xlsx format).
-# OS module for interacting with the operating system (file paths, etc.).
+# import openpyxl as xl  # Used for working with Excel files (.xlsx format).
 import os
 import re  # Regular expression module for pattern matching in strings.
-import time  # Module for time-related functions.
-import json  # JSON module to parse and manipulate JSON data.
-# Import ordered dictionary to maintain the order of keys.
-from collections import OrderedDict
-from shutil import copy  # Used to copy files or directories.
+# import time  # Module for time-related functions.
+# import json  # JSON module to parse and manipulate JSON data.
+# from collections import OrderedDict
+# from shutil import copy  # Used to copy files or directories.
 from openpyxl import load_workbook, Workbook
 import pandas as pd
 
@@ -661,7 +656,7 @@ def process_directions(twsc_summary_results, lane_configs):
         original_key_dict = {"ID": entry["ID"]}
         intersection_id = int(entry["ID"])
 
-        # ✅ Ensure `lane_configs` is accessed correctly
+        # ✅ Ensure lane_configs is accessed correctly
         lane_config = next(
             (config for config in flattened_lane_configs if isinstance(config, dict) and str(config.get("Intersection ID")) == str(intersection_id)), 
             None
@@ -680,7 +675,7 @@ def process_directions(twsc_summary_results, lane_configs):
             direction = key[:2]
             suffix = key[2:]
 
-            # print(f"\nProcessing movement: {key} -> Direction: {direction}, Suffix: {suffix}")
+            print(f"\nProcessing movement: {key} -> Direction: {direction}, Suffix: {suffix}")
 
             # Get the number of configured lanes for the direction
             config_amount = len(lane_config[direction]) if (lane_config and direction in lane_config) else 1
@@ -692,13 +687,13 @@ def process_directions(twsc_summary_results, lane_configs):
             if suffix.startswith("Ln") and lane_config and direction in lane_config:
                 try:
                     lane_index = int(suffix[2:]) - 1  # Convert "Ln1" to 0-based index
-                    # print(f"  Found lane index {lane_index} in {direction}")
+                    print(f"  Found lane index {lane_index} in {direction}")
 
                     if 0 <= lane_index < len(lane_config[direction]):
-                        # print(f"  Replacing '{suffix}' with '{lane_config[direction][lane_index]}'")
+                        print(f"  Replacing '{suffix}' with '{lane_config[direction][lane_index]}'")
                         suffix = lane_config[direction][lane_index]  # Replace with correct movement
                     else:
-                        # print(f"  Lane index {lane_index} out of range for {direction}, setting to '-'")
+                        print(f"  Lane index {lane_index} out of range for {direction}, setting to '-'")
                         suffix = "-"  # Set to '-' if index is invalid
                 except (ValueError, IndexError):
                     print(f"  Failed to process {suffix}, setting to '-'")
@@ -724,8 +719,8 @@ def process_directions(twsc_summary_results, lane_configs):
         processed_list.append(processed_dict)
         original_key_list.append(original_key_dict)
 
-        # print(f"\nProcessed Data for Intersection {intersection_id}: {processed_dict}")
-        # print(f"Original Key Data: {original_key_dict}")
+        print(f"\nProcessed Data for Intersection {intersection_id}: {processed_dict}")
+        print(f"Original Key Data: {original_key_dict}")
 
     return processed_list, original_key_list, combined_mvmt_names
 
@@ -733,7 +728,7 @@ def process_directions(twsc_summary_results, lane_configs):
 def parse_lane_configs(int_lane_groups, intersection_ids):
     parsed_list = []  # This will store the parsed dictionaries for each group
     raw_data_list = []
-    
+    intersection_ids = sorted(intersection_ids, key=int)        
     # print(f"Length of matching_configs: {len(int_lane_groups)}")
     # print(f"Length of intersection_ids: {len(intersection_ids)}")
     
@@ -1583,13 +1578,15 @@ def extract_data_to_csv(file_path, output_file):
         config for config in all_intersection_configs 
         if config.get('ID') in unique_ids and config.get('ID') not in seen_ids and not seen_ids.add(config.get('ID'))
     ]
-    twsc_parsed_configs = parse_lane_configs(matching_configs, unique_ids)
+    print(f"$$${matching_configs}")
+    twsc_parsed_configs, _ = parse_lane_configs(matching_configs, unique_ids)
+    print("****", twsc_parsed_configs)
     twsc_intersection_directions, _, _ = process_directions(
         twsc_overall, twsc_parsed_configs)
     
     combined_list.extend(twsc_intersections)
     
-    # print(f"\nTWSC Directions: {twsc_intersection_directions}")
+    print(f"\nTWSC Directions: {twsc_intersection_directions}")
     # print(f"\nTWSC Intersections:\n{twsc_intersections}")
     # print(f"\nCombined list: \n{combined_list}")
     # print(f"\ntwsc_overall:\n{twsc_overall}\n")
@@ -1741,13 +1738,20 @@ def extract_data_to_csv(file_path, output_file):
         
         # """ Processing TWSC summary data"""
         elif twsc_summary_result:
-            print(f"\nTWSC Summary Result:\n{twsc_summary_result}")
+            # print(f"\nTWSC Summary Result:\n{twsc_summary_result}")
             # print(f"\nTWSC Summary Directions:\n{twsc_summary_directions}")
+            
+            processed_directions = set()
             for direction, movement_values in twsc_summary_result.items():
-                if direction == "ID" :
+                if direction == "ID":
                     continue
                 base_direction_printed = False
                 idx = 0
+                base_direction = direction[:2]
+                # ✅ Skip if this direction has already been processed
+                if base_direction in processed_directions:
+                    continue
+                
                 if direction in twsc_summary_result:
                     if movement_values[3] == '-':
                         continue
@@ -1765,8 +1769,6 @@ def extract_data_to_csv(file_path, output_file):
                 # print(direction_value)
                 
                 # Ensure that Ln1 is replaced with the actual recorded direction
-                base_direction = direction[:2]
-                
                 if isinstance(direction_value, list):
                     for dir_val in direction_value:
                         idx += 1
@@ -1780,11 +1782,11 @@ def extract_data_to_csv(file_path, output_file):
                             key = base_direction + f"Ln{idx}"
                             lane_data = twsc_summary_result[key]
                         except KeyError:
-                            print(f"'{base_direction + f'Ln{idx}'}' not found in the dictionary. Defaulting to LTR's...")
+                            # print(f"'{base_direction + f'Ln{idx}'}' not found in the dictionary. Defaulting to LTR's...")
                             key = base_direction + dir_val
                             lane_data = twsc_summary_result[key]
                             
-                        print(f"\nLane data for key '{key}': {lane_data}")
+                        # print(f"\nLane data for key '{key}': {lane_data}")
                         if lane_data != ('-', '-', '-', '-'):
                             intersection_data.append([intersection_id_str, base_direction_str, dir_val,lane_data[0], lane_data[1], lane_data[2]])
                             intersection_id_printed = True
@@ -1793,8 +1795,10 @@ def extract_data_to_csv(file_path, output_file):
                 else:
                     intersection_data.append([intersection_id_str, direction[:2], direction_value, vc_value, los_value, delay_value])
                 # print(intersection_data)
+                
+                # ✅ Mark this direction as processed to prevent duplicates
+                processed_directions.add(base_direction)    
                 intersection_id_printed = True
-
                 
         elif awsc_summary_result:
             # print(f"\nAWSC Summary Result: {awsc_summary_result}")
