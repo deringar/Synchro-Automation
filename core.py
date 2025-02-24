@@ -647,20 +647,29 @@ def process_directions(twsc_summary_results, lane_configs):
     processed_list = []
     original_key_list = []
     combined_mvmt_names = []
-    # print(f"Lane configruations:\n{lane_configs}")
+
+    # ✅ Flatten lane_configs in case it contains lists inside
+    flattened_lane_configs = []
+    for entry in lane_configs:
+        if isinstance(entry, list):  # If it's a list of dictionaries, extend
+            flattened_lane_configs.extend(entry)
+        else:
+            flattened_lane_configs.append(entry)  # Otherwise, add normally
+
     for entry in twsc_summary_results:
         processed_dict = {"ID": entry["ID"]}
         original_key_dict = {"ID": entry["ID"]}
         intersection_id = int(entry["ID"])
 
-        # Retrieve lane configuration for the intersection
+        # ✅ Ensure `lane_configs` is accessed correctly
         lane_config = next(
-            (config for config in lane_configs if config["Intersection ID"] == intersection_id), 
+            (config for config in flattened_lane_configs if isinstance(config, dict) and str(config.get("Intersection ID")) == str(intersection_id)), 
             None
         )
-        
-        # print(f"\nProcessing Intersection ID: {intersection_id}")
-        # print(f"Lane Configurations: {lane_config}")
+
+        if lane_config is None:
+            print(f"⚠️ Warning: No lane configuration found for Intersection {intersection_id}, skipping.")
+            continue
 
         combined_mvmt = []
 
@@ -668,11 +677,10 @@ def process_directions(twsc_summary_results, lane_configs):
             if key == "ID":
                 continue  # Skip the ID key
 
-            # Extract base direction (e.g., "EB") and suffix (e.g., "Ln1", "T", etc.)
             direction = key[:2]
             suffix = key[2:]
 
-            print(f"\nProcessing movement: {key} -> Direction: {direction}, Suffix: {suffix}")
+            # print(f"\nProcessing movement: {key} -> Direction: {direction}, Suffix: {suffix}")
 
             # Get the number of configured lanes for the direction
             config_amount = len(lane_config[direction]) if (lane_config and direction in lane_config) else 1
@@ -680,29 +688,29 @@ def process_directions(twsc_summary_results, lane_configs):
             # Add suffixes to the original key dict
             original_key_dict.setdefault(direction, []).append(suffix)
 
-            # 🔹 **Convert "LnX" to the correct movement (L, T, R) from lane_config**
+            # 🔹 Convert "LnX" to the correct movement (L, T, R) from lane_config
             if suffix.startswith("Ln") and lane_config and direction in lane_config:
                 try:
                     lane_index = int(suffix[2:]) - 1  # Convert "Ln1" to 0-based index
-                    print(f"  Found lane index {lane_index} in {direction}")
+                    # print(f"  Found lane index {lane_index} in {direction}")
 
                     if 0 <= lane_index < len(lane_config[direction]):
-                        print(f"  Replacing '{suffix}' with '{lane_config[direction][lane_index]}'")
+                        # print(f"  Replacing '{suffix}' with '{lane_config[direction][lane_index]}'")
                         suffix = lane_config[direction][lane_index]  # Replace with correct movement
                     else:
-                        print(f"  Lane index {lane_index} out of range for {direction}, setting to '-'")
+                        # print(f"  Lane index {lane_index} out of range for {direction}, setting to '-'")
                         suffix = "-"  # Set to '-' if index is invalid
                 except (ValueError, IndexError):
                     print(f"  Failed to process {suffix}, setting to '-'")
                     suffix = "-"  # Set to '-' if parsing fails
 
-            # 🔹 **Ensure suffix is stored correctly**
+            # 🔹 Ensure suffix is stored correctly
             if config_amount > 1:
                 processed_dict.setdefault(direction, []).append(suffix)
             else:
                 processed_dict[direction] = suffix  # Store as a string
 
-        # 🔹 **Format the final combined movement names**
+        # 🔹 Format the final combined movement names
         for direction, value in processed_dict.items():
             if direction != "ID":
                 if isinstance(value, list):
@@ -716,11 +724,120 @@ def process_directions(twsc_summary_results, lane_configs):
         processed_list.append(processed_dict)
         original_key_list.append(original_key_dict)
 
-        print(f"\nProcessed Data for Intersection {intersection_id}: {processed_dict}")
-        print(f"Original Key Data: {original_key_dict}")
-        # print(f"Combined Movements: {combined_mvmt}")
+        # print(f"\nProcessed Data for Intersection {intersection_id}: {processed_dict}")
+        # print(f"Original Key Data: {original_key_dict}")
 
     return processed_list, original_key_list, combined_mvmt_names
+
+
+def parse_lane_configs(int_lane_groups, intersection_ids):
+    parsed_list = []  # This will store the parsed dictionaries for each group
+    raw_data_list = []
+    
+    # print(f"Length of matching_configs: {len(int_lane_groups)}")
+    # print(f"Length of intersection_ids: {len(intersection_ids)}")
+    
+    for idx, lane_dict in enumerate(int_lane_groups):
+
+        intersection_id = intersection_ids[idx]
+
+        # Skip if the intersection ID is already in parsed_list
+        if any(parsed_dict.get("Intersection ID") == intersection_id for parsed_dict in parsed_list):
+            continue
+
+        parsed_dict = {
+            "Intersection ID": intersection_id,
+            # Initialize with three None values for L, T, R
+            'EB': [None, None, None],
+            'WB': [None, None, None],
+            'NB': [None, None, None],
+            'SB': [None, None, None],
+            'NE': [None, None, None],
+            'NW': [None, None, None],
+            'SE': [None, None, None],
+            'SW': [None, None, None]
+        }
+
+        # Initialize the raw data dictionary
+        raw_data_dict = {
+            "Intersection ID": intersection_id,
+            'EB': [None, None, None],
+            'WB': [None, None, None],
+            'NB': [None, None, None],
+            'SB': [None, None, None],
+            'NE': [None, None, None],
+            'NW': [None, None, None],
+            'SE': [None, None, None],
+            'SW': [None, None, None]
+        }
+
+        for direction, value in lane_dict.items():
+            if value is None or value == '':
+                value = '-'
+                continue
+
+            # Process each direction and suffix (L, T, R)
+            suffixes = {
+                'L': 0,  # Index 0 for Left
+                'T': 1,  # Index 1 for Through
+                'R': 2   # Index 2 for Right
+            }
+
+            for suffix, idx in suffixes.items():
+                # Parse the value for numbers and special characters < and >
+                if direction.endswith(suffix):
+                    # Store the raw value directly in raw_data_dict in the correct position
+                    direction_prefix = direction[:-1]
+                    if direction_prefix in raw_data_dict:
+                        # Store unparsed raw value
+                        raw_data_dict[direction_prefix][idx] = value
+
+                    parsed_value = ''
+
+                    if '<' in value:
+                        parsed_value += 'L'  # Leading left if < is present
+                    number_part = ''.join(
+                        filter(str.isdigit, value))  # Get the number
+                    if number_part:
+                        # Repeat based on the number
+                        parsed_value += suffix * int(number_part)
+
+                    else:
+                        parsed_value += suffix
+
+                    if '>' in value:
+                        parsed_value += 'R'  # Trailing right if > is present
+
+                    # Store the parsed value in the respective direction and suffix position
+                    # Get the prefix like EB, WB, etc.
+                    direction_prefix = direction[:-1]
+                    if direction_prefix in parsed_dict:
+                        parsed_dict[direction_prefix][idx] = parsed_value or None
+
+        # Remove None values from each list in the parsed_dict
+        for key in list(parsed_dict.keys()):
+            if key != "Intersection ID":  # Don't touch the Intersection ID key
+                parsed_dict[key] = [
+                    value for value in parsed_dict[key] if value is not None]
+                # If the list is empty (no valid values), set it to '-'
+                if not parsed_dict[key]:
+                    parsed_dict[key] = '-'
+
+        # Clean up the raw_data_dict in the same way
+        for key in raw_data_dict:
+            if key != "Intersection ID":
+                raw_data_dict[key] = [value for value in raw_data_dict[key]]
+                if not raw_data_dict[key]:
+                    raw_data_dict[key] = '-'
+
+        # Debugging output
+        # print(f"\nParsed Lane Config (Intersection #{intersection_id}):\n{parsed_dict} \nRaw Lane Config (Intersection #{intersection_id}):\n{raw_data_dict}")
+
+        # Append the parsed_dict for this lane group to the final list
+        parsed_list.append(parsed_dict)
+        raw_data_list.append(raw_data_dict)
+
+    return parsed_list, raw_data_list
 
 
 def parse_overall_data_v2(file_path, df):
@@ -1232,7 +1349,6 @@ def extract_data_to_csv(file_path, output_file):
             # Append the config_dict to the group_config_data list if it contains data
             if config_dict:
                 config_dict['ID'] = f'{current_id}'
-                print(f"***Intersection {current_id} configs: \n{config_dict}")
                 group_config_data = config_dict
                 all_intersection_configs.append(config_dict)
 
@@ -1451,27 +1567,32 @@ def extract_data_to_csv(file_path, output_file):
     awsc_dir_formatted, _, _ = process_directions(awsc_overall, lane_configurations)
     
     # print(f"\nCombined data: {awsc_combined_data}")
-    print(f"\nAWSC Directions: {awsc_dir_formatted}")
+    # print(f"\nAWSC Directions: {awsc_dir_formatted}")
     
     twsc_overall, synchro_overall, hcm_overall, _ = parse_overall_data_v2(
         file_path, df)
     twsc_intersections = parse_twsc_approach(df)
     
     # Extract all unique 'ID' values
-    unique_ids = list(set(entry['ID'] for entry in twsc_overall))    
-    # Filter dictionaries that have an 'ID' matching one in unique_ids
-    matching_configs = [config for config in all_intersection_configs if config.get('ID') in unique_ids]
+    unique_ids = list(set(entry['ID'] for entry in twsc_overall))
+    # print(f"\nUnique IDs: {unique_ids}")
+
+    # ✅ Fixed version: Filter and ensure unique entries
+    seen_ids = set()
+    matching_configs = [
+        config for config in all_intersection_configs 
+        if config.get('ID') in unique_ids and config.get('ID') not in seen_ids and not seen_ids.add(config.get('ID'))
+    ]
     twsc_parsed_configs = parse_lane_configs(matching_configs, unique_ids)
-    
     twsc_intersection_directions, _, _ = process_directions(
         twsc_overall, twsc_parsed_configs)
     
     combined_list.extend(twsc_intersections)
     
-    print(f"\nTWSC Directions: {twsc_intersection_directions}")
+    # print(f"\nTWSC Directions: {twsc_intersection_directions}")
     # print(f"\nTWSC Intersections:\n{twsc_intersections}")
     # print(f"\nCombined list: \n{combined_list}")
-    print(f"\ntwsc_overall:\n{twsc_overall}\n")
+    # print(f"\ntwsc_overall:\n{twsc_overall}\n")
     
     # Create an empty DataFrame to hold all intersections' data
     final_df = pd.DataFrame()
@@ -1620,11 +1741,13 @@ def extract_data_to_csv(file_path, output_file):
         
         # """ Processing TWSC summary data"""
         elif twsc_summary_result:
+            print(f"\nTWSC Summary Result:\n{twsc_summary_result}")
+            # print(f"\nTWSC Summary Directions:\n{twsc_summary_directions}")
             for direction, movement_values in twsc_summary_result.items():
-                if direction == "ID":
+                if direction == "ID" :
                     continue
                 base_direction_printed = False
-        
+                idx = 0
                 if direction in twsc_summary_result:
                     if movement_values[3] == '-':
                         continue
@@ -1639,23 +1762,33 @@ def extract_data_to_csv(file_path, output_file):
                 intersection_id_str = str(intersection_id) if not intersection_id_printed else ''
                 direction_value = twsc_summary_directions[direction[:2]]
                 
-                print(f"\nTWSC Summary Directions:\n{twsc_summary_directions}")
-                print(direction_value)
+                # print(direction_value)
+                
                 # Ensure that Ln1 is replaced with the actual recorded direction
                 base_direction = direction[:2]
+                
                 if isinstance(direction_value, list):
                     for dir_val in direction_value:
+                        idx += 1
                         if "Ln" in dir_val:  # Replace 'Ln1' with the actual direction
                             dir_val = base_direction  # Use the base direction from lane config
                         
                         intersection_id_str = str(intersection_id) if not intersection_id_printed else ''
-                        base_direction_str = str(direction) if not base_direction_printed else ''
-                        key = direction
-                        lane_data = twsc_summary_result[key]
-                
+                        base_direction_str = str(base_direction) if not base_direction_printed else ''
+                        
+                        try:
+                            key = base_direction + f"Ln{idx}"
+                            lane_data = twsc_summary_result[key]
+                        except KeyError:
+                            print(f"'{base_direction + f'Ln{idx}'}' not found in the dictionary. Defaulting to LTR's...")
+                            key = base_direction + dir_val
+                            lane_data = twsc_summary_result[key]
+                            
+                        print(f"\nLane data for key '{key}': {lane_data}")
                         if lane_data != ('-', '-', '-', '-'):
-                            intersection_data.append([intersection_id_str, direction[:2], dir_val, vc_value, los_value, delay_value])
+                            intersection_data.append([intersection_id_str, base_direction_str, dir_val,lane_data[0], lane_data[1], lane_data[2]])
                             intersection_id_printed = True
+                            base_direction_printed = True
 
                 else:
                     intersection_data.append([intersection_id_str, direction[:2], direction_value, vc_value, los_value, delay_value])
@@ -1663,7 +1796,6 @@ def extract_data_to_csv(file_path, output_file):
                 intersection_id_printed = True
 
                 
-        # """ Processing AWSC summary data"""
         elif awsc_summary_result:
             # print(f"\nAWSC Summary Result: {awsc_summary_result}")
             # print(f"AWSC Summary Directions: {awsc_summary_directions}")
@@ -1817,113 +1949,6 @@ def extract_data_to_csv(file_path, output_file):
     print(f"Total number of useable datasets found: {len(combined_list_sorted)}")
     print("_" * 40 + "\n")
     """
-
-def parse_lane_configs(int_lane_groups, intersection_ids):
-    parsed_list = []  # This will store the parsed dictionaries for each group
-    raw_data_list = []
-
-    for idx, lane_dict in enumerate(int_lane_groups):
-
-        intersection_id = intersection_ids[idx]
-
-        # Skip if the intersection ID is already in parsed_list
-        if any(parsed_dict.get("Intersection ID") == intersection_id for parsed_dict in parsed_list):
-            continue
-
-        parsed_dict = {
-            "Intersection ID": intersection_id,
-            # Initialize with three None values for L, T, R
-            'EB': [None, None, None],
-            'WB': [None, None, None],
-            'NB': [None, None, None],
-            'SB': [None, None, None],
-            'NE': [None, None, None],
-            'NW': [None, None, None],
-            'SE': [None, None, None],
-            'SW': [None, None, None]
-        }
-
-        # Initialize the raw data dictionary
-        raw_data_dict = {
-            "Intersection ID": intersection_id,
-            'EB': [None, None, None],
-            'WB': [None, None, None],
-            'NB': [None, None, None],
-            'SB': [None, None, None],
-            'NE': [None, None, None],
-            'NW': [None, None, None],
-            'SE': [None, None, None],
-            'SW': [None, None, None]
-        }
-
-        for direction, value in lane_dict.items():
-            if value is None or value == '':
-                value = '-'
-                continue
-
-            # Process each direction and suffix (L, T, R)
-            suffixes = {
-                'L': 0,  # Index 0 for Left
-                'T': 1,  # Index 1 for Through
-                'R': 2   # Index 2 for Right
-            }
-
-            for suffix, idx in suffixes.items():
-                # Parse the value for numbers and special characters < and >
-                if direction.endswith(suffix):
-                    # Store the raw value directly in raw_data_dict in the correct position
-                    direction_prefix = direction[:-1]
-                    if direction_prefix in raw_data_dict:
-                        # Store unparsed raw value
-                        raw_data_dict[direction_prefix][idx] = value
-
-                    parsed_value = ''
-
-                    if '<' in value:
-                        parsed_value += 'L'  # Leading left if < is present
-                    number_part = ''.join(
-                        filter(str.isdigit, value))  # Get the number
-                    if number_part:
-                        # Repeat based on the number
-                        parsed_value += suffix * int(number_part)
-
-                    else:
-                        parsed_value += suffix
-
-                    if '>' in value:
-                        parsed_value += 'R'  # Trailing right if > is present
-
-                    # Store the parsed value in the respective direction and suffix position
-                    # Get the prefix like EB, WB, etc.
-                    direction_prefix = direction[:-1]
-                    if direction_prefix in parsed_dict:
-                        parsed_dict[direction_prefix][idx] = parsed_value or None
-
-        # Remove None values from each list in the parsed_dict
-        for key in list(parsed_dict.keys()):
-            if key != "Intersection ID":  # Don't touch the Intersection ID key
-                parsed_dict[key] = [
-                    value for value in parsed_dict[key] if value is not None]
-                # If the list is empty (no valid values), set it to '-'
-                if not parsed_dict[key]:
-                    parsed_dict[key] = '-'
-
-        # Clean up the raw_data_dict in the same way
-        for key in raw_data_dict:
-            if key != "Intersection ID":
-                raw_data_dict[key] = [value for value in raw_data_dict[key]]
-                if not raw_data_dict[key]:
-                    raw_data_dict[key] = '-'
-
-        # Debugging output
-        # print(f"\nParsed Lane Config (Intersection #{intersection_id}):\n{parsed_dict} \nRaw Lane Config (Intersection #{intersection_id}):\n{raw_data_dict}")
-
-        # Append the parsed_dict for this lane group to the final list
-        parsed_list.append(parsed_dict)
-        raw_data_list.append(raw_data_dict)
-
-    return parsed_list, raw_data_list
-
 
 if __name__ == "__main__":
     # Test input/ouput files
