@@ -62,7 +62,7 @@ Intersection ID,Direction,Lane,V/c,LOS,Delay
 ,SW,LTR,0.135,A,8.2
 ,,,,,
 23,NB,L,0.048,A,9.4
-,,T,0.128,A,9.1
+23,,T,0.128,A,9.1
 ,EB,LTR,0.321,B,10.9
 ,SB,LT,0.137,A,9.7
 ,,R,0.039,A,8.1

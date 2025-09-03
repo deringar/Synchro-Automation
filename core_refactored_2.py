@@ -23,6 +23,14 @@ import re  # Regular expression module for pattern matching in strings.
 from openpyxl import load_workbook, Workbook
 import pandas as pd
 
+def sort_directions(data_dict):
+    ordered = {}
+    for direction in ['EB', 'WB', 'NB', 'SB', 'NE', 'NW', 'SE', 'SW']:
+        if direction in data_dict:
+            ordered[direction] = data_dict[direction]
+    return ordered
+
+
 
 """ Part 1 """
 
@@ -1575,7 +1583,8 @@ def extract_data_to_csv(file_path, output_file):
 
     awsc_overall = parse_awsc_data(df)
     awsc_combined_data = integrate_awsc_data(awsc_overall, [])
-    awsc_dir_formatted, _, _ = process_directions(awsc_overall, lane_configurations)
+    awsc_dir_formatted_unsorted, _, _ = process_directions(awsc_overall, lane_configurations)
+    awsc_dir_formatted = [dict(entry, **sort_directions(entry)) if isinstance(entry, dict) else entry for entry in awsc_dir_formatted_unsorted]
 
     # print(f"\nCombined data: {awsc_combined_data}")
     print(f"\nAWSC Directions: {awsc_dir_formatted}")
@@ -1597,12 +1606,12 @@ def extract_data_to_csv(file_path, output_file):
     print(f"$$${matching_configs}")
     twsc_parsed_configs, _ = parse_lane_configs(matching_configs, unique_ids)
     print("****", twsc_parsed_configs)
-    twsc_intersection_directions, _, _ = process_directions(
+    twsc_intersection_directions_unsorted, _, _ = process_directions(
         twsc_overall, twsc_parsed_configs)
 
     combined_list.extend(twsc_intersections)
 
-    print(f"\nTWSC Directions: {twsc_intersection_directions}")
+    # print(f"\nTWSC Directions: {twsc_intersection_directions}")
     # print(f"\nTWSC Intersections:\n{twsc_intersections}")
     # print(f"\nCombined list: \n{combined_list}")
     # print(f"\ntwsc_overall:\n{twsc_overall}\n")
@@ -1643,7 +1652,7 @@ def extract_data_to_csv(file_path, output_file):
         """ Check if the intersection has TWSC data """
         twsc_summary_result = next(
             (twsc for twsc in twsc_overall if twsc.get("ID") == str(intersection_id)), None)
-        twsc_summary_directions = next((twsc_dir for twsc_dir in twsc_intersection_directions if twsc_dir.get(
+        twsc_summary_directions = next((twsc_dir for twsc_dir in twsc_intersection_directions_unsorted if twsc_dir.get(
             "ID") == str(intersection_id)), None)
 
         """ Check if the intersection has AWSC data """
