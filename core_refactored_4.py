@@ -22,7 +22,6 @@ import re  # Regular expression module for pattern matching in strings.
 # from shutil import copy  # Used to copy files or directories.
 from openpyxl import load_workbook, Workbook
 import pandas as pd
-import sys
 
 
 """ Part 1 """
@@ -331,7 +330,7 @@ def read_input_file(file_path):
 
     print(f"Found intersections: {intersections}")
 
-    directions = ["EB", "WB", "NB", "SB", "NE", "NW", "SE", "SW"]
+    directions = ["EB", "WB", "NB", "SB", "NW", "NE", "SW", "SE"]
     # output_start_row = 4  # Start writing from row 4
 
     # Dictionary to store results for each intersection
@@ -1752,80 +1751,64 @@ def extract_data_to_csv(file_path, output_file):
 
         # """ Processing TWSC summary data"""
         elif twsc_summary_result:
-            # Enforce consistent direction ordering for TWSC outputs
-            ORDERED_DIRECTIONS = ["EB", "WB", "NB", "SB", "NE", "NW", "SE", "SW"]
             processed_directions = set()
-            for base_direction in ORDERED_DIRECTIONS:
-                movements = twsc_summary_directions.get(base_direction)
-                if not movements:
+            for direction, movement_values in twsc_summary_result.items():
+                if direction == "ID":
                     continue
+                base_direction_printed = False
+                idx = 0
+                base_direction = direction[:2]
 
                 if base_direction in processed_directions:
                     continue
 
-                base_direction_printed = False
+                if direction in twsc_summary_result:
+                    if movement_values[3] == '-':
+                        continue
+                    lane_data = twsc_summary_result[direction]
+                else:
+                    lane_data = ('-', '-', '-', '-')
 
-                if isinstance(movements, list):
-                    idx = 0
-                    for mv in movements:
+                vc_value, los_value, delay_value, capacity_value = (
+                    lane_data if isinstance(lane_data, tuple) else ('-', '-', '-', '-')
+                )
+
+                intersection_id_str = str(intersection_id) if not intersection_id_printed else ''
+                direction_value = twsc_summary_directions[direction[:2]]
+
+                if isinstance(direction_value, list):
+                    for dir_val in direction_value:
                         idx += 1
-                        dir_val = mv
+                        if "Ln" in dir_val:
+                            dir_val = base_direction
 
-                        # Prefer Ln-indexed lane keys, fall back to movement-suffixed key
-                        key = f"{base_direction}Ln{idx}"
-                        if key not in twsc_summary_result:
-                            key = f"{base_direction}{dir_val}"
+                        try:
+                            key = base_direction + f"Ln{idx}"
+                            lane_data = twsc_summary_result[key]
+                        except KeyError:
+                            key = base_direction + dir_val
+                            lane_data = twsc_summary_result[key]
 
-                        lane_data = twsc_summary_result.get(key, ('-', '-', '-', '-'))
                         if lane_data != ('-', '-', '-', '-'):
-                            vc_value, los_value, delay_value, capacity_value = (
-                                lane_data if isinstance(lane_data, tuple) else ('-', '-', '-', '-')
-                            )
-                            id_cell = str(intersection_id) if not intersection_id_printed else ''
-                            intersection_data.append([
-                                id_cell,
-                                base_direction if not base_direction_printed else '',
-                                dir_val,
-                                vc_value,
-                                los_value,
-                                delay_value,
-                            ])
+                            intersection_data.append([intersection_id_str, base_direction if not base_direction_printed else '', dir_val,
+                                                      lane_data[0], lane_data[1], lane_data[2]])
                             intersection_id_printed = True
                             base_direction_printed = True
                 else:
-                    dir_val = movements
-                    key = f"{base_direction}Ln1"
-                    if key not in twsc_summary_result:
-                        key = f"{base_direction}{dir_val}"
-                    lane_data = twsc_summary_result.get(key, ('-', '-', '-', '-'))
-                    vc_value, los_value, delay_value, capacity_value = (
-                        lane_data if isinstance(lane_data, tuple) else ('-', '-', '-', '-')
-                    )
-                    id_cell = str(intersection_id) if not intersection_id_printed else ''
-                    intersection_data.append([
-                        id_cell,
-                        base_direction,
-                        dir_val,
-                        vc_value,
-                        los_value,
-                        delay_value,
-                    ])
-                    intersection_id_printed = True
+                    intersection_data.append([intersection_id_str, direction[:2], direction_value, vc_value, los_value, delay_value])
 
                 processed_directions.add(base_direction)
+                intersection_id_printed = True
 
         elif awsc_summary_result:
             # print(f"\nAWSC Summary Result: {awsc_summary_result}")
             # print(f"AWSC Summary Directions: {awsc_summary_directions}")
 
+            intersection_id_str = str(intersection_id)  # Ensure intersection ID is available
+
             print(awsc_summary_directions)
             # ✅ First loop through `awsc_summary_directions` to process movements
-            # Enforce consistent direction ordering for AWSC outputs
-            ORDERED_DIRECTIONS = ["EB", "WB", "NB", "SB", "NE", "NW", "SE", "SW"]
-            for base_direction in ORDERED_DIRECTIONS:
-                movements = awsc_summary_directions.get(base_direction)
-                if movements is None:
-                    continue
+            for base_direction, movements in awsc_summary_directions.items():
                 if base_direction == "ID":
                     continue  # Skip ID field
 
@@ -1838,8 +1821,6 @@ def extract_data_to_csv(file_path, output_file):
                 )
                 # print(f"Lanes found for {base_direction}: {lane_keys}")
 
-                # Compute per-row ID when appending to avoid duplicates
-                # (left here for backward compatibility with earlier logic)
                 intersection_id_str = str(intersection_id) if not intersection_id_printed else ''
 
                 # ✅ Handle case where movements are a string (e.g., "LTR")
@@ -1862,8 +1843,7 @@ def extract_data_to_csv(file_path, output_file):
 
                             # ✅ Append lane data to `intersection_data`
                             if lane_data != ('-', '-', '-', '-'):
-                                id_cell = str(intersection_id) if not intersection_id_printed else ''
-                                intersection_data.append([id_cell, base_direction, movement, vc_value, los_value, delay_value])
+                                intersection_data.append([intersection_id_str, base_direction, movement, vc_value, los_value, delay_value])
                                 intersection_id_printed = True
                     elif len(lane_keys) == 2 and len(movements) == 4:
                         # Split into two parts: "LT" for Ln1 and "TR" for Ln2
@@ -1876,8 +1856,7 @@ def extract_data_to_csv(file_path, output_file):
 
                                 # ✅ Append lane data to `intersection_data`
                                 if lane_data != ('-', '-', '-', '-'):
-                                    id_cell = str(intersection_id) if not intersection_id_printed else ''
-                                    intersection_data.append([id_cell, base_direction, movement, vc_value, los_value, delay_value])
+                                    intersection_data.append([intersection_id_str, base_direction, movement, vc_value, los_value, delay_value])
                                     intersection_id_printed = True
                 # ✅ Handle case where movements are a list (e.g., ['L', 'T', 'R'])
                 elif isinstance(movements, list):
@@ -1896,8 +1875,7 @@ def extract_data_to_csv(file_path, output_file):
 
                             # ✅ Append lane data to `intersection_data`
                             if lane_data != ('-', '-', '-', '-'):
-                                id_cell = str(intersection_id) if not intersection_id_printed else ''
-                                intersection_data.append([id_cell, base_direction_str, movement, vc_value, los_value, delay_value])
+                                intersection_data.append([intersection_id_str, base_direction_str, movement, vc_value, los_value, delay_value])
                                 intersection_id_printed = True
                                 base_direction_printed = True
                     base_direction_printed = False
@@ -1979,32 +1957,6 @@ def extract_data_to_csv(file_path, output_file):
     """
 
 if __name__ == "__main__":
-    # Route all printed output to a local log file (overwrite each run)
-    class _Tee:
-        def __init__(self, *streams):
-            self.streams = streams
-        def write(self, data):
-            for s in self.streams:
-                try:
-                    s.write(data)
-                except Exception:
-                    pass
-            return len(data)
-        def flush(self):
-            for s in self.streams:
-                try:
-                    s.flush()
-                except Exception:
-                    pass
-
-    try:
-        _log_file = open('log.txt', 'w', encoding='utf-8')
-        sys.stdout = _Tee(sys.stdout, _log_file)
-        sys.stderr = _Tee(sys.stderr, _log_file)
-    except Exception as _e:
-        # If logging setup fails, continue without file logging
-        print(f"Warning: failed to initialize log file: {_e}")
-
     # Test input/ouput files
     test_report_1 = "test/Test Report 1.txt"
     test_report_2 = "test/Test Report 2.txt"

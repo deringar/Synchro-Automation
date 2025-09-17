@@ -69,6 +69,7 @@ Intersection ID,Direction,Lane,V/c,LOS,Delay
 ,,R,-,-,14.4
 ,Overall,,-,B,13.2
 ,,,,,
-5,NW,LR,0.744,E,46.2
-,WB,T,0.053,A,8.6
+5,EB,R,-,-,-
+,WB,T,-,A,0.0
+,NW,LR,0.744,E,46.2
 ,,,,,
