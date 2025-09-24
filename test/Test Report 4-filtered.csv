@@ -1,11 +1,15 @@
 Intersection ID,Direction,Lane,V/c,LOS,Delay
 1,NE,LTR,0.142,B,10.5
-,NW,R,-,-,-
-,SE,R,-,-,-
+,NW,L,0.021,A,7.3
+,,T,-,A,0.0
+,SE,L,0.004,A,7.4
+,,T,-,A,0.0
 ,SW,LTR,0.153,B,11.0
 ,,,,,
-2,EB,R,-,-,-
-,WB,R,-,-,-
+2,EB,L,0.008,A,7.6
+,,T,-,A,0.0
+,WB,L,0.035,A,7.4
+,,T,-,A,0.0
 ,NB,RR,0.123,B,11.2
 ,SW,LLR,0.162,B,12.1
 ,,,,,

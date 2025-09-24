@@ -1,0 +1,1300 @@
+﻿Lanes, Volumes, Timings
+1: NYS Route 304 & Congers Road (C.R. 80)	09/22/2025
+
+
+Lane Group                        		EBL  	EBT  	EBR  	WBL  	WBT  	WBR  	NBL  	NBT  	NBR  	SBL  	SBT  	SBR
+Lane Configurations               		1    	1>   	0    	1    	1>   	0    	1    	2    	1    	1    	2>   	0
+Traffic Volume (vph)              		41   	253  	93   	217  	295  	86   	144  	615  	187  	86   	522  	45
+Future Volume (vph)               		41   	253  	93   	217  	295  	86   	144  	615  	187  	86   	522  	45
+Ideal Flow (vphpl)                		1900 	1900 	1900 	1900 	1900 	1900 	1900 	1900 	1900 	1900 	1900 	1900
+Grade (%)                         		     	-4%  	     	     	-3%  	     	     	2%   	     	     	1%   	
+Storage Length (ft)               		80   	     	0    	115  	     	0    	460  	     	220  	420  	     	0
+Storage Lanes                     		1    	     	0    	1    	     	0    	1    	     	1    	1    	     	0
+Taper Length (ft)                 		86   	     	     	86   	     	     	86   	     	     	86   	     	
+Lane Util. Factor                 		1.00 	1.00 	1.00 	1.00 	1.00 	1.00 	1.00 	0.95 	1.00 	1.00 	0.95 	0.95
+Ped Bike Factor                   		1.00 	1.00 	     	1.00 	1.00 	     	     	     	     	     	     	
+Frt                               		     	0.960	     	     	0.966	     	     	     	0.850	     	0.988	
+Flt Protected                     		0.950	     	     	0.950	     	     	0.950	     	     	0.950	     	
+Satd. Flow (prot)                 		1841 	1854 	0    	1814 	1838 	0    	1787 	3504 	1568 	1778 	3479 	0
+Flt Permitted                     		0.403	     	     	0.212	     	     	0.950	     	     	0.950	     	
+Satd. Flow (perm)                 		780  	1854 	0    	405  	1838 	0    	1787 	3504 	1568 	1778 	3479 	0
+Right Turn on Red                 		     	     	No   	     	     	No   	     	     	No   	     	     	No
+Satd. Flow (RTOR)                 		     	     	     	     	     	     	     	     	     	     	     	
+Link Speed (mph)                  		     	30   	     	     	30   	     	     	55   	     	     	55   	
+Link Distance (ft)                		     	185  	     	     	418  	     	     	754  	     	     	965  	
+Travel Time (s)                   		     	4.2  	     	     	9.5  	     	     	9.3  	     	     	12.0 	
+Confl. Peds. (#/hr)               		2    	     	1    	1    	     	2    	     	     	     	     	     	
+Peak Hour Factor                  		0.92 	0.92 	0.92 	0.92 	0.92 	0.92 	0.92 	0.92 	0.92 	0.92 	0.92 	0.92
+Heavy Vehicles (%)                		0%   	0%   	0%   	1%   	1%   	1%   	0%   	2%   	2%   	1%   	2%   	2%
+Adj. Flow (vph)                   		45   	275  	101  	236  	321  	93   	157  	668  	203  	93   	567  	49
+Shared Lane Traffic (%)           		     	     	     	     	     	     	     	     	     	     	     	
+Lane Group Flow (vph)             		45   	376  	0    	236  	414  	0    	157  	668  	203  	93   	616  	0
+Enter Blocked Intersection        		No   	No   	No   	No   	No   	No   	No   	No   	No   	No   	No   	No
+Lane Alignment                    		Left 	Left 	Right	Left 	Left 	Right	Left 	Left 	Right	Left 	Left 	Right
+Median Width(ft)                  		     	12   	     	     	12   	     	     	12   	     	     	12   	
+Link Offset(ft)                   		     	0    	     	     	0    	     	     	0    	     	     	0    	
+Crosswalk Width(ft)               		     	16   	     	     	16   	     	     	16   	     	     	16   	
+Two way Left Turn Lane            		     	     	     	     	     	     	     	     	     	     	     	
+Headway Factor                    		0.97 	0.97 	0.97 	0.98 	0.98 	0.98 	1.01 	1.01 	1.01 	1.01 	1.01 	1.01
+Turning Speed (mph)               		15   	     	9    	15   	     	9    	15   	     	9    	15   	     	9
+Number of Detectors               		1    	2    	     	1    	2    	     	1    	2    	1    	1    	2    	
+Detector Template                 		     	     	     	     	     	     	     	     	     	     	     	
+Leading Detector (ft)             		35   	83   	     	35   	83   	     	35   	83   	35   	35   	83   	
+Trailing Detector (ft)            		-5   	-5   	     	-5   	-5   	     	-5   	-5   	-5   	-5   	-5   	
+Detector 1 Position(ft)           		-5   	-5   	     	-5   	-5   	     	-5   	-5   	-5   	-5   	-5   	
+Detector 1 Size(ft)               		40   	40   	     	40   	40   	     	40   	40   	40   	40   	40   	
+Detector 1 Type                   		Cl+Ex	Cl+Ex	     	Cl+Ex	Cl+Ex	     	Cl+Ex	Cl+Ex	Cl+Ex	Cl+Ex	Cl+Ex	
+Detector 1 Channel                		     	     	     	     	     	     	     	     	     	     	     	
+Detector 1 Extend (s)             		0.0  	0.0  	     	0.0  	0.0  	     	0.0  	0.0  	0.0  	0.0  	0.0  	
+Detector 1 Queue (s)              		0.0  	0.0  	     	0.0  	0.0  	     	0.0  	0.0  	0.0  	0.0  	0.0  	
+Detector 1 Delay (s)              		0.0  	0.0  	     	0.0  	0.0  	     	0.0  	0.0  	0.0  	0.0  	0.0  	
+Detector 2 Position(ft)           		     	43   	     	     	43   	     	     	43   	     	     	43   	
+Detector 2 Size(ft)               		     	40   	     	     	40   	     	     	40   	     	     	40   	
+Detector 2 Type                   		     	Cl+Ex	     	     	Cl+Ex	     	     	Cl+Ex	     	     	Cl+Ex	
+Detector 2 Channel                		     	     	     	     	     	     	     	     	     	     	     	
+Detector 2 Extend (s)             		     	0.0  	     	     	0.0  	     	     	0.0  	     	     	0.0  	
+Turn Type                         		pm+pt	NA   	     	pm+pt	NA   	     	Prot 	NA   	Perm 	Prot 	NA   	
+Protected Phases                  		3    	8    	     	7    	4    	     	1    	6    	     	5    	2    	
+Permitted Phases                  		8    	     	     	4    	     	     	     	     	6    	     	     	
+Detector Phase                    		3    	8    	     	7    	4    	     	1    	6    	6    	5    	2    	
+Switch Phase                      		     	     	     	     	     	     	     	     	     	     	     	
+Minimum Initial (s)               		5.0  	5.0  	     	8.0  	20.0 	     	5.0  	10.0 	10.0 	5.0  	10.0 	
+Minimum Split (s)                 		12.0 	46.0 	     	15.0 	46.0 	     	12.0 	29.0 	29.0 	12.0 	29.0 	
+Total Split (s)                   		22.0 	57.0 	     	22.0 	57.0 	     	22.0 	57.0 	57.0 	22.0 	57.0 	
+Total Split (%)                   		13.9%	36.1%	     	13.9%	36.1%	     	13.9%	36.1%	36.1%	13.9%	36.1%	
+Maximum Green (s)                 		15.0 	50.0 	     	15.0 	50.0 	     	15.0 	50.0 	50.0 	15.0 	50.0 	
+Yellow Time (s)                   		5.0  	5.0  	     	5.0  	5.0  	     	5.0  	5.0  	5.0  	5.0  	5.0  	
+All-Red Time (s)                  		2.0  	2.0  	     	2.0  	2.0  	     	2.0  	2.0  	2.0  	2.0  	2.0  	
+Lost Time Adjust (s)              		0.0  	0.0  	     	0.0  	0.0  	     	0.0  	0.0  	0.0  	0.0  	0.0  	
+Total Lost Time (s)               		7.0  	7.0  	     	7.0  	7.0  	     	7.0  	7.0  	7.0  	7.0  	7.0  	
+Lead/Lag                          		Lead 	Lag  	     	Lead 	Lag  	     	Lead 	Lag  	Lag  	Lead 	Lag  	
+Lead-Lag Optimize?                		Yes  	Yes  	     	Yes  	Yes  	     	Yes  	Yes  	Yes  	Yes  	Yes  	
+Vehicle Extension (s)             		2.0  	2.0  	     	2.0  	2.0  	     	2.0  	4.0  	4.0  	2.0  	4.0  	
+Recall Mode                       		None 	None 	     	None 	None 	     	None 	Min  	Min  	None 	Min  	
+Walk Time (s)                     		     	7.0  	     	     	7.0  	     	     	7.0  	7.0  	     	7.0  	
+Flash Don't Walk (s)              		     	30.0 	     	     	30.0 	     	     	14.0 	14.0 	     	14.0 	
+Pedestrian Calls (#/hr)           		     	5    	     	     	5    	     	     	5    	5    	     	5    	
+v/c Ratio                         		0.15 	0.82 	     	0.68 	0.66 	     	0.69 	0.66 	0.45 	0.57 	0.70 	
+Control Delay (s/veh)             		22.7 	57.2 	     	33.3 	40.4 	     	68.5 	41.1 	39.4 	68.5 	44.5 	
+Queue Delay                       		0.0  	0.0  	     	0.0  	0.0  	     	0.0  	0.0  	0.0  	0.0  	0.0  	
+Total Delay (s/veh)               		22.7 	57.2 	     	33.3 	40.4 	     	68.5 	41.1 	39.4 	68.5 	44.5 	
+Queue Length 50th (ft)            		18   	261  	     	109  	262  	     	111  	230  	123  	66   	220  	
+Queue Length 95th (ft)            		49   	434  	     	204  	454  	     	#278 	356  	233  	146  	325  	
+Internal Link Dist (ft)           		     	105  	     	     	338  	     	     	674  	     	     	885  	
+Turn Bay Length (ft)              		80   	     	     	115  	     	     	460  	     	220  	420  	     	
+Base Capacity (vph)               		440  	829  	     	364  	821  	     	239  	1566 	700  	238  	1555 	
+Starvation Cap Reductn            		0    	0    	     	0    	0    	     	0    	0    	0    	0    	0    	
+Spillback Cap Reductn             		0    	0    	     	0    	0    	     	0    	0    	0    	0    	0    	
+Storage Cap Reductn               		0    	0    	     	0    	0    	     	0    	0    	0    	0    	0    	
+Reduced v/c Ratio                 		0.10 	0.45 	     	0.65 	0.50 	     	0.66 	0.43 	0.29 	0.39 	0.40 	
+
+Intersection Summary
+Area Type:                        	Other
+Cycle Length: 158
+Actuated Cycle Length: 115.3
+Natural Cycle: 105
+Control Type: Actuated-Uncoordinated
+#    95th percentile volume exceeds capacity, queue may be longer.
+     Queue shown is maximum after two cycles.
+
+
+PMEX 2023/2024 Existing Traffic Volumes 10:17 am 08/21/2024 Weekday Peak PM Hour	Synchro 12 Report
+21006961A - P.W.G.	Page 0
+
+Lanes, Volumes, Timings
+2: Town Hall Exit Driveway/E Evergreen Road & Congers Road (C.R. 80)	09/22/2025
+
+
+Lane Group                        		EBL  	EBT  	EBR  	WBL  	WBT  	WBR  	NBL  	NBT  	NBR  	SBL  	SBT  	SBR
+Lane Configurations               		0    	<1   	0    	0    	1>   	0    	0    	<1>  	0    	0    	<1>  	0
+Traffic Volume (vph)              		0    	373  	0    	0    	478  	5    	2    	0    	21   	4    	0    	7
+Future Volume (vph)               		0    	373  	0    	0    	478  	5    	2    	0    	21   	4    	0    	7
+Ideal Flow (vphpl)                		1900 	1900 	1900 	1900 	1900 	1900 	1900 	1900 	1900 	1900 	1900 	1900
+Lane Width (ft)                   		13   	13   	13   	13   	13   	13   	12   	12   	12   	11   	11   	11
+Grade (%)                         		     	-3%  	     	     	4%   	     	     	-1%  	     	     	1%   	
+Lane Util. Factor                 		1.00 	1.00 	1.00 	1.00 	1.00 	1.00 	1.00 	1.00 	1.00 	1.00 	1.00 	1.00
+Ped Bike Factor                   		     	     	     	     	     	     	     	     	     	     	     	
+Frt                               		     	     	     	     	0.998	     	     	0.876	     	     	0.910	
+Flt Protected                     		     	     	     	     	     	     	     	0.996	     	     	0.984	
+Satd. Flow (prot)                 		0    	1973 	0    	0    	1901 	0    	0    	1666 	0    	0    	1636 	0
+Flt Permitted                     		     	     	     	     	     	     	     	0.996	     	     	0.984	
+Satd. Flow (perm)                 		0    	1973 	0    	0    	1901 	0    	0    	1666 	0    	0    	1636 	0
+Link Speed (mph)                  		     	30   	     	     	30   	     	     	30   	     	     	30   	
+Link Distance (ft)                		     	189  	     	     	185  	     	     	123  	     	     	279  	
+Travel Time (s)                   		     	4.3  	     	     	4.2  	     	     	2.8  	     	     	6.3  	
+Confl. Peds. (#/hr)               		2    	     	4    	4    	     	2    	4    	     	4    	2    	     	2
+Peak Hour Factor                  		0.90 	0.90 	0.90 	0.90 	0.90 	0.90 	0.90 	0.90 	0.90 	0.90 	0.90 	0.90
+Heavy Vehicles (%)                		0%   	1%   	0%   	0%   	1%   	0%   	0%   	0%   	0%   	0%   	0%   	0%
+Adj. Flow (vph)                   		0    	414  	0    	0    	531  	6    	2    	0    	23   	4    	0    	8
+Shared Lane Traffic (%)           		     	     	     	     	     	     	     	     	     	     	     	
+Lane Group Flow (vph)             		0    	414  	0    	0    	537  	0    	0    	25   	0    	0    	12   	0
+Enter Blocked Intersection        		No   	No   	No   	No   	No   	No   	No   	No   	No   	No   	No   	No
+Lane Alignment                    		Left 	Left 	Right	Left 	Left 	Right	Left 	Left 	Right	Left 	Left 	Right
+Median Width(ft)                  		     	12   	     	     	12   	     	     	0    	     	     	0    	
+Link Offset(ft)                   		     	0    	     	     	0    	     	     	0    	     	     	0    	
+Crosswalk Width(ft)               		     	16   	     	     	16   	     	     	16   	     	     	16   	
+Two way Left Turn Lane            		     	     	     	     	     	     	     	     	     	     	     	
+Headway Factor                    		0.94 	0.94 	0.94 	0.98 	0.98 	0.98 	0.99 	0.99 	0.99 	1.05 	1.05 	1.05
+Turning Speed (mph)               		15   	     	9    	15   	     	9    	15   	     	9    	15   	     	9
+Sign Control                      		     	Free 	     	     	Free 	     	     	Stop 	     	     	Stop 	
+
+Intersection Summary
+Area Type:                        	Other
+Control Type: Unsignalized
+
+
+PMEX 2023/2024 Existing Traffic Volumes 10:17 am 08/21/2024 Weekday Peak PM Hour	Synchro 12 Report
+21006961A - P.W.G.	Page 0
+
+HCM 7th TWSC
+2: Town Hall Exit Driveway/E Evergreen Road & Congers Road (C.R. 80)	09/22/2025
+
+
+
+Intersection                      		      	      	      	      	      	      	      	      	      	      	      	
+Int Delay, s/veh                  		0.5   	      	      	      	      	      	      	      	      	      	      	
+
+Movement                          		EBL   	EBT   	EBR   	WBL   	WBT   	WBR   	NBL   	NBT   	NBR   	SBL   	SBT   	SBR
+Lane Configurations               		0     	<1    	0     	0     	1>    	0     	0     	<1>   	0     	0     	<1>   	0
+Traffic Vol, veh/h                		0     	373   	0     	0     	478   	5     	2     	0     	21    	4     	0     	7
+Future Vol, veh/h                 		0     	373   	0     	0     	478   	5     	2     	0     	21    	4     	0     	7
+Conflicting Peds, #/hr            		2     	0     	4     	4     	0     	2     	4     	0     	4     	2     	0     	2
+Sign Control                      		Free  	Free  	Free  	Free  	Free  	Free  	Stop  	Stop  	Stop  	Stop  	Stop  	Stop
+RT Channelized                    		-     	-     	None  	-     	-     	None  	-     	-     	None  	-     	-     	None
+Storage Length                    		-     	-     	-     	-     	-     	-     	-     	-     	-     	-     	-     	-
+Veh in Median Storage, #          		-     	0     	-     	-     	0     	-     	-     	0     	-     	-     	0     	-
+Grade, %                          		-     	-3    	-     	-     	4     	-     	-     	-1    	-     	-     	1     	-
+Peak Hour Factor                  		90    	90    	90    	90    	90    	90    	90    	90    	90    	90    	90    	90
+Heavy Vehicles, %                 		0     	1     	0     	0     	1     	0     	0     	0     	0     	0     	0     	0
+Mvmt Flow                         		0     	414   	0     	0     	531   	6     	2     	0     	23    	4     	0     	8
+                                  		      	      	      	      	      	      	      	      	      	      	      	
+
+Major/Minor                       		Major1	      	      	Major2	      	      	Minor1	      	      	Minor2	      	
+Conflicting Flow All              		539   	0     	-     	-     	-     	0     	950   	953   	418   	954   	950   	540
+          Stage 1                 		-     	-     	-     	-     	-     	-     	414   	414   	-     	536   	536   	-
+          Stage 2                 		-     	-     	-     	-     	-     	-     	535   	539   	-     	418   	414   	-
+Critical Hdwy                     		4.1   	-     	-     	-     	-     	-     	6.9   	6.3   	6.1   	7.3   	6.7   	6.3
+Critical Hdwy Stg 1               		-     	-     	-     	-     	-     	-     	5.9   	5.3   	-     	6.3   	5.7   	-
+Critical Hdwy Stg 2               		-     	-     	-     	-     	-     	-     	5.9   	5.3   	-     	6.3   	5.7   	-
+Follow-up Hdwy                    		2.2   	-     	-     	-     	-     	-     	3.5   	4     	3.3   	3.5   	4     	3.3
+Pot Cap-1 Maneuver                		1040  	-     	0     	0     	-     	-     	255   	275   	646   	228   	249   	538
+          Stage 1                 		-     	-     	0     	0     	-     	-     	634   	610   	-     	517   	511   	-
+          Stage 2                 		-     	-     	0     	0     	-     	-     	549   	541   	-     	602   	583   	-
+Platoon blocked, %                		      	-     	      	      	-     	-     	      	      	      	      	      	
+Mov Cap-1 Maneuver                		1038  	-     	-     	-     	-     	-     	251   	275   	644   	218   	248   	535
+Mov Cap-2 Maneuver                		-     	-     	-     	-     	-     	-     	251   	275   	-     	218   	248   	-
+          Stage 1                 		-     	-     	-     	-     	-     	-     	634   	610   	-     	516   	510   	-
+          Stage 2                 		-     	-     	-     	-     	-     	-     	539   	540   	-     	578   	583   	-
+                                  		      	      	      	      	      	      	      	      	      	      	      	
+
+Approach                          		EB    	      	      	WB    	      	      	NB    	      	      	SB    	      	
+HCM Ctrl Dly, s/v                 		0     	      	      	0     	      	      	11.66 	      	      	15.65 	      	
+HCM LOS                           		      	      	      	      	      	      	B     	      	      	C     	      	
+                                  		      	      	      	      	      	      	      	      	      	      	      	
+
+Minor Lane/Major Mvmt             		      	NBLn1 	EBL   	EBT   	WBT   	WBR   	SBLn1
+Capacity (veh/h)                  		      	566   	1038  	-     	-     	-     	350
+HCM Lane V/C Ratio                		      	0.045 	-     	-     	-     	-     	0.035
+HCM Ctrl Dly (s/v)                		      	11.7  	0     	-     	-     	-     	15.7
+HCM Lane LOS                      		      	B     	A     	-     	-     	-     	C
+HCM 95th %tile Q(veh)             		      	0.1   	0     	-     	-     	-     	0.1
+
+
+PMEX 2023/2024 Existing Traffic Volumes 10:17 am 08/21/2024 Weekday Peak PM Hour	Synchro 12 Report
+21006961A - P.W.G.	Page 0
+
+Lanes, Volumes, Timings
+3: Maple Avenue & Congers Road (C.R. 80)	09/22/2025
+
+
+Lane Group                        		EBL   	EBT   	EBR   	WBL   	WBT   	WBR   	NBL   	NBT   	NBR   	SBL   	SBT   	SBR
+Lane Configurations               		      	1>    	0     	0     	<1    	      	1     	      	1     	      	      	
+Traffic Volume (vph)              		      	320   	35    	47    	440   	      	73    	      	62    	      	      	
+Future Volume (vph)               		      	320   	35    	47    	440   	      	73    	      	62    	      	      	
+Ideal Flow (vphpl)                		      	1900  	1900  	1900  	1900  	      	1900  	      	1900  	      	      	
+Lane Width (ft)                   		      	12    	12    	13    	13    	      	12    	      	12    	      	      	
+Grade (%)                         		      	-2%   	      	      	2%    	      	-3%   	      	      	      	      	
+Storage Length (ft)               		      	      	0     	0     	      	      	0     	      	135   	      	      	
+Storage Lanes                     		      	      	0     	0     	      	      	1     	      	1     	      	      	
+Taper Length (ft)                 		      	      	      	25    	      	      	25    	      	      	      	      	
+Lane Util. Factor                 		      	1.00  	1.00  	1.00  	1.00  	      	1.00  	      	1.00  	      	      	
+Ped Bike Factor                   		      	      	      	      	      	      	      	      	      	      	      	
+Frt                               		      	0.987 	      	      	      	      	      	      	0.850 	      	      	
+Flt Protected                     		      	      	      	      	0.995 	      	0.950 	      	      	      	      	
+Satd. Flow (prot)                 		      	1861  	0     	0     	1909  	      	1762  	      	1607  	      	      	
+Flt Permitted                     		      	      	      	      	0.995 	      	0.950 	      	      	      	      	
+Satd. Flow (perm)                 		      	1861  	0     	0     	1909  	      	1762  	      	1607  	      	      	
+Link Speed (mph)                  		      	30    	      	      	30    	      	30    	      	      	      	      	
+Link Distance (ft)                		      	80    	      	      	189   	      	253   	      	      	      	      	
+Travel Time (s)                   		      	1.8   	      	      	4.3   	      	5.8   	      	      	      	      	
+Confl. Peds. (#/hr)               		      	      	10    	3     	      	      	10    	      	3     	      	      	
+Peak Hour Factor                  		      	0.86  	0.86  	0.86  	0.86  	      	0.86  	      	0.86  	      	      	
+Heavy Vehicles (%)                		      	1%    	9%    	4%    	1%    	      	4%    	      	2%    	      	      	
+Adj. Flow (vph)                   		      	372   	41    	55    	512   	      	85    	      	72    	      	      	
+Shared Lane Traffic (%)           		      	      	      	      	      	      	      	      	      	      	      	
+Lane Group Flow (vph)             		      	413   	0     	0     	567   	      	85    	      	72    	      	      	
+Enter Blocked Intersection        		      	No    	No    	No    	No    	      	No    	      	No    	      	      	
+Lane Alignment                    		      	Left  	Right 	Left  	Left  	      	Left  	      	Right 	      	      	
+Median Width(ft)                  		      	0     	      	      	0     	      	12    	      	      	      	      	
+Link Offset(ft)                   		      	0     	      	      	0     	      	0     	      	      	      	      	
+Crosswalk Width(ft)               		      	16    	      	      	16    	      	16    	      	      	      	      	
+Two way Left Turn Lane            		      	      	      	      	      	      	      	      	      	      	      	
+Headway Factor                    		      	0.99  	0.99  	0.97  	0.97  	      	0.98  	      	0.98  	      	      	
+Turning Speed (mph)               		      	      	9     	15    	      	      	15    	      	9     	      	      	
+Sign Control                      		      	Free  	      	      	Free  	      	Stop  	      	      	      	      	
+
+Intersection Summary
+Area Type:                        	Other
+Control Type: Unsignalized
+
+
+PMEX 2023/2024 Existing Traffic Volumes 10:17 am 08/21/2024 Weekday Peak PM Hour	Synchro 12 Report
+21006961A - P.W.G.	Page 0
+
+HCM 7th TWSC
+3: Maple Avenue & Congers Road (C.R. 80)	09/22/2025
+
+
+
+Intersection                      		      	      	      	      	      	
+Int Delay, s/veh                  		2.9   	      	      	      	      	
+
+Movement                          		EBT   	EBR   	WBL   	WBT   	NBL   	NBR
+Lane Configurations               		1>    	0     	0     	<1    	1     	1
+Traffic Vol, veh/h                		320   	35    	47    	440   	73    	62
+Future Vol, veh/h                 		320   	35    	47    	440   	73    	62
+Conflicting Peds, #/hr            		0     	10    	3     	0     	10    	3
+Sign Control                      		Free  	Free  	Free  	Free  	Stop  	Stop
+RT Channelized                    		-     	None  	-     	None  	-     	None
+Storage Length                    		-     	-     	-     	-     	0     	135
+Veh in Median Storage, #          		0     	-     	-     	0     	0     	-
+Grade, %                          		-2    	-     	-     	2     	-3    	-
+Peak Hour Factor                  		86    	86    	86    	86    	86    	86
+Heavy Vehicles, %                 		1     	9     	4     	1     	4     	2
+Mvmt Flow                         		372   	41    	55    	512   	85    	72
+                                  		      	      	      	      	      	
+
+Major/Minor                       		Major1	      	Major2	      	Minor1	
+Conflicting Flow All              		0     	0     	423   	0     	1033  	405
+          Stage 1                 		-     	-     	-     	-     	402   	-
+          Stage 2                 		-     	-     	-     	-     	631   	-
+Critical Hdwy                     		-     	-     	4.14  	-     	5.84  	5.92
+Critical Hdwy Stg 1               		-     	-     	-     	-     	4.84  	-
+Critical Hdwy Stg 2               		-     	-     	-     	-     	4.84  	-
+Follow-up Hdwy                    		-     	-     	2.236 	-     	3.536 	3.318
+Pot Cap-1 Maneuver                		-     	-     	1126  	-     	303   	668
+          Stage 1                 		-     	-     	-     	-     	718   	-
+          Stage 2                 		-     	-     	-     	-     	585   	-
+Platoon blocked, %                		-     	-     	      	-     	      	
+Mov Cap-1 Maneuver                		-     	-     	1115  	-     	277   	659
+Mov Cap-2 Maneuver                		-     	-     	-     	-     	277   	-
+          Stage 1                 		-     	-     	-     	-     	711   	-
+          Stage 2                 		-     	-     	-     	-     	540   	-
+                                  		      	      	      	      	      	
+
+Approach                          		EB    	      	WB    	      	NB    	
+HCM Ctrl Dly, s/v                 		0     	      	0.81  	      	17.89 	
+HCM LOS                           		      	      	      	      	C     	
+                                  		      	      	      	      	      	
+
+Minor Lane/Major Mvmt             		      	NBLn1 	NBLn2 	EBT   	EBR   	WBL   	WBT
+Capacity (veh/h)                  		      	277   	659   	-     	-     	174   	-
+HCM Lane V/C Ratio                		      	0.306 	0.109 	-     	-     	0.049 	-
+HCM Ctrl Dly (s/v)                		      	23.6  	11.1  	-     	-     	8.4   	0
+HCM Lane LOS                      		      	C     	B     	-     	-     	A     	A
+HCM 95th %tile Q(veh)             		      	1.3   	0.4   	-     	-     	0.2   	-
+
+
+PMEX 2023/2024 Existing Traffic Volumes 10:17 am 08/21/2024 Weekday Peak PM Hour	Synchro 12 Report
+21006961A - P.W.G.	Page 0
+
+Lanes, Volumes, Timings
+4: Congers Road (C.R. 80) & W Evergreen Road (Site Driveway 1)	09/22/2025
+
+
+Lane Group                        		EBL   	EBT   	EBR   	WBL   	WBT   	WBR   	NBL   	NBT   	NBR   	SBL   	SBT   	SBR
+Lane Configurations               		0     	<1    	      	      	1>    	0     	      	      	      	0     	      	1
+Traffic Volume (vph)              		2     	356   	      	      	439   	74    	      	      	      	0     	      	0
+Future Volume (vph)               		2     	356   	      	      	439   	74    	      	      	      	0     	      	0
+Ideal Flow (vphpl)                		1900  	1900  	      	      	1900  	1900  	      	      	      	1900  	      	1900
+Lane Width (ft)                   		12    	12    	      	      	12    	12    	      	      	      	16    	      	16
+Grade (%)                         		      	-2%   	      	      	2%    	      	      	      	      	1%    	      	
+Lane Util. Factor                 		1.00  	1.00  	      	      	1.00  	1.00  	      	      	      	1.00  	      	1.00
+Ped Bike Factor                   		      	      	      	      	      	      	      	      	      	      	      	
+Frt                               		      	      	      	      	0.981 	      	      	      	      	      	      	
+Flt Protected                     		      	      	      	      	      	      	      	      	      	      	      	
+Satd. Flow (prot)                 		0     	1900  	      	      	1830  	0     	      	      	      	0     	      	2143
+Flt Permitted                     		      	      	      	      	      	      	      	      	      	      	      	
+Satd. Flow (perm)                 		0     	1900  	      	      	1830  	0     	      	      	      	0     	      	2143
+Link Speed (mph)                  		      	30    	      	      	30    	      	      	      	      	30    	      	
+Link Distance (ft)                		      	115   	      	      	80    	      	      	      	      	278   	      	
+Travel Time (s)                   		      	2.6   	      	      	1.8   	      	      	      	      	6.3   	      	
+Confl. Peds. (#/hr)               		      	      	      	      	      	7     	      	      	      	7     	      	
+Peak Hour Factor                  		0.86  	0.86  	      	      	0.86  	0.86  	      	      	      	0.86  	      	0.86
+Heavy Vehicles (%)                		0%    	1%    	      	      	1%    	0%    	      	      	      	0%    	      	0%
+Adj. Flow (vph)                   		2     	414   	      	      	510   	86    	      	      	      	0     	      	0
+Shared Lane Traffic (%)           		      	      	      	      	      	      	      	      	      	      	      	
+Lane Group Flow (vph)             		0     	416   	      	      	596   	0     	      	      	      	0     	      	0
+Enter Blocked Intersection        		No    	No    	      	      	No    	No    	      	      	      	No    	      	No
+Lane Alignment                    		Left  	Left  	      	      	Left  	Right 	      	      	      	Left  	      	Right
+Median Width(ft)                  		      	0     	      	      	0     	      	      	      	      	0     	      	
+Link Offset(ft)                   		      	0     	      	      	0     	      	      	      	      	0     	      	
+Crosswalk Width(ft)               		      	16    	      	      	16    	      	      	      	      	16    	      	
+Two way Left Turn Lane            		      	      	      	      	      	      	      	      	      	      	      	
+Headway Factor                    		0.99  	0.99  	      	      	1.01  	1.01  	      	      	      	0.85  	      	0.85
+Turning Speed (mph)               		15    	      	      	      	      	9     	      	      	      	15    	      	9
+Sign Control                      		      	Free  	      	      	Free  	      	      	      	      	Stop  	      	
+
+Intersection Summary
+Area Type:                        	Other
+Control Type: Unsignalized
+
+
+PMEX 2023/2024 Existing Traffic Volumes 10:17 am 08/21/2024 Weekday Peak PM Hour	Synchro 12 Report
+21006961A - P.W.G.	Page 0
+
+HCM 7th TWSC
+4: Congers Road (C.R. 80) & W Evergreen Road (Site Driveway 1)	09/22/2025
+
+
+
+Intersection                      		      	      	      	      	      	
+Int Delay, s/veh                  		0     	      	      	      	      	
+
+Movement                          		EBL   	EBT   	WBT   	WBR   	SBL   	SBR
+Lane Configurations               		0     	<1    	1>    	0     	0     	1
+Traffic Vol, veh/h                		2     	356   	439   	74    	0     	0
+Future Vol, veh/h                 		2     	356   	439   	74    	0     	0
+Conflicting Peds, #/hr            		0     	0     	0     	7     	7     	0
+Sign Control                      		Free  	Free  	Free  	Free  	Stop  	Stop
+RT Channelized                    		-     	None  	-     	None  	-     	None
+Storage Length                    		-     	-     	-     	-     	-     	0
+Veh in Median Storage, #          		-     	0     	0     	-     	0     	-
+Grade, %                          		-     	-2    	2     	-     	1     	-
+Peak Hour Factor                  		86    	86    	86    	86    	86    	86
+Heavy Vehicles, %                 		0     	1     	1     	0     	0     	0
+Mvmt Flow                         		2     	414   	510   	86    	0     	0
+                                  		      	      	      	      	      	
+
+Major/Minor                       		Major1	      	Major2	      	Minor2	
+Conflicting Flow All              		604   	0     	-     	0     	-     	560
+          Stage 1                 		-     	-     	-     	-     	-     	-
+          Stage 2                 		-     	-     	-     	-     	-     	-
+Critical Hdwy                     		4.1   	-     	-     	-     	-     	6.3
+Critical Hdwy Stg 1               		-     	-     	-     	-     	-     	-
+Critical Hdwy Stg 2               		-     	-     	-     	-     	-     	-
+Follow-up Hdwy                    		2.2   	-     	-     	-     	-     	3.3
+Pot Cap-1 Maneuver                		984   	-     	-     	-     	0     	523
+          Stage 1                 		-     	-     	-     	-     	0     	-
+          Stage 2                 		-     	-     	-     	-     	0     	-
+Platoon blocked, %                		      	-     	-     	-     	      	
+Mov Cap-1 Maneuver                		975   	-     	-     	-     	-     	518
+Mov Cap-2 Maneuver                		-     	-     	-     	-     	-     	-
+          Stage 1                 		-     	-     	-     	-     	-     	-
+          Stage 2                 		-     	-     	-     	-     	-     	-
+                                  		      	      	      	      	      	
+
+Approach                          		EB    	      	WB    	      	SB    	
+HCM Ctrl Dly, s/v                 		0.05  	      	0     	      	0     	
+HCM LOS                           		      	      	      	      	A     	
+                                  		      	      	      	      	      	
+
+Minor Lane/Major Mvmt             		      	EBL   	EBT   	WBT   	WBR   	SBLn1
+Capacity (veh/h)                  		      	10    	-     	-     	-     	-
+HCM Lane V/C Ratio                		      	0.002 	-     	-     	-     	-
+HCM Ctrl Dly (s/v)                		      	8.7   	0     	-     	-     	0
+HCM Lane LOS                      		      	A     	A     	-     	-     	A
+HCM 95th %tile Q(veh)             		      	0     	-     	-     	-     	-
+
+
+PMEX 2023/2024 Existing Traffic Volumes 10:17 am 08/21/2024 Weekday Peak PM Hour	Synchro 12 Report
+21006961A - P.W.G.	Page 0
+
+Lanes, Volumes, Timings
+5: Congers Road (C.R. 80) & Site Driveway 2	09/22/2025
+
+
+Lane Group                        		EBL   	EBT   	EBR   	WBL   	WBT   	WBR   	NBL   	NBT   	NBR   	SBL   	SBT   	SBR
+Lane Configurations               		0     	<1    	      	      	2>    	0     	      	      	      	1>    	      	0
+Traffic Volume (vph)              		8     	356   	      	      	380   	59    	      	      	      	2     	      	14
+Future Volume (vph)               		8     	356   	      	      	380   	59    	      	      	      	2     	      	14
+Ideal Flow (vphpl)                		1900  	1900  	      	      	1900  	1900  	      	      	      	1900  	      	1900
+Grade (%)                         		      	-2%   	      	      	1%    	      	      	      	      	0%    	      	
+Lane Util. Factor                 		1.00  	1.00  	      	      	0.95  	0.95  	      	      	      	1.00  	      	1.00
+Ped Bike Factor                   		      	      	      	      	      	      	      	      	      	      	      	
+Frt                               		      	      	      	      	0.980 	      	      	      	      	0.881 	      	
+Flt Protected                     		      	0.999 	      	      	      	      	      	      	      	0.994 	      	
+Satd. Flow (prot)                 		0     	1880  	      	      	3460  	0     	      	      	      	1664  	      	0
+Flt Permitted                     		      	0.999 	      	      	      	      	      	      	      	0.994 	      	
+Satd. Flow (perm)                 		0     	1880  	      	      	3460  	0     	      	      	      	1664  	      	0
+Link Speed (mph)                  		      	30    	      	      	30    	      	      	      	      	30    	      	
+Link Distance (ft)                		      	130   	      	      	115   	      	      	      	      	190   	      	
+Travel Time (s)                   		      	3.0   	      	      	2.6   	      	      	      	      	4.3   	      	
+Confl. Peds. (#/hr)               		22    	      	      	      	      	16    	      	      	      	16    	      	22
+Peak Hour Factor                  		0.95  	0.95  	      	      	0.95  	0.95  	      	      	      	0.95  	      	0.95
+Heavy Vehicles (%)                		0%    	2%    	      	      	2%    	0%    	      	      	      	0%    	      	0%
+Adj. Flow (vph)                   		8     	375   	      	      	400   	62    	      	      	      	2     	      	15
+Shared Lane Traffic (%)           		      	      	      	      	      	      	      	      	      	      	      	
+Lane Group Flow (vph)             		0     	383   	      	      	462   	0     	      	      	      	17    	      	0
+Enter Blocked Intersection        		No    	No    	      	      	No    	No    	      	      	      	No    	      	No
+Lane Alignment                    		Left  	Left  	      	      	Left  	Right 	      	      	      	Left  	      	Right
+Median Width(ft)                  		      	0     	      	      	0     	      	      	      	      	12    	      	
+Link Offset(ft)                   		      	0     	      	      	0     	      	      	      	      	0     	      	
+Crosswalk Width(ft)               		      	16    	      	      	16    	      	      	      	      	16    	      	
+Two way Left Turn Lane            		      	      	      	      	      	      	      	      	      	      	      	
+Headway Factor                    		0.99  	0.99  	      	      	1.01  	1.01  	      	      	      	1.00  	      	1.00
+Turning Speed (mph)               		15    	      	      	      	      	9     	      	      	      	15    	      	9
+Sign Control                      		      	Free  	      	      	Free  	      	      	      	      	Stop  	      	
+
+Intersection Summary
+Area Type:                        	Other
+Control Type: Unsignalized
+
+
+PMEX 2023/2024 Existing Traffic Volumes 10:17 am 08/21/2024 Weekday Peak PM Hour	Synchro 12 Report
+21006961A - P.W.G.	Page 0
+
+HCM 7th TWSC
+5: Congers Road (C.R. 80) & Site Driveway 2	09/22/2025
+
+
+
+Intersection                      		      	      	      	      	      	
+Int Delay, s/veh                  		0.3   	      	      	      	      	
+
+Movement                          		EBL   	EBT   	WBT   	WBR   	SBL   	SBR
+Lane Configurations               		0     	<1    	2>    	0     	1>    	0
+Traffic Vol, veh/h                		8     	356   	380   	59    	2     	14
+Future Vol, veh/h                 		8     	356   	380   	59    	2     	14
+Conflicting Peds, #/hr            		22    	0     	0     	16    	16    	22
+Sign Control                      		Free  	Free  	Free  	Free  	Stop  	Stop
+RT Channelized                    		-     	None  	-     	None  	-     	None
+Storage Length                    		-     	-     	-     	-     	0     	-
+Veh in Median Storage, #          		-     	0     	0     	-     	0     	-
+Grade, %                          		-     	-2    	1     	-     	0     	-
+Peak Hour Factor                  		95    	95    	95    	95    	95    	95
+Heavy Vehicles, %                 		0     	2     	2     	0     	0     	0
+Mvmt Flow                         		8     	375   	400   	62    	2     	15
+                                  		      	      	      	      	      	
+
+Major/Minor                       		Major1	      	Major2	      	Minor2	
+Conflicting Flow All              		484   	0     	-     	0     	861   	275
+          Stage 1                 		-     	-     	-     	-     	453   	-
+          Stage 2                 		-     	-     	-     	-     	408   	-
+Critical Hdwy                     		4.1   	-     	-     	-     	6.6   	6.9
+Critical Hdwy Stg 1               		-     	-     	-     	-     	5.8   	-
+Critical Hdwy Stg 2               		-     	-     	-     	-     	5.4   	-
+Follow-up Hdwy                    		2.2   	-     	-     	-     	3.5   	3.3
+Pot Cap-1 Maneuver                		1089  	-     	-     	-     	313   	729
+          Stage 1                 		-     	-     	-     	-     	613   	-
+          Stage 2                 		-     	-     	-     	-     	676   	-
+Platoon blocked, %                		      	-     	-     	-     	      	
+Mov Cap-1 Maneuver                		1066  	-     	-     	-     	297   	698
+Mov Cap-2 Maneuver                		-     	-     	-     	-     	297   	-
+          Stage 1                 		-     	-     	-     	-     	594   	-
+          Stage 2                 		-     	-     	-     	-     	662   	-
+                                  		      	      	      	      	      	
+
+Approach                          		EB    	      	WB    	      	SB    	
+HCM Ctrl Dly, s/v                 		0.18  	      	0     	      	11.2  	
+HCM LOS                           		      	      	      	      	B     	
+                                  		      	      	      	      	      	
+
+Minor Lane/Major Mvmt             		      	EBL   	EBT   	WBT   	WBR   	SBLn1
+Capacity (veh/h)                  		      	40    	-     	-     	-     	598
+HCM Lane V/C Ratio                		      	0.008 	-     	-     	-     	0.028
+HCM Ctrl Dly (s/v)                		      	8.4   	0     	-     	-     	11.2
+HCM Lane LOS                      		      	A     	A     	-     	-     	B
+HCM 95th %tile Q(veh)             		      	0     	-     	-     	-     	0.1
+
+
+PMEX 2023/2024 Existing Traffic Volumes 10:17 am 08/21/2024 Weekday Peak PM Hour	Synchro 12 Report
+21006961A - P.W.G.	Page 0
+
+Lanes, Volumes, Timings
+6: S Main Street & Congers Road (C.R. 80)	09/22/2025
+
+
+Lane Group                        		EBL     	EBT     	EBR     	WBL     	WBT     	WBR     	NBL     	NBT     	NBR     	SBL     	SBT     	SBR     	Ø1      	Ø3      	Ø4      	Ø5      	Ø6      	Ø8      	Ø9      	Ø10
+Lane Configurations               		        	        	        	1       	        	1       	        	1       	1       	1       	1       	        	        	        	        	        	        	        	        	
+Traffic Volume (vph)              		        	        	        	77      	        	317     	        	263     	52      	311     	328     	        	        	        	        	        	        	        	        	
+Future Volume (vph)               		        	        	        	77      	        	317     	        	263     	52      	311     	328     	        	        	        	        	        	        	        	        	
+Ideal Flow (vphpl)                		        	        	        	1900    	        	1900    	        	1900    	1900    	1900    	1900    	        	        	        	        	        	        	        	        	
+Lane Width (ft)                   		        	        	        	11      	        	11      	        	11      	11      	11      	11      	        	        	        	        	        	        	        	        	
+Grade (%)                         		        	        	        	1%      	        	        	        	-2%     	        	        	4%      	        	        	        	        	        	        	        	        	
+Storage Length (ft)               		        	        	        	0       	        	0       	        	        	50      	0       	        	        	        	        	        	        	        	        	        	
+Storage Lanes                     		        	        	        	1       	        	1       	        	        	1       	1       	        	        	        	        	        	        	        	        	        	
+Taper Length (ft)                 		        	        	        	86      	        	        	        	        	        	25      	        	        	        	        	        	        	        	        	        	
+Lane Util. Factor                 		        	        	        	1.00    	        	1.00    	        	1.00    	1.00    	1.00    	1.00    	        	        	        	        	        	        	        	        	
+Ped Bike Factor                   		        	        	        	0.99    	        	        	        	        	0.92    	0.98    	        	        	        	        	        	        	        	        	        	
+Frt                               		        	        	        	        	        	0.850   	        	        	0.850   	        	        	        	        	        	        	        	        	        	        	
+Flt Protected                     		        	        	        	0.950   	        	        	        	        	        	0.950   	        	        	        	        	        	        	        	        	        	
+Satd. Flow (prot)                 		        	        	        	1686    	        	1538    	        	1837    	1577    	1676    	1765    	        	        	        	        	        	        	        	        	
+Flt Permitted                     		        	        	        	0.950   	        	        	        	        	        	0.363   	        	        	        	        	        	        	        	        	        	
+Satd. Flow (perm)                 		        	        	        	1663    	        	1538    	        	1837    	1455    	626     	1765    	        	        	        	        	        	        	        	        	
+Right Turn on Red                 		        	        	        	        	        	Yes     	        	        	Yes     	        	        	        	        	        	        	        	        	        	        	
+Satd. Flow (RTOR)                 		        	        	        	        	        	307     	        	        	24      	        	        	        	        	        	        	        	        	        	        	
+Link Speed (mph)                  		        	        	        	30      	        	        	        	30      	        	        	30      	        	        	        	        	        	        	        	        	
+Link Distance (ft)                		        	        	        	130     	        	        	        	400     	        	        	243     	        	        	        	        	        	        	        	        	
+Travel Time (s)                   		        	        	        	3.0     	        	        	        	9.1     	        	        	5.5     	        	        	        	        	        	        	        	        	
+Confl. Peds. (#/hr)               		        	        	        	4       	        	5       	        	        	17      	17      	        	        	        	        	        	        	        	        	        	
+Peak Hour Factor                  		        	        	        	0.95    	        	0.95    	        	0.95    	0.95    	0.95    	0.95    	        	        	        	        	        	        	        	        	
+Heavy Vehicles (%)                		        	        	        	3%      	        	1%      	        	1%      	0%      	2%      	2%      	        	        	        	        	        	        	        	        	
+Adj. Flow (vph)                   		        	        	        	81      	        	334     	        	277     	55      	327     	345     	        	        	        	        	        	        	        	        	
+Shared Lane Traffic (%)           		        	        	        	        	        	        	        	        	        	        	        	        	        	        	        	        	        	        	        	
+Lane Group Flow (vph)             		        	        	        	81      	        	334     	        	277     	55      	327     	345     	        	        	        	        	        	        	        	        	
+Enter Blocked Intersection        		        	        	        	No      	        	No      	        	No      	No      	No      	No      	        	        	        	        	        	        	        	        	
+Lane Alignment                    		        	        	        	Left    	        	Right   	        	Left    	Right   	Left    	Left    	        	        	        	        	        	        	        	        	
+Median Width(ft)                  		        	        	        	11      	        	        	        	11      	        	        	11      	        	        	        	        	        	        	        	        	
+Link Offset(ft)                   		        	        	        	0       	        	        	        	0       	        	        	0       	        	        	        	        	        	        	        	        	
+Crosswalk Width(ft)               		        	        	        	16      	        	        	        	16      	        	        	16      	        	        	        	        	        	        	        	        	
+Two way Left Turn Lane            		        	        	        	        	        	        	        	        	        	        	        	        	        	        	        	        	        	        	        	
+Headway Factor                    		        	        	        	1.05    	        	1.05    	        	1.03    	1.03    	1.07    	1.07    	        	        	        	        	        	        	        	        	
+Turning Speed (mph)               		        	        	        	15      	        	9       	        	        	9       	15      	        	        	        	        	        	        	        	        	        	
+Turn Type                         		        	        	        	Prot    	        	custom  	        	NA      	Perm    	custom  	NA      	        	        	        	        	        	        	        	        	
+Protected Phases                  		        	        	        	7       	        	7 5 8   	        	2       	        	5 8 10  	5 6 8 10	        	1       	3       	4       	5       	6       	8       	9       	10
+Permitted Phases                  		        	        	        	        	        	        	        	        	2       	6       	        	        	        	        	        	        	        	        	        	
+Minimum Split (s)                 		        	        	        	23.0    	        	        	        	25.0    	25.0    	        	        	        	10.0    	23.0    	23.0    	10.0    	23.0    	22.5    	3.0     	3.0
+Total Split (s)                   		        	        	        	30.0    	        	        	        	40.0    	40.0    	        	        	        	15.0    	30.0    	30.0    	19.0    	44.0    	30.0    	4.0     	4.0
+Total Split (%)                   		        	        	        	24.4%   	        	        	        	32.5%   	32.5%   	        	        	        	12%     	24%     	24%     	15%     	36%     	24%     	3%      	3%
+Maximum Green (s)                 		        	        	        	25.0    	        	        	        	35.0    	35.0    	        	        	        	10.0    	25.0    	25.0    	14.0    	39.0    	25.0    	2.0     	2.0
+Yellow Time (s)                   		        	        	        	4.0     	        	        	        	4.0     	4.0     	        	        	        	4.0     	4.0     	4.0     	4.0     	4.0     	4.0     	2.0     	2.0
+All-Red Time (s)                  		        	        	        	1.0     	        	        	        	1.0     	1.0     	        	        	        	1.0     	1.0     	1.0     	1.0     	1.0     	1.0     	0.0     	0.0
+Lost Time Adjust (s)              		        	        	        	0.0     	        	        	        	0.0     	0.0     	        	        	        	        	        	        	        	        	        	        	
+Total Lost Time (s)               		        	        	        	5.0     	        	        	        	5.0     	5.0     	        	        	        	        	        	        	        	        	        	        	
+Lead/Lag                          		        	        	        	        	        	        	        	Lag     	Lag     	        	        	        	Lag     	        	        	        	        	        	Lead    	Lead
+Lead-Lag Optimize?                		        	        	        	        	        	        	        	Yes     	Yes     	        	        	        	Yes     	        	        	        	        	        	Yes     	Yes
+Walk Time (s)                     		        	        	        	7.0     	        	        	        	7.0     	7.0     	        	        	        	        	        	7.0     	        	7.0     	        	        	
+Flash Don't Walk (s)              		        	        	        	11.0    	        	        	        	11.0    	11.0    	        	        	        	        	        	11.0    	        	11.0    	        	        	
+Pedestrian Calls (#/hr)           		        	        	        	5       	        	        	        	5       	5       	        	        	        	        	        	5       	        	5       	        	        	
+v/c Ratio                         		        	        	        	0.24    	        	0.32    	        	0.53    	0.13    	0.41    	0.27    	        	        	        	        	        	        	        	        	
+Control Delay (s/veh)             		        	        	        	43.2    	        	2.5     	        	41.5    	21.5    	11.4    	4.7     	        	        	        	        	        	        	        	        	
+Queue Delay                       		        	        	        	0.0     	        	0.0     	        	0.0     	0.0     	1.0     	0.7     	        	        	        	        	        	        	        	        	
+Total Delay (s/veh)               		        	        	        	43.2    	        	2.5     	        	41.5    	21.5    	12.4    	5.5     	        	        	        	        	        	        	        	        	
+Queue Length 50th (ft)            		        	        	        	54      	        	8       	        	186     	18      	45      	47      	        	        	        	        	        	        	        	        	
+Queue Length 95th (ft)            		        	        	        	101     	        	46      	        	275     	51      	122     	85      	        	        	        	        	        	        	        	        	
+Internal Link Dist (ft)           		        	        	        	50      	        	        	        	320     	        	        	163     	        	        	        	        	        	        	        	        	
+Turn Bay Length (ft)              		        	        	        	        	        	        	        	        	50      	        	        	        	        	        	        	        	        	        	        	
+Base Capacity (vph)               		        	        	        	342     	        	1047    	        	522     	431     	798     	1262    	        	        	        	        	        	        	        	        	
+Starvation Cap Reductn            		        	        	        	0       	        	0       	        	0       	0       	255     	597     	        	        	        	        	        	        	        	        	
+Spillback Cap Reductn             		        	        	        	0       	        	0       	        	0       	0       	0       	0       	        	        	        	        	        	        	        	        	
+Storage Cap Reductn               		        	        	        	0       	        	0       	        	0       	0       	0       	0       	        	        	        	        	        	        	        	        	
+Reduced v/c Ratio                 		        	        	        	0.24    	        	0.32    	        	0.53    	0.13    	0.60    	0.52    	        	        	        	        	        	        	        	        	
+
+Intersection Summary
+Area Type:                        	Other
+Cycle Length: 123
+Actuated Cycle Length: 123
+Offset: 47 (38%), Referenced to phase 2:NBT, Start of Yellow
+Natural Cycle: 90
+Control Type: Pretimed
+
+
+PMEX 2023/2024 Existing Traffic Volumes 10:17 am 08/21/2024 Weekday Peak PM Hour	Synchro 12 Report
+21006961A - P.W.G.	Page 0
+
+Lanes, Volumes, Timings
+7: S Main Street/N Main Street (C.R. 29) & New Hempstead Road (C.R. 80)/Site Driveway 3	09/22/2025
+
+
+Lane Group                        		EBL     	EBT     	EBR     	WBL     	WBT     	WBR     	NBL     	NBT     	NBR     	SBL     	SBT     	SBR     	Ø2      	Ø5      	Ø6      	Ø7      	Ø8      	Ø9      	Ø10
+Lane Configurations               		1       	1       	1       	1       	1>      	0       	1       	1>      	0       	1       	2       	1       	        	        	        	        	        	        	
+Traffic Volume (vph)              		257     	40      	332     	48      	50      	41      	291     	259     	30      	26      	259     	312     	        	        	        	        	        	        	
+Future Volume (vph)               		257     	40      	332     	48      	50      	41      	291     	259     	30      	26      	259     	312     	        	        	        	        	        	        	
+Ideal Flow (vphpl)                		1900    	1900    	1900    	1900    	1900    	1900    	1900    	1900    	1900    	1900    	1900    	1900    	        	        	        	        	        	        	
+Lane Width (ft)                   		11      	11      	11      	11      	11      	11      	11      	11      	11      	11      	11      	11      	        	        	        	        	        	        	
+Grade (%)                         		        	0%      	        	        	0%      	        	        	-4%     	        	        	1%      	        	        	        	        	        	        	        	
+Storage Length (ft)               		175     	        	0       	50      	        	0       	0       	        	0       	115     	        	200     	        	        	        	        	        	        	
+Storage Lanes                     		1       	        	1       	1       	        	0       	1       	        	0       	1       	        	1       	        	        	        	        	        	        	
+Taper Length (ft)                 		86      	        	        	86      	        	        	25      	        	        	15      	        	        	        	        	        	        	        	        	
+Lane Util. Factor                 		1.00    	1.00    	1.00    	1.00    	1.00    	1.00    	1.00    	1.00    	1.00    	1.00    	0.95    	1.00    	        	        	        	        	        	        	
+Ped Bike Factor                   		0.99    	        	        	        	0.98    	        	1.00    	1.00    	        	0.99    	        	0.97    	        	        	        	        	        	        	
+Frt                               		        	        	0.850   	        	0.933   	        	        	0.984   	        	        	        	0.850   	        	        	        	        	        	        	
+Flt Protected                     		0.950   	        	        	0.950   	        	        	0.950   	        	        	0.950   	        	        	        	        	        	        	        	        	
+Satd. Flow (prot)                 		1728    	1783    	1531    	1745    	1685    	0       	1762    	1836    	0       	1736    	3404    	1523    	        	        	        	        	        	        	
+Flt Permitted                     		0.685   	        	        	0.730   	        	        	0.587   	        	        	0.422   	        	        	        	        	        	        	        	        	
+Satd. Flow (perm)                 		1227    	1783    	1531    	1341    	1685    	0       	1084    	1836    	0       	764     	3404    	1482    	        	        	        	        	        	        	
+Right Turn on Red                 		        	        	Yes     	        	        	Yes     	        	        	Yes     	        	        	Yes     	        	        	        	        	        	        	
+Satd. Flow (RTOR)                 		        	        	342     	        	30      	        	        	7       	        	        	        	322     	        	        	        	        	        	        	
+Link Speed (mph)                  		        	30      	        	        	30      	        	        	30      	        	        	30      	        	        	        	        	        	        	        	
+Link Distance (ft)                		        	427     	        	        	158     	        	        	243     	        	        	317     	        	        	        	        	        	        	        	
+Travel Time (s)                   		        	9.7     	        	        	3.6     	        	        	5.5     	        	        	7.2     	        	        	        	        	        	        	        	
+Confl. Peds. (#/hr)               		5       	        	        	        	        	5       	2       	        	6       	6       	        	2       	        	        	        	        	        	        	
+Peak Hour Factor                  		0.97    	0.97    	0.97    	0.97    	0.97    	0.97    	0.97    	0.97    	0.97    	0.97    	0.97    	0.97    	        	        	        	        	        	        	
+Heavy Vehicles (%)                		1%      	3%      	2%      	0%      	0%      	0%      	1%      	0%      	0%      	0%      	2%      	2%      	        	        	        	        	        	        	
+Adj. Flow (vph)                   		265     	41      	342     	49      	52      	42      	300     	267     	31      	27      	267     	322     	        	        	        	        	        	        	
+Shared Lane Traffic (%)           		        	        	        	        	        	        	        	        	        	        	        	        	        	        	        	        	        	        	
+Lane Group Flow (vph)             		265     	41      	342     	49      	94      	0       	300     	298     	0       	27      	267     	322     	        	        	        	        	        	        	
+Enter Blocked Intersection        		No      	No      	No      	No      	No      	No      	No      	No      	No      	No      	No      	No      	        	        	        	        	        	        	
+Lane Alignment                    		Left    	Left    	Right   	Left    	Left    	Right   	Left    	Left    	Right   	Left    	Left    	Right   	        	        	        	        	        	        	
+Median Width(ft)                  		        	11      	        	        	11      	        	        	12      	        	        	12      	        	        	        	        	        	        	        	
+Link Offset(ft)                   		        	0       	        	        	0       	        	        	0       	        	        	0       	        	        	        	        	        	        	        	
+Crosswalk Width(ft)               		        	16      	        	        	16      	        	        	16      	        	        	16      	        	        	        	        	        	        	        	
+Two way Left Turn Lane            		        	        	        	        	        	        	        	        	        	        	Yes     	        	        	        	        	        	        	        	
+Headway Factor                    		1.04    	1.04    	1.04    	1.04    	1.04    	1.04    	1.02    	1.02    	1.02    	1.05    	1.05    	1.05    	        	        	        	        	        	        	
+Turning Speed (mph)               		15      	        	9       	15      	        	9       	15      	        	9       	15      	        	9       	        	        	        	        	        	        	
+Turn Type                         		D.P+P   	NA      	pm+ov   	Perm    	NA      	        	custom  	NA      	        	Perm    	NA      	pm+ov   	        	        	        	        	        	        	
+Protected Phases                  		1       	1 4     	3       	        	4       	        	3       	2 3     	        	        	6 9     	1       	2       	5       	6       	7       	8       	9       	10
+Permitted Phases                  		4       	        	1 4     	4       	        	        	2       	        	        	6 9     	        	6 9     	        	        	        	        	        	        	
+Minimum Split (s)                 		10.0    	        	23.0    	23.0    	23.0    	        	23.0    	        	        	        	        	10.0    	25.0    	10.0    	23.0    	23.0    	22.5    	3.0     	3.0
+Total Split (s)                   		15.0    	        	30.0    	30.0    	30.0    	        	30.0    	        	        	        	        	15.0    	40.0    	19.0    	44.0    	30.0    	30.0    	4.0     	4.0
+Total Split (%)                   		12.2%   	        	24.4%   	24.4%   	24.4%   	        	24.4%   	        	        	        	        	12.2%   	33%     	15%     	36%     	24%     	24%     	3%      	3%
+Maximum Green (s)                 		10.0    	        	25.0    	25.0    	25.0    	        	25.0    	        	        	        	        	10.0    	35.0    	14.0    	39.0    	25.0    	25.0    	2.0     	2.0
+Yellow Time (s)                   		4.0     	        	4.0     	4.0     	4.0     	        	4.0     	        	        	        	        	4.0     	4.0     	4.0     	4.0     	4.0     	4.0     	2.0     	2.0
+All-Red Time (s)                  		1.0     	        	1.0     	1.0     	1.0     	        	1.0     	        	        	        	        	1.0     	1.0     	1.0     	1.0     	1.0     	1.0     	0.0     	0.0
+Lost Time Adjust (s)              		0.0     	        	0.0     	0.0     	0.0     	        	0.0     	        	        	        	        	0.0     	        	        	        	        	        	        	
+Total Lost Time (s)               		5.0     	        	5.0     	5.0     	5.0     	        	5.0     	        	        	        	        	5.0     	        	        	        	        	        	        	
+Lead/Lag                          		Lag     	        	        	        	        	        	        	        	        	        	        	Lag     	Lag     	        	        	        	        	Lead    	Lead
+Lead-Lag Optimize?                		Yes     	        	        	        	        	        	        	        	        	        	        	Yes     	Yes     	        	        	        	        	Yes     	Yes
+Walk Time (s)                     		        	        	        	7.0     	7.0     	        	        	        	        	        	        	        	7.0     	        	7.0     	7.0     	        	        	
+Flash Don't Walk (s)              		        	        	        	11.0    	11.0    	        	        	        	        	        	        	        	11.0    	        	11.0    	11.0    	        	        	
+Pedestrian Calls (#/hr)           		        	        	        	5       	5       	        	        	        	        	        	        	        	5       	        	5       	5       	        	        	
+v/c Ratio                         		0.68    	0.07    	0.35    	0.18    	0.26    	        	0.45    	0.31    	        	0.11    	0.25    	0.41    	        	        	        	        	        	        	
+Control Delay (s/veh)             		45.4    	29.2    	2.2     	42.7    	30.2    	        	13.1    	8.6     	        	31.5    	31.9    	2.9     	        	        	        	        	        	        	
+Queue Delay                       		0.0     	0.0     	0.0     	0.0     	0.0     	        	0.7     	1.4     	        	0.0     	0.0     	0.0     	        	        	        	        	        	        	
+Total Delay (s/veh)               		45.4    	29.2    	2.2     	42.7    	30.2    	        	13.8    	10.1    	        	31.5    	31.9    	2.9     	        	        	        	        	        	        	
+Queue Length 50th (ft)            		168     	22      	0       	33      	43      	        	65      	61      	        	15      	82      	0       	        	        	        	        	        	        	
+Queue Length 95th (ft)            		251     	50      	37      	69      	92      	        	90      	86      	        	39      	118     	28      	        	        	        	        	        	        	
+Internal Link Dist (ft)           		        	347     	        	        	78      	        	        	163     	        	        	237     	        	        	        	        	        	        	        	
+Turn Bay Length (ft)              		175     	        	        	50      	        	        	        	        	        	115     	        	200     	        	        	        	        	        	        	
+Base Capacity (vph)               		389     	579     	970     	272     	366     	        	666     	973     	        	242     	1079    	787     	        	        	        	        	        	        	
+Starvation Cap Reductn            		0       	0       	0       	0       	0       	        	143     	483     	        	0       	0       	0       	        	        	        	        	        	        	
+Spillback Cap Reductn             		0       	0       	0       	0       	0       	        	0       	0       	        	0       	0       	0       	        	        	        	        	        	        	
+Storage Cap Reductn               		0       	0       	0       	0       	0       	        	0       	0       	        	0       	0       	0       	        	        	        	        	        	        	
+Reduced v/c Ratio                 		0.68    	0.07    	0.35    	0.18    	0.26    	        	0.57    	0.61    	        	0.11    	0.25    	0.41    	        	        	        	        	        	        	
+
+Intersection Summary
+Area Type:                        	Other
+Cycle Length: 123
+Actuated Cycle Length: 123
+Offset: 47 (38%), Referenced to phase 2:NBT, Start of Yellow
+Natural Cycle: 90
+Control Type: Pretimed
+
+
+PMEX 2023/2024 Existing Traffic Volumes 10:17 am 08/21/2024 Weekday Peak PM Hour	Synchro 12 Report
+21006961A - P.W.G.	Page 0
+
+Lanes, Volumes, Timings
+8: N Main Street (C.R. 29) & 49-51 N Main St Driveway/Site Driveway 4	09/22/2025
+
+
+Lane Group                        		EBL     	EBT     	EBR     	WBL     	WBT     	WBR     	NBL     	NBT     	NBR     	SBL     	SBT     	SBR
+Lane Configurations               		0       	<1>     	0       	0       	<1>     	0       	1       	1>      	0       	1       	2>      	0
+Traffic Volume (vph)              		0       	0       	0       	61      	0       	25      	0       	521     	54      	8       	557     	0
+Future Volume (vph)               		0       	0       	0       	61      	0       	25      	0       	521     	54      	8       	557     	0
+Ideal Flow (vphpl)                		1900    	1900    	1900    	1900    	1900    	1900    	1900    	1900    	1900    	1900    	1900    	1900
+Lane Width (ft)                   		12      	12      	12      	15      	12      	15      	12      	12      	12      	11      	11      	12
+Grade (%)                         		        	-5%     	        	        	0%      	        	        	-1%     	        	        	-1%     	
+Storage Length (ft)               		0       	        	0       	0       	        	0       	50      	        	0       	50      	        	0
+Storage Lanes                     		0       	        	0       	0       	        	0       	1       	        	0       	1       	        	0
+Taper Length (ft)                 		25      	        	        	25      	        	        	25      	        	        	15      	        	
+Lane Util. Factor                 		1.00    	1.00    	1.00    	1.00    	1.00    	1.00    	1.00    	1.00    	1.00    	1.00    	0.95    	0.95
+Ped Bike Factor                   		        	        	        	        	        	        	        	        	        	        	        	
+Frt                               		        	        	        	        	0.960   	        	        	0.986   	        	        	        	
+Flt Protected                     		        	        	        	        	0.966   	        	        	        	        	0.950   	        	
+Satd. Flow (prot)                 		0       	1947    	0       	0       	1738    	0       	1909    	1866    	0       	1754    	3438    	0
+Flt Permitted                     		        	        	        	        	0.966   	        	        	        	        	0.950   	        	
+Satd. Flow (perm)                 		0       	1947    	0       	0       	1738    	0       	1909    	1866    	0       	1754    	3438    	0
+Link Speed (mph)                  		        	30      	        	        	30      	        	        	30      	        	        	30      	
+Link Distance (ft)                		        	272     	        	        	311     	        	        	317     	        	        	265     	
+Travel Time (s)                   		        	6.2     	        	        	7.1     	        	        	7.2     	        	        	6.0     	
+Confl. Peds. (#/hr)               		5       	        	5       	2       	        	2       	5       	        	2       	2       	        	5
+Peak Hour Factor                  		0.98    	0.98    	0.98    	0.98    	0.98    	0.98    	0.98    	0.98    	0.98    	0.98    	0.98    	0.98
+Heavy Vehicles (%)                		0%      	0%      	0%      	2%      	0%      	0%      	0%      	1%      	0%      	0%      	2%      	0%
+Adj. Flow (vph)                   		0       	0       	0       	62      	0       	26      	0       	532     	55      	8       	568     	0
+Shared Lane Traffic (%)           		        	        	        	        	        	        	        	        	        	        	        	
+Lane Group Flow (vph)             		0       	0       	0       	0       	88      	0       	0       	587     	0       	8       	568     	0
+Enter Blocked Intersection        		No      	No      	No      	No      	No      	No      	No      	No      	No      	No      	No      	No
+Lane Alignment                    		Left    	Left    	Right   	Left    	Left    	Right   	Left    	Left    	Right   	Left    	Left    	Right
+Median Width(ft)                  		        	0       	        	        	0       	        	        	12      	        	        	12      	
+Link Offset(ft)                   		        	0       	        	        	0       	        	        	0       	        	        	0       	
+Crosswalk Width(ft)               		        	16      	        	        	16      	        	        	16      	        	        	16      	
+Two way Left Turn Lane            		        	        	        	        	        	        	        	Yes     	        	        	Yes     	
+Headway Factor                    		0.97    	0.97    	0.97    	0.88    	1.00    	0.88    	0.99    	0.99    	0.99    	1.04    	1.04    	0.99
+Turning Speed (mph)               		15      	        	9       	15      	        	9       	15      	        	9       	15      	        	9
+Sign Control                      		        	Stop    	        	        	Stop    	        	        	Free    	        	        	Free    	
+
+Intersection Summary
+Area Type:                        	Other
+Control Type: Unsignalized
+
+
+PMEX 2023/2024 Existing Traffic Volumes 10:17 am 08/21/2024 Weekday Peak PM Hour	Synchro 12 Report
+21006961A - P.W.G.	Page 0
+
+HCM 7th TWSC
+8: N Main Street (C.R. 29) & 49-51 N Main St Driveway/Site Driveway 4	09/22/2025
+
+
+
+Intersection                      		        	        	        	        	        	        	        	        	        	        	        	
+Int Delay, s/veh                  		1.6     	        	        	        	        	        	        	        	        	        	        	
+
+Movement                          		EBL     	EBT     	EBR     	WBL     	WBT     	WBR     	NBL     	NBT     	NBR     	SBL     	SBT     	SBR
+Lane Configurations               		0       	<1>     	0       	0       	<1>     	0       	1       	1>      	0       	1       	2>      	0
+Traffic Vol, veh/h                		0       	0       	0       	61      	0       	25      	0       	521     	54      	8       	557     	0
+Future Vol, veh/h                 		0       	0       	0       	61      	0       	25      	0       	521     	54      	8       	557     	0
+Conflicting Peds, #/hr            		5       	0       	5       	2       	0       	2       	5       	0       	2       	2       	0       	5
+Sign Control                      		Stop    	Stop    	Stop    	Stop    	Stop    	Stop    	Free    	Free    	Free    	Free    	Free    	Free
+RT Channelized                    		-       	-       	None    	-       	-       	None    	-       	-       	None    	-       	-       	None
+Storage Length                    		-       	-       	-       	-       	-       	-       	50      	-       	-       	50      	-       	-
+Veh in Median Storage, #          		-       	0       	-       	-       	0       	-       	-       	0       	-       	-       	0       	-
+Grade, %                          		-       	-5      	-       	-       	0       	-       	-       	-1      	-       	-       	-1      	-
+Peak Hour Factor                  		98      	98      	98      	98      	98      	98      	98      	98      	98      	98      	98      	98
+Heavy Vehicles, %                 		0       	0       	0       	2       	0       	0       	0       	1       	0       	0       	2       	0
+Mvmt Flow                         		0       	0       	0       	62      	0       	26      	0       	532     	55      	8       	568     	0
+                                  		        	        	        	        	        	        	        	        	        	        	        	
+
+Major/Minor                       		Minor2  	        	        	Minor1  	        	        	Major1  	        	        	Major2  	        	
+Conflicting Flow All              		1126    	1178    	294     	867     	1151    	566     	573     	0       	0       	589     	0       	0
+          Stage 1                 		590     	590     	-       	561     	561     	-       	-       	-       	-       	-       	-       	-
+          Stage 2                 		537     	589     	-       	306     	590     	-       	-       	-       	-       	-       	-       	-
+Critical Hdwy                     		6.3     	5.5     	6.4     	7.33    	6.5     	6.2     	4.1     	-       	-       	4.1     	-       	-
+Critical Hdwy Stg 1               		5.5     	4.5     	-       	6.13    	5.5     	-       	-       	-       	-       	-       	-       	-
+Critical Hdwy Stg 2               		5.1     	4.5     	-       	6.53    	5.5     	-       	-       	-       	-       	-       	-       	-
+Follow-up Hdwy                    		3.5     	4       	3.3     	3.519   	4       	3.3     	2.2     	-       	-       	2.2     	-       	-
+Pot Cap-1 Maneuver                		236     	267     	738     	260     	200     	527     	1010    	-       	-       	996     	-       	-
+          Stage 1                 		549     	587     	-       	511     	513     	-       	-       	-       	-       	-       	-       	-
+          Stage 2                 		617     	587     	-       	680     	498     	-       	-       	-       	-       	-       	-       	-
+Platoon blocked, %                		        	        	        	        	        	        	        	-       	-       	        	-       	-
+Mov Cap-1 Maneuver                		220     	263     	731     	256     	197     	524     	1005    	-       	-       	995     	-       	-
+Mov Cap-2 Maneuver                		220     	263     	-       	256     	197     	-       	-       	-       	-       	-       	-       	-
+          Stage 1                 		542     	579     	-       	510     	512     	-       	-       	-       	-       	-       	-       	-
+          Stage 2                 		585     	586     	-       	671     	492     	-       	-       	-       	-       	-       	-       	-
+                                  		        	        	        	        	        	        	        	        	        	        	        	
+
+Approach                          		EB      	        	        	WB      	        	        	NB      	        	        	SB      	        	
+HCM Ctrl Dly, s/v                 		0       	        	        	21.84   	        	        	0       	        	        	0.12    	        	
+HCM LOS                           		A       	        	        	C       	        	        	        	        	        	        	        	
+                                  		        	        	        	        	        	        	        	        	        	        	        	
+
+Minor Lane/Major Mvmt             		        	NBL     	NBT     	NBR     	EBLn1   	WBLn1   	SBL     	SBT     	SBR
+Capacity (veh/h)                  		        	1005    	-       	-       	-       	301     	995     	-       	-
+HCM Lane V/C Ratio                		        	-       	-       	-       	-       	0.292   	0.008   	-       	-
+HCM Ctrl Dly (s/v)                		        	0       	-       	-       	0       	21.8    	8.6     	-       	-
+HCM Lane LOS                      		        	A       	-       	-       	A       	C       	A       	-       	-
+HCM 95th %tile Q(veh)             		        	0       	-       	-       	-       	1.2     	0       	-       	-
+
+
+PMEX 2023/2024 Existing Traffic Volumes 10:17 am 08/21/2024 Weekday Peak PM Hour	Synchro 12 Report
+21006961A - P.W.G.	Page 0
+
+Lanes, Volumes, Timings
+9: N Main Street (C.R. 29) & 67 N Main St Driveway/Site Driveway 5	09/22/2025
+
+
+Lane Group                        		EBL     	EBT     	EBR     	WBL     	WBT     	WBR     	NBL     	NBT     	NBR     	SBL     	SBT     	SBR
+Lane Configurations               		0       	<1>     	0       	0       	<1>     	0       	1       	1>      	0       	1       	2>      	0
+Traffic Volume (vph)              		0       	0       	0       	67      	0       	52      	0       	512     	33      	46      	493     	0
+Future Volume (vph)               		0       	0       	0       	67      	0       	52      	0       	512     	33      	46      	493     	0
+Ideal Flow (vphpl)                		1900    	1900    	1900    	1900    	1900    	1900    	1900    	1900    	1900    	1900    	1900    	1900
+Lane Width (ft)                   		12      	12      	12      	15      	12      	15      	12      	12      	12      	11      	11      	12
+Grade (%)                         		        	-9%     	        	        	1%      	        	        	1%      	        	        	-1%     	
+Storage Length (ft)               		0       	        	0       	0       	        	0       	50      	        	0       	50      	        	0
+Storage Lanes                     		0       	        	0       	0       	        	0       	1       	        	0       	1       	        	0
+Taper Length (ft)                 		25      	        	        	25      	        	        	25      	        	        	15      	        	
+Lane Util. Factor                 		1.00    	1.00    	1.00    	1.00    	1.00    	1.00    	1.00    	1.00    	1.00    	1.00    	0.95    	0.95
+Ped Bike Factor                   		        	        	        	        	        	        	        	        	        	        	        	
+Frt                               		        	        	        	        	0.941   	        	        	0.991   	        	        	        	
+Flt Protected                     		        	        	        	        	0.973   	        	        	        	        	0.950   	        	
+Satd. Flow (prot)                 		0       	1985    	0       	0       	1731    	0       	1890    	1856    	0       	1754    	3438    	0
+Flt Permitted                     		        	        	        	        	0.973   	        	        	        	        	0.950   	        	
+Satd. Flow (perm)                 		0       	1985    	0       	0       	1731    	0       	1890    	1856    	0       	1754    	3438    	0
+Link Speed (mph)                  		        	30      	        	        	30      	        	        	30      	        	        	30      	
+Link Distance (ft)                		        	259     	        	        	312     	        	        	265     	        	        	276     	
+Travel Time (s)                   		        	5.9     	        	        	7.1     	        	        	6.0     	        	        	6.3     	
+Confl. Peds. (#/hr)               		1       	        	5       	8       	        	4       	5       	        	8       	4       	        	1
+Peak Hour Factor                  		0.98    	0.98    	0.98    	0.98    	0.98    	0.98    	0.98    	0.98    	0.98    	0.98    	0.98    	0.98
+Heavy Vehicles (%)                		0%      	0%      	0%      	0%      	0%      	0%      	0%      	1%      	0%      	0%      	2%      	0%
+Adj. Flow (vph)                   		0       	0       	0       	68      	0       	53      	0       	522     	34      	47      	503     	0
+Shared Lane Traffic (%)           		        	        	        	        	        	        	        	        	        	        	        	
+Lane Group Flow (vph)             		0       	0       	0       	0       	121     	0       	0       	556     	0       	47      	503     	0
+Enter Blocked Intersection        		No      	No      	No      	No      	No      	No      	No      	No      	No      	No      	No      	No
+Lane Alignment                    		Left    	Left    	Right   	Left    	Left    	Right   	Left    	Left    	Right   	Left    	Left    	Right
+Median Width(ft)                  		        	0       	        	        	0       	        	        	12      	        	        	12      	
+Link Offset(ft)                   		        	0       	        	        	0       	        	        	0       	        	        	0       	
+Crosswalk Width(ft)               		        	16      	        	        	16      	        	        	16      	        	        	16      	
+Two way Left Turn Lane            		        	        	        	        	        	        	        	Yes     	        	        	Yes     	
+Headway Factor                    		0.94    	0.94    	0.94    	0.89    	1.01    	0.89    	1.01    	1.01    	1.01    	1.04    	1.04    	0.99
+Turning Speed (mph)               		15      	        	9       	15      	        	9       	15      	        	9       	15      	        	9
+Sign Control                      		        	Stop    	        	        	Stop    	        	        	Free    	        	        	Free    	
+
+Intersection Summary
+Area Type:                        	Other
+Control Type: Unsignalized
+
+
+PMEX 2023/2024 Existing Traffic Volumes 10:17 am 08/21/2024 Weekday Peak PM Hour	Synchro 12 Report
+21006961A - P.W.G.	Page 0
+
+HCM 7th TWSC
+9: N Main Street (C.R. 29) & 67 N Main St Driveway/Site Driveway 5	09/22/2025
+
+
+
+Intersection                      		        	        	        	        	        	        	        	        	        	        	        	
+Int Delay, s/veh                  		2.8     	        	        	        	        	        	        	        	        	        	        	
+
+Movement                          		EBL     	EBT     	EBR     	WBL     	WBT     	WBR     	NBL     	NBT     	NBR     	SBL     	SBT     	SBR
+Lane Configurations               		0       	<1>     	0       	0       	<1>     	0       	1       	1>      	0       	1       	2>      	0
+Traffic Vol, veh/h                		0       	0       	0       	67      	0       	52      	0       	512     	33      	46      	493     	0
+Future Vol, veh/h                 		0       	0       	0       	67      	0       	52      	0       	512     	33      	46      	493     	0
+Conflicting Peds, #/hr            		1       	0       	5       	8       	0       	4       	5       	0       	8       	4       	0       	1
+Sign Control                      		Stop    	Stop    	Stop    	Stop    	Stop    	Stop    	Free    	Free    	Free    	Free    	Free    	Free
+RT Channelized                    		-       	-       	None    	-       	-       	None    	-       	-       	None    	-       	-       	None
+Storage Length                    		-       	-       	-       	-       	-       	-       	50      	-       	-       	50      	-       	-
+Veh in Median Storage, #          		-       	0       	-       	-       	0       	-       	-       	0       	-       	-       	0       	-
+Grade, %                          		-       	-9      	-       	-       	1       	-       	-       	1       	-       	-       	-1      	-
+Peak Hour Factor                  		98      	98      	98      	98      	98      	98      	98      	98      	98      	98      	98      	98
+Heavy Vehicles, %                 		0       	0       	0       	0       	0       	0       	0       	1       	0       	0       	2       	0
+Mvmt Flow                         		0       	0       	0       	68      	0       	53      	0       	522     	34      	47      	503     	0
+                                  		        	        	        	        	        	        	        	        	        	        	        	
+
+Major/Minor                       		Minor2  	        	        	Minor1  	        	        	Major1  	        	        	Major2  	        	
+Conflicting Flow All              		1128    	1166    	265     	901     	1149    	551     	508     	0       	0       	564     	0       	0
+          Stage 1                 		602     	602     	-       	547     	547     	-       	-       	-       	-       	-       	-       	-
+          Stage 2                 		526     	564     	-       	353     	602     	-       	-       	-       	-       	-       	-       	-
+Critical Hdwy                     		5.5     	4.7     	6       	7.5     	6.7     	6.3     	4.1     	-       	-       	4.1     	-       	-
+Critical Hdwy Stg 1               		4.7     	3.7     	-       	6.3     	5.7     	-       	-       	-       	-       	-       	-       	-
+Critical Hdwy Stg 2               		4.3     	3.7     	-       	6.7     	5.7     	-       	-       	-       	-       	-       	-       	-
+Follow-up Hdwy                    		3.5     	4       	3.3     	3.5     	4       	3.3     	2.2     	-       	-       	2.2     	-       	-
+Pot Cap-1 Maneuver                		302     	350     	791     	236     	188     	530     	1067    	-       	-       	1018    	-       	-
+          Stage 1                 		619     	665     	-       	509     	505     	-       	-       	-       	-       	-       	-       	-
+          Stage 2                 		701     	678     	-       	630     	476     	-       	-       	-       	-       	-       	-       	-
+Platoon blocked, %                		        	        	        	        	        	        	        	-       	-       	        	-       	-
+Mov Cap-1 Maneuver                		257     	330     	781     	222     	177     	524     	1062    	-       	-       	1010    	-       	-
+Mov Cap-2 Maneuver                		257     	330     	-       	222     	177     	-       	-       	-       	-       	-       	-       	-
+          Stage 1                 		588     	631     	-       	505     	501     	-       	-       	-       	-       	-       	-       	-
+          Stage 2                 		628     	673     	-       	596     	452     	-       	-       	-       	-       	-       	-       	-
+                                  		        	        	        	        	        	        	        	        	        	        	        	
+
+Approach                          		EB      	        	        	WB      	        	        	NB      	        	        	SB      	        	
+HCM Ctrl Dly, s/v                 		0       	        	        	25.29   	        	        	0       	        	        	0.75    	        	
+HCM LOS                           		A       	        	        	D       	        	        	        	        	        	        	        	
+                                  		        	        	        	        	        	        	        	        	        	        	        	
+
+Minor Lane/Major Mvmt             		        	NBL     	NBT     	NBR     	EBLn1   	WBLn1   	SBL     	SBT     	SBR
+Capacity (veh/h)                  		        	1062    	-       	-       	-       	297     	1010    	-       	-
+HCM Lane V/C Ratio                		        	-       	-       	-       	-       	0.409   	0.046   	-       	-
+HCM Ctrl Dly (s/v)                		        	0       	-       	-       	0       	25.3    	8.7     	-       	-
+HCM Lane LOS                      		        	A       	-       	-       	A       	D       	A       	-       	-
+HCM 95th %tile Q(veh)             		        	0       	-       	-       	-       	1.9     	0.1     	-       	-
+
+
+PMEX 2023/2024 Existing Traffic Volumes 10:17 am 08/21/2024 Weekday Peak PM Hour	Synchro 12 Report
+21006961A - P.W.G.	Page 0
+
+Lanes, Volumes, Timings
+10: N Main Street (C.R. 29) & Site Driveway 6	09/22/2025
+
+
+Lane Group                        		EBL     	EBT     	EBR     	WBL     	WBT     	WBR     	NBL     	NBT     	NBR     	SBL     	SBT     	SBR
+Lane Configurations               		        	        	        	1>      	        	0       	        	1>      	0       	1       	2       	
+Traffic Volume (vph)              		        	        	        	17      	        	46      	        	544     	6       	23      	512     	
+Future Volume (vph)               		        	        	        	17      	        	46      	        	544     	6       	23      	512     	
+Ideal Flow (vphpl)                		        	        	        	1900    	        	1900    	        	1900    	1900    	1900    	1900    	
+Lane Width (ft)                   		        	        	        	15      	        	15      	        	12      	12      	11      	11      	
+Grade (%)                         		        	        	        	1%      	        	        	        	1%      	        	        	-1%     	
+Storage Length (ft)               		        	        	        	0       	        	0       	        	        	0       	50      	        	
+Storage Lanes                     		        	        	        	1       	        	0       	        	        	0       	1       	        	
+Taper Length (ft)                 		        	        	        	25      	        	        	        	        	        	15      	        	
+Lane Util. Factor                 		        	        	        	1.00    	        	1.00    	        	1.00    	1.00    	1.00    	0.95    	
+Ped Bike Factor                   		        	        	        	        	        	        	        	        	        	        	        	
+Frt                               		        	        	        	0.902   	        	        	        	0.999   	        	        	        	
+Flt Protected                     		        	        	        	0.986   	        	        	        	        	        	0.950   	        	
+Satd. Flow (prot)                 		        	        	        	1819    	        	0       	        	1870    	0       	1754    	3438    	
+Flt Permitted                     		        	        	        	0.986   	        	        	        	        	        	0.950   	        	
+Satd. Flow (perm)                 		        	        	        	1819    	        	0       	        	1870    	0       	1754    	3438    	
+Link Speed (mph)                  		        	        	        	30      	        	        	        	30      	        	        	30      	
+Link Distance (ft)                		        	        	        	206     	        	        	        	276     	        	        	656     	
+Travel Time (s)                   		        	        	        	4.7     	        	        	        	6.3     	        	        	14.9    	
+Confl. Peds. (#/hr)               		        	        	        	5       	        	5       	        	        	5       	5       	        	
+Peak Hour Factor                  		        	        	        	0.97    	        	0.97    	        	0.97    	0.97    	0.97    	0.97    	
+Heavy Vehicles (%)                		        	        	        	6%      	        	0%      	        	1%      	0%      	0%      	2%      	
+Adj. Flow (vph)                   		        	        	        	18      	        	47      	        	561     	6       	24      	528     	
+Shared Lane Traffic (%)           		        	        	        	        	        	        	        	        	        	        	        	
+Lane Group Flow (vph)             		        	        	        	65      	        	0       	        	567     	0       	24      	528     	
+Enter Blocked Intersection        		        	        	        	No      	        	No      	        	No      	No      	No      	No      	
+Lane Alignment                    		        	        	        	Left    	        	Right   	        	Left    	Right   	Left    	Left    	
+Median Width(ft)                  		        	        	        	15      	        	        	        	11      	        	        	11      	
+Link Offset(ft)                   		        	        	        	0       	        	        	        	0       	        	        	0       	
+Crosswalk Width(ft)               		        	        	        	16      	        	        	        	16      	        	        	16      	
+Two way Left Turn Lane            		        	        	        	        	        	        	        	Yes     	        	        	Yes     	
+Headway Factor                    		        	        	        	0.89    	        	0.89    	        	1.01    	1.01    	1.04    	1.04    	
+Turning Speed (mph)               		        	        	        	15      	        	9       	        	        	9       	15      	        	
+Sign Control                      		        	        	        	Stop    	        	        	        	Free    	        	        	Free    	
+
+Intersection Summary
+Area Type:                        	Other
+Control Type: Unsignalized
+
+
+PMEX 2023/2024 Existing Traffic Volumes 10:17 am 08/21/2024 Weekday Peak PM Hour	Synchro 12 Report
+21006961A - P.W.G.	Page 0
+
+HCM 7th TWSC
+10: N Main Street (C.R. 29) & Site Driveway 6	09/22/2025
+
+
+
+Intersection                      		        	        	        	        	        	
+Int Delay, s/veh                  		0.9     	        	        	        	        	
+
+Movement                          		WBL     	WBR     	NBT     	NBR     	SBL     	SBT
+Lane Configurations               		1>      	0       	1>      	0       	1       	2
+Traffic Vol, veh/h                		17      	46      	544     	6       	23      	512
+Future Vol, veh/h                 		17      	46      	544     	6       	23      	512
+Conflicting Peds, #/hr            		5       	5       	0       	5       	5       	0
+Sign Control                      		Stop    	Stop    	Free    	Free    	Free    	Free
+RT Channelized                    		-       	None    	-       	None    	-       	None
+Storage Length                    		0       	-       	-       	-       	50      	-
+Veh in Median Storage, #          		0       	-       	0       	-       	-       	0
+Grade, %                          		1       	-       	1       	-       	-       	-1
+Peak Hour Factor                  		97      	97      	97      	97      	97      	97
+Heavy Vehicles, %                 		6       	0       	1       	0       	0       	2
+Mvmt Flow                         		18      	47      	561     	6       	24      	528
+                                  		        	        	        	        	        	
+
+Major/Minor                       		Minor1  	        	Major1  	        	Major2  	
+Conflicting Flow All              		885     	574     	0       	0       	572     	0
+          Stage 1                 		569     	-       	-       	-       	-       	-
+          Stage 2                 		316     	-       	-       	-       	-       	-
+Critical Hdwy                     		6.89    	6.3     	-       	-       	4.1     	-
+Critical Hdwy Stg 1               		5.69    	-       	-       	-       	-       	-
+Critical Hdwy Stg 2               		6.09    	-       	-       	-       	-       	-
+Follow-up Hdwy                    		3.557   	3.3     	-       	-       	2.2     	-
+Pot Cap-1 Maneuver                		279     	514     	-       	-       	1011    	-
+          Stage 1                 		538     	-       	-       	-       	-       	-
+          Stage 2                 		690     	-       	-       	-       	-       	-
+Platoon blocked, %                		        	        	-       	-       	        	-
+Mov Cap-1 Maneuver                		269     	509     	-       	-       	1005    	-
+Mov Cap-2 Maneuver                		392     	-       	-       	-       	-       	-
+          Stage 1                 		535     	-       	-       	-       	-       	-
+          Stage 2                 		671     	-       	-       	-       	-       	-
+                                  		        	        	        	        	        	
+
+Approach                          		WB      	        	NB      	        	SB      	
+HCM Ctrl Dly, s/v                 		13.87   	        	0       	        	0.37    	
+HCM LOS                           		B       	        	        	        	        	
+                                  		        	        	        	        	        	
+
+Minor Lane/Major Mvmt             		        	NBT     	NBR     	WBLn1   	SBL     	SBT
+Capacity (veh/h)                  		        	-       	-       	471     	1005    	-
+HCM Lane V/C Ratio                		        	-       	-       	0.138   	0.024   	-
+HCM Ctrl Dly (s/v)                		        	-       	-       	13.9    	8.7     	-
+HCM Lane LOS                      		        	-       	-       	B       	A       	-
+HCM 95th %tile Q(veh)             		        	-       	-       	0.5     	0.1     	-
+
+
+PMEX 2023/2024 Existing Traffic Volumes 10:17 am 08/21/2024 Weekday Peak PM Hour	Synchro 12 Report
+21006961A - P.W.G.	Page 0
+
+Lanes, Volumes, Timings
+11: N Main Street (C.R. 29) & Omni Court/Cavalry Drive	09/22/2025
+
+
+Lane Group                        		EBL     	EBT     	EBR     	WBL     	WBT     	WBR     	NBL     	NBT     	NBR     	SBL     	SBT     	SBR
+Lane Configurations               		0       	<1>     	0       	1       	1>      	0       	1       	1       	1       	1       	1>      	0
+Traffic Volume (vph)              		9       	4       	10      	132     	4       	91      	7       	374     	186     	78      	363     	3
+Future Volume (vph)               		9       	4       	10      	132     	4       	91      	7       	374     	186     	78      	363     	3
+Ideal Flow (vphpl)                		1900    	1900    	1900    	1900    	1900    	1900    	1900    	1900    	1900    	1900    	1900    	1900
+Lane Width (ft)                   		15      	15      	15      	11      	12      	12      	11      	12      	10      	11      	12      	12
+Storage Length (ft)               		0       	        	0       	100     	        	0       	540     	        	290     	250     	        	0
+Storage Lanes                     		0       	        	0       	1       	        	0       	1       	        	1       	1       	        	0
+Taper Length (ft)                 		25      	        	        	86      	        	        	25      	        	        	86      	        	
+Lane Util. Factor                 		1.00    	1.00    	1.00    	1.00    	1.00    	1.00    	1.00    	1.00    	1.00    	1.00    	1.00    	1.00
+Ped Bike Factor                   		        	        	        	        	        	        	1.00    	        	0.98    	1.00    	1.00    	
+Frt                               		        	0.941   	        	        	0.856   	        	        	        	0.850   	        	0.999   	
+Flt Protected                     		        	0.981   	        	0.950   	        	        	0.950   	        	        	0.950   	        	
+Satd. Flow (prot)                 		0       	1929    	0       	1711    	1596    	0       	1745    	1881    	1507    	1745    	1861    	0
+Flt Permitted                     		        	0.875   	        	0.742   	        	        	0.536   	        	        	0.395   	        	
+Satd. Flow (perm)                 		0       	1721    	0       	1336    	1596    	0       	981     	1881    	1471    	724     	1861    	0
+Right Turn on Red                 		        	        	Yes     	        	        	Yes     	        	        	Yes     	        	        	Yes
+Satd. Flow (RTOR)                 		        	10      	        	        	95      	        	        	        	194     	        	1       	
+Link Speed (mph)                  		        	30      	        	        	30      	        	        	30      	        	        	30      	
+Link Distance (ft)                		        	402     	        	        	422     	        	        	592     	        	        	1401    	
+Travel Time (s)                   		        	9.1     	        	        	9.6     	        	        	13.5    	        	        	31.8    	
+Confl. Peds. (#/hr)               		        	        	        	        	        	        	3       	        	2       	2       	        	3
+Peak Hour Factor                  		0.96    	0.96    	0.96    	0.96    	0.96    	0.96    	0.96    	0.96    	0.96    	0.96    	0.96    	0.96
+Heavy Vehicles (%)                		0%      	0%      	0%      	2%      	0%      	2%      	0%      	1%      	0%      	0%      	2%      	0%
+Adj. Flow (vph)                   		9       	4       	10      	138     	4       	95      	7       	390     	194     	81      	378     	3
+Shared Lane Traffic (%)           		        	        	        	        	        	        	        	        	        	        	        	
+Lane Group Flow (vph)             		0       	23      	0       	138     	99      	0       	7       	390     	194     	81      	381     	0
+Enter Blocked Intersection        		No      	No      	No      	No      	No      	No      	No      	No      	No      	No      	No      	No
+Lane Alignment                    		Left    	Left    	Right   	Left    	Left    	Right   	Left    	Left    	Right   	Left    	Left    	Right
+Median Width(ft)                  		        	11      	        	        	11      	        	        	12      	        	        	12      	
+Link Offset(ft)                   		        	0       	        	        	0       	        	        	0       	        	        	0       	
+Crosswalk Width(ft)               		        	16      	        	        	16      	        	        	16      	        	        	16      	
+Two way Left Turn Lane            		        	        	        	        	        	        	        	Yes     	        	        	        	
+Headway Factor                    		0.88    	0.88    	0.88    	1.04    	1.00    	1.00    	1.04    	1.00    	1.09    	1.04    	1.00    	1.00
+Turning Speed (mph)               		15      	        	9       	15      	        	9       	15      	        	9       	15      	        	9
+Number of Detectors               		        	2       	        	1       	2       	        	1       	2       	1       	1       	2       	
+Detector Template                 		        	        	        	        	        	        	        	        	        	        	        	
+Leading Detector (ft)             		        	83      	        	35      	83      	        	35      	83      	35      	35      	83      	
+Trailing Detector (ft)            		        	-5      	        	-5      	-5      	        	-5      	-5      	-5      	-5      	-5      	
+Detector 1 Position(ft)           		        	-5      	        	-5      	-5      	        	-5      	-5      	-5      	-5      	-5      	
+Detector 1 Size(ft)               		        	40      	        	40      	40      	        	40      	40      	40      	40      	40      	
+Detector 1 Type                   		        	Cl+Ex   	        	Cl+Ex   	Cl+Ex   	        	Cl+Ex   	Cl+Ex   	Cl+Ex   	Cl+Ex   	Cl+Ex   	
+Detector 1 Channel                		        	        	        	        	        	        	        	        	        	        	        	
+Detector 1 Extend (s)             		        	0.0     	        	0.0     	0.0     	        	0.0     	0.0     	0.0     	0.0     	0.0     	
+Detector 1 Queue (s)              		        	0.0     	        	0.0     	0.0     	        	0.0     	0.0     	0.0     	0.0     	0.0     	
+Detector 1 Delay (s)              		        	0.0     	        	0.0     	0.0     	        	0.0     	0.0     	0.0     	0.0     	0.0     	
+Detector 2 Position(ft)           		        	43      	        	        	43      	        	        	43      	        	        	43      	
+Detector 2 Size(ft)               		        	40      	        	        	40      	        	        	40      	        	        	40      	
+Detector 2 Type                   		        	Cl+Ex   	        	        	Cl+Ex   	        	        	Cl+Ex   	        	        	Cl+Ex   	
+Detector 2 Channel                		        	        	        	        	        	        	        	        	        	        	        	
+Detector 2 Extend (s)             		        	0.0     	        	        	0.0     	        	        	0.0     	        	        	0.0     	
+Turn Type                         		Perm    	NA      	        	Perm    	NA      	        	Perm    	NA      	Perm    	pm+pt   	NA      	
+Protected Phases                  		        	4       	        	        	8       	        	        	2       	        	1       	6       	
+Permitted Phases                  		4       	        	        	8       	        	        	2       	        	2       	6       	        	
+Detector Phase                    		4       	4       	        	8       	8       	        	2       	2       	2       	1       	6       	
+Switch Phase                      		        	        	        	        	        	        	        	        	        	        	        	
+Minimum Initial (s)               		10.0    	10.0    	        	10.0    	10.0    	        	10.0    	10.0    	10.0    	3.0     	10.0    	
+Minimum Split (s)                 		20.0    	20.0    	        	22.0    	22.0    	        	35.0    	35.0    	35.0    	7.0     	50.0    	
+Total Split (s)                   		25.0    	25.0    	        	25.0    	25.0    	        	35.0    	35.0    	35.0    	15.0    	50.0    	
+Total Split (%)                   		33.3%   	33.3%   	        	33.3%   	33.3%   	        	46.7%   	46.7%   	46.7%   	20.0%   	66.7%   	
+Maximum Green (s)                 		20.0    	20.0    	        	20.0    	20.0    	        	30.0    	30.0    	30.0    	11.0    	45.0    	
+Yellow Time (s)                   		4.0     	4.0     	        	4.0     	4.0     	        	4.0     	4.0     	4.0     	3.0     	4.0     	
+All-Red Time (s)                  		1.0     	1.0     	        	1.0     	1.0     	        	1.0     	1.0     	1.0     	1.0     	1.0     	
+Lost Time Adjust (s)              		        	0.0     	        	0.0     	0.0     	        	0.0     	0.0     	0.0     	0.0     	0.0     	
+Total Lost Time (s)               		        	5.0     	        	5.0     	5.0     	        	5.0     	5.0     	5.0     	4.0     	5.0     	
+Lead/Lag                          		        	        	        	        	        	        	Lag     	Lag     	Lag     	Lead    	        	
+Lead-Lag Optimize?                		        	        	        	        	        	        	Yes     	Yes     	Yes     	Yes     	        	
+Vehicle Extension (s)             		3.0     	3.0     	        	3.0     	3.0     	        	3.0     	3.0     	3.0     	3.0     	3.0     	
+Recall Mode                       		None    	None    	        	None    	None    	        	Min     	Min     	Min     	None    	Min     	
+Walk Time (s)                     		7.0     	7.0     	        	7.0     	7.0     	        	7.0     	7.0     	7.0     	        	        	
+Flash Don't Walk (s)              		8.0     	8.0     	        	8.0     	8.0     	        	12.0    	12.0    	12.0    	        	        	
+Pedestrian Calls (#/hr)           		5       	5       	        	5       	5       	        	5       	5       	5       	        	        	
+v/c Ratio                         		        	0.05    	        	0.38    	0.20    	        	0.01    	0.42    	0.23    	0.13    	0.33    	
+Control Delay (s/veh)             		        	13.7    	        	21.1    	6.5     	        	11.6    	14.0    	3.3     	5.6     	7.1     	
+Queue Delay                       		        	0.0     	        	0.0     	0.0     	        	0.0     	0.0     	0.0     	0.0     	0.0     	
+Total Delay (s/veh)               		        	13.7    	        	21.1    	6.5     	        	11.6    	14.0    	3.3     	5.6     	7.1     	
+Queue Length 50th (ft)            		        	3       	        	33      	1       	        	1       	86      	0       	8       	48      	
+Queue Length 95th (ft)            		        	20      	        	94      	33      	        	9       	190     	34      	27      	118     	
+Internal Link Dist (ft)           		        	322     	        	        	342     	        	        	512     	        	        	1321    	
+Turn Bay Length (ft)              		        	        	        	100     	        	        	540     	        	290     	250     	        	
+Base Capacity (vph)               		        	824     	        	636     	809     	        	700     	1344    	1106    	710     	1660    	
+Starvation Cap Reductn            		        	0       	        	0       	0       	        	0       	0       	0       	0       	0       	
+Spillback Cap Reductn             		        	0       	        	0       	0       	        	0       	0       	0       	0       	0       	
+Storage Cap Reductn               		        	0       	        	0       	0       	        	0       	0       	0       	0       	0       	
+Reduced v/c Ratio                 		        	0.03    	        	0.22    	0.12    	        	0.01    	0.29    	0.18    	0.11    	0.23    	
+
+Intersection Summary
+Area Type:                        	Other
+Cycle Length: 75
+Actuated Cycle Length: 46.1
+Natural Cycle: 75
+Control Type: Actuated-Uncoordinated
+
+
+PMEX 2023/2024 Existing Traffic Volumes 10:17 am 08/21/2024 Weekday Peak PM Hour	Synchro 12 Report
+21006961A - P.W.G.	Page 0
+
+Lanes, Volumes, Timings
+12: N Main St & Squadron Blvd	09/22/2025
+
+
+Lane Group                        		EBL     	EBT     	EBR     	WBL     	WBT     	WBR     	NBL     	NBT     	NBR     	SBL     	SBT     	SBR
+Lane Configurations               		0       	<1>     	0       	0       	<1      	1       	1       	1>      	0       	1       	1>      	0
+Traffic Volume (vph)              		1       	1       	2       	132     	1       	281     	0       	471     	83      	206     	410     	4
+Future Volume (vph)               		1       	1       	2       	132     	1       	281     	0       	471     	83      	206     	410     	4
+Ideal Flow (vphpl)                		1900    	1900    	1900    	1900    	1900    	1900    	1900    	1900    	1900    	1900    	1900    	1900
+Grade (%)                         		        	-8%     	        	        	9%      	        	        	-1%     	        	        	-1%     	
+Storage Length (ft)               		0       	        	0       	125     	        	0       	400     	        	0       	175     	        	0
+Storage Lanes                     		0       	        	0       	1       	        	1       	1       	        	0       	1       	        	0
+Taper Length (ft)                 		25      	        	        	25      	        	        	25      	        	        	25      	        	
+Lane Util. Factor                 		1.00    	1.00    	1.00    	1.00    	1.00    	1.00    	1.00    	1.00    	1.00    	1.00    	1.00    	1.00
+Ped Bike Factor                   		        	        	        	        	        	        	        	1.00    	        	        	1.00    	
+Frt                               		        	0.932   	        	        	        	0.850   	        	0.978   	        	        	0.999   	
+Flt Protected                     		        	0.988   	        	        	0.953   	        	        	        	        	0.950   	        	
+Satd. Flow (prot)                 		0       	1456    	0       	0       	1696    	1527    	1909    	1839    	0       	1796    	1866    	0
+Flt Permitted                     		        	0.922   	        	        	0.726   	        	        	        	        	0.206   	        	
+Satd. Flow (perm)                 		0       	1358    	0       	0       	1292    	1527    	1909    	1839    	0       	389     	1866    	0
+Right Turn on Red                 		        	        	Yes     	        	        	Yes     	        	        	Yes     	        	        	Yes
+Satd. Flow (RTOR)                 		        	2       	        	        	        	207     	        	14      	        	        	1       	
+Link Speed (mph)                  		        	30      	        	        	30      	        	        	30      	        	        	30      	
+Link Distance (ft)                		        	174     	        	        	371     	        	        	1401    	        	        	2320    	
+Travel Time (s)                   		        	4.0     	        	        	8.4     	        	        	31.8    	        	        	52.7    	
+Confl. Peds. (#/hr)               		        	        	        	        	        	        	2       	        	3       	3       	        	2
+Peak Hour Factor                  		0.94    	0.94    	0.94    	0.94    	0.94    	0.94    	0.94    	0.94    	0.94    	0.94    	0.94    	0.94
+Heavy Vehicles (%)                		0%      	0%      	50%     	2%      	0%      	1%      	0%      	1%      	2%      	1%      	2%      	25%
+Adj. Flow (vph)                   		1       	1       	2       	140     	1       	299     	0       	501     	88      	219     	436     	4
+Shared Lane Traffic (%)           		        	        	        	        	        	        	        	        	        	        	        	
+Lane Group Flow (vph)             		0       	4       	0       	0       	141     	299     	0       	589     	0       	219     	440     	0
+Enter Blocked Intersection        		No      	No      	No      	No      	No      	No      	No      	No      	No      	No      	No      	No
+Lane Alignment                    		Left    	Left    	Right   	Left    	Left    	Right   	Left    	Left    	Right   	Left    	Left    	Right
+Median Width(ft)                  		        	0       	        	        	0       	        	        	12      	        	        	12      	
+Link Offset(ft)                   		        	0       	        	        	0       	        	        	0       	        	        	0       	
+Crosswalk Width(ft)               		        	16      	        	        	16      	        	        	16      	        	        	16      	
+Two way Left Turn Lane            		        	        	        	        	        	        	        	        	        	        	        	
+Headway Factor                    		0.95    	0.95    	0.95    	1.06    	1.06    	1.06    	0.99    	0.99    	0.99    	0.99    	0.99    	0.99
+Turning Speed (mph)               		15      	        	9       	15      	        	9       	15      	        	9       	15      	        	9
+Number of Detectors               		        	2       	        	        	2       	2       	2       	2       	        	2       	2       	
+Detector Template                 		        	        	        	        	        	        	        	        	        	        	        	
+Leading Detector (ft)             		        	83      	        	        	83      	83      	83      	83      	        	83      	83      	
+Trailing Detector (ft)            		        	-5      	        	        	-5      	-5      	-5      	-5      	        	-5      	-5      	
+Detector 1 Position(ft)           		        	-5      	        	        	-5      	-5      	-5      	-5      	        	-5      	-5      	
+Detector 1 Size(ft)               		        	40      	        	        	40      	40      	40      	40      	        	40      	40      	
+Detector 1 Type                   		        	Cl+Ex   	        	        	Cl+Ex   	Cl+Ex   	Cl+Ex   	Cl+Ex   	        	Cl+Ex   	Cl+Ex   	
+Detector 1 Channel                		        	        	        	        	        	        	        	        	        	        	        	
+Detector 1 Extend (s)             		        	0.0     	        	        	0.0     	0.0     	0.0     	0.0     	        	0.0     	0.0     	
+Detector 1 Queue (s)              		        	0.0     	        	        	0.0     	0.0     	0.0     	0.0     	        	0.0     	0.0     	
+Detector 1 Delay (s)              		        	0.0     	        	        	0.0     	0.0     	0.0     	0.0     	        	0.0     	0.0     	
+Detector 2 Position(ft)           		        	43      	        	        	43      	43      	43      	43      	        	43      	43      	
+Detector 2 Size(ft)               		        	40      	        	        	40      	40      	40      	40      	        	40      	40      	
+Detector 2 Type                   		        	Cl+Ex   	        	        	Cl+Ex   	Cl+Ex   	Cl+Ex   	Cl+Ex   	        	Cl+Ex   	Cl+Ex   	
+Detector 2 Channel                		        	        	        	        	        	        	        	        	        	        	        	
+Detector 2 Extend (s)             		        	0.0     	        	        	0.0     	0.0     	0.0     	0.0     	        	0.0     	0.0     	
+Turn Type                         		Perm    	NA      	        	Perm    	NA      	pm+ov   	Perm    	NA      	        	pm+pt   	NA      	
+Protected Phases                  		        	4       	        	        	8       	1       	        	2       	        	1       	6       	
+Permitted Phases                  		4       	        	        	8       	        	8       	2       	        	        	6       	        	
+Detector Phase                    		4       	4       	        	8       	8       	1       	2       	2       	        	1       	6       	
+Switch Phase                      		        	        	        	        	        	        	        	        	        	        	        	
+Minimum Initial (s)               		10.0    	10.0    	        	10.0    	10.0    	3.0     	5.0     	5.0     	        	3.0     	10.0    	
+Minimum Split (s)                 		20.0    	20.0    	        	20.0    	20.0    	10.0    	35.0    	35.0    	        	10.0    	50.0    	
+Total Split (s)                   		25.0    	25.0    	        	25.0    	25.0    	15.0    	35.0    	35.0    	        	15.0    	50.0    	
+Total Split (%)                   		33.3%   	33.3%   	        	33.3%   	33.3%   	20.0%   	46.7%   	46.7%   	        	20.0%   	66.7%   	
+Maximum Green (s)                 		20.0    	20.0    	        	20.0    	20.0    	11.0    	30.0    	30.0    	        	11.0    	45.0    	
+Yellow Time (s)                   		4.0     	4.0     	        	4.0     	4.0     	3.0     	4.0     	4.0     	        	3.0     	4.0     	
+All-Red Time (s)                  		1.0     	1.0     	        	1.0     	1.0     	1.0     	1.0     	1.0     	        	1.0     	1.0     	
+Lost Time Adjust (s)              		        	0.0     	        	        	0.0     	0.0     	0.0     	0.0     	        	0.0     	0.0     	
+Total Lost Time (s)               		        	5.0     	        	        	5.0     	4.0     	5.0     	5.0     	        	4.0     	5.0     	
+Lead/Lag                          		        	        	        	        	        	Lead    	Lag     	Lag     	        	Lead    	        	
+Lead-Lag Optimize?                		        	        	        	        	        	Yes     	Yes     	Yes     	        	Yes     	        	
+Vehicle Extension (s)             		2.0     	2.0     	        	2.0     	2.0     	2.0     	2.0     	2.0     	        	2.0     	2.0     	
+Recall Mode                       		None    	None    	        	None    	None    	None    	Min     	Min     	        	None    	Min     	
+Walk Time (s)                     		7.0     	7.0     	        	7.0     	7.0     	        	7.0     	7.0     	        	        	7.0     	
+Flash Don't Walk (s)              		8.0     	8.0     	        	8.0     	8.0     	        	12.0    	12.0    	        	        	12.0    	
+Pedestrian Calls (#/hr)           		5       	5       	        	5       	5       	        	5       	5       	        	        	5       	
+v/c Ratio                         		        	0.01    	        	        	0.42    	0.41    	        	0.78    	        	0.46    	0.34    	
+Control Delay (s/veh)             		        	17.8    	        	        	26.8    	6.1     	        	23.5    	        	8.0     	6.5     	
+Queue Delay                       		        	0.0     	        	        	0.0     	0.0     	        	0.0     	        	0.0     	0.0     	
+Total Delay (s/veh)               		        	17.8    	        	        	26.8    	6.1     	        	23.5    	        	8.0     	6.5     	
+Queue Length 50th (ft)            		        	1       	        	        	42      	17      	        	155     	        	24      	60      	
+Queue Length 95th (ft)            		        	8       	        	        	106     	67      	        	#360    	        	64      	140     	
+Internal Link Dist (ft)           		        	94      	        	        	291     	        	        	1321    	        	        	2240    	
+Turn Bay Length (ft)              		        	        	        	        	        	        	        	        	        	175     	        	
+Base Capacity (vph)               		        	601     	        	        	571     	844     	        	1117    	        	603     	1506    	
+Starvation Cap Reductn            		        	0       	        	        	0       	0       	        	0       	        	0       	0       	
+Spillback Cap Reductn             		        	0       	        	        	0       	0       	        	0       	        	0       	0       	
+Storage Cap Reductn               		        	0       	        	        	0       	0       	        	0       	        	0       	0       	
+Reduced v/c Ratio                 		        	0.01    	        	        	0.25    	0.35    	        	0.53    	        	0.36    	0.29    	
+
+Intersection Summary
+Area Type:                        	Other
+Cycle Length: 75
+Actuated Cycle Length: 53.4
+Natural Cycle: 70
+Control Type: Actuated-Uncoordinated
+#    95th percentile volume exceeds capacity, queue may be longer.
+     Queue shown is maximum after two cycles.
+
+
+PMEX 2023/2024 Existing Traffic Volumes 10:17 am 08/21/2024 Weekday Peak PM Hour	Synchro 12 Report
+21006961A - P.W.G.	Page 0
+
+Lanes, Volumes, Timings
+13: N Main Street (C.R. 29) & Phillips Hill Rd/Walnut Ct	09/22/2025
+
+
+Lane Group                        		EBL     	EBT     	EBR     	WBL     	WBT     	WBR     	NBL     	NBT     	NBR     	SBL     	SBT     	SBR
+Lane Configurations               		0       	<1      	1       	0       	<1>     	0       	1       	1>      	0       	1       	1       	1
+Traffic Volume (vph)              		165     	4       	223     	9       	2       	0       	281     	318     	14      	2       	261     	178
+Future Volume (vph)               		165     	4       	223     	9       	2       	0       	281     	318     	14      	2       	261     	178
+Ideal Flow (vphpl)                		1900    	1900    	1900    	1900    	1900    	1900    	1900    	1900    	1900    	1900    	1900    	1900
+Grade (%)                         		        	-4%     	        	        	9%      	        	        	1%      	        	        	-2%     	
+Storage Length (ft)               		0       	        	100     	0       	        	0       	215     	        	0       	75      	        	150
+Storage Lanes                     		0       	        	1       	0       	        	0       	1       	        	0       	1       	        	1
+Taper Length (ft)                 		25      	        	        	25      	        	        	25      	        	        	25      	        	
+Lane Util. Factor                 		1.00    	1.00    	1.00    	1.00    	1.00    	1.00    	1.00    	1.00    	1.00    	1.00    	1.00    	1.00
+Frt                               		        	        	0.850   	        	        	        	        	0.994   	        	        	        	0.850
+Flt Protected                     		        	0.953   	        	        	0.960   	        	0.950   	        	        	0.950   	        	
+Satd. Flow (prot)                 		0       	1829    	1599    	0       	1742    	0       	1761    	1844    	0       	1823    	1900    	1568
+Flt Permitted                     		        	0.722   	        	        	0.777   	        	0.477   	        	        	0.540   	        	
+Satd. Flow (perm)                 		0       	1386    	1599    	0       	1410    	0       	884     	1844    	0       	1036    	1900    	1568
+Right Turn on Red                 		        	        	Yes     	        	        	Yes     	        	        	Yes     	        	        	Yes
+Satd. Flow (RTOR)                 		        	        	251     	        	        	        	        	5       	        	        	        	200
+Link Speed (mph)                  		        	30      	        	        	30      	        	        	30      	        	        	30      	
+Link Distance (ft)                		        	717     	        	        	247     	        	        	2320    	        	        	640     	
+Travel Time (s)                   		        	16.3    	        	        	5.6     	        	        	52.7    	        	        	14.5    	
+Peak Hour Factor                  		0.89    	0.89    	0.89    	0.89    	0.89    	0.89    	0.89    	0.89    	0.89    	0.89    	0.89    	0.89
+Heavy Vehicles (%)                		1%      	0%      	3%      	0%      	0%      	0%      	2%      	2%      	0%      	0%      	1%      	4%
+Adj. Flow (vph)                   		185     	4       	251     	10      	2       	0       	316     	357     	16      	2       	293     	200
+Shared Lane Traffic (%)           		        	        	        	        	        	        	        	        	        	        	        	
+Lane Group Flow (vph)             		0       	189     	251     	0       	12      	0       	316     	373     	0       	2       	293     	200
+Enter Blocked Intersection        		No      	No      	No      	No      	No      	No      	No      	No      	No      	No      	No      	No
+Lane Alignment                    		Left    	Left    	Right   	Left    	Left    	Right   	Left    	Left    	Right   	Left    	Left    	Right
+Median Width(ft)                  		        	0       	        	        	0       	        	        	12      	        	        	12      	
+Link Offset(ft)                   		        	0       	        	        	0       	        	        	0       	        	        	0       	
+Crosswalk Width(ft)               		        	16      	        	        	16      	        	        	16      	        	        	16      	
+Two way Left Turn Lane            		        	        	        	        	        	        	        	        	        	        	        	
+Headway Factor                    		0.97    	0.97    	0.97    	1.06    	1.06    	1.06    	1.01    	1.01    	1.01    	0.99    	0.99    	0.99
+Turning Speed (mph)               		15      	        	9       	15      	        	9       	15      	        	9       	15      	        	9
+Number of Detectors               		        	2       	3       	        	2       	        	2       	2       	        	2       	2       	2
+Detector Template                 		        	        	        	        	        	        	        	        	        	        	        	
+Leading Detector (ft)             		        	83      	170     	        	83      	        	83      	83      	        	83      	83      	83
+Trailing Detector (ft)            		        	-5      	-5      	        	-5      	        	-5      	-5      	        	-5      	-5      	-5
+Detector 1 Position(ft)           		        	-5      	-5      	        	-5      	        	-5      	-5      	        	-5      	-5      	-5
+Detector 1 Size(ft)               		        	40      	40      	        	40      	        	40      	40      	        	40      	40      	40
+Detector 1 Type                   		        	Cl+Ex   	Cl+Ex   	        	Cl+Ex   	        	Cl+Ex   	Cl+Ex   	        	Cl+Ex   	Cl+Ex   	Cl+Ex
+Detector 1 Channel                		        	        	        	        	        	        	        	        	        	        	        	
+Detector 1 Extend (s)             		        	0.0     	0.0     	        	0.0     	        	0.0     	0.0     	        	0.0     	0.0     	0.0
+Detector 1 Queue (s)              		        	0.0     	0.0     	        	0.0     	        	0.0     	0.0     	        	0.0     	0.0     	0.0
+Detector 1 Delay (s)              		        	0.0     	0.0     	        	0.0     	        	0.0     	0.0     	        	0.0     	0.0     	0.0
+Detector 2 Position(ft)           		        	43      	43      	        	43      	        	43      	43      	        	43      	43      	43
+Detector 2 Size(ft)               		        	40      	40      	        	40      	        	40      	40      	        	40      	40      	40
+Detector 2 Type                   		        	Cl+Ex   	Cl+Ex   	        	Cl+Ex   	        	Cl+Ex   	Cl+Ex   	        	Cl+Ex   	Cl+Ex   	Cl+Ex
+Detector 2 Channel                		        	        	        	        	        	        	        	        	        	        	        	
+Detector 2 Extend (s)             		        	0.0     	0.0     	        	0.0     	        	0.0     	0.0     	        	0.0     	0.0     	0.0
+Detector 3 Position(ft)           		        	        	164     	        	        	        	        	        	        	        	        	
+Detector 3 Size(ft)               		        	        	6       	        	        	        	        	        	        	        	        	
+Detector 3 Type                   		        	        	Cl+Ex   	        	        	        	        	        	        	        	        	
+Detector 3 Channel                		        	        	        	        	        	        	        	        	        	        	        	
+Detector 3 Extend (s)             		        	        	0.0     	        	        	        	        	        	        	        	        	
+Turn Type                         		Perm    	NA      	pm+ov   	Perm    	NA      	        	pm+pt   	NA      	        	Perm    	NA      	Perm
+Protected Phases                  		        	4       	5       	        	8       	        	5       	2       	        	        	6       	
+Permitted Phases                  		4       	        	4       	8       	        	        	2       	        	        	6       	        	6
+Detector Phase                    		4       	4       	5       	8       	8       	        	5       	2       	        	6       	6       	6
+Switch Phase                      		        	        	        	        	        	        	        	        	        	        	        	
+Minimum Initial (s)               		10.0    	10.0    	4.0     	10.0    	10.0    	        	4.0     	45.0    	        	30.0    	30.0    	30.0
+Minimum Split (s)                 		24.0    	24.0    	11.0    	20.0    	20.0    	        	11.0    	50.0    	        	35.0    	35.0    	35.0
+Total Split (s)                   		25.0    	25.0    	15.0    	25.0    	25.0    	        	15.0    	50.0    	        	35.0    	35.0    	35.0
+Total Split (%)                   		33.3%   	33.3%   	20.0%   	33.3%   	33.3%   	        	20.0%   	66.7%   	        	46.7%   	46.7%   	46.7%
+Maximum Green (s)                 		20.0    	20.0    	11.0    	20.0    	20.0    	        	11.0    	45.0    	        	30.0    	30.0    	30.0
+Yellow Time (s)                   		3.0     	3.0     	3.0     	3.0     	3.0     	        	3.0     	3.5     	        	3.5     	3.5     	3.5
+All-Red Time (s)                  		2.0     	2.0     	1.0     	2.0     	2.0     	        	1.0     	1.5     	        	1.5     	1.5     	1.5
+Lost Time Adjust (s)              		        	0.0     	0.0     	        	0.0     	        	0.0     	0.0     	        	0.0     	0.0     	0.0
+Total Lost Time (s)               		        	5.0     	4.0     	        	5.0     	        	4.0     	5.0     	        	5.0     	5.0     	5.0
+Lead/Lag                          		        	        	Lead    	        	        	        	Lead    	        	        	Lag     	Lag     	Lag
+Lead-Lag Optimize?                		        	        	Yes     	        	        	        	Yes     	        	        	Yes     	Yes     	Yes
+Vehicle Extension (s)             		2.0     	2.0     	2.0     	2.0     	2.0     	        	2.0     	2.0     	        	3.0     	3.0     	3.0
+Recall Mode                       		Min     	Min     	None    	Min     	Min     	        	None    	Min     	        	None    	None    	None
+Walk Time (s)                     		7.0     	7.0     	        	        	        	        	        	        	        	7.0     	7.0     	7.0
+Flash Don't Walk (s)              		12.0    	12.0    	        	        	        	        	        	        	        	12.0    	12.0    	12.0
+Pedestrian Calls (#/hr)           		5       	5       	        	        	        	        	        	        	        	5       	5       	5
+v/c Ratio                         		        	0.67    	0.31    	        	0.04    	        	0.45    	0.31    	        	0.00    	0.34    	0.24
+Control Delay (s/veh)             		        	37.7    	2.8     	        	21.5    	        	7.5     	6.7     	        	13.0    	14.9    	3.3
+Queue Delay                       		        	0.0     	0.0     	        	0.0     	        	0.0     	0.0     	        	0.0     	0.0     	0.0
+Total Delay (s/veh)               		        	37.7    	2.8     	        	21.5    	        	7.5     	6.7     	        	13.0    	14.9    	3.3
+Queue Length 50th (ft)            		        	75      	0       	        	4       	        	44      	56      	        	1       	78      	0
+Queue Length 95th (ft)            		        	135     	33      	        	16      	        	100     	122     	        	4       	152     	36
+Internal Link Dist (ft)           		        	637     	        	        	167     	        	        	2240    	        	        	560     	
+Turn Bay Length (ft)              		        	        	100     	        	        	        	215     	        	        	75      	        	150
+Base Capacity (vph)               		        	401     	837     	        	408     	        	728     	1203    	        	471     	864     	822
+Starvation Cap Reductn            		        	0       	0       	        	0       	        	0       	0       	        	0       	0       	0
+Spillback Cap Reductn             		        	0       	0       	        	0       	        	0       	0       	        	0       	0       	0
+Storage Cap Reductn               		        	0       	0       	        	0       	        	0       	0       	        	0       	0       	0
+Reduced v/c Ratio                 		        	0.47    	0.30    	        	0.03    	        	0.43    	0.31    	        	0.00    	0.34    	0.24
+
+Intersection Summary
+Area Type:                        	Other
+Cycle Length: 75
+Actuated Cycle Length: 69.2
+Natural Cycle: 75
+Control Type: Semi Act-Uncoord
+
+
+PMEX 2023/2024 Existing Traffic Volumes 10:17 am 08/21/2024 Weekday Peak PM Hour	Synchro 12 Report
+21006961A - P.W.G.	Page 0
+
