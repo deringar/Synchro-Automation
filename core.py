@@ -23,8 +23,11 @@ import re  # Regular expression module for pattern matching in strings.
 from openpyxl import load_workbook, Workbook
 import pandas as pd
 import sys
+from pathlib import Path
 
-
+PROJECT_ROOT = Path(__file__).resolve().parent
+DEFAULT_TEMP_DIR = PROJECT_ROOT / "temp"
+DEFAULT_OUTPUT_DIR = PROJECT_ROOT / "out"
 
 _DEBUG = False
 
@@ -110,26 +113,35 @@ def select_reports_and_extract(output_directory=None):
         print("No files selected; nothing to extract.")
         return []
 
-    exported_files = []
-    for file_path in selected_files:
-        file_path = os.path.normpath(file_path)
-        base_name = os.path.splitext(os.path.basename(file_path))[0] + '.csv'
+    temp_dir = DEFAULT_TEMP_DIR
+    temp_dir.mkdir(parents=True, exist_ok=True)
 
-        if output_directory:
-            os.makedirs(output_directory, exist_ok=True)
-            output_path = os.path.join(output_directory, base_name)
-        else:
-            output_path = os.path.join(os.path.dirname(file_path), base_name)
+    if output_directory:
+        candidate_dir = Path(output_directory)
+        if not candidate_dir.is_absolute():
+            candidate_dir = PROJECT_ROOT / candidate_dir
+        final_output_dir = candidate_dir
+    else:
+        final_output_dir = DEFAULT_OUTPUT_DIR
+    final_output_dir.mkdir(parents=True, exist_ok=True)
+
+    exported_files = []
+    for selected in selected_files:
+        source_path = Path(selected)
+        helper_csv_path = temp_dir / f"{source_path.stem}.csv"
 
         try:
-            extract_data_to_csv(file_path, output_path)
-            exported_files.append(output_path)
-            print(f"Exported {file_path} -> {output_path}")
+            final_csv_path = extract_data_to_csv(
+                source_path,
+                helper_csv_path,
+                output_dir=final_output_dir,
+            )
+            exported_files.append(str(final_csv_path))
+            print(f"Exported {source_path} -> {final_csv_path}")
         except Exception as exc:
-            print(f"Failed to export {file_path}: {exc}")
+            print(f"Failed to export {source_path}: {exc}")
 
     return exported_files
-
 
 def _sanitize_lane_data(lane_data):
     if not isinstance(lane_data, tuple):
@@ -525,7 +537,7 @@ Part 3: Data extraction
     * process_directions(twsc_summary_results)
     * parse_overall_data_v2(file_path)
     * parse_twsc_approach(df)
-    * extract_data_to_csv(file_path, output_file)
+    * extract_data_to_csv(file_path, output_file, output_dir=None)
     * parse_lane_configs(int_lane_groups, intersection_ids)
 """
 
@@ -1328,7 +1340,27 @@ def parse_twsc_approach(df):
     return approach_data
 
 
-def extract_data_to_csv(file_path, output_file):
+def extract_data_to_csv(file_path, output_file, output_dir=None):
+    source_path = Path(file_path)
+    file_path = str(source_path)
+
+    if output_dir is None:
+        final_output_dir = DEFAULT_OUTPUT_DIR
+    else:
+        final_output_dir = Path(output_dir)
+        if not final_output_dir.is_absolute():
+            final_output_dir = PROJECT_ROOT / final_output_dir
+    final_output_dir.mkdir(parents=True, exist_ok=True)
+
+    if output_file:
+        candidate_helper = Path(output_file)
+        helper_csv_path = candidate_helper if candidate_helper.is_absolute() else DEFAULT_TEMP_DIR / candidate_helper.name
+    else:
+        helper_csv_path = DEFAULT_TEMP_DIR / f"{source_path.stem}.csv"
+    helper_csv_path.parent.mkdir(parents=True, exist_ok=True)
+
+    final_output_path = final_output_dir / f"{source_path.stem}-filtered.csv"
+
     data = []  # To store the final data for CSV
     # skip_lines = 0  # Counter to track skipped lines
     intersection_count = 0
@@ -1337,12 +1369,11 @@ def extract_data_to_csv(file_path, output_file):
     # Flag to track if we're collecting after "Minor Lane/Major Mvmt"
     collecting_minor_lane = False
     lane_groups = []
-
     """
         Parse and extract relevant intersection data from the text file
         into a Dataframe and generate a CSV file
     """
-    with open(file_path, 'r') as file:
+    with source_path.open('r') as file:
         for line in file:
             stripped_line = line.rstrip('\n')  # Remove the newline character
 
@@ -1413,7 +1444,7 @@ def extract_data_to_csv(file_path, output_file):
 
     # Step 5: Create a DataFrame and save to CSV
     df = pd.DataFrame(data)
-    df.to_csv(output_file, index=False)
+    df.to_csv(helper_csv_path, index=False)
     df = df.map(lambda x: x.strip() if isinstance(x, str) else x)
 
     # Define the terms to search for
@@ -2031,8 +2062,7 @@ def extract_data_to_csv(file_path, output_file):
             final_df = pd.concat([final_df, intersection_df], ignore_index=True)
 
             # Write the final DataFrame to a CSV file
-            file_name, _ = os.path.splitext(file_path)
-            final_df.to_csv(f"{file_name}-filtered.csv", index=False)
+            final_df.to_csv(final_output_path, index=False)
 
     """
         Output finalized data for debugging and testing
@@ -2095,6 +2125,7 @@ def extract_data_to_csv(file_path, output_file):
 
     print(f"Total number of useable datasets found: {len(combined_list_sorted)}")
     print("_" * 40 + "\n")
+    return str(final_output_path)
     """
 
 if __name__ == "__main__":
@@ -2153,33 +2184,37 @@ if __name__ == "__main__":
 
     test_report_alpha = "test/Test Report Alpha.txt"
     test_alpha_csv = "test-alpha.csv"
+    helper_dir = DEFAULT_TEMP_DIR
+    final_output_dir_path = DEFAULT_OUTPUT_DIR
+    helper_dir.mkdir(parents=True, exist_ok=True)
+    final_output_dir_path.mkdir(parents=True, exist_ok=True)
 
     # parse_overall_data_v2(file)  # Gets the data for overall
 
     # Testing with Test Report 1.txt
     print('\n' + "*"*35 + "\n| Results for 'Test Report 1.txt' |\n" + "*"*35 + '\n')
-    extract_data_to_csv(test_report_1, test_report_1_csv)
+    extract_data_to_csv(test_report_1, helper_dir / test_report_1_csv, output_dir=final_output_dir_path)
 
     # Testing with Test Report 2.
     print('\n' + "*"*35 + "\n| Results for 'Test Report 2.txt' |\n" + "*"*35 + '\n')
-    extract_data_to_csv(test_report_2, test_report_2_csv)
+    extract_data_to_csv(test_report_2, helper_dir / test_report_2_csv, output_dir=final_output_dir_path)
 
     # Testing with Test Report 3.txt
     print('\n' + "*"*35 + "\n| Results for 'Test Report 3.txt' |\n" + "*"*35 + '\n')
-    extract_data_to_csv(test_report_3, test_report_3_csv)
+    extract_data_to_csv(test_report_3, helper_dir / test_report_3_csv, output_dir=final_output_dir_path)
 
     # Testing with Test Report 3.txt
     print('\n' + "*"*35 + "\n| Results for 'Test Report 4.txt' |\n" + "*"*35 + '\n')
-    extract_data_to_csv(test_report_4, test_report_4_csv)
+    extract_data_to_csv(test_report_4, helper_dir / test_report_4_csv, output_dir=final_output_dir_path)
 
     print('\n' + "*"*35 + "\n| Results for 'TEST TWSC.txt' |\n" + "*"*35 +'\n')
-    extract_data_to_csv(test_twsc, test_twsc_csv)
+    extract_data_to_csv(test_twsc, helper_dir / test_twsc_csv, output_dir=final_output_dir_path)
 
     print('\n' + "*"*35 + "\n| Results for 'TEST AWSC.txt' |\n" + "*"*35 + '\n')
-    extract_data_to_csv(test_awsc, test_awsc_csv)
+    extract_data_to_csv(test_awsc, helper_dir / test_awsc_csv, output_dir=final_output_dir_path)
 
     print('\n' + "*"*35 + "\n| Results for 'Test Report Alpha.txt' |\n" + "*"*35 + '\n')
-    extract_data_to_csv(test_report_alpha, test_alpha_csv)
+    extract_data_to_csv(test_report_alpha, helper_dir / test_alpha_csv, output_dir=final_output_dir_path)
 
     # lane_groups = separate_characters(movement)
     # print(f"\nLane groups:\n{lane_groups}")

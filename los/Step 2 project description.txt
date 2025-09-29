@@ -1,5 +1,0 @@
-- Everything is gonna have a LOS (A-F), Delay (s), and Volume (V/c Ratio)
-- Have results individually for different movements (L,R, T)
-- Each approach has an overall result (just LOS and Delay, no V/c)
-- And the entire intersection has an overall result (LOS and Delay)
-- 
