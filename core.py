@@ -62,6 +62,17 @@ def _filter_rows_with_metric_data(rows, metric_slice=slice(3, 6)):
 
 
 
+def _freeze_nested(value):
+    if isinstance(value, dict):
+        return tuple(sorted((key, _freeze_nested(val)) for key, val in value.items()))
+    if isinstance(value, list):
+        return tuple(_freeze_nested(item) for item in value)
+    if isinstance(value, set):
+        return tuple(sorted(_freeze_nested(item) for item in value))
+    return value
+
+
+
 _LOS_PRIORITY = {'A': 0, 'B': 1, 'C': 2, 'D': 3, 'E': 4, 'F': 5, 'N': 0}
 
 
@@ -1706,8 +1717,9 @@ def extract_data_to_csv(file_path, output_file, output_dir=None):
 
                 # Replace the lowest non-zero value with '-'
                 if min_non_zero_value != float('inf') and values != los_values:
-                    min_index = non_zero_values.index(min_non_zero_value)
-                    values[direction][min_index] = '-'
+                    if len(non_inf_values) > 1:
+                        min_index = non_zero_values.index(min_non_zero_value)
+                        values[direction][min_index] = '-'
 
             # Filter out '-' values and add to combined_dict
             filtered_values = {direction: [value for value in values[direction]
@@ -1762,33 +1774,17 @@ def extract_data_to_csv(file_path, output_file, output_dir=None):
     # print(f"\nCombined list: \n{combined_list}")
     # print(f"\ntwsc_overall:\n{twsc_overall}\n")
 
-    unsignalized_ids = set()
-    for entry in twsc_overall:
-        try:
-            unsignalized_ids.add(int(entry.get('ID')))
-        except (TypeError, ValueError):
-            continue
-    for entry in awsc_overall:
-        try:
-            unsignalized_ids.add(int(entry.get('ID')))
-        except (TypeError, ValueError):
-            continue
-
-    if unsignalized_ids:
-        filtered = []
-        for item in combined_list:
-            identifier = _normalize_metric_value(item.get('Intersection ID'))
-            if ('Configurations' in item and identifier.isdigit() and int(identifier) in unsignalized_ids):
-                continue
-            filtered.append(item)
-        combined_list = filtered or combined_list
-
-    deduped = {}
-    for item in reversed(combined_list):
+    seen_signatures = set()
+    deduped_list = []
+    for item in combined_list:
         identifier = _normalize_metric_value(item.get('Intersection ID'))
         if identifier:
-            deduped[identifier] = item
-    combined_list = list(reversed(list(deduped.values())))
+            signature = (identifier, _freeze_nested(item))
+            if signature in seen_signatures:
+                continue
+            seen_signatures.add(signature)
+        deduped_list.append(item)
+    combined_list = deduped_list
 
     # Create an empty DataFrame to hold all intersections' data
     final_df = pd.DataFrame()
@@ -1803,7 +1799,6 @@ def extract_data_to_csv(file_path, output_file, output_dir=None):
     # Sort combined_list by Intersection ID for ordered processing
     combined_list_sorted = sorted(
         combined_list, key=lambda x: int(x.get("Intersection ID", "ID")))
-
 
     # Combine both lists and sort by the "index" key
     combined_overall_data = sorted(
