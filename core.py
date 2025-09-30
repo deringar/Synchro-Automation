@@ -46,6 +46,16 @@ def _normalize_metric_value(value):
     return str(value).strip()
 
 
+def _is_effectively_zero(value):
+    normalized = _normalize_metric_value(value)
+    if not normalized:
+        return False
+    try:
+        return float(normalized) == 0.0
+    except (TypeError, ValueError):
+        return False
+
+
 def _has_metric_data(*values):
     return any(_normalize_metric_value(value).lower() not in PLACEHOLDER_METRIC_VALUES for value in values)
 
@@ -1057,24 +1067,19 @@ def parse_overall_data_v2(file_path, df):
 
                 # Set the end line to the next empty line starting from this line
                 end_line = line_number + 1
-                while end_line < len(lines) and lines[end_line].strip() != '':
-                    if "HCM" in lines[end_line]:
+                synchro_end_line = end_line
+                while synchro_end_line < len(lines) and lines[synchro_end_line].strip() != '':
+                    if lines[synchro_end_line].strip().startswith('HCM'):
                         break
-                    end_line += 1  # Continue until we find an empty line
-
-                if "HCM" in lines[end_line]:
-                    # print(f"Found 'HCM' at line {end_line}, skipping Synchro block for this ID\n")
-                    continue
-
-                # print(f"Synchro block ends at line {end_line}\n")
+                    synchro_end_line += 1  # Continue until we find an empty line or the next section
 
                 # Initialize values to None
                 vc_ratio_value = None
                 los_value = None
                 delay_value = None
 
-                # Now process the following lines for the search terms until the next blank line
-                for search_line_number in range(line_number + 1, end_line):
+                # Now process the following lines for the search terms until the next blank line or section header
+                for search_line_number in range(line_number + 1, synchro_end_line):
                     line = lines[search_line_number]
 
                     # print(f"Processing Synchro data at line {search_line_number}: {line.strip()}")
@@ -1577,6 +1582,10 @@ def extract_data_to_csv(file_path, output_file, output_dir=None):
         # Access lane configurations for the current intersection
         lane_config = lane_configurations[i]
         raw_lane_config = raw_lane_configs[i]
+        if not isinstance(lane_config, dict):
+            lane_config = {}
+        if not isinstance(raw_lane_config, dict):
+            raw_lane_config = {}
 
         i += 1
 
@@ -1697,8 +1706,8 @@ def extract_data_to_csv(file_path, output_file, output_dir=None):
                 # Determine if we need to update based on raw lane configuration
                 needs_update = any(
                     value not in [
-                        "-", "0", None] and lane_config in ["0", None]
-                    for value, lane_config in zip(values[direction], raw_lane_config[direction])
+                        "-", "0", None] and raw_token in ["0", None]
+                    for value, raw_token in zip(values[direction], raw_lane_config.get(direction, []))
                 )
 
                 # Skip updating if all configurations are valid
@@ -1707,13 +1716,13 @@ def extract_data_to_csv(file_path, output_file, output_dir=None):
                     continue
 
                 # Apply the update logic based on the type of data
-                for i, (value, lane_config) in enumerate(zip(values[direction], raw_lane_config[direction])):
-                    if value in ["-", "0", None] and lane_config not in ["0", None]:
+                for idx_val, (value, raw_token) in enumerate(zip(values[direction], raw_lane_config.get(direction, []))):
+                    if value in ["-", "0", None] and raw_token not in ["0", None]:
                         if values == los_values:
                             # Higher letter for LOS
-                            values[direction][i] = max_non_zero_value
+                            values[direction][idx_val] = max_non_zero_value
                         else:
-                            values[direction][i] = str(max_non_zero_value)
+                            values[direction][idx_val] = str(max_non_zero_value)
 
                 # Replace the lowest non-zero value with '-'
                 if min_non_zero_value != float('inf') and values != los_values:
@@ -1722,10 +1731,42 @@ def extract_data_to_csv(file_path, output_file, output_dir=None):
                         values[direction][min_index] = '-'
 
             # Filter out '-' values and add to combined_dict
-            filtered_values = {direction: [value for value in values[direction]
-                                           if value != '-' and value != 'Z'] for direction in directions}
+            if not lane_config:
+                filtered_values = {direction: [value for value in values[direction] if value not in ('-', 'Z')]
+                                    for direction in directions}
+            else:
+                filtered_values = {}
+                raw_filtered_values = {}
+                for direction in directions:
+                    filtered = [value for value in values[direction] if value not in ('-', 'Z')]
+                    raw_filtered_values[direction] = filtered
+                    lane_tokens = lane_config.get(direction) if lane_config else None
+                    if not filtered or lane_tokens in (None, '-'):
+                        filtered_values[direction] = []
+                        continue
+                    if isinstance(lane_tokens, list):
+                        expected_len = len(lane_tokens)
+                    else:
+                        expected_len = 1
+                    if expected_len <= 0:
+                        filtered_values[direction] = []
+                        continue
+                    prioritized = []
+                    zero_candidates = []
+                    for val in filtered:
+                        if _is_effectively_zero(val):
+                            zero_candidates.append(val)
+                        else:
+                            prioritized.append(val)
+                    prioritized.extend(zero_candidates)
+                    filtered_values[direction] = prioritized[:expected_len] if len(prioritized) > expected_len else prioritized
+                if not any(filtered_values.get(direction) for direction in directions):
+                    filtered_values = raw_filtered_values
+
             combined_dict[term] = [
-                value for sublist in filtered_values.values() for value in sublist]
+                value for direction in directions for value in filtered_values.get(direction, [])
+            ]
+            combined_dict[f"{term}__per_direction"] = filtered_values
 
         # Merge approach data into combined_dict and append to final lists
         combined_dict.update(approach_data)
@@ -1890,17 +1931,38 @@ def extract_data_to_csv(file_path, output_file, output_dir=None):
                     for term in general_terms['v/c']:
                         matching_key = next((key for key in data_dict if key.lower() == term.lower()), None)
                         if matching_key:
-                            vc_value = data_dict[matching_key][j] if j < len(data_dict[matching_key]) else '-'
+                            per_direction_key = f"{matching_key}__per_direction"
+                            per_direction_map = data_dict.get(per_direction_key)
+                            lane_values = per_direction_map.get(direction, []) if isinstance(per_direction_map, dict) else []
+                            if i < len(lane_values):
+                                vc_value = lane_values[i]
+                            else:
+                                vc_list = data_dict.get(matching_key, [])
+                                vc_value = vc_list[j] if j < len(vc_list) else '-'
                             break
 
                     for term in general_terms['los']:
                         if term in data_dict:
-                            los_value = data_dict[term][j] if j < len(data_dict[term]) else '-'
+                            per_direction_key = f"{term}__per_direction"
+                            per_direction_map = data_dict.get(per_direction_key)
+                            lane_values = per_direction_map.get(direction, []) if isinstance(per_direction_map, dict) else []
+                            if i < len(lane_values):
+                                los_value = lane_values[i]
+                            else:
+                                los_list = data_dict.get(term, [])
+                                los_value = los_list[j] if j < len(los_list) else '-'
                             break
 
                     for term in general_terms['delay']:
                         if term in data_dict:
-                            delay_value = data_dict[term][j] if j < len(data_dict[term]) else '-'
+                            per_direction_key = f"{term}__per_direction"
+                            per_direction_map = data_dict.get(per_direction_key)
+                            lane_values = per_direction_map.get(direction, []) if isinstance(per_direction_map, dict) else []
+                            if i < len(lane_values):
+                                delay_value = lane_values[i]
+                            else:
+                                delay_list = data_dict.get(term, [])
+                                delay_value = delay_list[j] if j < len(delay_list) else '-'
                             break
 
                     vc_value = _normalize_metric_value(vc_value)
