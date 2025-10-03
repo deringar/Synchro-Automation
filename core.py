@@ -6,6 +6,7 @@ Last modified on Thurs Oct 3 2024
 @authors: philip.gotthelf, alex.dering - Colliers Engineering & Design
 """
 
+
 # main_window.py
 
 import tkinter as tk  # Import the Tkinter module for GUI development.
